@@ -3,7 +3,11 @@
 ## Requisito
 Eliminar el método `spinAndGetResult`, que genera el resultado con `Math.random()` localmente. En Ruleta de Dupla el resultado siempre viene del servidor.
 
-## Estado actual
+## Estado
+
+Por implementar
+
+## Implementación actual
 ```ts
 // wheel-container.component.ts:823
 public spinAndGetResult(): Promise<WheelSpinResult> {

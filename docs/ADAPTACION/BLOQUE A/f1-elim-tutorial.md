@@ -3,7 +3,11 @@
 ## Requisito
 Eliminar la lógica de tutorial stage que afectaba animaciones del componente.
 
-## Estado actual
+## Estado
+
+Por implementar
+
+## Implementación actual
 ```ts
 // wheel-container.component.ts:43
 @Input() tutorialStage: string = '';

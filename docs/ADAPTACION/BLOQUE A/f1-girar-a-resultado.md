@@ -3,7 +3,11 @@
 ## Requisito
 `spinToResult` debe recibir dos animales objetivo: uno para el anillo exterior y otro para el anillo interior. El resultado siempre viene del servidor; nunca se genera localmente.
 
-## Estado actual
+## Estado
+
+Por implementar
+
+## Implementación actual
 ```ts
 // wheel-container.component.ts:922
 public spinToResult(result: { animal: Animal; number: number }): Promise<WheelSpinResult>

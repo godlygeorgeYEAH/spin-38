@@ -3,7 +3,11 @@
 ## Requisito
 Eliminar la interacción de click/tap sobre segmentos de la rueda para selección de animales. En Ruleta de Dupla la rueda es solo un display; la selección de animales no existe.
 
-## Estado actual
+## Estado
+
+Por implementar
+
+## Implementación actual
 ```ts
 // wheel-container.component.ts:461
 public onSegmentClick(animal: Animal, event: Event): void { ... }

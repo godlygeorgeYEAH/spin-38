@@ -3,7 +3,11 @@
 ## Requisito
 Los dos anillos deben girar en sentidos opuestos entre sí.
 
-## Estado actual
+## Estado
+
+Por implementar
+
+## Implementación actual
 `calculateFinalAngle` ya maneja la inversión:
 ```ts
 // wheel-container.component.ts:1123

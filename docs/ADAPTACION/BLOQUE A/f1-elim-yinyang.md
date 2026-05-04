@@ -3,7 +3,11 @@
 ## Requisito
 Eliminar el yin-yang central con el botón GIRAR y sus ondas de pulso. La ruleta es un display pasivo; el giro se inicia exclusivamente desde el servidor.
 
-## Estado actual
+## Estado
+
+Por implementar
+
+## Implementación actual
 En el componente:
 - Variables: `yinYangPressed` (l.65), `pulseWave` (l.66).
 - Ratio de tamaño: `CENTER_SIZE_RATIO` (l.219).

@@ -3,7 +3,11 @@
 ## Requisito
 El anillo interno debe dejar de mostrar multiplicadores numéricos y pasar a aceptar un segundo array de animales igual al exterior, para representar los 38 animales del animalito venezolano en ambos anillos.
 
-## Estado actual
+## Estado
+
+Por implementar
+
+## Implementación actual
 ```ts
 // wheel-container.component.ts:90
 public numbers = [10, 5, 3, 2, 1.5, 1, 10, 5, 3, 2, 1.5, 1];

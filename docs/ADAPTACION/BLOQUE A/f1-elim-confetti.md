@@ -3,7 +3,11 @@
 ## Requisito
 Eliminar el sistema de confetti del componente.
 
-## Estado actual
+## Estado
+
+Por implementar
+
+## Implementación actual
 ```ts
 // wheel-container.component.ts:306
 public confettiArray: { index: number; angle: number; distance: number; delay: number; duration: number }[] = [];

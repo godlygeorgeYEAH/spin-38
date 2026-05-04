@@ -3,7 +3,11 @@
 ## Requisito
 `segmentsCount` debe ser un `@Input()` configurable, con valor 38 para este proyecto. No debe ser una constante interna.
 
-## Estado actual
+## Estado
+
+Por implementar
+
+## Implementación actual
 ```ts
 // wheel-container.component.ts:92
 private readonly segmentsCount = 12;
