@@ -84,17 +84,19 @@
       </g>
     </g>
     <g #innerWheel>
-      <g *ngFor="let number of numbers; let i = index">
+      <g *ngFor="let item of innerDisplayItems; let i = index">
         <path [attr.d]="getSegmentPath(innerRingRadius, i)"
           [attr.fill]="'url(#innerGradient-' + (i % 6) + '-' + componentId + ')'"
           stroke="#d4af37" stroke-width="2" />
       </g>
-      <g>
-        <text *ngFor="let number of numbers; let i = index" [attr.transform]="getNumberTransform(i)"
-          dominant-baseline="middle" text-anchor="middle" class="number-text"
-          [class.winning-number]="winningNumberIndex === i">
-          {{ number }}
-        </text>
+      <g *ngFor="let item of innerDisplayItems; let i = index" [attr.transform]="getInnerAnimalTransform(i)">
+        <image [attr.href]="getAnimalImage(item.name)"
+          [attr.x]="animalImageOffset"
+          [attr.y]="animalImageOffset"
+          [attr.width]="animalImageSize"
+          [attr.height]="animalImageSize"
+          class="wheel-animal-image"
+          [class.winning-animal]="winningInnerAnimalIndex === i" />
       </g>
     </g>
   </svg>

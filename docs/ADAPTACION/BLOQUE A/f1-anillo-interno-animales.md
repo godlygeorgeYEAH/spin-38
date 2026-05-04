@@ -5,7 +5,12 @@ El anillo interno debe dejar de mostrar multiplicadores numéricos y pasar a ace
 
 ## Estado
 
-Por implementar
+Implementado
+
+## Nota post-implementación
+El cambio requirió tocar 4 archivos en vez de 2:
+- `wheel-general.interface.ts`: `WheelSpinResult.number: number` eliminado, reemplazado por `innerAnimal: Animal`. `innerWheelAnimal` eliminado (redundante). Justificación: el multiplicador ya no existe en el modelo, mantenerlo como campo basura en la interfaz sería deuda técnica.
+- `home.page.ts`: cascada del cambio de interfaz — `result.number` eliminado en 3 lugares (`addToHistory`, `calculateWinnings`, shareText). Los usos eran lógica de Spin Zodiac que igualmente desaparece en Fase 2.
 
 ## Implementación actual
 ```ts

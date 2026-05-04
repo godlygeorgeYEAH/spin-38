@@ -146,10 +146,6 @@
                class="result-animal-full-image">
 
           <!-- Multiplicador sobre la imagen -->
-          <img *ngIf="lastWin > 0"
-               [src]="'assets/images/multiplicadores/X' + gameResult.number + '.png'"
-               [alt]="'X' + gameResult.number"
-               class="result-multiplier-badge">
         </div>
 
         <!-- Texto descriptivo del animal -->
@@ -157,7 +153,6 @@
           <h4 class="animal-name">{{ gameResult.animal.name }}</h4>
           <p class="animal-trait">{{ gameResult.animal.description || 'Animal del zodiaco chino' }}</p>
           <p *ngIf="lastWin > 0" class="win-amount">+${{ lastWin }}</p>
-          <p *ngIf="lastWin > 0" class="multiplier-text">Multiplicador: <strong>x{{ gameResult.number }}</strong></p>
         </div>
 
         <!-- Botones de acción -->

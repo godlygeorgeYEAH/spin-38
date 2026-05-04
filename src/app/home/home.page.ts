@@ -813,8 +813,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
       // Usar el nuevo método spinToResult() que acepta el resultado del backend
       const result = await this.wheelContainer.spinToResult({
-        animal: winningAnimal,
-        number: backendResult.winningMultiplier
+        outerAnimal: winningAnimal,
+        innerAnimal: winningAnimal, // placeholder: el backend de Duplas enviará el animal interno real
       });
 
       console.log('[HomePage] Ruleta completada. Resultado visual:', result);
@@ -851,7 +851,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       // Agregar resultado al historial
       this.addToHistory(
         result.animal,
-        result.number,
+        0,
         this.lastWin,
         backendResult.isWin
       );
@@ -1158,7 +1158,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     try {
       const shareTitle = '¡Gané en la Ruleta del Zodiaco Chino!';
-      const shareText = `¡Acabo de ganar $${this.lastWin} apostando a ${this.gameResult.animal.name} con multiplicador x${this.gameResult.number}! 🎰🐉`;
+      const shareText = `¡Acabo de ganar $${this.lastWin} apostando a ${this.gameResult.animal.name}! 🎰🐉`;
 
       // Verificar APIs disponibles
       const hasShare = !!navigator.share;
@@ -1355,7 +1355,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private calculateWinnings(result: WheelSpinResult): void {
     const winningBet = this.selectedAnimals.find(bet => bet.animal.name === result.animal.name);
     if (winningBet) {
-      this.lastWin = Math.round(winningBet.amount * result.number);
+      this.lastWin = winningBet.amount;
     } else {
       this.lastWin = 0;
     }

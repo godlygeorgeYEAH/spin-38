@@ -41,14 +41,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   @Input() innerWheelSpinDuration: number = 10000; // Duración giro rueda interna (debe ser >= spinDuration)
   @Input() expansionRange: number = 180;
   @Input() tutorialStage: string = '';
-  @Input() set multiplierValues(values: number[] | undefined) {
-    if (values && Array.isArray(values) && values.length === 6) {
-      // Generar array de 12 valores (cada valor aparece 2 veces)
-      // Orden: menor a mayor, repitiéndose
-      this.numbers = [...values, ...values];
-    }
-    // Si no se proporciona o es inválido, mantener valores por defecto
-  }
+  @Input() innerAnimals: WheelItem[] = [];
   @Output() onAnimalToggle = new EventEmitter<Animal>();
   @Output() spinRequested = new EventEmitter<void>();
   @Output() manualSpinRequested = new EventEmitter<void>();
@@ -58,8 +51,9 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
 
   public spinning = false;
   public displayItems: Animal[] = [];
+  public innerDisplayItems: Animal[] = [];
   public errorMessage: string = '';
-  public winningNumberIndex: number | null = null;
+  public winningInnerAnimalIndex: number | null = null;
   public showConfetti = false;
   public pointerBounce = false;
   public yinYangPressed = false;
@@ -87,7 +81,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private targetOuterAngle = 0;
   private targetInnerAngle = 0;
 
-  public numbers = [10, 5, 3, 2, 1.5, 1, 10, 5, 3, 2, 1.5, 1, 10, 5, 3, 2, 1.5, 1, 10, 5, 3, 2, 1.5, 1, 10, 5, 3, 2, 1.5, 1, 10, 5, 3, 2, 1.5, 1, 10, 5];
   private readonly fallbackZodiacs = ['Rata', 'Buey', 'Tigre', 'Conejo', 'Dragón', 'Serpiente', 'Caballo', 'Cabra', 'Mono', 'Gallo', 'Perro', 'Cerdo', 'Rata', 'Buey', 'Tigre', 'Conejo', 'Dragón', 'Serpiente', 'Caballo', 'Cabra', 'Mono', 'Gallo', 'Perro', 'Cerdo', 'Rata', 'Buey', 'Tigre', 'Conejo', 'Dragón', 'Serpiente', 'Caballo', 'Cabra', 'Mono', 'Gallo', 'Perro', 'Cerdo', 'Rata', 'Buey'];
   @Input() segmentsCount: number = 38;
   get degreesPerSegment(): number { return 360 / this.segmentsCount; }
@@ -436,7 +429,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['animals']) {
+    if (changes['animals'] || changes['innerAnimals']) {
       this.prepareDisplayItems();
     }
 
@@ -847,8 +840,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
 
       // Obtener resultados de cada rueda
       const winningAnimalItem = this.displayItems[outerResultIndex];
-      const winningNumber = this.numbers[innerResultIndex];
-      const innerWheelAnimalItem = this.displayItems[innerResultIndex];
+      const innerWheelAnimalItem = this.innerDisplayItems[innerResultIndex];
 
       // Calcular ángulos finales para cada rueda con SUS PROPIOS índices
       this.targetOuterAngle = this.calculateFinalAngle(outerResultIndex, this.restingOuterAngle, true);
@@ -882,42 +874,34 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
         // Solo activar animación de victoria si el jugador ganó
         if (playerWon) {
           this.zone.run(() => {
-            this.winningNumberIndex = innerResultIndex;
-            this.showConfetti = true; // Activar confetti inmediatamente
-            this.audioService.playVictory(); // Reproducir sonido de victoria
-            console.log('🎰 ¡VICTORIA! Animación activada - Animal ganador:', winningAnimalItem.name, 'Número:', winningNumber);
+            this.winningInnerAnimalIndex = innerResultIndex;
+            this.showConfetti = true;
+            this.audioService.playVictory();
             this.cdr.markForCheck();
           });
-        } else {
-          console.log('❌ El jugador perdió - No se activa animación');
         }
 
-        // Usar delay condicional: 2.5s para victorias (mostrar animación), 300ms para derrotas (rápido)
         const resultDelay = playerWon ? 1500 : 300;
 
         setTimeout(() => {
-          // Mapear a objetos Animal completos
           const winningAnimal: Animal = animalMap[winningAnimalItem.name] || { name: winningAnimalItem.name, emoji: '❓' };
-          const innerWheelAnimal: Animal = animalMap[innerWheelAnimalItem.name] || { name: innerWheelAnimalItem.name, emoji: '❓' };
+          const innerAnimal: Animal = animalMap[innerWheelAnimalItem.name] || { name: innerWheelAnimalItem.name, emoji: '❓' };
 
-          // Limpiar la animación del número ganador y el confetti
           this.zone.run(() => {
-            this.winningNumberIndex = null;
+            this.winningInnerAnimalIndex = null;
             this.showConfetti = false;
             this.cdr.markForCheck();
           });
 
-          // Resultado completo con información de ambas ruedas para logging
           resolve({
             animal: winningAnimal,
-            number: winningNumber,
+            innerAnimal,
             isPositioningOnly: this.isRandomPositioning,
             outerWheelIndex: outerResultIndex,
             innerWheelIndex: innerResultIndex,
-            innerWheelAnimal: innerWheelAnimal
           });
         }, resultDelay);
-      }, validatedInnerDuration); // Esperar a que termine la rueda interna (la más lenta)
+      }, validatedInnerDuration);
     });
   }
 
@@ -926,7 +910,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
    * @param result - Resultado del backend (animal ganador y multiplicador)
    * @returns Promise que se resuelve cuando la animación termina
    */
-  public spinToResult(result: { animal: Animal; number: number }): Promise<WheelSpinResult> {
+  public spinToResult(result: { outerAnimal: Animal; innerAnimal: Animal }): Promise<WheelSpinResult> {
     if (this.spinning) {
       return Promise.reject(new Error("La ruleta ya está girando."));
     }
@@ -942,38 +926,26 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     }
 
     return new Promise((resolve, reject) => {
-      // Encontrar el índice del animal ganador en displayItems
-      const outerResultIndex = this.displayItems.findIndex(item => item.name === result.animal.name);
+      const outerResultIndex = this.displayItems.findIndex(item => item.name === result.outerAnimal.name);
       if (outerResultIndex === -1) {
-        console.error('[WheelContainer] Animal ganador no encontrado en displayItems:', result.animal.name);
         this.spinning = false;
-        reject(new Error(`Animal ${result.animal.name} no encontrado`));
+        reject(new Error(`Animal externo ${result.outerAnimal.name} no encontrado`));
         return;
       }
 
-      // Encontrar el índice del número ganador en la rueda interna
-      const innerResultIndex = this.numbers.findIndex(num => num === result.number);
+      const innerResultIndex = this.innerDisplayItems.findIndex(item => item.name === result.innerAnimal.name);
       if (innerResultIndex === -1) {
-        console.error('[WheelContainer] Número ganador no encontrado en numbers:', result.number);
         this.spinning = false;
-        reject(new Error(`Número ${result.number} no encontrado`));
+        reject(new Error(`Animal interno ${result.innerAnimal.name} no encontrado`));
         return;
       }
 
-      console.log('[WheelContainer] Índices calculados - Animal:', outerResultIndex, 'Número:', innerResultIndex);
-
-      // Obtener los items de resultado
       const winningAnimalItem = this.displayItems[outerResultIndex];
-      const winningNumber = this.numbers[innerResultIndex];
-      const innerWheelAnimalItem = this.displayItems[innerResultIndex];
+      const innerWheelAnimalItem = this.innerDisplayItems[innerResultIndex];
 
-      // Calcular ángulos finales para cada rueda
       this.targetOuterAngle = this.calculateFinalAngle(outerResultIndex, this.restingOuterAngle, true);
       this.targetInnerAngle = this.calculateFinalAngle(innerResultIndex, this.restingInnerAngle, false);
 
-      console.log('[WheelContainer] Ángulos objetivo - Outer:', this.targetOuterAngle, 'Inner:', this.targetInnerAngle);
-
-      // Iniciar monitoreo de rotación optimizado
       this.lastSegmentIndex = this.getCurrentSegmentIndex(this.restingOuterAngle);
       this.spinStartTime = performance.now();
       this.spinStartAngle = this.restingOuterAngle;
@@ -981,71 +953,57 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
       this.spinDurationMs = this.spinDuration;
       this.monitorWheelRotation();
 
-      // Aplicar animación de giro a ambas ruedas CON DURACIONES INDEPENDIENTES
       this.applySpinAnimation(this.outerWheel.nativeElement, this.targetOuterAngle, this.spinDuration);
       this.applySpinAnimation(this.innerWheel.nativeElement, this.targetInnerAngle, validatedInnerDuration);
 
-      console.log('[WheelContainer] Animaciones iniciadas. Duraciones - Outer:', this.spinDuration, 'Inner:', validatedInnerDuration);
-
-      // Esperar al tiempo máximo (rueda interna que siempre es >= a la externa)
       setTimeout(() => {
         this.spinning = false;
         this.restingOuterAngle = this.targetOuterAngle;
         this.restingInnerAngle = this.targetInnerAngle;
 
-        // Safari fix: Forzar detención completa de la animación
         this.forceStopAnimation(this.outerWheel.nativeElement, this.targetOuterAngle);
         this.forceStopAnimation(this.innerWheel.nativeElement, this.targetInnerAngle);
 
-        // Verificar si el jugador ganó (si apostó al animal ganador)
         const playerWon = this.selectedAnimals.includes(winningAnimalItem.name);
 
-        console.log('[WheelContainer] Giro completado. Jugador ganó:', playerWon);
-
-        // Solo activar animación de victoria si el jugador ganó
         if (playerWon) {
           this.zone.run(() => {
-            this.winningNumberIndex = innerResultIndex;
+            this.winningInnerAnimalIndex = innerResultIndex;
             this.showConfetti = true;
             this.audioService.playVictory();
-            console.log('🎰 ¡VICTORIA! Animación activada - Animal ganador:', winningAnimalItem.name, 'Número:', winningNumber);
             this.cdr.markForCheck();
           });
-        } else {
-          console.log('❌ El jugador perdió - No se activa animación');
         }
 
-        // Usar delay condicional: 1.5s para victorias, 300ms para derrotas
         const resultDelay = playerWon ? 1500 : 300;
 
         setTimeout(() => {
-          // Mapear a objetos Animal completos
           const winningAnimal: Animal = animalMap[winningAnimalItem.name] || { name: winningAnimalItem.name, emoji: '❓' };
-          const innerWheelAnimal: Animal = animalMap[innerWheelAnimalItem.name] || { name: innerWheelAnimalItem.name, emoji: '❓' };
+          const innerAnimal: Animal = animalMap[innerWheelAnimalItem.name] || { name: innerWheelAnimalItem.name, emoji: '❓' };
 
-          // Limpiar la animación del número ganador y el confetti
           this.zone.run(() => {
-            this.winningNumberIndex = null;
+            this.winningInnerAnimalIndex = null;
             this.showConfetti = false;
             this.cdr.markForCheck();
           });
 
-          // Resultado completo
           resolve({
             animal: winningAnimal,
-            number: winningNumber,
+            innerAnimal,
             isPositioningOnly: this.isRandomPositioning,
             outerWheelIndex: outerResultIndex,
             innerWheelIndex: innerResultIndex,
-            innerWheelAnimal: innerWheelAnimal
           });
         }, resultDelay);
-      }, validatedInnerDuration); // Esperar a que termine la rueda interna
+      }, validatedInnerDuration);
     });
   }
 
   private prepareDisplayItems(): void {
     this.displayItems = this.fallbackZodiacs.map(name => animalMap[name]);
+    this.innerDisplayItems = this.innerAnimals.length > 0
+      ? this.innerAnimals.map(item => animalMap[item.name] || { name: item.name, emoji: '❓' })
+      : this.fallbackZodiacs.map(name => animalMap[name]);
   }
 
   public isAnimalSelected(animalName: string): boolean {
@@ -1228,7 +1186,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
    * Nota: Los números reciben una rotación adicional de +90° para mantener el texto vertical
    * sin importar su posición en la rueda.
    */
-  public getNumberTransform(index: number): string {
+  public getInnerAnimalTransform(index: number): string {
     if (this.numberTransformCache.has(index)) {
       return this.numberTransformCache.get(index)!;
     }
