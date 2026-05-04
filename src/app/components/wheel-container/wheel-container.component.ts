@@ -87,10 +87,10 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private targetOuterAngle = 0;
   private targetInnerAngle = 0;
 
-  public numbers = [10, 5, 3, 2, 1.5, 1, 10, 5, 3, 2, 1.5, 1];
-  private readonly fallbackZodiacs = ['Rata', 'Buey', 'Tigre', 'Conejo', 'Dragón', 'Serpiente', 'Caballo', 'Cabra', 'Mono', 'Gallo', 'Perro', 'Cerdo'];
-  private readonly segmentsCount = 12;
-  private readonly degreesPerSegment = 360 / this.segmentsCount;
+  public numbers = [10, 5, 3, 2, 1.5, 1, 10, 5, 3, 2, 1.5, 1, 10, 5, 3, 2, 1.5, 1, 10, 5, 3, 2, 1.5, 1, 10, 5, 3, 2, 1.5, 1, 10, 5, 3, 2, 1.5, 1, 10, 5];
+  private readonly fallbackZodiacs = ['Rata', 'Buey', 'Tigre', 'Conejo', 'Dragón', 'Serpiente', 'Caballo', 'Cabra', 'Mono', 'Gallo', 'Perro', 'Cerdo', 'Rata', 'Buey', 'Tigre', 'Conejo', 'Dragón', 'Serpiente', 'Caballo', 'Cabra', 'Mono', 'Gallo', 'Perro', 'Cerdo', 'Rata', 'Buey', 'Tigre', 'Conejo', 'Dragón', 'Serpiente', 'Caballo', 'Cabra', 'Mono', 'Gallo', 'Perro', 'Cerdo', 'Rata', 'Buey'];
+  @Input() segmentsCount: number = 38;
+  get degreesPerSegment(): number { return 360 / this.segmentsCount; }
 
   // Cache para cálculos trigonométricos
   private segmentPathCache = new Map<string, string>();
@@ -438,6 +438,13 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['animals']) {
       this.prepareDisplayItems();
+    }
+
+    if (changes['segmentsCount']) {
+      this.segmentPathCache.clear();
+      this.textPathCache.clear();
+      this.animalTransformCache.clear();
+      this.numberTransformCache.clear();
     }
 
     // Actualizar estado de yin-yang presionado cuando cambia gameState
