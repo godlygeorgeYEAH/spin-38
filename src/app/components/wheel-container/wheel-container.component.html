@@ -1,0 +1,135 @@
+<div class="wheel-wrapper"
+     [class.performance-low]="performanceProfile.tier === 'low'"
+     [class.performance-medium]="performanceProfile.tier === 'medium'"
+     [class.performance-high]="performanceProfile.tier === 'high'">
+  <!-- Aurora Rings adaptativo según rendimiento del dispositivo -->
+  <div class="aurora-container" *ngIf="performanceProfile.auroraRings > 0" [class.no-filters]="!performanceProfile.auroraFilters">
+    <div class="aurora-ring" *ngFor="let i of auroraRingsArray"></div>
+  </div>
+  <div class="pointers-container">
+    <img src="assets/images/rueda/puntero.png" alt="Puntero" class="pointer-image" [class.bounce]="pointerBounce">
+  </div>
+  <svg class="wheel" [attr.viewBox]="viewBoxSize" [class.tutorial-manual-spin-animation]="tutorialStage === 'manual-spin' && !isSafari">
+    <defs>
+      <radialGradient [attr.id]="'outerGradient-' + componentId" cx="50%" cy="50%" r="50%">
+        <stop offset="60%" stop-color="#f50b0b" />
+        <stop offset="100%" stop-color="#ac0505" />
+      </radialGradient>
+      <radialGradient [attr.id]="'outerGradientEven-' + componentId" cx="50%" cy="50%" r="50%">
+        <stop offset="60%" stop-color="#ac0505" />
+        <stop offset="100%" stop-color="#f50b0b" />
+      </radialGradient>
+      <radialGradient [attr.id]="'selectedGradient-' + componentId" cx="50%" cy="50%" r="50%">
+        <stop offset="60%" stop-color="#00ff88" />
+        <stop offset="100%" stop-color="#00cc66" />
+      </radialGradient>
+      <radialGradient [attr.id]="'innerGradient-0-' + componentId" cx="50%" cy="50%" r="50%">
+        <stop offset="60%" stop-color="#ff40ff" />
+        <stop offset="100%" stop-color="#c000c0" />
+      </radialGradient>
+      <radialGradient [attr.id]="'innerGradient-1-' + componentId" cx="50%" cy="50%" r="50%">
+        <stop offset="60%" stop-color="#34d399" />
+        <stop offset="100%" stop-color="#059669" />
+      </radialGradient>
+      <radialGradient [attr.id]="'innerGradient-2-' + componentId" cx="50%" cy="50%" r="50%">
+        <stop offset="60%" stop-color="#a78bfa" />
+        <stop offset="100%" stop-color="#7c3aed" />
+      </radialGradient>
+      <radialGradient [attr.id]="'innerGradient-3-' + componentId" cx="50%" cy="50%" r="50%">
+        <stop offset="60%" stop-color="#5eead4" />
+        <stop offset="100%" stop-color="#0d9488" />
+      </radialGradient>
+      <radialGradient [attr.id]="'innerGradient-4-' + componentId" cx="50%" cy="50%" r="50%">
+        <stop offset="60%" stop-color="#fcd34d" />
+        <stop offset="100%" stop-color="#f59e0b" />
+      </radialGradient>
+      <radialGradient [attr.id]="'innerGradient-5-' + componentId" cx="50%" cy="50%" r="50%">
+        <stop offset="60%" stop-color="#f87171" />
+        <stop offset="100%" stop-color="#dc2626" />
+      </radialGradient>
+    </defs>
+    <g #outerWheel>
+      <g *ngFor="let item of displayItems; let i = index">
+        <path [attr.d]="getSegmentPath(outerRingRadius, i)"
+          style="cursor: pointer; pointer-events: all;"
+          (click)="onSegmentClick(item, $event)"
+          [attr.fill]="isAnimalSelected(item.name) ? 'url(#selectedGradient-' + componentId + ')' : (i % 2 === 0 ? 'url(#outerGradient-' + componentId + ')' : 'url(#outerGradientEven-' + componentId + ')')"
+          stroke="#d4af37" stroke-width="2" [class.selected-segment]="isAnimalSelected(item.name)" />
+      </g>
+      <g *ngFor="let item of displayItems; let i = index" [attr.transform]="getAnimalTransform(i)">
+        <!-- Imagen del animal (ahora clickeable) -->
+        <image [attr.href]="getAnimalImage(item.name)"
+          [attr.x]="animalImageOffset"
+          [attr.y]="animalImageOffset"
+          [attr.width]="animalImageSize"
+          [attr.height]="animalImageSize"
+          class="wheel-animal-image"
+          style="cursor: pointer; pointer-events: all;"
+          (click)="onSegmentClick(item, $event)"
+          [class.selected-animal]="isAnimalSelected(item.name)" />
+      </g>
+      <g *ngFor="let item of displayItems; let i = index" style="cursor: pointer; pointer-events: all;" (click)="onSegmentClick(item, $event)">
+        <defs>
+          <path [attr.id]="'textPath-' + i + '-' + componentId"
+                [attr.d]="getTextPathArc(i)"
+                fill="none" />
+        </defs>
+        <text class="animal-name-text">
+          <textPath [attr.href]="'#textPath-' + i + '-' + componentId"
+                    startOffset="50%"
+                    text-anchor="middle">
+            {{ item.name }}
+          </textPath>
+        </text>
+      </g>
+    </g>
+    <g #innerWheel>
+      <g *ngFor="let number of numbers; let i = index">
+        <path [attr.d]="getSegmentPath(innerRingRadius, i)"
+          [attr.fill]="'url(#innerGradient-' + (i % 6) + '-' + componentId + ')'"
+          stroke="#d4af37" stroke-width="2" />
+      </g>
+      <g>
+        <text *ngFor="let number of numbers; let i = index" [attr.transform]="getNumberTransform(i)"
+          dominant-baseline="middle" text-anchor="middle" class="number-text"
+          [class.winning-number]="winningNumberIndex === i">
+          {{ number }}
+        </text>
+      </g>
+    </g>
+  </svg>
+
+  <!-- Borde decorativo de la rueda -->
+  <div class="wheel-border">
+    <img src="assets/images/rueda/borde.png" alt="Borde" class="wheel-border-image">
+  </div>
+
+  <div class="yin-yang-center" (click)="onYinYangClick()" [class.pressed]="yinYangPressed" [class.disabled]="!canSpinFromParent">
+    <!-- Ondas de pulso -->
+    <div class="pulse-waves" *ngIf="pulseWave">
+      <div class="pulse-wave"></div>
+      <div class="pulse-wave"></div>
+      <div class="pulse-wave"></div>
+    </div>
+
+    <img src="assets/images/rueda/ying-yang.png"
+         alt="Yin Yang"
+         class="yin-yang-image"
+         [class.tutorial-pulse]="tutorialStage === 'spin'">
+    <button class="spin-center-button"
+            (click)="spinRequested.emit(); $event.stopPropagation()"
+            [disabled]="!canSpinFromParent">
+      <span class="spin-center-text">GIRAR</span>
+    </button>
+  </div>
+
+  <!-- Confetti Animation - Explosión circular desde el centro (adaptativo) -->
+  <div class="confetti-container" *ngIf="showConfetti">
+    <div class="confetti" *ngFor="let particle of confettiArray"
+         [style.--angle]="particle.angle + 'deg'"
+         [style.--distance]="particle.distance + 'px'"
+         [style.animation-delay]="particle.delay + 's'"
+         [style.animation-duration]="particle.duration + 's'"
+         [style.background]="getConfettiColor(particle.index)"></div>
+  </div>
+</div>

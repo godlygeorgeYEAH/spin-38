@@ -1,0 +1,7 @@
+{
+  "name": "ruleta-zodiaco-chino",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

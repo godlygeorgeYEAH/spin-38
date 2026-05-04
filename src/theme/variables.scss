@@ -1,0 +1,103 @@
+// Ionic Variables and Theming
+// For information on how to create your own theme, please see:
+// http://ionicframework.com/docs/theming/
+
+:root {
+  // Wheel variables
+  // Valor por defecto para dispositivos sin media query específico
+  // Los media queries en home.page.css sobrescriben este valor para cada dispositivo
+  --wheel-diameter: 450px;
+  --wheel-border-transform-y: 0px;
+
+  // Wheel displacement when betting panel is visible (default values)
+  --wheel-displacement-x: 0px;
+  --wheel-displacement-y: -10vh;
+
+  // Betting panel appear/disappear animation offsets (default values)
+  --betting-panel-appear-offset-x: 0px;      // Horizontal offset for appear animation
+  --betting-panel-appear-offset-y: 100px;    // Vertical offset for appear animation (from above)
+
+  // Help buttons layout
+  --help-buttons-direction: column;  // Base: vertical para móviles pequeños
+  --help-buttons-gap: 3rem;
+
+  // Chips layout (betting chips grid)
+  --chips-columns: 3;        // Base: 3 columnas = 2 filas para 6 fichas
+  --chips-section-width: 150px;  // Ancho total del contenedor de fichas
+  --chips-gap-horizontal: 8px;  // Espacio horizontal entre fichas (columnas)
+  --chips-gap-vertical: 8px;    // Espacio vertical entre fichas (filas)
+
+  // Pointer/Marker variables
+  --pointer-color: #b99b36;
+  --pointer-border-color: rgba(0, 0, 0, 1);
+
+  // Color palette - Effects
+  --electric-green: #00ff88;
+  --aurora-magenta: #ff00ff;
+  --aurora-purple: #3c00ff;
+  --aurora-cyan: #00ffff;
+
+  // Color palette - Gold
+  --gold: #d4af37;
+  --gold-primary: #d4af37;
+  --gold-secondary: #ffd700;
+  --yin-yang-shadow: rgba(212, 175, 55, 0.6);
+
+  // Tutorial variables
+  --tutorial-primary: #d4af37;
+  --tutorial-secondary: #ffd700;
+  --tutorial-accent: #2ddc7a;
+  --tutorial-text: #ffffff;
+  --tutorial-bg-primary: #1a1a1a;
+  --tutorial-bg-secondary: #2d1b1b;
+  --tutorial-shadow: rgba(212, 175, 55, 0.3);
+
+  // Color palette - Red
+  --red-primary: #cc0000;
+  --red-secondary: #ff2626;
+
+  // Background variables
+  --bg-dark-primary: #1a1a1a;
+  --bg-dark-secondary: #2d1b1b;
+
+  // Text variables
+  --text-light: #ffffff;
+
+  /* ============================================
+   * NON-RESPONSIVE VARIABLES
+   * Valores que NO cambian con el tamaño de pantalla
+   * Para valores responsive, ver responsive-variables.scss
+   * ============================================ */
+
+  // Padding y spacing base (NO responsive)
+  --balance-padding: 8px 16px;
+  --balance-border-radius: 20px;
+  --wheel-container-padding: 15px;
+  --betting-panel-padding: 12px;
+  --betting-chip-size: 45px;
+  --betting-chip-font-size: 0.8rem;
+  --animal-name-padding: 4px 8px;
+
+  // Modal base styles (NO responsive)
+  --modal-subtitle-font-size: 1rem;
+  --modal-body-font-size: 0.9rem;
+  --modal-button-font-size: 0.95rem;
+
+  // Result Modal Elements (NO responsive)
+  --animal-name-modal-font-size: 1.6rem;
+  --animal-trait-font-size: 1.1rem;
+  --multiplier-text-font-size: 1.2rem;
+  --result-details-font-size: 0.95rem;
+
+  // Winning Display (NO responsive)
+  --winning-display-font-size: 1.8rem;
+  --winning-display-padding: 20px;
+  --winning-animal-size: 80px;
+
+  // Spacing
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+}

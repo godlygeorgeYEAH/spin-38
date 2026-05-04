@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Variables Test - Ruleta Zodiaco</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #1a1a1a;
+      color: white;
+      padding: 20px;
+    }
+
+    /* Import responsive variables (simulated from responsive-variables.scss) */
+    :root {
+      /* MOBILE BASE (0-359px) */
+      --logo-size: 90px;
+      --help-button-size: 50px;
+      --balance-font-size: 1rem;
+      --wheel-diameter: 280px;
+      --betting-panel-width: 280px;
+    }
+
+    /* MOBILE STANDARD (360-413px) - MAYORÍA */
+    @media (min-width: 360px) and (max-width: 413px) {
+      :root {
+        --logo-size: 110px;
+        --help-button-size: 60px;
+        --balance-font-size: 1.15rem;
+        --wheel-diameter: 320px;
+        --betting-panel-width: 310px;
+      }
+    }
+
+    /* MOBILE LARGE (414-599px) */
+    @media (min-width: 414px) and (max-width: 599px) {
+      :root {
+        --logo-size: 130px;
+        --help-button-size: 70px;
+        --balance-font-size: 1.3rem;
+        --wheel-diameter: 380px;
+        --betting-panel-width: 370px;
+      }
+    }
+
+    /* TABLET (600-1023px) */
+    @media (min-width: 600px) and (max-width: 1023px) {
+      :root {
+        --logo-size: 170px;
+        --help-button-size: 85px;
+        --balance-font-size: 1.9rem;
+        --wheel-diameter: 550px;
+        --betting-panel-width: 480px;
+      }
+    }
+
+    /* DESKTOP (1024-1799px) */
+    @media (min-width: 1024px) and (max-width: 1799px) {
+      :root {
+        --logo-size: 210px;
+        --help-button-size: 105px;
+        --balance-font-size: 2.6rem;
+        --wheel-diameter: 750px;
+        --betting-panel-width: 680px;
+      }
+    }
+
+    /* LARGE DESKTOP (1800px+) */
+    @media (min-width: 1800px) {
+      :root {
+        --logo-size: 270px;
+        --help-button-size: 135px;
+        --balance-font-size: 3.3rem;
+        --wheel-diameter: 950px;
+        --betting-panel-width: 880px;
+      }
+    }
+
+    /* Test Components */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .info-panel {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+
+    .viewport-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .info-item {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .info-label {
+      color: #ffd700;
+      font-size: 0.85rem;
+      margin-bottom: 5px;
+    }
+
+    .info-value {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .test-elements {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .game-logo {
+      width: var(--logo-size);
+      height: auto;
+      background: linear-gradient(135deg, #ffd700, #ffed4e);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(var(--logo-size) * 0.25);
+      color: #000;
+      font-weight: bold;
+      aspect-ratio: 1;
+    }
+
+    .help-button {
+      width: var(--help-button-size);
+      height: var(--help-button-size);
+      background: rgba(0, 0, 0, 0.95);
+      color: #ffd700;
+      border: 4px solid #ffd700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(var(--help-button-size) * 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .help-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #ffd700;
+    }
+
+    .balance-display {
+      font-size: var(--balance-font-size);
+      background: rgba(0, 0, 0, 0.8);
+      color: #ffd700;
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 2px solid #ffd700;
+    }
+
+    .wheel-mock {
+      width: var(--wheel-diameter);
+      height: var(--wheel-diameter);
+      background: radial-gradient(circle, #ffd700, #ff8c00);
+      border-radius: 50%;
+      border: 5px solid #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(var(--wheel-diameter) * 0.15);
+      color: #000;
+      font-weight: bold;
+    }
+
+    .betting-panel {
+      width: var(--betting-panel-width);
+      background: rgba(0, 0, 0, 0.9);
+      border: 3px solid #ffd700;
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .element-info {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+
+    .breakpoint-indicator {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #ff4444;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      z-index: 9999;
+    }
+
+    @media (min-width: 360px) and (max-width: 413px) {
+      .breakpoint-indicator { background: #4CAF50; }
+      .breakpoint-indicator::before { content: "📱 MOBILE STANDARD"; }
+    }
+
+    @media (max-width: 359px) {
+      .breakpoint-indicator { background: #ff9800; }
+      .breakpoint-indicator::before { content: "📱 MOBILE SMALL"; }
+    }
+
+    @media (min-width: 414px) and (max-width: 599px) {
+      .breakpoint-indicator { background: #2196F3; }
+      .breakpoint-indicator::before { content: "📱 MOBILE LARGE"; }
+    }
+
+    @media (min-width: 600px) and (max-width: 1023px) {
+      .breakpoint-indicator { background: #9C27B0; }
+      .breakpoint-indicator::before { content: "📲 TABLET"; }
+    }
+
+    @media (min-width: 1024px) and (max-width: 1799px) {
+      .breakpoint-indicator { background: #00BCD4; }
+      .breakpoint-indicator::before { content: "💻 DESKTOP"; }
+    }
+
+    @media (min-width: 1800px) {
+      .breakpoint-indicator { background: #E91E63; }
+      .breakpoint-indicator::before { content: "🖥️ LARGE DESKTOP"; }
+    }
+  </style>
+</head>
+<body>
+  <div class="breakpoint-indicator"></div>
+
+  <div class="container">
+    <h1 style="text-align: center; margin-bottom: 30px; color: #ffd700;">
+      🎰 Prueba de Variables Responsivas
+    </h1>
+
+    <div class="info-panel">
+      <h2 style="margin-bottom: 15px;">📊 Información del Viewport</h2>
+      <div class="viewport-info">
+        <div class="info-item">
+          <div class="info-label">Ancho de pantalla:</div>
+          <div class="info-value" id="viewport-width">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Alto de pantalla:</div>
+          <div class="info-value" id="viewport-height">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">--logo-size:</div>
+          <div class="info-value" id="logo-size-value">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">--help-button-size:</div>
+          <div class="info-value" id="help-size-value">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">--wheel-diameter:</div>
+          <div class="info-value" id="wheel-size-value">-</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">--balance-font-size:</div>
+          <div class="info-value" id="balance-size-value">-</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="test-elements">
+      <div>
+        <div class="game-logo">LOGO</div>
+        <div class="element-info" id="logo-info">Logo Size</div>
+      </div>
+
+      <div>
+        <div class="help-button">?</div>
+        <div class="element-info" id="help-info">Help Button Size</div>
+      </div>
+
+      <div>
+        <div class="balance-display">Saldo: $1,000</div>
+        <div class="element-info" id="balance-info">Balance Font Size</div>
+      </div>
+
+      <div>
+        <div class="wheel-mock">RULETA</div>
+        <div class="element-info" id="wheel-info">Wheel Diameter</div>
+      </div>
+
+      <div>
+        <div class="betting-panel">
+          <div style="text-align: center; color: #ffd700;">Panel de Apuestas</div>
+        </div>
+        <div class="element-info" id="panel-info">Betting Panel Width</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 50px; padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 10px;">
+      <h3 style="color: #ffd700; margin-bottom: 15px;">📝 Instrucciones de prueba:</h3>
+      <ol style="line-height: 1.8;">
+        <li>Abre el DevTools del navegador (F12)</li>
+        <li>Activa el modo responsive (Ctrl+Shift+M o Cmd+Shift+M)</li>
+        <li>Prueba estos anchos clave:
+          <ul style="margin-top: 10px; margin-left: 20px;">
+            <li><strong>320px</strong> - Mobile Small (iPhone 5)</li>
+            <li><strong>360px</strong> - Mobile Standard (Galaxy S8) ← MAYORÍA</li>
+            <li><strong>375px</strong> - Mobile Standard (iPhone 7)</li>
+            <li><strong>414px</strong> - Mobile Large (iPhone 8 Plus)</li>
+            <li><strong>768px</strong> - Tablet (iPad)</li>
+            <li><strong>1024px</strong> - Desktop</li>
+            <li><strong>1920px</strong> - Large Desktop</li>
+          </ul>
+        </li>
+        <li>Observa cómo cambian los tamaños de los elementos</li>
+        <li>El indicador superior derecha muestra el breakpoint activo</li>
+        <li>Los valores de las variables se actualizan en tiempo real arriba</li>
+      </ol>
+
+      <p style="margin-top: 20px; padding: 15px; background: rgba(255, 215, 0, 0.1); border-left: 4px solid #ffd700; border-radius: 5px;">
+        <strong>💡 Nota:</strong> Este demo simula el sistema de variables de <code>responsive-variables.scss</code>.
+        Los valores mostrados aquí coinciden con los definidos en el archivo SCSS del proyecto.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function updateInfo() {
+      const root = document.documentElement;
+      const computedStyle = getComputedStyle(root);
+
+      // Viewport info
+      document.getElementById('viewport-width').textContent = window.innerWidth + 'px';
+      document.getElementById('viewport-height').textContent = window.innerHeight + 'px';
+
+      // Variable values
+      const logoSize = computedStyle.getPropertyValue('--logo-size').trim();
+      const helpSize = computedStyle.getPropertyValue('--help-button-size').trim();
+      const wheelSize = computedStyle.getPropertyValue('--wheel-diameter').trim();
+      const balanceSize = computedStyle.getPropertyValue('--balance-font-size').trim();
+
+      document.getElementById('logo-size-value').textContent = logoSize;
+      document.getElementById('help-size-value').textContent = helpSize;
+      document.getElementById('wheel-size-value').textContent = wheelSize;
+      document.getElementById('balance-size-value').textContent = balanceSize;
+
+      // Element info
+      document.getElementById('logo-info').textContent = `Logo: ${logoSize}`;
+      document.getElementById('help-info').textContent = `Help Button: ${helpSize}`;
+      document.getElementById('balance-info').textContent = `Balance: ${balanceSize}`;
+      document.getElementById('wheel-info').textContent = `Wheel: ${wheelSize}`;
+
+      const panel = document.querySelector('.betting-panel');
+      const panelWidth = computedStyle.getPropertyValue('--betting-panel-width').trim();
+      document.getElementById('panel-info').textContent = `Panel: ${panelWidth}`;
+    }
+
+    // Update on load and resize
+    updateInfo();
+    window.addEventListener('resize', updateInfo);
+
+    // Update every 500ms to catch CSS changes
+    setInterval(updateInfo, 500);
+  </script>
+</body>
+</html>

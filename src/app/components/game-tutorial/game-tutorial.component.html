@@ -1,0 +1,69 @@
+<div class="tutorial-modal-overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="tutorial-modal scale-in-hor-right" (click)="$event.stopPropagation()">
+    <div class="tutorial-header ">
+      <div class="tutorial-title">
+        <span class="title-icon">?</span>
+        Cómo Jugar - Spin Zodiac
+      </div>
+      <ion-button class="close-button" fill="clear" (click)="onClose()">
+        <ion-icon  name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="tutorial-content">
+      <div class="tutorial-container">
+        <div class="steps-section">
+          <h3 class="section-title">📋 Pasos para Jugar</h3>
+          <div class="steps-grid">
+            <div *ngFor="let step of tutorialSteps; let i = index" class="step-card" [style.border-color]="step.color">
+              <div class="step-header">
+                <div class="step-number" [style.background-color]="step.color">{{ step.step }}</div>
+                <span class="step-icon">{{ step.icon === 'help-circle' ? '?' : step.icon === 'cash' ? '$' : step.icon === 'play' ? '▶' : step.icon === 'trophy' ? '🏆' : step.icon === 'refresh' ? '↻' : '?' }}</span>
+                <h4 class="step-title">{{ step.title }}</h4>
+              </div>
+              <div class="step-content">
+                <p class="step-description">{{ step.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-card">
+          <div class="rules-header">
+            <h3 class="rules-title">📜 Reglas del Juego</h3>
+          </div>
+          <div class="rules-content">
+            <div class="rules-list">
+              <div *ngFor="let rule of gameRules" class="rule-item">
+                <span class="rule-icon">✓</span>
+                <span class="rule-text">{{ rule }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tips-card">
+          <div class="tips-header">
+            <h3 class="tips-title">💡 Consejos Útiles</h3>
+          </div>
+          <div class="tips-content">
+            <ul class="tips-list">
+              <li>🎯 <strong>Estrategia:</strong> Diversifica tus apuestas entre varios animales para aumentar tus chances</li>
+              <li>💰 <strong>Presupuesto:</strong> Establece un límite de apuestas antes de comenzar</li>
+              <li>🔄 <strong>Limpiar:</strong> Usa "Limpiar" para resetear todo y comenzar desde cero</li>
+              <li>⚡ <strong>Validación:</strong> El botón de giro solo se activa cuando has apostado por todos tus animales seleccionados</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tutorial-actions">
+
+          <button (click)="onClose()" class="understand-button ion-button">
+            <span class="button-icon">✓</span>
+            ¡Entendido!
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
