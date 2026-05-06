@@ -33,7 +33,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   public readonly componentId: number;
 
   @Input() animals: WheelItem[] = [];
-  @Input() selectedAnimals: string[] = [];
   @Input() gameState: GameState = GameState.IDLE;
   @Input() canSpinFromParent: boolean = false;
   @Input() isRandomPositioning: boolean = false;
@@ -49,7 +48,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     }
     // Si no se proporciona o es inválido, mantener valores por defecto
   }
-  @Output() onAnimalToggle = new EventEmitter<Animal>();
   @Output() spinRequested = new EventEmitter<void>();
   @Output() manualSpinRequested = new EventEmitter<void>();
 
@@ -71,7 +69,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private isDragIntent = false;
   private dragStartCoords = { x: 0, y: 0 };
   private potentialTapTarget: Animal | null = null;
-  private justProcessedTap = false; // Prevenir doble emisión
 
   private adjustmentAngularRange: number = 90;
   private velocityThreshold: number = 2.5;
@@ -454,46 +451,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
 
 
   /**
-   * Maneja el click directo en un segmento de animal (fallback confiable)
-   * Este método proporciona una forma alternativa de selección que no depende
-   * del sistema de detección de drag, mejorando la reactividad
-   */
-  public onSegmentClick(animal: Animal, event: Event): void {
-    console.log('[WheelContainer] onSegmentClick called', {
-      animal: animal.name,
-      spinning: this.spinning,
-      gameState: this.gameState,
-      isDragIntent: this.isDragIntent,
-      isDragging: this.isDragging,
-      justProcessedTap: this.justProcessedTap
-    });
-
-    // Prevenir que se active durante spinning o drag real (no tap)
-    // Solo bloquear si realmente se está arrastrando (isDragIntent), no en taps simples
-    if (this.spinning || this.gameState === GameState.PLAYING) {
-      console.log('[WheelContainer] onSegmentClick blocked by spinning/gameState');
-      return;
-    }
-
-    // Si hay un drag intent activo, no procesar el click
-    if (this.isDragIntent) {
-      console.log('[WheelContainer] onSegmentClick blocked by isDragIntent');
-      return;
-    }
-
-    // Si acabamos de procesar un tap en endDrag, no procesar el click duplicado
-    if (this.justProcessedTap) {
-      console.log('[WheelContainer] onSegmentClick blocked by justProcessedTap');
-      this.justProcessedTap = false;
-      return;
-    }
-
-    event.stopPropagation();
-    this.onAnimalToggle.emit(animal);
-    console.log('[WheelContainer] onSegmentClick emitted');
-  }
-
-  /**
    * Maneja el click en el yin-yang para iniciar el giro con efecto de presionado
    */
   public onYinYangClick(): void {
@@ -790,14 +747,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
         this.manualRotation = 0;
       }
 
-    } else if (this.potentialTapTarget) {
-      console.log('[WheelContainer] endDrag - emitting potentialTapTarget:', this.potentialTapTarget.name);
-      this.justProcessedTap = true;
-      this.zone.run(() => this.onAnimalToggle.emit(this.potentialTapTarget!));
-      // Resetear el flag después de un pequeño delay para evitar bloquear clicks legítimos
-      setTimeout(() => this.justProcessedTap = false, 50);
-    } else {
-      console.log('[WheelContainer] endDrag - NO potentialTapTarget to emit');
     }
 
     this.potentialTapTarget = null;
@@ -869,8 +818,9 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
         this.forceStopAnimation(this.outerWheel.nativeElement, this.targetOuterAngle);
         this.forceStopAnimation(this.innerWheel.nativeElement, this.targetInnerAngle);
 
-        // Verificar si el jugador ganó (si apostó al animal ganador)
-        const playerWon = this.selectedAnimals.includes(winningAnimalItem.name);
+        // Detección de victoria desactivada: la responsabilidad pasa al servidor (f1-elim-click-segmentos).
+        // La animación de confetti y sonido de victoria nunca se activan desde este componente.
+        const playerWon = false;
 
         // Solo activar animación de victoria si el jugador ganó
         if (playerWon) {
@@ -990,8 +940,9 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
         this.forceStopAnimation(this.outerWheel.nativeElement, this.targetOuterAngle);
         this.forceStopAnimation(this.innerWheel.nativeElement, this.targetInnerAngle);
 
-        // Verificar si el jugador ganó (si apostó al animal ganador)
-        const playerWon = this.selectedAnimals.includes(winningAnimalItem.name);
+        // Detección de victoria desactivada: la responsabilidad pasa al servidor (f1-elim-click-segmentos).
+        // La animación de confetti y sonido de victoria nunca se activan desde este componente.
+        const playerWon = false;
 
         console.log('[WheelContainer] Giro completado. Jugador ganó:', playerWon);
 
@@ -1039,10 +990,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
 
   private prepareDisplayItems(): void {
     this.displayItems = this.fallbackZodiacs.map(name => animalMap[name]);
-  }
-
-  public isAnimalSelected(animalName: string): boolean {
-    return this.selectedAnimals.includes(animalName);
   }
 
   public getAnimalImage(animalName: string): string {
