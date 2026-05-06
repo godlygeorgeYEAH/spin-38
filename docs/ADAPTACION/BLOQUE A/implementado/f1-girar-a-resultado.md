@@ -5,7 +5,7 @@
 
 ## Estado
 
-Por implementar
+Implementado
 
 ## Implementación actual
 ```ts

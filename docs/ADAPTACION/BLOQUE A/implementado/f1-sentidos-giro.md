@@ -9,7 +9,7 @@ Implementado
 
 ### Notas de Implementación
 
-El spec original decía "ya implementado" pero había un bug en `calculateFinalAngle`: usaba `Math.floor(currentAngle / 360)` para calcular `currentRevolutions`. Cuando el anillo interno acumula ángulos negativos grandes (ej: -3705 tras el primer giro), `Math.floor` retorna un valor muy negativo, `baseRotation` se vuelve negativo, y al negar produce un resultado positivo — haciendo que el anillo interno gire en el mismo sentido que el externo a partir del segundo giro.
+El spec original ya tenía esta funcionalidad implementada pero había un bug en `calculateFinalAngle`: usaba `Math.floor(currentAngle / 360)` para calcular `currentRevolutions`. Cuando el anillo interno acumula ángulos negativos grandes (ej: -3705 tras el primer giro), `Math.floor` retorna un valor muy negativo, `baseRotation` se vuelve negativo, y al negar produce un resultado positivo — haciendo que el anillo interno gire en el mismo sentido que el externo a partir del segundo giro.
 
 **Fix**: Reescrita la función para no depender de `currentRevolutions`. Ahora usa el ángulo normalizado de ambas ruedas y garantiza por construcción que:
 - Outer siempre avanza en positivo desde `currentAngle` (horario).

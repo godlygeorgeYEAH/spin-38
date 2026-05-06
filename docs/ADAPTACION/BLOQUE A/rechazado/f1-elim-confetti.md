@@ -5,7 +5,11 @@ Eliminar el sistema de confetti del componente.
 
 ## Estado
 
-Por implementar
+Rechazado
+
+### Notas de Implementación
+
+Se rechaza la eliminación de esta funcionalidad. Es posible que se pueda utilizar en el futuro.
 
 ## Implementación actual
 ```ts
