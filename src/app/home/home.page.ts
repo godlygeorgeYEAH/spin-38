@@ -1288,21 +1288,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.showBettingPanel();
     this.capturedScreenshot = null; // Limpiar screenshot pre-capturado
     this.updateTotalBetAmount();
-    await new Promise(resolve => setTimeout(resolve, 500));
-    await this.adjustWheelPosition();
-  }
-
-  public async adjustWheelPosition(): Promise<void> {
-    if (this.gameState !== GameState.IDLE) return;
-    this.hideBettingPanel();
-    this.gameState = GameState.PLAYING;
-    this.wheelContainer.spinDuration = 7000;
-    this.wheelContainer.isRandomPositioning = true;
-    await this.wheelContainer.spinAndGetResult();
-    this.gameState = GameState.IDLE;
-    this.showBettingPanel();
-    this.wheelContainer.isRandomPositioning = false;
-    this.cdr.markForCheck();
   }
 
   public async manualSpinWheels(): Promise<void> {
