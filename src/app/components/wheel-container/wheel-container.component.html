@@ -6,6 +6,7 @@
   <div class="aurora-container" *ngIf="performanceProfile.auroraRings > 0" [class.no-filters]="!performanceProfile.auroraFilters">
     <div class="aurora-ring" *ngFor="let i of auroraRingsArray"></div>
   </div>
+  <!-- Puntero de la rueda -->
   <div class="pointers-container">
     <img src="assets/images/rueda/puntero.png" alt="Puntero" class="pointer-image" [class.bounce]="pointerBounce">
   </div>
