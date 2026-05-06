@@ -569,12 +569,20 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private calculateFinalAngle(index: number, currentAngle: number, isOuter: boolean): number {
     const rotations = 10;
     const segmentCenterAngle = index * this.degreesPerSegment + (this.degreesPerSegment / 2);
-    const offsetAngle = -segmentCenterAngle;
+    // En cualquier rueda con CSS rotate(φ), el segmento en la parte superior es el que
+    // estaba en -φ (mod 360). Para mostrar segmentCenterAngle arriba: φ ≡ -segmentCenterAngle (mod 360)
+    const remainder = ((-segmentCenterAngle % 360) + 360) % 360;
+    const currentNorm = ((currentAngle % 360) + 360) % 360;
 
-    const currentRevolutions = Math.floor(currentAngle / 360);
-    const baseRotation = (currentRevolutions + rotations) * 360;
-
-    return isOuter ? (baseRotation + offsetAngle) : -(baseRotation + Math.abs(offsetAngle));
+    if (isOuter) {
+      // Siempre horario: target > currentAngle + rotations*360
+      const extra = (remainder - currentNorm + 360) % 360 || 360;
+      return currentAngle + rotations * 360 + extra;
+    } else {
+      // Siempre antihorario: target < currentAngle - rotations*360
+      const extra = (currentNorm - remainder + 360) % 360 || 360;
+      return currentAngle - rotations * 360 - extra;
+    }
   }
 
   public getSegmentPath(radius: number, index: number): string {
