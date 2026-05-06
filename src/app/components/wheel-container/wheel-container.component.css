@@ -56,49 +56,7 @@
   pointer-events: none;
 }
 
-/* Center Yin-Yang */
-.yin-yang-center {
-  position: absolute;
-  width: calc(28% + 20px);
-  height: calc(28% + 20px);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 11;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  transition: transform 0.1s ease, filter 0.1s ease;
-  /* Animación de sombra eliminada para evitar opacar los números */
-  /* animation: pulse-center-glow 5s ease-in-out infinite alternate; */
-}
-
-/* Estado de yin-yang presionado */
-.yin-yang-center.pressed {
-  transform: translate(-50%, -50%) scale(0.92);
-  filter: brightness(0.85);
-}
-
-/* Estado de yin-yang deshabilitado */
-.yin-yang-center.disabled {
-  cursor: not-allowed;
-  /* Removido opacity para mantener solidez del asset */
-}
-
-/* Hover effect cuando está habilitado */
-.yin-yang-center:not(.disabled):not(.pressed):hover {
-  transform: translate(-50%, -50%) scale(1.05);
-  filter: brightness(1.1);
-}
-
-@keyframes pulse-center-glow {
-  0% { filter: drop-shadow(0 0 10px var(--gold)) drop-shadow(0 0 20px var(--aurora-purple)); }
-  50% { filter: drop-shadow(0 0 15px #ffdd00) drop-shadow(0 0 30px var(--aurora-magenta)); }
-  100% { filter: drop-shadow(0 0 16px var(--gold)) drop-shadow(0 0 20px var(--aurora-cyan)); }
-}
-
-/* === ONDAS DE PULSO === */
+/* === ONDAS DE PULSO (desactivadas — reservadas para uso futuro) ===
 .pulse-waves {
   position: absolute;
   top: 50%;
@@ -155,75 +113,7 @@
     border-width: 0px;
   }
 }
-
-.yin-yang-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 50%;
-  /* Sombras reducidas para evitar opacar los números */
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
-  pointer-events: auto;
-  cursor: pointer;
-  /* animation: yinYangGlow 3s ease-in-out infinite alternate; */
-}
-
-@keyframes yinYangGlow {
-  0% { filter: drop-shadow(0 0 10px var(--yin-yang-shadow)) brightness(1); }
-  100% { filter: drop-shadow(0 0 15px var(--yin-yang-shadow)) brightness(1.05); }
-}
-
-/* Spin Button */
-.spin-center-button {
-  position: absolute;
-  opacity: 0;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.7);
-  border: 2px solid var(--gold);
-  border-radius: 50px;
-  padding: 0.5rem 1.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 12;
-  -webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
-  box-shadow: 0 0 20px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.1);
-  pointer-events: none; /* No bloquear clicks del yin-yang */
-}
-
-.spin-center-button:hover:not(:disabled) {
-  opacity: 0;
-  background: rgba(0, 255, 136, 0.1);
-  border-color: var(--electric-green);
-  box-shadow: 0 0 30px var(--electric-green);
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
-.spin-center-button:hover:not(:disabled) .spin-center-text {
-  opacity: 0;
-  text-shadow: 0 0 8px var(--electric-green) !important;
-}
-
-.spin-center-button:disabled {
-  opacity: 0;
-  cursor: not-allowed;
-  border-color: rgba(212, 175, 55, 0.3);
-}
-
-.spin-center-text {
-  opacity: 0;
-  color: #fff;
-  font-size: 1.2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  text-shadow: 0 0 8px var(--gold);
-}
-
-.spin-center-button:disabled .spin-center-text { color: rgba(212,175,55,0.3); }
-.spin-center-button:hover:not(:disabled) .spin-center-text { color: var(--electric-green); }
+=== FIN ONDAS DE PULSO */
 
 .pointers-container {
   position: absolute;
@@ -660,10 +550,6 @@ svg image {
   filter: brightness(1.1) !important;
 }
 
-.wheel-wrapper.performance-low .yin-yang-image {
-  filter: brightness(1) !important;
-}
-
 .wheel-wrapper.performance-low .wheel-animal-image {
   filter: none !important;
 }
@@ -684,10 +570,6 @@ svg image {
   filter: none !important;
 }
 
-.wheel-wrapper.performance-low .pulse-wave {
-  filter: none !important;
-}
-
 /* MEDIUM TIER - Reducir drop-shadows a 1 por elemento */
 .wheel-wrapper.performance-medium .pointer-image {
   filter: drop-shadow(0 0 12px var(--gold)) !important;
@@ -695,10 +577,6 @@ svg image {
 
 .wheel-wrapper.performance-medium .pointer-image.selected-animal {
   filter: drop-shadow(0 0 20px var(--gold)) brightness(1.1) !important;
-}
-
-.wheel-wrapper.performance-medium .yin-yang-image {
-  filter: drop-shadow(0 0 10px var(--yin-yang-shadow)) !important;
 }
 
 .wheel-wrapper.performance-medium .wheel-animal-image {
@@ -720,4 +598,5 @@ svg image {
 .wheel-wrapper.performance-medium .animal-name-text {
   filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5)) !important;
 }
+
 

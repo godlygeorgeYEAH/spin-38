@@ -108,9 +108,8 @@
     <div class="wheel-side">
       <div class="wheel-container-wrapper" [class.displaced]="isWheelDisplaced">
         <app-wheel-container [animals]="animalsForWheel"
-          [gameState]="gameState" [canSpinFromParent]="canSpin()" [spinDuration]="spinDuration"
-          [innerWheelSpinDuration]="innerWheelSpinDuration"
-          (spinRequested)="spinWheels()">
+          [gameState]="gameState" [spinDuration]="spinDuration"
+          [innerWheelSpinDuration]="innerWheelSpinDuration">
         </app-wheel-container>
       </div>
     </div>
