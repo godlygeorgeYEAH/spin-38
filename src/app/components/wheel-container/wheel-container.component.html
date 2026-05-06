@@ -104,25 +104,6 @@
     <img src="assets/images/rueda/borde.png" alt="Borde" class="wheel-border-image">
   </div>
 
-  <div class="yin-yang-center" (click)="onYinYangClick()" [class.pressed]="yinYangPressed" [class.disabled]="!canSpinFromParent">
-    <!-- Ondas de pulso -->
-    <div class="pulse-waves" *ngIf="pulseWave">
-      <div class="pulse-wave"></div>
-      <div class="pulse-wave"></div>
-      <div class="pulse-wave"></div>
-    </div>
-
-    <img src="assets/images/rueda/ying-yang.png"
-         alt="Yin Yang"
-         class="yin-yang-image"
-         [class.tutorial-pulse]="tutorialStage === 'spin'">
-    <button class="spin-center-button"
-            (click)="spinRequested.emit(); $event.stopPropagation()"
-            [disabled]="!canSpinFromParent">
-      <span class="spin-center-text">GIRAR</span>
-    </button>
-  </div>
-
   <!-- Confetti Animation - Explosión circular desde el centro (adaptativo) -->
   <div class="confetti-container" *ngIf="showConfetti">
     <div class="confetti" *ngFor="let particle of confettiArray"

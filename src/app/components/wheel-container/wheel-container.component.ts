@@ -35,7 +35,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   @Input() animals: WheelItem[] = [];
   @Input() selectedAnimals: string[] = [];
   @Input() gameState: GameState = GameState.IDLE;
-  @Input() canSpinFromParent: boolean = false;
   @Input() isRandomPositioning: boolean = false;
   @Input() spinDuration: number = 8000; // Duración giro rueda externa
   @Input() innerWheelSpinDuration: number = 10000; // Duración giro rueda interna (debe ser >= spinDuration)
@@ -50,7 +49,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     // Si no se proporciona o es inválido, mantener valores por defecto
   }
   @Output() onAnimalToggle = new EventEmitter<Animal>();
-  @Output() spinRequested = new EventEmitter<void>();
   @Output() manualSpinRequested = new EventEmitter<void>();
 
   @ViewChild('outerWheel', { static: true }) outerWheel!: ElementRef<SVGGElement>;
@@ -62,8 +60,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   public winningNumberIndex: number | null = null;
   public showConfetti = false;
   public pointerBounce = false;
-  public yinYangPressed = false;
-  public pulseWave = false;
 
   private isDragging = false;
   private lastMouseAngle = 0;
@@ -207,16 +203,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
    * esto controla el tamaño de la rueda de los numeros
    */
   private readonly INNER_RING_RATIO = 0.555; // 120/210 ≈ 0.571
-
-  /**
-   * Ratio para el tamaño del círculo central (yin-yang).
-   * El centro ocupa el 40% del diámetro de la rueda.
-   * Usado para calcular el tamaño del contenedor yin-yang en CSS.
-   *
-   * Para ajustar: aumentar para centro más grande (máx ~0.5),
-   *               disminuir para centro más pequeño (mín ~0.25)
-   */
-  private readonly CENTER_SIZE_RATIO = 0.15;
 
   /**
    * Ratio para el tamaño de las imágenes de animales en la rueda.
@@ -440,15 +426,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
       this.prepareDisplayItems();
     }
 
-    // Actualizar estado de yin-yang presionado cuando cambia gameState
-    if (changes['gameState']) {
-      if (this.gameState === GameState.PLAYING) {
-        this.yinYangPressed = true;
-      } else if (this.gameState === GameState.IDLE || this.gameState === GameState.RESULT) {
-        this.yinYangPressed = false;
-      }
-    }
-
     // Nota: La animación de tutorial está desactivada en Safari via HTML binding
   }
 
@@ -491,38 +468,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     event.stopPropagation();
     this.onAnimalToggle.emit(animal);
     console.log('[WheelContainer] onSegmentClick emitted');
-  }
-
-  /**
-   * Maneja el click en el yin-yang para iniciar el giro con efecto de presionado
-   */
-  public onYinYangClick(): void {
-    if (!this.canSpinFromParent || this.spinning || this.gameState === GameState.PLAYING) {
-      return;
-    }
-
-    // Reproducir sonido del botón
-    this.audioService.playButton();
-
-    // Activar estado de presionado y onda de pulso
-    this.zone.run(() => {
-      this.yinYangPressed = true;
-      this.pulseWave = true;
-      this.cdr.markForCheck();
-    });
-
-    // Desactivar onda de pulso después de la animación (1 segundo)
-    setTimeout(() => {
-      this.zone.run(() => {
-        this.pulseWave = false;
-        this.cdr.markForCheck();
-      });
-    }, 1000);
-
-    // Esperar medio segundo y luego emitir el evento de giro
-    setTimeout(() => {
-      this.spinRequested.emit();
-    }, 500);
   }
 
   private setupManualInteraction(): void {

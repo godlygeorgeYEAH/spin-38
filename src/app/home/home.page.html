@@ -111,12 +111,12 @@
     <div class="wheel-side">
       <div class="wheel-container-wrapper" [class.displaced]="isWheelDisplaced">
         <app-wheel-container [animals]="animalsForWheel" [selectedAnimals]="getSelectedAnimalNames()"
-          [gameState]="gameState" [canSpinFromParent]="canSpin()" [spinDuration]="spinDuration"
+          [gameState]="gameState" [spinDuration]="spinDuration"
           [innerWheelSpinDuration]="innerWheelSpinDuration"
           [expansionRange]="expansionRange" [tutorialStage]="tutorialStage"
           [multiplierValues]="multiplierValues"
           (onAnimalToggle)="onAnimalToggle($event)"
-          (spinRequested)="spinWheels()" (manualSpinRequested)="manualSpinWheels()">
+          (manualSpinRequested)="manualSpinWheels()">
         </app-wheel-container>
       </div>
     </div>
