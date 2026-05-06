@@ -1305,11 +1305,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  public async manualSpinWheels(): Promise<void> {
-    if (this.gameState !== GameState.IDLE) return;
-    // Perform a real betting spin instead of just adjusting position
-    await this.spinWheels();
-  }
 
   private updateTotalBetAmount(): void {
     const total = this.selectedAnimals.reduce((sum, bet) => sum + bet.amount, 0);
