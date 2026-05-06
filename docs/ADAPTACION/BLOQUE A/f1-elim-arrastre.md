@@ -5,7 +5,13 @@ Eliminar todo el sistema de interacción manual: drag con mouse y touch, cálcul
 
 ## Estado
 
-Por implementar
+Implementado
+
+### Notas de Implementación
+- Se eliminaron 11 métodos (~280 líneas), 13 variables de estado, `@Output() manualSpinRequested`, `@Input() expansionRange`, y las variables `currentVelocity`, `lastDeltaAngle`, `playIntentThreshold`, `adjustmentAngularRange`.
+- `onSegmentClick` simplificado: eliminadas las guardas contra drag (`isDragIntent`, `justProcessedTap`). Queda solo la guarda de `spinning`/`gameState`.
+- `home.page.ts`: eliminado `manualSpinWheels()`.
+- `home.page.html`: eliminados los bindings `(manualSpinRequested)`, `[expansionRange]` y `[multiplierValues]` (este último también era drag-only en la práctica).
 
 ## Implementación actual
 El sistema ocupa aproximadamente 280 líneas del componente:

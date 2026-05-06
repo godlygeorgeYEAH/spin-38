@@ -39,7 +39,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   @Input() isRandomPositioning: boolean = false;
   @Input() spinDuration: number = 8000; // Duración giro rueda externa
   @Input() innerWheelSpinDuration: number = 10000; // Duración giro rueda interna (debe ser >= spinDuration)
-  @Input() expansionRange: number = 180;
   @Input() tutorialStage: string = '';
   @Input() set multiplierValues(values: number[] | undefined) {
     if (values && Array.isArray(values) && values.length === 6) {
@@ -51,7 +50,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   }
   @Output() onAnimalToggle = new EventEmitter<Animal>();
   @Output() spinRequested = new EventEmitter<void>();
-  @Output() manualSpinRequested = new EventEmitter<void>();
 
   @ViewChild('outerWheel', { static: true }) outerWheel!: ElementRef<SVGGElement>;
   @ViewChild('innerWheel', { static: true }) innerWheel!: ElementRef<SVGGElement>;
@@ -64,22 +62,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   public pointerBounce = false;
   public yinYangPressed = false;
   public pulseWave = false;
-
-  private isDragging = false;
-  private lastMouseAngle = 0;
-  private manualRotation = 0;
-  private isDragIntent = false;
-  private dragStartCoords = { x: 0, y: 0 };
-  private potentialTapTarget: Animal | null = null;
-  private justProcessedTap = false; // Prevenir doble emisión
-
-  private adjustmentAngularRange: number = 90;
-  private velocityThreshold: number = 2.5;
-  // private expansionRange: number = 180; // Now an Input
-  private isAdjustmentMode: boolean = false;
-  private adjustmentStartAngle: number = 0;
-  private lastUpdateTime: number = 0;
-  private lastAngle: number = 0;
 
   private restingOuterAngle = 0;
   private restingInnerAngle = 0;
@@ -287,10 +269,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     return `${-r} ${-r} ${r * 2} ${r * 2}`;
   }
 
-  private currentVelocity: number = 0;
-  private lastDeltaAngle: number = 0;
-  private playIntentThreshold: number = 300;
-
   // Variables para detección de cruce de segmentos y audio
   private lastSegmentIndex: number = -1;
   private animationFrameId: number | null = null;
@@ -390,18 +368,12 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     this.spinning = false;
     this.displayItems = [];
     this.errorMessage = '';
-    this.isDragging = false;
-    this.lastMouseAngle = 0;
-    this.manualRotation = 0;
-    this.isDragIntent = false;
-    this.potentialTapTarget = null;
     this.restingOuterAngle = 0;
     this.restingInnerAngle = 0;
     this.targetOuterAngle = 0;
     this.targetInnerAngle = 0;
 
     this.prepareDisplayItems();
-    this.setupManualInteraction();
   }
 
   ngAfterViewInit(): void {
@@ -459,38 +431,9 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
    * del sistema de detección de drag, mejorando la reactividad
    */
   public onSegmentClick(animal: Animal, event: Event): void {
-    console.log('[WheelContainer] onSegmentClick called', {
-      animal: animal.name,
-      spinning: this.spinning,
-      gameState: this.gameState,
-      isDragIntent: this.isDragIntent,
-      isDragging: this.isDragging,
-      justProcessedTap: this.justProcessedTap
-    });
-
-    // Prevenir que se active durante spinning o drag real (no tap)
-    // Solo bloquear si realmente se está arrastrando (isDragIntent), no en taps simples
-    if (this.spinning || this.gameState === GameState.PLAYING) {
-      console.log('[WheelContainer] onSegmentClick blocked by spinning/gameState');
-      return;
-    }
-
-    // Si hay un drag intent activo, no procesar el click
-    if (this.isDragIntent) {
-      console.log('[WheelContainer] onSegmentClick blocked by isDragIntent');
-      return;
-    }
-
-    // Si acabamos de procesar un tap en endDrag, no procesar el click duplicado
-    if (this.justProcessedTap) {
-      console.log('[WheelContainer] onSegmentClick blocked by justProcessedTap');
-      this.justProcessedTap = false;
-      return;
-    }
-
+    if (this.spinning || this.gameState === GameState.PLAYING) return;
     event.stopPropagation();
     this.onAnimalToggle.emit(animal);
-    console.log('[WheelContainer] onSegmentClick emitted');
   }
 
   /**
@@ -523,286 +466,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     setTimeout(() => {
       this.spinRequested.emit();
     }, 500);
-  }
-
-  private setupManualInteraction(): void {
-    const wheelElement = this.outerWheel.nativeElement.closest('.wheel-wrapper') as HTMLElement;
-    if (!wheelElement) return;
-
-    wheelElement.addEventListener('mousedown', (event) => this.zone.run(() => this.onMouseDown(event)));
-    document.addEventListener('mousemove', (event) => this.zone.run(() => this.onMouseMove(event)));
-    document.addEventListener('mouseup', (event) => this.zone.run(() => this.onMouseUp(event)));
-
-    wheelElement.addEventListener('touchstart', (event) => this.zone.run(() => this.onTouchStart(event)), { passive: false });
-    document.addEventListener('touchmove', (event) => this.zone.run(() => this.onTouchMove(event)), { passive: false });
-    document.addEventListener('touchend', (event) => this.zone.run(() => this.onTouchEnd(event)));
-  }
-
-  private onMouseDown(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    const closestYinYang = target.closest('.yin-yang-center');
-
-    console.log('[WheelContainer] onMouseDown', {
-      target: target.tagName,
-      targetClasses: target.className,
-      spinning: this.spinning,
-      gameState: this.gameState,
-      closestYinYang: closestYinYang ? 'FOUND - IGNORING' : 'not found'
-    });
-
-    if (this.spinning || this.gameState === GameState.PLAYING) {
-      console.log('[WheelContainer] onMouseDown - blocked by spinning/gameState');
-      return;
-    }
-
-    // Ignorar clicks en el yin-yang center
-    if (closestYinYang) {
-      console.log('[WheelContainer] onMouseDown - blocked by yin-yang-center');
-      return;
-    }
-
-    // SIEMPRE iniciar el drag - el sistema de drag decidirá si es un tap o un drag
-    event.preventDefault();
-    console.log('[WheelContainer] onMouseDown - calling startDrag');
-    this.startDrag(event.clientX, event.clientY);
-  }
-
-  private onMouseMove(event: MouseEvent): void {
-    if (!this.isDragging) return;
-    event.preventDefault();
-    this.updateDrag(event.clientX, event.clientY);
-  }
-
-  private onMouseUp(event: MouseEvent): void {
-    console.log('[WheelContainer] onMouseUp', {
-      isDragging: this.isDragging,
-      isDragIntent: this.isDragIntent,
-      potentialTapTarget: this.potentialTapTarget?.name
-    });
-
-    if (!this.isDragging) {
-      // Resetear isDragIntent incluso si no hay drag activo
-      this.isDragIntent = false;
-      return;
-    }
-    event.preventDefault();
-    this.endDrag();
-  }
-
-  private onTouchStart(event: TouchEvent): void {
-    if (this.spinning || this.gameState === GameState.PLAYING) return;
-
-    // Ignorar clicks en el yin-yang center
-    const target = event.target as HTMLElement;
-    if (target.closest('.yin-yang-center')) {
-      return;
-    }
-
-    // SIEMPRE iniciar el drag - el sistema de drag decidirá si es un tap o un drag
-    event.preventDefault();
-    this.startDrag(event.touches[0].clientX, event.touches[0].clientY);
-  }
-
-  private onTouchMove(event: TouchEvent): void {
-    if (!this.isDragging) return;
-    event.preventDefault();
-    this.updateDrag(event.touches[0].clientX, event.touches[0].clientY);
-  }
-
-  private onTouchEnd(event: TouchEvent): void {
-    if (!this.isDragging) return;
-    event.preventDefault();
-    this.endDrag();
-  }
-
-  private startDrag(clientX: number, clientY: number): void {
-    this.isDragging = true;
-    this.isDragIntent = false;
-    this.dragStartCoords = { x: clientX, y: clientY };
-    this.potentialTapTarget = null;
-    this.manualRotation = 0;
-
-    // Inicializar segmento actual para detección de sonido
-    this.lastSegmentIndex = this.getCurrentSegmentIndex(this.restingOuterAngle);
-
-    const wheelRect = this.outerWheel.nativeElement.getBoundingClientRect();
-    const centerX = wheelRect.left + wheelRect.width / 2;
-    const centerY = wheelRect.top + wheelRect.height / 2;
-    this.lastMouseAngle = Math.atan2(clientY - centerY, clientX - centerX);
-
-    const dx = clientX - centerX;
-    const dy = clientY - centerY;
-    const distanceFromCenter = Math.sqrt(dx * dx + dy * dy);
-    const outerRadius = wheelRect.width / 2;
-    const innerRadius = outerRadius * (120 / 200);
-
-    // Expandir el rango para incluir las imágenes de animales
-    // Las imágenes pueden extenderse más allá del borde exterior
-    const minRadius = innerRadius * 0.5; // 50% del innerRadius para capturar clicks más cerca del centro
-    const maxRadius = outerRadius * 1.3; // 130% del outerRadius para capturar las imágenes extendidas
-
-    // Calcular potentialTapTarget si el click está dentro del rango expandido
-    if (distanceFromCenter >= minRadius && distanceFromCenter <= maxRadius) {
-      let angle = Math.atan2(dy, dx) * (180 / Math.PI);
-      angle = (angle + 450) % 360;
-
-      const currentWheelRotation = (this.restingOuterAngle % 360 + 360) % 360;
-      const effectiveAngle = (angle - currentWheelRotation + 360) % 360;
-
-      const segmentIndex = Math.floor(effectiveAngle / this.degreesPerSegment);
-      console.log('[WheelContainer] startDrag - calculating tap target', {
-        clickAngle: angle,
-        currentWheelRotation,
-        effectiveAngle,
-        segmentIndex,
-        degreesPerSegment: this.degreesPerSegment,
-        targetAnimal: this.displayItems[segmentIndex]?.name,
-        distanceFromCenter,
-        minRadius,
-        maxRadius,
-        innerRadius,
-        outerRadius
-      });
-
-      if (this.displayItems[segmentIndex]) {
-        this.potentialTapTarget = this.displayItems[segmentIndex];
-        console.log('[WheelContainer] startDrag - potentialTapTarget set to:', this.potentialTapTarget.name);
-      } else {
-        console.log('[WheelContainer] startDrag - NO valid segment found at index:', segmentIndex);
-      }
-    } else {
-      console.log('[WheelContainer] startDrag - click outside valid radius', {
-        distanceFromCenter,
-        minRadius,
-        maxRadius
-      });
-    }
-
-    this.isAdjustmentMode = true;
-    this.adjustmentStartAngle = 0;
-    this.lastUpdateTime = Date.now();
-    this.lastAngle = this.lastMouseAngle;
-  }
-
-  private updateDrag(clientX: number, clientY: number): void {
-    const deltaX = clientX - this.dragStartCoords.x;
-    const deltaY = clientY - this.dragStartCoords.y;
-    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-    // Umbral aumentado de 10px a 25px para mayor tolerancia en taps
-    if (distance > 25 && !this.isDragIntent) {
-      this.isDragIntent = true;
-      this.potentialTapTarget = null;
-    }
-
-    if (!this.isDragIntent) return;
-
-    const wheelRect = this.outerWheel.nativeElement.getBoundingClientRect();
-    const centerX = wheelRect.left + wheelRect.width / 2;
-    const centerY = wheelRect.top + wheelRect.height / 2;
-    const currentAngle = Math.atan2(clientY - centerY, clientX - centerX);
-
-    let deltaAngle = currentAngle - this.lastMouseAngle;
-
-    if (deltaAngle > Math.PI) deltaAngle -= 2 * Math.PI;
-    if (deltaAngle < -Math.PI) deltaAngle += 2 * Math.PI;
-
-    this.lastDeltaAngle = deltaAngle;
-
-    const currentTime = Date.now();
-    const timeDelta = currentTime - this.lastUpdateTime;
-    const angleDeltaDeg = Math.abs(deltaAngle * (180 / Math.PI));
-
-    const velocity = timeDelta > 0 ? angleDeltaDeg / (timeDelta / 1000) : 0;
-    this.currentVelocity = velocity;
-
-    if (velocity > this.velocityThreshold && this.isAdjustmentMode) {
-      this.isAdjustmentMode = false;
-    }
-
-    const rotationIncrement = deltaAngle * (180 / Math.PI);
-
-    if (this.isAdjustmentMode) {
-      const minRotation = this.adjustmentStartAngle - this.expansionRange / 2;
-      const maxRotation = this.adjustmentStartAngle + this.expansionRange / 2;
-      this.manualRotation = Math.max(minRotation, Math.min(maxRotation, this.manualRotation + rotationIncrement));
-    } else {
-      this.manualRotation += rotationIncrement;
-    }
-
-    this.lastMouseAngle = currentAngle;
-    this.lastUpdateTime = currentTime;
-    this.lastAngle = currentAngle;
-
-    this.outerWheel.nativeElement.style.transition = 'none';
-    this.innerWheel.nativeElement.style.transition = 'none';
-    this.outerWheel.nativeElement.style.transform = `rotate(${this.restingOuterAngle + this.manualRotation}deg)`;
-    this.innerWheel.nativeElement.style.transform = `rotate(${this.restingInnerAngle - this.manualRotation}deg)`;
-
-    // Verificar cruce de segmento y reproducir sonido durante el arrastre
-    const currentWheelAngle = this.restingOuterAngle + this.manualRotation;
-    this.checkSegmentCrossing(currentWheelAngle);
-  }
-
-  private applyInertiaStop(element: SVGGElement, targetAngle: number): void {
-    element.style.transition = 'transform 800ms cubic-bezier(0.1, 0.57, 0.1, 1)';
-    element.style.transform = `rotate(${targetAngle}deg)`;
-
-    setTimeout(() => {
-      if (!this.spinning && !this.isDragging) {
-        element.style.transition = 'none';
-      }
-    }, 800);
-  }
-
-  private endDrag(): void {
-    console.log('[WheelContainer] endDrag', {
-      isDragging: this.isDragging,
-      isDragIntent: this.isDragIntent,
-      potentialTapTarget: this.potentialTapTarget?.name,
-      currentVelocity: this.currentVelocity
-    });
-
-    this.isDragging = false;
-
-    if (this.isDragIntent) {
-
-      if (this.currentVelocity > this.playIntentThreshold) {
-
-        this.restingOuterAngle += this.manualRotation;
-        this.restingInnerAngle -= this.manualRotation;
-        this.manualRotation = 0;
-
-        this.zone.run(() => this.manualSpinRequested.emit());
-
-      } else {
-        const direction = this.lastDeltaAngle >= 0 ? 1 : -1;
-        const inertia = this.currentVelocity * 0.3 * direction;
-
-        const finalOuter = this.restingOuterAngle + this.manualRotation + inertia;
-        const finalInner = this.restingInnerAngle - (this.manualRotation + inertia);
-
-        this.applyInertiaStop(this.outerWheel.nativeElement, finalOuter);
-        this.applyInertiaStop(this.innerWheel.nativeElement, finalInner);
-
-        this.restingOuterAngle = finalOuter;
-        this.restingInnerAngle = finalInner;
-        this.manualRotation = 0;
-      }
-
-    } else if (this.potentialTapTarget) {
-      console.log('[WheelContainer] endDrag - emitting potentialTapTarget:', this.potentialTapTarget.name);
-      this.justProcessedTap = true;
-      this.zone.run(() => this.onAnimalToggle.emit(this.potentialTapTarget!));
-      // Resetear el flag después de un pequeño delay para evitar bloquear clicks legítimos
-      setTimeout(() => this.justProcessedTap = false, 50);
-    } else {
-      console.log('[WheelContainer] endDrag - NO potentialTapTarget to emit');
-    }
-
-    this.potentialTapTarget = null;
-    this.isDragIntent = false;
-    this.currentVelocity = 0;
   }
 
   /**
@@ -1355,7 +1018,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
    * para evitar layout thrashing y mejorar rendimiento en 15-25%
    */
   private monitorWheelRotation(): void {
-    if (!this.spinning && !this.isDragging) {
+    if (!this.spinning) {
       // Detener monitoreo si no hay movimiento
       if (this.animationFrameId !== null) {
         cancelAnimationFrame(this.animationFrameId);

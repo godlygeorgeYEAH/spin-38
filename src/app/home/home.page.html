@@ -113,10 +113,9 @@
         <app-wheel-container [animals]="animalsForWheel" [selectedAnimals]="getSelectedAnimalNames()"
           [gameState]="gameState" [canSpinFromParent]="canSpin()" [spinDuration]="spinDuration"
           [innerWheelSpinDuration]="innerWheelSpinDuration"
-          [expansionRange]="expansionRange" [tutorialStage]="tutorialStage"
-          [multiplierValues]="multiplierValues"
+          [tutorialStage]="tutorialStage"
           (onAnimalToggle)="onAnimalToggle($event)"
-          (spinRequested)="spinWheels()" (manualSpinRequested)="manualSpinWheels()">
+          (spinRequested)="spinWheels()">
         </app-wheel-container>
       </div>
     </div>
