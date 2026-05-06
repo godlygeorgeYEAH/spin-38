@@ -5,7 +5,14 @@ Eliminar el método `spinAndGetResult`, que genera el resultado con `Math.random
 
 ## Estado
 
-Por implementar
+Implementado
+
+### Notas de Implementación
+
+- Se eliminó el método completo `spinAndGetResult()` (~108 líneas) junto con su JSDoc de `wheel-container.component.ts`.
+- El único caller era `adjustWheelPosition()` en `home.page.ts` (llamado desde `resetGame()`). `adjustWheelPosition` existía únicamente para hacer un giro aleatorio de reposicionamiento visual; sin `spinAndGetResult`, el método quedaba vacío de lógica real, por lo que se eliminó también el método completo.
+- En `resetGame()`: eliminadas las líneas `await new Promise(resolve => setTimeout(resolve, 500))` (delay para esperar la animación de posicionamiento) y `await this.adjustWheelPosition()`, que eran una unidad funcional junto con el método removido.
+- No había referencias al método en templates ni otros servicios.
 
 ## Implementación actual
 ```ts
