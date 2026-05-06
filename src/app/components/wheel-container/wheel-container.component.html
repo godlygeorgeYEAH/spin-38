@@ -51,24 +51,18 @@
     <g #outerWheel>
       <g *ngFor="let item of displayItems; let i = index">
         <path [attr.d]="getSegmentPath(outerRingRadius, i)"
-          style="cursor: pointer; pointer-events: all;"
-          (click)="onSegmentClick(item, $event)"
-          [attr.fill]="isAnimalSelected(item.name) ? 'url(#selectedGradient-' + componentId + ')' : (i % 2 === 0 ? 'url(#outerGradient-' + componentId + ')' : 'url(#outerGradientEven-' + componentId + ')')"
-          stroke="#d4af37" stroke-width="2" [class.selected-segment]="isAnimalSelected(item.name)" />
+          [attr.fill]="i % 2 === 0 ? 'url(#outerGradient-' + componentId + ')' : 'url(#outerGradientEven-' + componentId + ')'"
+          stroke="#d4af37" stroke-width="2" />
       </g>
       <g *ngFor="let item of displayItems; let i = index" [attr.transform]="getAnimalTransform(i)">
-        <!-- Imagen del animal (ahora clickeable) -->
         <image [attr.href]="getAnimalImage(item.name)"
           [attr.x]="animalImageOffset"
           [attr.y]="animalImageOffset"
           [attr.width]="animalImageSize"
           [attr.height]="animalImageSize"
-          class="wheel-animal-image"
-          style="cursor: pointer; pointer-events: all;"
-          (click)="onSegmentClick(item, $event)"
-          [class.selected-animal]="isAnimalSelected(item.name)" />
+          class="wheel-animal-image" />
       </g>
-      <g *ngFor="let item of displayItems; let i = index" style="cursor: pointer; pointer-events: all;" (click)="onSegmentClick(item, $event)">
+      <g *ngFor="let item of displayItems; let i = index">
         <defs>
           <path [attr.id]="'textPath-' + i + '-' + componentId"
                 [attr.d]="getTextPathArc(i)"

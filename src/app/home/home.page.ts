@@ -505,41 +505,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  public onAnimalToggle(animal: Animal): void {
-    console.log('[HomePage] onAnimalToggle received', { animal: animal.name, gameState: this.gameState });
-    if (this.gameState === 'playing') return;
-
-    // Tutorial: Bloquear interacción con la rueda en etapa betting
-    if (this.tutorialActive && this.tutorialStage === 'betting') {
-      this.onTutorialWrongAreaClick();
-      return;
-    }
-
-    // Lógica del tutorial: avanzar a etapa "betting" cuando se presiona un animal
-    this.onTutorialAnimalClick();
-
-    const existingIndex = this.selectedAnimals.findIndex(bet => bet.animal.name === animal.name);
-
-    if (existingIndex >= 0) {
-      // Deseleccionar animal
-      this.selectedAnimals = this.selectedAnimals.filter(bet => bet.animal.name !== animal.name);
-      if (this.currentEditingAnimal && this.currentEditingAnimal.name === animal.name) {
-        this.currentEditingAnimal = this.selectedAnimals.length > 0 ? this.selectedAnimals[0].animal : null;
-      }
-
-      // Ocultar panel si no quedan animales seleccionados
-      if (this.selectedAnimals.length === 0) {
-        this.hideBettingPanel();
-      }
-    } else {
-      // Seleccionar nuevo animal
-      const newBet: AnimalBet = { id: this.betIdCounter++, animal, amount: 0 };
-      this.selectedAnimals = [...this.selectedAnimals, newBet];
-      this.setCurrentEditingAnimal(animal);
-    }
-    this.updateTotalBetAmount();
-  }
-
   public setCurrentEditingAnimal(animal: Animal): void {
     // Bug fix 5.1: Limpiar animal anterior si no tiene apuesta
     if (this.currentEditingAnimal) {
