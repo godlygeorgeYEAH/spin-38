@@ -38,7 +38,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   @Input() isRandomPositioning: boolean = false;
   @Input() spinDuration: number = 8000; // Duración giro rueda externa
   @Input() innerWheelSpinDuration: number = 10000; // Duración giro rueda interna (debe ser >= spinDuration)
-  @Input() tutorialStage: string = '';
   @Input() innerAnimals: WheelItem[] = [];
   @Output() spinRequested = new EventEmitter<void>();
 
@@ -418,8 +417,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
         this.yinYangPressed = false;
       }
     }
-
-    // Nota: La animación de tutorial está desactivada en Safari via HTML binding
   }
 
 
