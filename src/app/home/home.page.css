@@ -23,8 +23,8 @@ ion-content {
   }
 }
 
-/* Video de fondo */
-.background-video {
+/* Imagen de fondo */
+.background-image {
   position: fixed;
   top: 0;
   left: 0;
@@ -33,7 +33,6 @@ ion-content {
   object-fit: cover;
   z-index: -1;
   pointer-events: none;
-  display: none; /* Oculto por defecto, se mostrará solo en móviles */
 }
 
 /* Logo en esquina superior izquierda */
@@ -2037,19 +2036,11 @@ ion-content {
 }
 
 /* ================================================================
-   VIDEO DE FONDO - SOLO MÓVILES
+   IMAGEN DE FONDO
    ================================================================ */
 
-/* Mostrar video en dispositivos móviles (hasta 1023px) */
-@media (max-width: 1023px) {
-  .background-video {
-    display: block;
-  }
-
-  /* Ocultar el color de fondo sólido cuando el video está activo */
-  .home-background {
-    --background: transparent;
-  }
+.home-background {
+  --background: transparent;
 }
 
 /* ================================================================
