@@ -5,7 +5,23 @@ Los dos anillos deben girar en sentidos opuestos entre sí.
 
 ## Estado
 
-Por implementar
+Implementado
+
+### Notas de Implementación
+
+El spec original decía "ya implementado" pero había un bug en `calculateFinalAngle`: usaba `Math.floor(currentAngle / 360)` para calcular `currentRevolutions`. Cuando el anillo interno acumula ángulos negativos grandes (ej: -3705 tras el primer giro), `Math.floor` retorna un valor muy negativo, `baseRotation` se vuelve negativo, y al negar produce un resultado positivo — haciendo que el anillo interno gire en el mismo sentido que el externo a partir del segundo giro.
+
+**Fix**: Reescrita la función para no depender de `currentRevolutions`. Ahora usa el ángulo normalizado de ambas ruedas y garantiza por construcción que:
+- Outer siempre avanza en positivo desde `currentAngle` (horario).
+- Inner siempre retrocede en negativo desde `currentAngle` (antihorario).
+
+```ts
+// wheel-container.component.ts — calculateFinalAngle
+const remainder = ((-segmentCenterAngle % 360) + 360) % 360;
+const currentNorm = ((currentAngle % 360) + 360) % 360;
+// Outer: target = currentAngle + rotations*360 + extraToReachSegment
+// Inner: target = currentAngle - rotations*360 - extraToReachSegment
+```
 
 ## Implementación actual
 `calculateFinalAngle` ya maneja la inversión:
