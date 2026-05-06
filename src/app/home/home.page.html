@@ -45,9 +45,6 @@
       <button (click)="openSettings()" class="help-button settings-btn" title="Configuración de Audio">
         <ion-icon name="settings-outline" style="font-size: 24px; color: var(--gold-primary);"></ion-icon>
       </button>
-      <button (click)="openTutorial()" class="help-button">
-        <span style="font-size: 24px; color: var(--gold-primary);">?</span>
-      </button>
     </div>
   </div>
 
@@ -113,7 +110,7 @@
         <app-wheel-container [animals]="animalsForWheel" [selectedAnimals]="getSelectedAnimalNames()"
           [gameState]="gameState" [canSpinFromParent]="canSpin()" [spinDuration]="spinDuration"
           [innerWheelSpinDuration]="innerWheelSpinDuration"
-          [expansionRange]="expansionRange" [tutorialStage]="tutorialStage"
+          [expansionRange]="expansionRange"
           [multiplierValues]="multiplierValues"
           (onAnimalToggle)="onAnimalToggle($event)"
           (spinRequested)="spinWheels()" (manualSpinRequested)="manualSpinWheels()">
@@ -178,71 +175,6 @@
       </div>
     </div>
   </div>
-  <!-- Tutorial Interactivo -->
-  <div class="tutorial-overlay" *ngIf="tutorialActive">
-    <!-- Overlay oscuro con áreas iluminadas según etapa -->
-    <div class="tutorial-dark-overlay"
-         (click)="handleTutorialOverlayClick()"
-         [class.clickable]="tutorialStage === 'welcome' || tutorialStage === 'spin' || tutorialStage === 'manual-spin'"></div>
-
-    <!-- Bloqueadores invisibles que capturan clicks FUERA del spotlight (solo en wheel/betting) -->
-    <div class="tutorial-click-blockers" *ngIf="tutorialStage === 'wheel' || tutorialStage === 'betting'">
-      <!-- Bloqueador superior -->
-      <div class="tutorial-blocker tutorial-blocker-top"
-           [class.blocker-wheel-stage]="tutorialStage === 'wheel'"
-           [class.blocker-betting-stage]="tutorialStage === 'betting'"
-           (click)="onTutorialWrongAreaClick()"></div>
-      <!-- Bloqueador inferior -->
-      <div class="tutorial-blocker tutorial-blocker-bottom"
-           [class.blocker-wheel-stage]="tutorialStage === 'wheel'"
-           [class.blocker-betting-stage]="tutorialStage === 'betting'"
-           (click)="onTutorialWrongAreaClick()"></div>
-      <!-- Bloqueador izquierdo -->
-      <div class="tutorial-blocker tutorial-blocker-left"
-           [class.blocker-wheel-stage]="tutorialStage === 'wheel'"
-           [class.blocker-betting-stage]="tutorialStage === 'betting'"
-           (click)="onTutorialWrongAreaClick()"></div>
-      <!-- Bloqueador derecho -->
-      <div class="tutorial-blocker tutorial-blocker-right"
-           [class.blocker-wheel-stage]="tutorialStage === 'wheel'"
-           [class.blocker-betting-stage]="tutorialStage === 'betting'"
-           (click)="onTutorialWrongAreaClick()"></div>
-    </div>
-
-    <!-- Spotlight para iluminar elementos según etapa -->
-    <div class="tutorial-spotlight"
-         [class.spotlight-wheel]="tutorialStage === 'wheel'"
-         [class.spotlight-betting]="tutorialStage === 'betting'"
-         [class.spotlight-spin]="tutorialStage === 'spin'"
-         [class.spotlight-manual-spin]="tutorialStage === 'manual-spin'"></div>
-
-    <!-- Indicador circular animado para giro manual -->
-    <div class="manual-spin-indicator" *ngIf="tutorialStage === 'manual-spin'"></div>
-
-    <!-- Animal guía -->
-    <div class="tutorial-animal"
-         [class.animal-welcome]="tutorialStage === 'welcome'"
-         [class.animal-wheel]="tutorialStage === 'wheel'"
-         [class.animal-betting]="tutorialStage === 'betting'"
-         [class.animal-spin]="tutorialStage === 'spin'"
-         [class.animal-manual-spin]="tutorialStage === 'manual-spin'">
-      <img [src]="tutorialAnimalImage" [alt]="tutorialAnimal" class="tutorial-animal-image">
-
-      <!-- Burbuja de texto -->
-      <div class="tutorial-text-bubble"
-           [class.bubble-welcome]="tutorialStage === 'welcome'"
-           [class.bubble-wheel]="tutorialStage === 'wheel'"
-           [class.bubble-betting]="tutorialStage === 'betting'"
-           [class.bubble-spin]="tutorialStage === 'spin'"
-           [class.bubble-manual-spin]="tutorialStage === 'manual-spin'">
-        <div class="tutorial-text-content">
-          {{ getTutorialText() }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <app-game-tutorial *ngIf="showTutorial" [isOpen]="showTutorial" (closeModal)="closeTutorial()"></app-game-tutorial>
   <app-game-settings *ngIf="showSettings" [isOpen]="showSettings" [uiVolume]="uiVolume"
     (closeModal)="closeSettings()" (uiVolumeChange)="onUIVolumeChange($event)"></app-game-settings>
   <app-bet-history *ngIf="showBetHistory" [isOpen]="showBetHistory" [historyData]="betHistory"

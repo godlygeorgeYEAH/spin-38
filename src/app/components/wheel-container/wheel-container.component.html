@@ -9,7 +9,7 @@
   <div class="pointers-container">
     <img src="assets/images/rueda/puntero.png" alt="Puntero" class="pointer-image" [class.bounce]="pointerBounce">
   </div>
-  <svg class="wheel" [attr.viewBox]="viewBoxSize" [class.tutorial-manual-spin-animation]="tutorialStage === 'manual-spin' && !isSafari">
+  <svg class="wheel" [attr.viewBox]="viewBoxSize">
     <defs>
       <radialGradient [attr.id]="'outerGradient-' + componentId" cx="50%" cy="50%" r="50%">
         <stop offset="60%" stop-color="#f50b0b" />
@@ -114,8 +114,7 @@
 
     <img src="assets/images/rueda/ying-yang.png"
          alt="Yin Yang"
-         class="yin-yang-image"
-         [class.tutorial-pulse]="tutorialStage === 'spin'">
+         class="yin-yang-image">
     <button class="spin-center-button"
             (click)="spinRequested.emit(); $event.stopPropagation()"
             [disabled]="!canSpinFromParent">

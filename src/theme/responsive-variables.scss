@@ -46,8 +46,6 @@
  * ============================================ */
 
 
-
-
 /* ============================================
  * BREAKPOINT 2: MOBILE STANDARD (360-413px)
  * ~65% de usuarios - CRÍTICO
@@ -186,7 +184,6 @@
     --bet-font-size: 1.35rem;
 
     
-
     /* === UI ELEMENTS === */
     --logo-size: 80px;
     --logo-top: 10px;
@@ -216,16 +213,12 @@
     --history-content-font-size: 0.9rem;
     --settings-title-font-size: 2rem;
     --settings-content-font-size: 1rem;
-    --tutorial-title-font-size: 2.2rem;
-    --tutorial-content-font-size: 0.95rem;
 
     /* Posicionamiento de menús/modales */
     --menu-history-top: 5%;
     --menu-history-left: 7%;
     --menu-settings-top: 10%;
     --menu-settings-left: 7%;
-    --menu-tutorial-top: 5%;
-    --menu-tutorial-left: 7%;
 
     /* === RESULT CARD === */
     --result-card-width: 90%;
@@ -245,116 +238,9 @@
     --result-multiplier-badge-right:2%;
     --win-amount-font-size: 2.8rem;
 
-    /* === TUTORIAL INTERACTIVO === */
-    /* Overlay darkness */
-    --tutorial-overlay-opacity: 0.85;
-    --tutorial-spin-overlay-opacity: 0.10;
-
-    /* === ETAPA WELCOME === */
-    /* Animal - Welcome */
-    --tutorial-welcome-animal-top: auto;
-    --tutorial-welcome-animal-bottom: 2%;
-    --tutorial-welcome-animal-left: 50%;
-    --tutorial-welcome-animal-right: auto;
-    --tutorial-welcome-animal-width: auto;
-    --tutorial-welcome-animal-height: auto;
-    /* Burbuja - Welcome */
-    --tutorial-welcome-bubble-width: 30vh;
-    --tutorial-welcome-bubble-max-width: auto;
-    --tutorial-welcome-bubble-min-width: auto;
-    --tutorial-welcome-bubble-height: 23vh;
-    --tutorial-welcome-bubble-font-size: 0.9rem;
-
-    /* === ETAPA WHEEL === */
-    /* Spotlight - Wheel */
-    --tutorial-wheel-spotlight-top: 49%;
-    --tutorial-wheel-spotlight-left: 50%;
-    --tutorial-wheel-spotlight-width: 49vh;
-    --tutorial-wheel-spotlight-height: 49vh;
-    /* Animal - Wheel */
-    --tutorial-wheel-animal-top: auto;
-    --tutorial-wheel-animal-bottom: 3%;
-    --tutorial-wheel-animal-left: 50%;
-    --tutorial-wheel-animal-right: auto;
-    --tutorial-wheel-animal-width: auto;
-    --tutorial-wheel-animal-height: auto;
-    /* Burbuja - Wheel */
-    --tutorial-wheel-bubble-width: 40vh;
-    --tutorial-wheel-bubble-max-width: auto;
-    --tutorial-wheel-bubble-min-width: auto;
-    --tutorial-wheel-bubble-height: 22vh;
-    --tutorial-wheel-bubble-font-size: 0.85rem;
-
-    /* === ETAPA BETTING === */
-    /* Spotlight - Betting */
-    --tutorial-betting-spotlight-top: auto;
-    --tutorial-betting-spotlight-bottom: 0%;
-    --tutorial-betting-spotlight-left: 50%;
-    --tutorial-betting-spotlight-width: 95vw;
-    --tutorial-betting-spotlight-height: 39vh;
-    /* Animal - Betting */
-    --tutorial-betting-animal-top: 10%;
-    --tutorial-betting-animal-bottom: auto;
-    --tutorial-betting-animal-left: 50%;
-    --tutorial-betting-animal-right: auto;
-    --tutorial-betting-animal-width: auto;
-    --tutorial-betting-animal-height: auto;
-    /* Burbuja - Betting */
-    --tutorial-betting-bubble-width: 36.5vh;
-    --tutorial-betting-bubble-max-width: auto;
-    --tutorial-betting-bubble-min-width: auto;
-    --tutorial-betting-bubble-height: 30vh;
-    --tutorial-betting-bubble-font-size: 0.9rem;
-
-    /* === ETAPA SPIN === */
-    /* Spotlight - Spin */
-    --tutorial-spin-spotlight-top: 34%;
-    --tutorial-spin-spotlight-left: 50%;
-    --tutorial-spin-spotlight-width: 49vh;
-    --tutorial-spin-spotlight-height: 49vh;
-    /* Animal - Spin */
-    --tutorial-spin-animal-top: auto;
-    --tutorial-spin-animal-bottom: 2%;
-    --tutorial-spin-animal-left: 50%;
-    --tutorial-spin-animal-right: auto;
-    --tutorial-spin-animal-width: auto;
-    --tutorial-spin-animal-height: auto;
-    /* Burbuja - Spin */
-    --tutorial-spin-bubble-width: 32vh;
-    --tutorial-spin-bubble-max-width: auto;
-    --tutorial-spin-bubble-min-width: auto;
-    --tutorial-spin-bubble-height: 30vh;
-    --tutorial-spin-bubble-font-size: 0.9rem;
-
-    /* === ETAPA MANUAL SPIN === */
-    /* Spotlight - Manual Spin */
-    --tutorial-manual-spin-spotlight-top: 34%;
-    --tutorial-manual-spin-spotlight-left: 50%;
-    --tutorial-manual-spin-spotlight-width: 49vh;
-    --tutorial-manual-spin-spotlight-height: 49vh;
-    /* Animal - Manual Spin */
-    --tutorial-manual-spin-animal-top: auto;
-    --tutorial-manual-spin-animal-bottom: 2%;
-    --tutorial-manual-spin-animal-left: 50%;
-    --tutorial-manual-spin-animal-right: auto;
-    --tutorial-manual-spin-animal-width: auto;
-    --tutorial-manual-spin-animal-height: auto;
-    /* Burbuja - Manual Spin */
-    --tutorial-manual-spin-bubble-width: 41vh;
-    --tutorial-manual-spin-bubble-max-width: auto;
-    --tutorial-manual-spin-bubble-min-width: auto;
-    --tutorial-manual-spin-bubble-height: 28vh;
-    --tutorial-manual-spin-bubble-font-size: 0.9rem;
 
     /* Globales */
-    --tutorial-animal-size: 100px;
-    --tutorial-animal-offset-y: 35%; /* Desplazamiento vertical del animal */
 
-    /* Padding interno del contenedor de texto */
-    --tutorial-text-content-padding-top:1.5rem;
-    --tutorial-text-content-padding-right: 1rem;
-    --tutorial-text-content-padding-bottom: 0.5rem;
-    --tutorial-text-content-padding-left: 1rem;
   }
 }
 
@@ -486,16 +372,12 @@
     --history-content-font-size: 0.9rem;
     --settings-title-font-size: 2rem;
     --settings-content-font-size: 1rem;
-    --tutorial-title-font-size: 2.2rem;
-    --tutorial-content-font-size: 0.95rem;
 
     /* Posicionamiento de menús/modales */
     --menu-history-top: 5%;
     --menu-history-left: 7%;
     --menu-settings-top: 10%;
     --menu-settings-left: 7%;
-    --menu-tutorial-top: 5%;
-    --menu-tutorial-left: 7%;
 
     /* === RESULT CARD === */
     --result-card-width: 90%;
@@ -515,101 +397,9 @@
     --result-multiplier-badge-right:2%;
     --win-amount-font-size: 2.8rem;
 
-    /* === TUTORIAL INTERACTIVO === */
-    --tutorial-overlay-opacity: 0.85;
-    --tutorial-spin-overlay-opacity: 0.10;
-
-    /* === ETAPA WELCOME === */
-    --tutorial-welcome-animal-top: auto;
-    --tutorial-welcome-animal-bottom: 3%;
-    --tutorial-welcome-animal-left: 50%;
-    --tutorial-welcome-animal-right: auto;
-    --tutorial-welcome-animal-width: auto;
-    --tutorial-welcome-animal-height: auto;
-    --tutorial-welcome-bubble-width: 30vh;
-    --tutorial-welcome-bubble-max-width: auto;
-    --tutorial-welcome-bubble-min-width: auto;
-    --tutorial-welcome-bubble-height: 22vh;
-    --tutorial-welcome-bubble-font-size: 0.9rem;
-
-    /* === ETAPA WHEEL === */
-    --tutorial-wheel-spotlight-top: 48%;
-    --tutorial-wheel-spotlight-left: 50%;
-    --tutorial-wheel-spotlight-width: 50vh;
-    --tutorial-wheel-spotlight-height: 50vh;
-    --tutorial-wheel-animal-top: auto;
-    --tutorial-wheel-animal-bottom: 3%;
-    --tutorial-wheel-animal-left: 50%;
-    --tutorial-wheel-animal-right: auto;
-    --tutorial-wheel-animal-width: auto;
-    --tutorial-wheel-animal-height: auto;
-    --tutorial-wheel-bubble-width: 40vh;
-    --tutorial-wheel-bubble-max-width: auto;
-    --tutorial-wheel-bubble-min-width: auto;
-    --tutorial-wheel-bubble-height: 21vh;
-    --tutorial-wheel-bubble-font-size: 0.85rem;
-
-    /* === ETAPA BETTING === */
-    --tutorial-betting-spotlight-top: auto;
-    --tutorial-betting-spotlight-bottom: 0%;
-    --tutorial-betting-spotlight-left: 50%;
-    --tutorial-betting-spotlight-width: 95vw;
-    --tutorial-betting-spotlight-height: 36vh;
-    --tutorial-betting-animal-top: 12%;
-    --tutorial-betting-animal-bottom: auto;
-    --tutorial-betting-animal-left: 50%;
-    --tutorial-betting-animal-right: auto;
-    --tutorial-betting-animal-width: auto;
-    --tutorial-betting-animal-height: auto;
-    --tutorial-betting-bubble-width: 36vh;
-    --tutorial-betting-bubble-max-width: auto;
-    --tutorial-betting-bubble-min-width: auto;
-    --tutorial-betting-bubble-height: 29vh;
-    --tutorial-betting-bubble-font-size: 0.9rem;
-
-    /* === ETAPA SPIN === */
-    --tutorial-spin-spotlight-top: 33%;
-    --tutorial-spin-spotlight-left: 50%;
-    --tutorial-spin-spotlight-width: 50vh;
-    --tutorial-spin-spotlight-height: 50vh;
-    --tutorial-spin-animal-top: auto;
-    --tutorial-spin-animal-bottom: 3%;
-    --tutorial-spin-animal-left: 50%;
-    --tutorial-spin-animal-right: auto;
-    --tutorial-spin-animal-width: auto;
-    --tutorial-spin-animal-height: auto;
-    --tutorial-spin-bubble-width: 32vh;
-    --tutorial-spin-bubble-max-width: auto;
-    --tutorial-spin-bubble-min-width: auto;
-    --tutorial-spin-bubble-height: 29vh;
-    --tutorial-spin-bubble-font-size: 0.9rem;
-
-    /* === ETAPA MANUAL SPIN === */
-    --tutorial-manual-spin-spotlight-top: 33%;
-    --tutorial-manual-spin-spotlight-left: 50%;
-    --tutorial-manual-spin-spotlight-width: 50vh;
-    --tutorial-manual-spin-spotlight-height: 50vh;
-    --tutorial-manual-spin-animal-top: auto;
-    --tutorial-manual-spin-animal-bottom: 3%;
-    --tutorial-manual-spin-animal-left: 50%;
-    --tutorial-manual-spin-animal-right: auto;
-    --tutorial-manual-spin-animal-width: auto;
-    --tutorial-manual-spin-animal-height: auto;
-    --tutorial-manual-spin-bubble-width: 41vh;
-    --tutorial-manual-spin-bubble-max-width: auto;
-    --tutorial-manual-spin-bubble-min-width: auto;
-    --tutorial-manual-spin-bubble-height: 27vh;
-    --tutorial-manual-spin-bubble-font-size: 0.9rem;
 
     /* Globales */
-    --tutorial-animal-size: 100px;
-    --tutorial-animal-offset-y: 35%;
 
-    /* Padding interno del contenedor de texto */
-    --tutorial-text-content-padding-top:1.5rem;
-    --tutorial-text-content-padding-right: 1rem;
-    --tutorial-text-content-padding-bottom: 0.5rem;
-    --tutorial-text-content-padding-left: 1rem;
   }
 }
 
@@ -739,16 +529,12 @@
     --history-content-font-size: 0.9rem;
     --settings-title-font-size: 2rem;
     --settings-content-font-size: 1rem;
-    --tutorial-title-font-size: 2.2rem;
-    --tutorial-content-font-size: 0.95rem;
 
     /* Posicionamiento de menús/modales */
     --menu-history-top: 5%;
     --menu-history-left: 7%;
     --menu-settings-top: 10%;
     --menu-settings-left: 7%;
-    --menu-tutorial-top: 5%;
-    --menu-tutorial-left: 7%;
 
     /* === RESULT CARD === */
     --result-card-width: 90%;
@@ -768,101 +554,9 @@
     --result-multiplier-badge-right:2%;
     --win-amount-font-size: 2.8rem;
 
-    /* === TUTORIAL INTERACTIVO === */
-    --tutorial-overlay-opacity: 0.85;
-    --tutorial-spin-overlay-opacity: 0.10;
-
-    /* === ETAPA WELCOME === */
-    --tutorial-welcome-animal-top: auto;
-    --tutorial-welcome-animal-bottom: 2.5%;
-    --tutorial-welcome-animal-left: 50%;
-    --tutorial-welcome-animal-right: auto;
-    --tutorial-welcome-animal-width: auto;
-    --tutorial-welcome-animal-height: auto;
-    --tutorial-welcome-bubble-width: 30vh;
-    --tutorial-welcome-bubble-max-width: auto;
-    --tutorial-welcome-bubble-min-width: auto;
-    --tutorial-welcome-bubble-height: 22.5vh;
-    --tutorial-welcome-bubble-font-size: 0.9rem;
-
-    /* === ETAPA WHEEL === */
-    --tutorial-wheel-spotlight-top: 48.5%;
-    --tutorial-wheel-spotlight-left: 50%;
-    --tutorial-wheel-spotlight-width: 49vh;
-    --tutorial-wheel-spotlight-height: 49vh;
-    --tutorial-wheel-animal-top: auto;
-    --tutorial-wheel-animal-bottom: 2.5%;
-    --tutorial-wheel-animal-left: 50%;
-    --tutorial-wheel-animal-right: auto;
-    --tutorial-wheel-animal-width: auto;
-    --tutorial-wheel-animal-height: auto;
-    --tutorial-wheel-bubble-width: 40vh;
-    --tutorial-wheel-bubble-max-width: auto;
-    --tutorial-wheel-bubble-min-width: auto;
-    --tutorial-wheel-bubble-height: 21.5vh;
-    --tutorial-wheel-bubble-font-size: 0.85rem;
-
-    /* === ETAPA BETTING === */
-    --tutorial-betting-spotlight-top: auto;
-    --tutorial-betting-spotlight-bottom: 0%;
-    --tutorial-betting-spotlight-left: 50%;
-    --tutorial-betting-spotlight-width: 95vw;
-    --tutorial-betting-spotlight-height: 37vh;
-    --tutorial-betting-animal-top: 11%;
-    --tutorial-betting-animal-bottom: auto;
-    --tutorial-betting-animal-left: 50%;
-    --tutorial-betting-animal-right: auto;
-    --tutorial-betting-animal-width: auto;
-    --tutorial-betting-animal-height: auto;
-    --tutorial-betting-bubble-width: 36vh;
-    --tutorial-betting-bubble-max-width: auto;
-    --tutorial-betting-bubble-min-width: auto;
-    --tutorial-betting-bubble-height: 29.5vh;
-    --tutorial-betting-bubble-font-size: 0.9rem;
-
-    /* === ETAPA SPIN === */
-    --tutorial-spin-spotlight-top: 33.5%;
-    --tutorial-spin-spotlight-left: 50%;
-    --tutorial-spin-spotlight-width: 49vh;
-    --tutorial-spin-spotlight-height: 49vh;
-    --tutorial-spin-animal-top: auto;
-    --tutorial-spin-animal-bottom: 2.5%;
-    --tutorial-spin-animal-left: 50%;
-    --tutorial-spin-animal-right: auto;
-    --tutorial-spin-animal-width: auto;
-    --tutorial-spin-animal-height: auto;
-    --tutorial-spin-bubble-width: 32vh;
-    --tutorial-spin-bubble-max-width: auto;
-    --tutorial-spin-bubble-min-width: auto;
-    --tutorial-spin-bubble-height: 29.5vh;
-    --tutorial-spin-bubble-font-size: 0.9rem;
-
-    /* === ETAPA MANUAL SPIN === */
-    --tutorial-manual-spin-spotlight-top: 33.5%;
-    --tutorial-manual-spin-spotlight-left: 50%;
-    --tutorial-manual-spin-spotlight-width: 49vh;
-    --tutorial-manual-spin-spotlight-height: 49vh;
-    --tutorial-manual-spin-animal-top: auto;
-    --tutorial-manual-spin-animal-bottom: 2.5%;
-    --tutorial-manual-spin-animal-left: 50%;
-    --tutorial-manual-spin-animal-right: auto;
-    --tutorial-manual-spin-animal-width: auto;
-    --tutorial-manual-spin-animal-height: auto;
-    --tutorial-manual-spin-bubble-width: 41vh;
-    --tutorial-manual-spin-bubble-max-width: auto;
-    --tutorial-manual-spin-bubble-min-width: auto;
-    --tutorial-manual-spin-bubble-height: 27.5vh;
-    --tutorial-manual-spin-bubble-font-size: 0.9rem;
 
     /* Globales */
-    --tutorial-animal-size: 100px;
-    --tutorial-animal-offset-y: 35%;
 
-    /* Padding interno del contenedor de texto */
-    --tutorial-text-content-padding-top:1.5rem;
-    --tutorial-text-content-padding-right: 1rem;
-    --tutorial-text-content-padding-bottom: 0.5rem;
-    --tutorial-text-content-padding-left: 1rem;
   }
 }
 
@@ -988,16 +682,12 @@
     --history-content-font-size: 0.9rem;
     --settings-title-font-size: 2.2rem;
     --settings-content-font-size: 1rem;
-    --tutorial-title-font-size: 2.5rem;
-    --tutorial-content-font-size: 0.95rem;
 
     /* Posicionamiento de menús/modales */
     --menu-history-top: 5%;
     --menu-history-left: 5%;
     --menu-settings-top: 15%;
     --menu-settings-left: 5%;
-    --menu-tutorial-top: 5%;
-    --menu-tutorial-left: 5%;
 
     /* === RESULT CARD === */
     --result-card-width: 90%;
@@ -1017,128 +707,15 @@
     --result-multiplier-badge-right:2%;
     --win-amount-font-size: 2.8rem;
 
-    /* === TUTORIAL INTERACTIVO === */
-    /* Overlay darkness */
-    --tutorial-overlay-opacity: 0.85;
-    --tutorial-spin-overlay-opacity: 0.70;
 
-    /* === ETAPA WELCOME === */
     /* Spotlight - Welcome */
     /* (No spotlight in welcome stage) */
 
-    /* Animal - Welcome */
-    --tutorial-welcome-animal-top: auto;
-    --tutorial-welcome-animal-bottom: 5%;
-    --tutorial-welcome-animal-left: 50%;
-    --tutorial-welcome-animal-right: auto;
-    --tutorial-welcome-animal-width: auto;
-    --tutorial-welcome-animal-height: auto;
 
-    /* Burbuja - Welcome */
-    --tutorial-welcome-bubble-width: 30vh;
-    --tutorial-welcome-bubble-max-width: auto;
-    --tutorial-welcome-bubble-min-width: auto;
-    --tutorial-welcome-bubble-height: 20vh;
-    --tutorial-welcome-bubble-font-size: 0.95rem;
-
-    /* === ETAPA WHEEL === */
-    /* Spotlight - Wheel */
-    --tutorial-wheel-spotlight-top: 48.5vh;
-    --tutorial-wheel-spotlight-left: 50%;
-    --tutorial-wheel-spotlight-width: 53vh;
-    --tutorial-wheel-spotlight-height: 53vh;
-
-    /* Animal - Wheel */
-    --tutorial-wheel-animal-top: auto;
-    --tutorial-wheel-animal-bottom: 5%;
-    --tutorial-wheel-animal-left: 50%;
-    --tutorial-wheel-animal-right: auto;
-    --tutorial-wheel-animal-width: auto;
-    --tutorial-wheel-animal-height: auto;
-
-    /* Burbuja - Wheel */
-    --tutorial-wheel-bubble-width: 45.5vh;
-    --tutorial-wheel-bubble-max-width: auto;
-    --tutorial-wheel-bubble-min-width: auto;
-    --tutorial-wheel-bubble-height: 24vh;
-    --tutorial-wheel-bubble-font-size: 0.95rem;
-
-    /* === ETAPA BETTING === */
-    /* Spotlight - Betting */
-    --tutorial-betting-spotlight-top: auto;
-    --tutorial-betting-spotlight-bottom: 0;
-    --tutorial-betting-spotlight-left: 50%;
-    --tutorial-betting-spotlight-width: 95vw;
-    --tutorial-betting-spotlight-height: 38vh;
-
-    /* Animal - Betting */
-    --tutorial-betting-animal-top: 16vh;
-    --tutorial-betting-animal-bottom: auto;
-    --tutorial-betting-animal-left: 50%;
-    --tutorial-betting-animal-right: auto;
-    --tutorial-betting-animal-width: auto;
-    --tutorial-betting-animal-height: auto;
-
-    /* Burbuja - Betting */
-    --tutorial-betting-bubble-width: 35.5vh;
-    --tutorial-betting-bubble-max-width: auto;
-    --tutorial-betting-bubble-min-width: auto;
-    --tutorial-betting-bubble-height: 30vh;
-    --tutorial-betting-bubble-font-size: 0.95rem;
-
-    /* === ETAPA SPIN === */
-    /* Spotlight - Spin */
-    --tutorial-spin-spotlight-top: 33.5%;
-    --tutorial-spin-spotlight-left: 50%;
-    --tutorial-spin-spotlight-width: 52vh;
-    --tutorial-spin-spotlight-height: 52vh;
-
-    /* Animal - Spin */
-    --tutorial-spin-animal-top: auto;
-    --tutorial-spin-animal-bottom: 5%;
-    --tutorial-spin-animal-left: 50%;
-    --tutorial-spin-animal-right: auto;
-    --tutorial-spin-animal-width: auto;
-    --tutorial-spin-animal-height: auto;
-
-    /* Burbuja - Spin */
-    --tutorial-spin-bubble-width: 32vh;
-    --tutorial-spin-bubble-max-width: auto;
-    --tutorial-spin-bubble-min-width: auto;
-    --tutorial-spin-bubble-height: 28vh;
-    --tutorial-spin-bubble-font-size: 0.95rem;
-
-    /* === ETAPA MANUAL SPIN === */
-    /* Spotlight - Manual Spin */
-    --tutorial-manual-spin-spotlight-top: 33.5%;
-    --tutorial-manual-spin-spotlight-left: 50%;
-    --tutorial-manual-spin-spotlight-width: 52vh;
-    --tutorial-manual-spin-spotlight-height: 52vh;
     /* Indicador - Manual Spin */
-    --tutorial-manual-spin-indicator-left: 50%;
-    /* Animal - Manual Spin */
-    --tutorial-manual-spin-animal-top: auto;
-    --tutorial-manual-spin-animal-bottom: 5%;
-    --tutorial-manual-spin-animal-left: 50%;
-    --tutorial-manual-spin-animal-right: auto;
-    --tutorial-manual-spin-animal-width: auto;
-    --tutorial-manual-spin-animal-height: auto;
-    /* Burbuja - Manual Spin */
-    --tutorial-manual-spin-bubble-width: 32vh;
-    --tutorial-manual-spin-bubble-max-width: auto;
-    --tutorial-manual-spin-bubble-min-width: auto;
-    --tutorial-manual-spin-bubble-height: 29vh;
-    --tutorial-manual-spin-bubble-font-size: 0.95rem;
 
     /* Globales */
-    --tutorial-animal-size: 110px;
-    --tutorial-animal-offset-y: 30%; /* Desplazamiento vertical del animal */
 
-    /* Padding interno del contenedor de texto */
-    --tutorial-text-content-padding-top: 1.5rem;
-    --tutorial-text-content-padding-right: 1rem;
-    --tutorial-text-content-padding-bottom: 0.5rem;
-    --tutorial-text-content-padding-left: 1rem;
   }
 }
 
@@ -1269,16 +846,12 @@
     --history-content-font-size: 0.95rem;
     --settings-title-font-size: 2.1rem;
     --settings-content-font-size: 1.05rem;
-    --tutorial-title-font-size: 2.3rem;
-    --tutorial-content-font-size: 1rem;
 
     /* Posicionamiento de menús/modales */
     --menu-history-top: 5%;
     --menu-history-left: 6%;
     --menu-settings-top: 10%;
     --menu-settings-left: 6%;
-    --menu-tutorial-top: 5%;
-    --menu-tutorial-left: 6%;
 
     /* === RESULT CARD === */
     --result-card-width: 90%;
@@ -1298,101 +871,9 @@
     --result-multiplier-badge-right:2%;
     --win-amount-font-size: 2.9rem;
 
-    /* === TUTORIAL INTERACTIVO === */
-    --tutorial-overlay-opacity: 0.85;
-    --tutorial-spin-overlay-opacity: 0.12;
-
-    /* === ETAPA WELCOME === */
-    --tutorial-welcome-animal-top: auto;
-    --tutorial-welcome-animal-bottom: 4%;
-    --tutorial-welcome-animal-left: 50%;
-    --tutorial-welcome-animal-right: auto;
-    --tutorial-welcome-animal-width: auto;
-    --tutorial-welcome-animal-height: auto;
-    --tutorial-welcome-bubble-width: 32vh;
-    --tutorial-welcome-bubble-max-width: auto;
-    --tutorial-welcome-bubble-min-width: auto;
-    --tutorial-welcome-bubble-height: 21vh;
-    --tutorial-welcome-bubble-font-size: 0.95rem;
-
-    /* === ETAPA WHEEL === */
-    --tutorial-wheel-spotlight-top: 48%;
-    --tutorial-wheel-spotlight-left: 50%;
-    --tutorial-wheel-spotlight-width: 53vh;
-    --tutorial-wheel-spotlight-height: 53vh;
-    --tutorial-wheel-animal-top: auto;
-    --tutorial-wheel-animal-bottom: 4%;
-    --tutorial-wheel-animal-left: 50%;
-    --tutorial-wheel-animal-right: auto;
-    --tutorial-wheel-animal-width: auto;
-    --tutorial-wheel-animal-height: auto;
-    --tutorial-wheel-bubble-width: 42vh;
-    --tutorial-wheel-bubble-max-width: auto;
-    --tutorial-wheel-bubble-min-width: auto;
-    --tutorial-wheel-bubble-height: 22vh;
-    --tutorial-wheel-bubble-font-size: 0.9rem;
-
-    /* === ETAPA BETTING === */
-    --tutorial-betting-spotlight-top: auto;
-    --tutorial-betting-spotlight-bottom: 0%;
-    --tutorial-betting-spotlight-left: 50%;
-    --tutorial-betting-spotlight-width: 95vw;
-    --tutorial-betting-spotlight-height: 37vh;
-    --tutorial-betting-animal-top: 14%;
-    --tutorial-betting-animal-bottom: auto;
-    --tutorial-betting-animal-left: 50%;
-    --tutorial-betting-animal-right: auto;
-    --tutorial-betting-animal-width: auto;
-    --tutorial-betting-animal-height: auto;
-    --tutorial-betting-bubble-width: 37vh;
-    --tutorial-betting-bubble-max-width: auto;
-    --tutorial-betting-bubble-min-width: auto;
-    --tutorial-betting-bubble-height: 29vh;
-    --tutorial-betting-bubble-font-size: 0.95rem;
-
-    /* === ETAPA SPIN === */
-    --tutorial-spin-spotlight-top: 32.5%;
-    --tutorial-spin-spotlight-left: 50%;
-    --tutorial-spin-spotlight-width: 53vh;
-    --tutorial-spin-spotlight-height: 53vh;
-    --tutorial-spin-animal-top: auto;
-    --tutorial-spin-animal-bottom: 4%;
-    --tutorial-spin-animal-left: 50%;
-    --tutorial-spin-animal-right: auto;
-    --tutorial-spin-animal-width: auto;
-    --tutorial-spin-animal-height: auto;
-    --tutorial-spin-bubble-width: 33vh;
-    --tutorial-spin-bubble-max-width: auto;
-    --tutorial-spin-bubble-min-width: auto;
-    --tutorial-spin-bubble-height: 29vh;
-    --tutorial-spin-bubble-font-size: 0.95rem;
-
-    /* === ETAPA MANUAL SPIN === */
-    --tutorial-manual-spin-spotlight-top: 32.5%;
-    --tutorial-manual-spin-spotlight-left: 50%;
-    --tutorial-manual-spin-spotlight-width: 53vh;
-    --tutorial-manual-spin-spotlight-height: 53vh;
-    --tutorial-manual-spin-animal-top: auto;
-    --tutorial-manual-spin-animal-bottom: 4%;
-    --tutorial-manual-spin-animal-left: 50%;
-    --tutorial-manual-spin-animal-right: auto;
-    --tutorial-manual-spin-animal-width: auto;
-    --tutorial-manual-spin-animal-height: auto;
-    --tutorial-manual-spin-bubble-width: 42vh;
-    --tutorial-manual-spin-bubble-max-width: auto;
-    --tutorial-manual-spin-bubble-min-width: auto;
-    --tutorial-manual-spin-bubble-height: 27vh;
-    --tutorial-manual-spin-bubble-font-size: 0.95rem;
 
     /* Globales */
-    --tutorial-animal-size: 105px;
-    --tutorial-animal-offset-y: 32%;
 
-    /* Padding interno del contenedor de texto */
-    --tutorial-text-content-padding-top:1.5rem;
-    --tutorial-text-content-padding-right: 1rem;
-    --tutorial-text-content-padding-bottom: 0.5rem;
-    --tutorial-text-content-padding-left: 1rem;
   }
 }
 
@@ -1536,16 +1017,12 @@
     --history-content-font-size: 1.25rem;
     --settings-title-font-size: 2.2rem;
     --settings-content-font-size: 1.5rem;
-    --tutorial-title-font-size: 2.5rem;
-    --tutorial-content-font-size: 1.25rem;
 
     /* Posicionamiento de menús/modales */
     --menu-history-top: 5%;
     --menu-history-left: 15%;
     --menu-settings-top: 25%;
     --menu-settings-left: 15%;
-    --menu-tutorial-top: 5%;
-    --menu-tutorial-left: 15%;
 
     /* === RESULT CARD === */
     --result-card-width: 90%;
@@ -1565,128 +1042,15 @@
     --result-multiplier-badge-right:2%;
     --win-amount-font-size: 2.8rem;
 
-    /* === TUTORIAL INTERACTIVO === */
-    /* Overlay darkness */
-    --tutorial-overlay-opacity: 0.85;
-    --tutorial-spin-overlay-opacity: 0.70;
 
-    /* === ETAPA WELCOME === */
     /* Spotlight - Welcome */
     /* (No spotlight in welcome stage) */
 
-    /* Animal - Welcome */
-    --tutorial-welcome-animal-top: auto;
-    --tutorial-welcome-animal-bottom: 2%;
-    --tutorial-welcome-animal-left: 50%;
-    --tutorial-welcome-animal-right: auto;
-    --tutorial-welcome-animal-width: auto;
-    --tutorial-welcome-animal-height: auto;
 
-    /* Burbuja - Welcome */
-    --tutorial-welcome-bubble-width: 30vh;
-    --tutorial-welcome-bubble-max-width: auto;
-    --tutorial-welcome-bubble-min-width: auto;
-    --tutorial-welcome-bubble-height: 25vh;
-    --tutorial-welcome-bubble-font-size: 1.65rem;
-
-    /* === ETAPA WHEEL === */
-    /* Spotlight - Wheel */
-    --tutorial-wheel-spotlight-top: 47.5%;
-    --tutorial-wheel-spotlight-left: 50%;
-    --tutorial-wheel-spotlight-width: 57vh;
-    --tutorial-wheel-spotlight-height: 57vh;
-
-    /* Animal - Wheel */
-    --tutorial-wheel-animal-top: auto;
-    --tutorial-wheel-animal-bottom: 2%;
-    --tutorial-wheel-animal-left: 50%;
-    --tutorial-wheel-animal-right: auto;
-    --tutorial-wheel-animal-width: auto;
-    --tutorial-wheel-animal-height: auto;
-
-    /* Burbuja - Wheel */
-    --tutorial-wheel-bubble-width: 40vh;
-    --tutorial-wheel-bubble-max-width: auto;
-    --tutorial-wheel-bubble-min-width: auto;
-    --tutorial-wheel-bubble-height: 25vh;
-    --tutorial-wheel-bubble-font-size: 1.65rem;
-
-    /* === ETAPA BETTING === */
-    /* Spotlight - Betting */
-    --tutorial-betting-spotlight-top: auto;
-    --tutorial-betting-spotlight-bottom: 0;
-    --tutorial-betting-spotlight-left: 50%;
-    --tutorial-betting-spotlight-width: 85vw;
-    --tutorial-betting-spotlight-height: 34vh;
-
-    /* Animal - Betting */
-    --tutorial-betting-animal-top: 23%;
-    --tutorial-betting-animal-bottom: auto;
-    --tutorial-betting-animal-left: 50%;
-    --tutorial-betting-animal-right: auto;
-    --tutorial-betting-animal-width: auto;
-    --tutorial-betting-animal-height: auto;
-
-    /* Burbuja - Betting */
-    --tutorial-betting-bubble-width: 35vh;
-    --tutorial-betting-bubble-max-width: auto;
-    --tutorial-betting-bubble-min-width: auto;
-    --tutorial-betting-bubble-height: 28vh;
-    --tutorial-betting-bubble-font-size: 1.65rem;
-
-    /* === ETAPA SPIN === */
-    /* Spotlight - Spin */
-    --tutorial-spin-spotlight-top: 35.5%;
-    --tutorial-spin-spotlight-left: 50%;
-    --tutorial-spin-spotlight-width: 57vh;
-    --tutorial-spin-spotlight-height: 57vh;
-
-    /* Animal - Spin */
-    --tutorial-spin-animal-top: auto;
-    --tutorial-spin-animal-bottom: 2%;
-    --tutorial-spin-animal-left: 50%;
-    --tutorial-spin-animal-right: auto;
-    --tutorial-spin-animal-width: auto;
-    --tutorial-spin-animal-height: auto;
-
-    /* Burbuja - Spin */
-    --tutorial-spin-bubble-width: 30vh;
-    --tutorial-spin-bubble-max-width: auto;
-    --tutorial-spin-bubble-min-width: auto;
-    --tutorial-spin-bubble-height: 27vh;
-    --tutorial-spin-bubble-font-size: 1.65rem;
-
-    /* === ETAPA MANUAL SPIN === */
-    /* Spotlight - Manual Spin */
-    --tutorial-manual-spin-spotlight-top: 35.5%;
-    --tutorial-manual-spin-spotlight-left: 50%;
-    --tutorial-manual-spin-spotlight-width: 57vh;
-    --tutorial-manual-spin-spotlight-height: 57vh;
     /* Indicador - Manual Spin */
-    --tutorial-manual-spin-indicator-left: 50%;
-    /* Animal - Manual Spin */
-    --tutorial-manual-spin-animal-top: auto;
-    --tutorial-manual-spin-animal-bottom: 2%;
-    --tutorial-manual-spin-animal-left: 50%;
-    --tutorial-manual-spin-animal-right: auto;
-    --tutorial-manual-spin-animal-width: auto;
-    --tutorial-manual-spin-animal-height: auto;
-    /* Burbuja - Manual Spin */
-    --tutorial-manual-spin-bubble-width: 35vh;
-    --tutorial-manual-spin-bubble-max-width: auto;
-    --tutorial-manual-spin-bubble-min-width: auto;
-    --tutorial-manual-spin-bubble-height: 23vh;
-    --tutorial-manual-spin-bubble-font-size: 1.65rem;
 
     /* Globales */
-    --tutorial-animal-size: 18vh;
-    --tutorial-animal-offset-y: 13%; /* Desplazamiento vertical del animal */
 
-    /* Padding interno del contenedor de texto */
-    --tutorial-text-content-padding-top: 0.75rem;
-    --tutorial-text-content-padding-right: 1.5rem;
-    --tutorial-text-content-padding-bottom: 0.75rem;
-    --tutorial-text-content-padding-left: 1.5rem;
   }
 }
 
@@ -1816,16 +1180,12 @@
     --history-content-font-size: 1.3rem;
     --settings-title-font-size: 3.2rem;
     --settings-content-font-size: 1.4rem;
-    --tutorial-title-font-size: 3.4rem;
-    --tutorial-content-font-size: 1.35rem;
 
     /* Posicionamiento de menús/modales */
     --menu-history-top: 5%;
     --menu-history-left: 20%;
     --menu-settings-top: 20%;
     --menu-settings-left: 20%;
-    --menu-tutorial-top: 5%;
-    --menu-tutorial-left: 20%;
 
     /* === RESULT CARD === */
     --result-card-width: 90%;
@@ -1846,133 +1206,15 @@
     --result-multiplier-badge-right:40px;
     --win-amount-font-size: 3.0rem;
 
-    /* === TUTORIAL INTERACTIVO === */
-    /* Overlay darkness */
-    --tutorial-overlay-opacity: 0.85;
-    --tutorial-spin-overlay-opacity: 0.70;
 
-    /* === ETAPA WELCOME === */
     /* Spotlight - Welcome */
     /* (No spotlight in welcome stage) */
 
-    /* Animal - Welcome (bottom-left on desktop) */
-    --tutorial-welcome-animal-top: auto;
-    --tutorial-welcome-animal-bottom: 20%;
-    --tutorial-welcome-animal-left: 15%;
-    --tutorial-welcome-animal-right: auto;
-    --tutorial-welcome-animal-width: auto;
-    --tutorial-welcome-animal-height: auto;
 
-    /* Burbuja - Welcome */
-    --tutorial-welcome-bubble-width: 34vh;
-    --tutorial-welcome-bubble-max-width: auto;
-    --tutorial-welcome-bubble-min-width: auto;
-    --tutorial-welcome-bubble-height: 25vh;
-    --tutorial-welcome-bubble-font-size: 1.1rem;
-
-    /* === ETAPA WHEEL === */
-    /* Spotlight - Wheel */
-    --tutorial-wheel-spotlight-top: 51%;
-    --tutorial-wheel-spotlight-left: 50%;
-    --tutorial-wheel-spotlight-width: 85vh;
-    --tutorial-wheel-spotlight-height: 85vh;
-
-    /* Animal - Wheel (bottom-right on desktop) */
-    
-
-    --tutorial-wheel-animal-top: auto;
-    --tutorial-wheel-animal-bottom: 20%;
-    --tutorial-wheel-animal-left: 15%;
-    --tutorial-wheel-animal-right: auto;
-    --tutorial-wheel-animal-width: auto;
-    --tutorial-wheel-animal-height: auto;
-
-    /* Burbuja - Wheel */
-    --tutorial-wheel-bubble-width: 35vh;
-    --tutorial-wheel-bubble-max-width: auto;
-    --tutorial-wheel-bubble-min-width: auto;
-    --tutorial-wheel-bubble-height: 30vh;
-    --tutorial-wheel-bubble-font-size: 1.1rem;
-
-    /* === ETAPA BETTING === */
-    /* Spotlight - Betting */
-    --tutorial-betting-spotlight-top: auto;
-    --tutorial-betting-spotlight-bottom: 35%;
-    --tutorial-betting-spotlight-left: 20.5%;
-    --tutorial-betting-spotlight-width: 31vw;
-    --tutorial-betting-spotlight-height: 52vh;
-
-    /* Animal - Betting (bottom-right on desktop) */
-
-
-    --tutorial-betting-animal-top: 10%;
-    --tutorial-betting-animal-bottom: auto;
-    --tutorial-betting-animal-left: 50%;
-    --tutorial-betting-animal-right: auto;
-    --tutorial-betting-animal-width: auto;
-    --tutorial-betting-animal-height: auto;
-
-    /* Burbuja - Betting */
-    --tutorial-betting-bubble-width: 39vh;
-    --tutorial-betting-bubble-max-width: auto;
-    --tutorial-betting-bubble-min-width: auto;
-    --tutorial-betting-bubble-height: 30vh;
-    --tutorial-betting-bubble-font-size: 1.1rem;
-
-    /* === ETAPA SPIN === */
-    /* Spotlight - Spin */
-    --tutorial-spin-spotlight-top: 51%;
-    --tutorial-spin-spotlight-left: 60%;
-    --tutorial-spin-spotlight-width: 85vh;
-    --tutorial-spin-spotlight-height: 85vh;
-
-    /* Animal - Spin (bottom-right on desktop) */
-
-    --tutorial-spin-animal-top: auto;
-    --tutorial-spin-animal-bottom:10%;
-    --tutorial-spin-animal-left: auto;
-    --tutorial-spin-animal-right: 45%;
-    --tutorial-spin-animal-width: auto;
-    --tutorial-spin-animal-height: auto;
-
-    /* Burbuja - Spin */
-    --tutorial-spin-bubble-width: 35vh;
-    --tutorial-spin-bubble-max-width: auto;
-    --tutorial-spin-bubble-min-width: auto;
-    --tutorial-spin-bubble-height: 30vh;
-    --tutorial-spin-bubble-font-size: 1.1rem;
-
-    /* === ETAPA MANUAL SPIN === */
-    /* Spotlight - Manual Spin */
-    --tutorial-manual-spin-spotlight-top: 51%;
-    --tutorial-manual-spin-spotlight-left: 60%;
-    --tutorial-manual-spin-spotlight-width: 85vh;
-    --tutorial-manual-spin-spotlight-height: 85vh;
     /* Indicador - Manual Spin */
-    --tutorial-manual-spin-indicator-left: 60%;
-    /* Animal - Manual Spin */
-    --tutorial-manual-spin-animal-top: auto;
-    --tutorial-manual-spin-animal-bottom: 10%;
-    --tutorial-manual-spin-animal-left: auto;
-    --tutorial-manual-spin-animal-right: 45%;
-    --tutorial-manual-spin-animal-width: auto;
-    --tutorial-manual-spin-animal-height: auto;
-    /* Burbuja - Manual Spin */
-    --tutorial-manual-spin-bubble-width: 35vh;
-    --tutorial-manual-spin-bubble-max-width: auto;
-    --tutorial-manual-spin-bubble-min-width: auto;
-    --tutorial-manual-spin-bubble-height: 30vh;
-    --tutorial-manual-spin-bubble-font-size: 1.1rem;
 
     /* Globales */
-    --tutorial-animal-size: 140px;
-    --tutorial-animal-offset-y: 0; /* Desplazamiento vertical del animal */
 
-    /* Padding interno del contenedor de texto */
-    --tutorial-text-content-padding-top: 1.5rem;
-    --tutorial-text-content-padding-right: 1rem;
-    --tutorial-text-content-padding-bottom: 0.5rem;
-    --tutorial-text-content-padding-left: 1rem;
   }
 }
 
@@ -2094,16 +1336,12 @@
     --history-content-font-size: 1.3rem;
     --settings-title-font-size: 3.2rem;
     --settings-content-font-size: 1.4rem;
-    --tutorial-title-font-size: 3.4rem;
-    --tutorial-content-font-size: 1.35rem;
 
     /* Posicionamiento de menús/modales */
     --menu-history-top: 5%;
     --menu-history-left: 30%;
     --menu-settings-top: 20%;
     --menu-settings-left: 30%;
-    --menu-tutorial-top: 5%;
-    --menu-tutorial-left: 30%;
 
     /* === RESULT CARD === */
     --result-card-width: 70%;
@@ -2124,133 +1362,15 @@
     --result-multiplier-badge-right:40px;
     --win-amount-font-size: 3.0rem;
 
-    /* === TUTORIAL INTERACTIVO === */
-    /* Overlay darkness */
-    --tutorial-overlay-opacity: 0.85;
-    --tutorial-spin-overlay-opacity: 0.70;
 
-    /* === ETAPA WELCOME === */
     /* Spotlight - Welcome */
     /* (No spotlight in welcome stage) */
 
-    /* Animal - Welcome (bottom-left on desktop) */
-    --tutorial-welcome-animal-top: auto;
-    --tutorial-welcome-animal-bottom: 20%;
-    --tutorial-welcome-animal-left: 15%;
-    --tutorial-welcome-animal-right: auto;
-    --tutorial-welcome-animal-width: auto;
-    --tutorial-welcome-animal-height: auto;
 
-    /* Burbuja - Welcome */
-    --tutorial-welcome-bubble-width: 34vh;
-    --tutorial-welcome-bubble-max-width: auto;
-    --tutorial-welcome-bubble-min-width: auto;
-    --tutorial-welcome-bubble-height: 25vh;
-    --tutorial-welcome-bubble-font-size: 1.1rem;
-
-    /* === ETAPA WHEEL === */
-    /* Spotlight - Wheel */
-    --tutorial-wheel-spotlight-top: 51%;
-    --tutorial-wheel-spotlight-left: 50%;
-    --tutorial-wheel-spotlight-width: 85vh;
-    --tutorial-wheel-spotlight-height: 85vh;
-
-    /* Animal - Wheel (bottom-right on desktop) */
-    
-
-    --tutorial-wheel-animal-top: auto;
-    --tutorial-wheel-animal-bottom: 20%;
-    --tutorial-wheel-animal-left: 15%;
-    --tutorial-wheel-animal-right: auto;
-    --tutorial-wheel-animal-width: auto;
-    --tutorial-wheel-animal-height: auto;
-
-    /* Burbuja - Wheel */
-    --tutorial-wheel-bubble-width: 35vh;
-    --tutorial-wheel-bubble-max-width: auto;
-    --tutorial-wheel-bubble-min-width: auto;
-    --tutorial-wheel-bubble-height: 30vh;
-    --tutorial-wheel-bubble-font-size: 1.1rem;
-
-    /* === ETAPA BETTING === */
-    /* Spotlight - Betting */
-    --tutorial-betting-spotlight-top: auto;
-    --tutorial-betting-spotlight-bottom: 35%;
-    --tutorial-betting-spotlight-left: 20.5%;
-    --tutorial-betting-spotlight-width: 31vw;
-    --tutorial-betting-spotlight-height: 52vh;
-
-    /* Animal - Betting (bottom-right on desktop) */
-
-
-    --tutorial-betting-animal-top: 10%;
-    --tutorial-betting-animal-bottom: auto;
-    --tutorial-betting-animal-left: 50%;
-    --tutorial-betting-animal-right: auto;
-    --tutorial-betting-animal-width: auto;
-    --tutorial-betting-animal-height: auto;
-
-    /* Burbuja - Betting */
-    --tutorial-betting-bubble-width: 39vh;
-    --tutorial-betting-bubble-max-width: auto;
-    --tutorial-betting-bubble-min-width: auto;
-    --tutorial-betting-bubble-height: 30vh;
-    --tutorial-betting-bubble-font-size: 1.1rem;
-
-    /* === ETAPA SPIN === */
-    /* Spotlight - Spin */
-    --tutorial-spin-spotlight-top: 51%;
-    --tutorial-spin-spotlight-left: 60%;
-    --tutorial-spin-spotlight-width: 85vh;
-    --tutorial-spin-spotlight-height: 85vh;
-
-    /* Animal - Spin (bottom-right on desktop) */
-
-    --tutorial-spin-animal-top: auto;
-    --tutorial-spin-animal-bottom:10%;
-    --tutorial-spin-animal-left: auto;
-    --tutorial-spin-animal-right: 45%;
-    --tutorial-spin-animal-width: auto;
-    --tutorial-spin-animal-height: auto;
-
-    /* Burbuja - Spin */
-    --tutorial-spin-bubble-width: 35vh;
-    --tutorial-spin-bubble-max-width: auto;
-    --tutorial-spin-bubble-min-width: auto;
-    --tutorial-spin-bubble-height: 30vh;
-    --tutorial-spin-bubble-font-size: 1.1rem;
-
-    /* === ETAPA MANUAL SPIN === */
-    /* Spotlight - Manual Spin */
-    --tutorial-manual-spin-spotlight-top: 51%;
-    --tutorial-manual-spin-spotlight-left: 60%;
-    --tutorial-manual-spin-spotlight-width: 85vh;
-    --tutorial-manual-spin-spotlight-height: 85vh;
     /* Indicador - Manual Spin */
-    --tutorial-manual-spin-indicator-left: 60%;
-    /* Animal - Manual Spin */
-    --tutorial-manual-spin-animal-top: auto;
-    --tutorial-manual-spin-animal-bottom: 10%;
-    --tutorial-manual-spin-animal-left: auto;
-    --tutorial-manual-spin-animal-right: 45%;
-    --tutorial-manual-spin-animal-width: auto;
-    --tutorial-manual-spin-animal-height: auto;
-    /* Burbuja - Manual Spin */
-    --tutorial-manual-spin-bubble-width: 35vh;
-    --tutorial-manual-spin-bubble-max-width: auto;
-    --tutorial-manual-spin-bubble-min-width: auto;
-    --tutorial-manual-spin-bubble-height: 30vh;
-    --tutorial-manual-spin-bubble-font-size: 1.1rem;
 
     /* Globales */
-    --tutorial-animal-size: 140px;
-    --tutorial-animal-offset-y: 0; /* Desplazamiento vertical del animal */
 
-    /* Padding interno del contenedor de texto */
-    --tutorial-text-content-padding-top: 1.5rem;
-    --tutorial-text-content-padding-right: 1rem;
-    --tutorial-text-content-padding-bottom: 0.5rem;
-    --tutorial-text-content-padding-left: 1rem;
   }
 }
 
@@ -2365,16 +1485,12 @@
     --history-content-font-size: 1.8rem;
     --settings-title-font-size: 4rem;
     --settings-content-font-size: 2rem;
-    --tutorial-title-font-size: 5rem;
-    --tutorial-content-font-size: 1.9rem;
 
     /* Posicionamiento de menús/modales */
     --menu-history-top: 25%;
     --menu-history-left: 25%;
     --menu-settings-top: 25%;
     --menu-settings-left: 25%;
-    --menu-tutorial-top: 25%;
-    --menu-tutorial-left: 25%;
 
     /* === RESULT CARD === */
     --result-card-width: 95%;
@@ -2391,128 +1507,15 @@
     --result-multiplier-badge-size: 300px;
     --win-amount-font-size: 6rem;
 
-    /* === TUTORIAL INTERACTIVO === */
-    /* Overlay darkness */
-    --tutorial-overlay-opacity: 0.85;
-    --tutorial-spin-overlay-opacity: 0.70;
 
-    /* === ETAPA WELCOME === */
     /* Spotlight - Welcome */
     /* (No spotlight in welcome stage) */
 
-    /* Animal - Welcome */
-    --tutorial-welcome-animal-top: auto;
-    --tutorial-welcome-animal-bottom: 8%;
-    --tutorial-welcome-animal-left: 50%;
-    --tutorial-welcome-animal-right: auto;
-    --tutorial-welcome-animal-width: auto;
-    --tutorial-welcome-animal-height: auto;
 
-    /* Burbuja - Welcome */
-    --tutorial-welcome-bubble-width: auto;
-    --tutorial-welcome-bubble-max-width: 500px;
-    --tutorial-welcome-bubble-min-width: 450px;
-    --tutorial-welcome-bubble-height: auto;
-    --tutorial-welcome-bubble-font-size: 1.8rem;
-
-    /* === ETAPA WHEEL === */
-    /* Spotlight - Wheel */
-    --tutorial-wheel-spotlight-top: 50%;
-    --tutorial-wheel-spotlight-left: 50%;
-    --tutorial-wheel-spotlight-width: 1080px;
-    --tutorial-wheel-spotlight-height: 1080px;
-
-    /* Animal - Wheel */
-    --tutorial-wheel-animal-top: auto;
-    --tutorial-wheel-animal-bottom: 8%;
-    --tutorial-wheel-animal-left: 50%;
-    --tutorial-wheel-animal-right: auto;
-    --tutorial-wheel-animal-width: auto;
-    --tutorial-wheel-animal-height: auto;
-
-    /* Burbuja - Wheel */
-    --tutorial-wheel-bubble-width: auto;
-    --tutorial-wheel-bubble-max-width: 500px;
-    --tutorial-wheel-bubble-min-width: 450px;
-    --tutorial-wheel-bubble-height: auto;
-    --tutorial-wheel-bubble-font-size: 1.8rem;
-
-    /* === ETAPA BETTING === */
-    /* Spotlight - Betting */
-    --tutorial-betting-spotlight-top: auto;
-    --tutorial-betting-spotlight-bottom: 100px;
-    --tutorial-betting-spotlight-left: 50%;
-    --tutorial-betting-spotlight-width: 1040px;
-    --tutorial-betting-spotlight-height: 640px;
-
-    /* Animal - Betting */
-    --tutorial-betting-animal-top: auto;
-    --tutorial-betting-animal-bottom: 8%;
-    --tutorial-betting-animal-left: 50%;
-    --tutorial-betting-animal-right: auto;
-    --tutorial-betting-animal-width: auto;
-    --tutorial-betting-animal-height: auto;
-
-    /* Burbuja - Betting */
-    --tutorial-betting-bubble-width: auto;
-    --tutorial-betting-bubble-max-width: 500px;
-    --tutorial-betting-bubble-min-width: 450px;
-    --tutorial-betting-bubble-height: auto;
-    --tutorial-betting-bubble-font-size: 1.8rem;
-
-    /* === ETAPA SPIN === */
-    /* Spotlight - Spin */
-    --tutorial-spin-spotlight-top: 50%;
-    --tutorial-spin-spotlight-left: 50%;
-    --tutorial-spin-spotlight-width: 1080px;
-    --tutorial-spin-spotlight-height: 1080px;
-
-    /* Animal - Spin */
-    --tutorial-spin-animal-top: auto;
-    --tutorial-spin-animal-bottom: 8%;
-    --tutorial-spin-animal-left: 50%;
-    --tutorial-spin-animal-right: auto;
-    --tutorial-spin-animal-width: auto;
-    --tutorial-spin-animal-height: auto;
-
-    /* Burbuja - Spin */
-    --tutorial-spin-bubble-width: auto;
-    --tutorial-spin-bubble-max-width: 500px;
-    --tutorial-spin-bubble-min-width: 450px;
-    --tutorial-spin-bubble-height: auto;
-    --tutorial-spin-bubble-font-size: 1.8rem;
-
-    /* === ETAPA MANUAL SPIN === */
-    /* Spotlight - Manual Spin */
-    --tutorial-manual-spin-spotlight-top: 50%;
-    --tutorial-manual-spin-spotlight-left: 50%;
-    --tutorial-manual-spin-spotlight-width: 1080px;
-    --tutorial-manual-spin-spotlight-height: 1080px;
     /* Indicador - Manual Spin */
-    --tutorial-manual-spin-indicator-left: 50%;
-    /* Animal - Manual Spin */
-    --tutorial-manual-spin-animal-top: auto;
-    --tutorial-manual-spin-animal-bottom: 8%;
-    --tutorial-manual-spin-animal-left: 50%;
-    --tutorial-manual-spin-animal-right: auto;
-    --tutorial-manual-spin-animal-width: auto;
-    --tutorial-manual-spin-animal-height: auto;
-    /* Burbuja - Manual Spin */
-    --tutorial-manual-spin-bubble-width: auto;
-    --tutorial-manual-spin-bubble-max-width: 500px;
-    --tutorial-manual-spin-bubble-min-width: 450px;
-    --tutorial-manual-spin-bubble-height: auto;
-    --tutorial-manual-spin-bubble-font-size: 1.8rem;
 
     /* Globales */
-    --tutorial-animal-size: 220px;
-    --tutorial-animal-offset-y: 0; /* Desplazamiento vertical del animal */
 
-    /* Padding interno del contenedor de texto */
-    --tutorial-text-content-padding-top: 1rem;
-    --tutorial-text-content-padding-right: 2rem;
-    --tutorial-text-content-padding-bottom: 1rem;
-    --tutorial-text-content-padding-left: 2rem;
   }
 }
 

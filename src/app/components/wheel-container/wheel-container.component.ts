@@ -40,7 +40,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   @Input() spinDuration: number = 8000; // Duración giro rueda externa
   @Input() innerWheelSpinDuration: number = 10000; // Duración giro rueda interna (debe ser >= spinDuration)
   @Input() expansionRange: number = 180;
-  @Input() tutorialStage: string = '';
   @Input() set multiplierValues(values: number[] | undefined) {
     if (values && Array.isArray(values) && values.length === 6) {
       // Generar array de 12 valores (cada valor aparece 2 veces)
@@ -448,8 +447,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
         this.yinYangPressed = false;
       }
     }
-
-    // Nota: La animación de tutorial está desactivada en Safari via HTML binding
   }
 
 

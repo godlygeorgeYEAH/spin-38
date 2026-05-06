@@ -4,7 +4,6 @@ import { IonContent } from '@ionic/angular/standalone';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { WheelContainerComponent } from '../components/wheel-container/wheel-container.component';
-import { GameTutorialComponent } from '../components/game-tutorial/game-tutorial.component';
 import { GameSettingsComponent } from '../components/game-settings/game-settings.component';
 import { BetHistoryComponent } from '../components/bet-history/bet-history.component';
 import { Animal, AnimalBet, WheelSpinResult } from '../interfaces/wheel-general.interface';
@@ -17,7 +16,6 @@ import { addIcons } from 'ionicons';
 import { settingsOutline, closeOutline } from 'ionicons/icons';
 import { IonIcon } from '@ionic/angular/standalone';
 import { AdminAuthService } from '../services/admin-auth.service';
-import { TutorialService, TutorialStage } from '../services/tutorial.service';
 import { AudioService } from '../services/audio.service';
 import { DevicePerformanceTier, PerformanceDetectorService } from '../services/performance-detector.service';
 import { ApiService } from '../services/api.service';
@@ -30,7 +28,7 @@ import html2canvas from 'html2canvas';
   standalone: true,
   imports: [
     IonContent, IonIcon, CommonModule, AsyncPipe,
-    WheelContainerComponent, GameTutorialComponent, GameSettingsComponent, BetHistoryComponent, FindBetPipe
+    WheelContainerComponent, GameSettingsComponent, BetHistoryComponent, FindBetPipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -62,19 +60,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private resultOverlayInterval: any = null;
   public errorMessage: string = '';
   private capturedScreenshot: File | null = null;
-  public showTutorial: boolean = false;
   public showSettings: boolean = false;
   public showBetHistory: boolean = false;
   public isBettingControlsVisible: boolean = true;
   public isWheelDisplaced: boolean = true; // Controla el desplazamiento de la rueda (separado de la visibilidad del panel)
   public bettingPanelAnimationState: 'hidden' | 'appearing' | 'visible' | 'disappearing' = 'visible';
-
-  // Tutorial interactivo
-  public tutorialActive: boolean = false;
-  public tutorialStage: TutorialStage = 'welcome';
-  public tutorialAnimal: string = '';
-  public tutorialAnimalImage: string = '';
-  public tutorialShowingRedirectMessage: boolean = false;
 
   // Volumen de sonidos de interfaz (0-100)
   public uiVolume: number = 50;
@@ -122,7 +112,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private zone: NgZone,
     private adminAuth: AdminAuthService,
-    private tutorialService: TutorialService,
     private audioService: AudioService,
     private performanceDetector: PerformanceDetectorService,
     private apiService: ApiService
@@ -177,7 +166,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.showResult = false;
 
     this.errorMessage = '';
-    this.showTutorial = false;
     this.showSettings = false;
     this.isBettingControlsVisible = false; // Oculto hasta que se seleccione un animal
     this.isWheelDisplaced = false; // La rueda empieza centrada
@@ -187,8 +175,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     // Obtener balance inicial del backend
     await this.initializeBalanceFromBackend();
 
-    // Inicializar tutorial si el usuario no lo ha completado
-    this.initializeTutorial();
     this.transactions = [];
 
     // Iniciar precarga de assets
@@ -509,15 +495,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     console.log('[HomePage] onAnimalToggle received', { animal: animal.name, gameState: this.gameState });
     if (this.gameState === 'playing') return;
 
-    // Tutorial: Bloquear interacción con la rueda en etapa betting
-    if (this.tutorialActive && this.tutorialStage === 'betting') {
-      this.onTutorialWrongAreaClick();
-      return;
-    }
-
-    // Lógica del tutorial: avanzar a etapa "betting" cuando se presiona un animal
-    this.onTutorialAnimalClick();
-
     const existingIndex = this.selectedAnimals.findIndex(bet => bet.animal.name === animal.name);
 
     if (existingIndex >= 0) {
@@ -564,17 +541,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   public addCoinToCurrentAnimal(value: number): void {
     if (this.gameState === 'playing' || !this.currentEditingAnimal) return;
 
-    // Tutorial: Bloquear interacción con las fichas en etapa wheel
-    if (this.tutorialActive && this.tutorialStage === 'wheel') {
-      this.onTutorialWrongAreaClick();
-      return;
-    }
-
     // Reproducir sonido de ficha
     this.playChipSound();
-
-    // Lógica del tutorial: avanzar a etapa "spin" cuando se presiona una ficha
-    this.onTutorialChipClick();
 
     const animalNameToUpdate = this.currentEditingAnimal.name;
     this.selectedAnimals = this.selectedAnimals.map(bet =>
@@ -621,12 +589,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   public clearAllBets(): void {
     if (this.gameState === 'playing') return;
 
-    // Tutorial: Bloquear botón limpiar en etapas wheel y betting
-    if (this.tutorialActive && (this.tutorialStage === 'wheel' || this.tutorialStage === 'betting')) {
-      this.onTutorialWrongAreaClick();
-      return;
-    }
-
     // Reproducir sonido de botón
     this.playPressSound();
 
@@ -651,12 +613,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   public clearCurrentAnimalBet(): void {
     if (this.gameState === 'playing') return;
 
-    // Tutorial: Bloquear botón limpiar en etapas wheel y betting
-    if (this.tutorialActive && (this.tutorialStage === 'wheel' || this.tutorialStage === 'betting')) {
-      this.onTutorialWrongAreaClick();
-      return;
-    }
-
     if (!this.currentEditingAnimal) {
       console.warn('No hay animal seleccionado para limpiar');
       return;
@@ -677,12 +633,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   public async spinWheels(): Promise<void> {
     if (!this.canSpin()) return;
-
-    // Tutorial: Bloquear botón girar en etapas wheel y betting
-    if (this.tutorialActive && (this.tutorialStage === 'wheel' || this.tutorialStage === 'betting')) {
-      this.onTutorialWrongAreaClick();
-      return;
-    }
 
     // Filtrar apuestas de $0 antes de girar (Bug fix 5.1)
     this.selectedAnimals = this.selectedAnimals.filter(bet => bet.amount > 0);
@@ -1316,15 +1266,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.totalBetAmountSubject.next(total);
   }
 
-  public openTutorial(): void {
-    this.playPressSound();
-    this.showTutorial = true;
-  }
-
-  public closeTutorial(): void {
-    this.showTutorial = false;
-  }
-
   public canSpin(): boolean {
     return this.selectedAnimals.length > 0 && this.gameState !== 'playing';
   }
@@ -1476,146 +1417,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.balanceSubject.next(this.playerBalance);
 
     return `✅ Balance actualizado: $${oldBalance} ${amount >= 0 ? '+' : ''}${amount} = $${this.playerBalance}`;
-  }
-
-  // ============================================
-  // MÉTODOS DEL TUTORIAL INTERACTIVO
-  // ============================================
-
-  /**
-   * Inicializa el tutorial si el usuario no lo ha completado
-   */
-  private initializeTutorial(): void {
-    if (!this.tutorialService.hasCompletedTutorial()) {
-      this.tutorialActive = true;
-      this.tutorialStage = 'welcome';
-      this.tutorialAnimal = this.tutorialService.getTutorialAnimal();
-      this.tutorialAnimalImage = `assets/images/animales/${this.tutorialAnimal.toUpperCase()}-MINGORE.png`;
-      this.hideBettingPanel(); // Ocultar panel al inicio del tutorial
-    }
-  }
-
-  /**
-   * Avanza a la siguiente etapa del tutorial
-   */
-  public advanceTutorialStage(): void {
-    if (!this.tutorialActive) return;
-
-    switch (this.tutorialStage) {
-      case 'welcome':
-        this.tutorialStage = 'wheel';
-        break;
-      case 'wheel':
-        // Se avanzará automáticamente cuando el usuario seleccione un animal
-        break;
-      case 'betting':
-        // Se avanzará automáticamente cuando el usuario seleccione una ficha
-        break;
-      case 'spin':
-        this.tutorialStage = 'manual-spin';
-        this.cdr.markForCheck();
-        break;
-      case 'manual-spin':
-        this.completeTutorial();
-        break;
-    }
-  }
-
-  /**
-   * Maneja el click en un animal durante el tutorial
-   */
-  public onTutorialAnimalClick(): void {
-    if (this.tutorialActive && this.tutorialStage === 'wheel') {
-      this.tutorialStage = 'betting';
-      this.showBettingPanel(); // Mostrar panel de apuestas
-    }
-  }
-
-  /**
-   * Maneja el click en una ficha durante el tutorial
-   */
-  public onTutorialChipClick(): void {
-    if (this.tutorialActive && this.tutorialStage === 'betting') {
-      this.tutorialStage = 'spin';
-    }
-  }
-
-  /**
-   * Completa el tutorial y lo marca como finalizado
-   */
-  private completeTutorial(): void {
-    this.tutorialService.markTutorialCompleted();
-    this.tutorialActive = false;
-    this.tutorialStage = 'completed';
-  }
-
-  /**
-   * Obtiene el texto a mostrar en la burbuja según la etapa actual
-   * PLACEHOLDER - Modificar estos textos según necesidad
-   */
-  public getTutorialText(): string {
-    // Si estamos mostrando mensaje de redirección, mostrar ese mensaje
-    if (this.tutorialShowingRedirectMessage) {
-      switch (this.tutorialStage) {
-        case 'wheel':
-          return 'Antes de que hagas eso, presiona en un animal de la ruleta para continuar el tutorial.';
-        case 'betting':
-          return 'Antes de que hagas eso, presiona en una ficha para continuar el tutorial.';
-        default:
-          return '';
-      }
-    }
-
-    // Mensajes normales del tutorial
-    // Capitalizar la primera letra del nombre del animal
-    const animalName = this.tutorialAnimal.charAt(0).toUpperCase() + this.tutorialAnimal.slice(1);
-
-    switch (this.tutorialStage) {
-      case 'welcome':
-        return `¡Bienvenido a Spin Zodiac! Soy ${animalName} y te enseñaré como jugar. ¡Comencemos!`;
-      case 'wheel':
-        return 'Esta es la ruleta con los 12 animales del zodiaco. ¡Presiona sobre cualquiera de mis colegas para continuar!';
-      case 'betting':
-        return 'Este es el panel de apuestas. Aquí tendrás información sobre tu apuesta y el animal que seleccionaste. Presiona una ficha para continuar.';
-      case 'spin':
-        return '¡Excelente! ¡Cuando termines con tus apuestas puedes utilizar el botón central de la rueda para comenzar a jugar!';
-      case 'manual-spin':
-        return '¡También puedes girar la ruleta manualmente! Desliza tu dedo sobre la ruleta para hacerla girar. ¡Inténtalo!';
-      default:
-        return '';
-    }
-  }
-
-  /**
-   * Maneja clicks en el overlay del tutorial
-   * Solo se llama en etapas welcome y spin (cuando overlay es clickable)
-   */
-  public handleTutorialOverlayClick(): void {
-    if (!this.tutorialActive) return;
-
-    // El overlay solo es clickable en etapas welcome, spin y manual-spin
-    // En estas etapas, cualquier click avanza el tutorial
-    if (this.tutorialStage === 'welcome' || this.tutorialStage === 'spin' || this.tutorialStage === 'manual-spin') {
-      this.advanceTutorialStage();
-      return;
-    }
-  }
-
-  /**
-   * Maneja clicks fuera del área permitida durante el tutorial
-   */
-  public onTutorialWrongAreaClick(): void {
-    if (!this.tutorialActive) return;
-
-    // Solo mostrar mensaje de redirección en etapas wheel y betting
-    if (this.tutorialStage === 'wheel' || this.tutorialStage === 'betting') {
-      this.tutorialShowingRedirectMessage = true;
-
-      // Resetear el mensaje
-      setTimeout(() => {
-        this.tutorialShowingRedirectMessage = false;
-      }, 8000);
-    }
   }
 
   public trackByBet(index: number, bet: AnimalBet): number {
