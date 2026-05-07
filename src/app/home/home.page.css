@@ -53,10 +53,18 @@ ion-content {
 
 /* Header - Contiene solo balance cuando betting-panel NO está visible */
 .header {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: clamp(0.5rem, 3vw, 5rem) 0;
   position: relative;
   z-index: 10;
+}
+
+.header-logo {
+  width: 250px; /* Ajusta el tamaño según necesites */
+  height: auto;
+  object-fit: contain;
 }
 
 .selected-animals-floating {

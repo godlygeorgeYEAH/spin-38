@@ -28,6 +28,11 @@
 
   <!-- Header - Contiene botones de ayuda -->
   <div class="header">
+    <!-- Logo en esquina superior izquierda -->
+    <div class="logo-container">
+      <img src="assets/images/logo/logo1.png" alt="Logo" class="header-logo">
+    </div>
+
     <!-- Clear All Button - Esquina superior izquierda -->
     <div class="clear-all-button-container" *ngIf="selectedAnimals.length > 0">
       <button (click)="clearAllBets()" class="clear-all-button" title="Limpiar Todo">
