@@ -19,6 +19,7 @@ import { AdminAuthService } from '../services/admin-auth.service';
 import { AudioService } from '../services/audio.service';
 import { DevicePerformanceTier, PerformanceDetectorService } from '../services/performance-detector.service';
 import { ApiService } from '../services/api.service';
+import { RoundOrchestratorService } from '../services/round-orchestrator.service';
 import html2canvas from 'html2canvas';
 
 @Component({
@@ -114,7 +115,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private adminAuth: AdminAuthService,
     private audioService: AudioService,
     private performanceDetector: PerformanceDetectorService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    public orchestrator: RoundOrchestratorService
   ) {
     addIcons({ settingsOutline, closeOutline });
 
@@ -258,6 +260,29 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     } else if (this.backgroundVideo?.nativeElement) {
       this.backgroundVideo.nativeElement.style.display = 'none';
     }
+
+    this.orchestrator.spinCommand$.subscribe(cmd => {
+      if (!this.wheelContainer || this.wheelContainer.spinning) return;
+      this.gameState = GameState.PLAYING;
+      this.cdr.markForCheck();
+      this.wheelContainer.spinToResult(cmd)
+        .then(() => {
+          this.orchestrator.notifySpinComplete();
+          return this.wheelContainer.resetToPosition();
+        })
+        .then(() => {
+          this.gameState = GameState.RESULT;
+          this.cdr.markForCheck();
+        })
+        .catch(err => {
+          console.error('[HomePage] spinToResult falló:', err);
+          this.orchestrator.notifySpinComplete();
+          this.gameState = GameState.IDLE;
+          this.cdr.markForCheck();
+        });
+    });
+
+    this.orchestrator.start();
   }
 
   private isXiaomiBrowser(): boolean {
@@ -266,6 +291,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.orchestrator.stop();
+
     // Limpiar listeners del video
     if (this.backgroundVideo?.nativeElement) {
       const video = this.backgroundVideo.nativeElement;

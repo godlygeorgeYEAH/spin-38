@@ -56,6 +56,13 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private animalTransformCache = new Map<number, string>();
   private numberTransformCache = new Map<number, string>();
 
+  // ── Posición de reset ──────────────────────────────────────────────────────
+  // Cambia estos valores para ajustar a dónde vuelve la rueda después de cada giro
+  private readonly RESET_OUTER_POSITION: number | string = '00';
+  private readonly RESET_INNER_POSITION: number | string = '00';
+  private readonly RESET_DURATION_MS = 1200;
+  private readonly RESET_ROTATIONS = 1;
+
   // ==========================================
   // CONFIGURACIÓN DE POSICIONAMIENTO SVG
   // ==========================================
@@ -481,11 +488,33 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     this.innerDisplayItems = [...this.displayItems];
   }
 
+  public resetToPosition(): Promise<void> {
+    const outerIndex = this.ROULETTE_NUMBERS.indexOf(this.RESET_OUTER_POSITION);
+    const innerIndex = this.ROULETTE_NUMBERS.indexOf(this.RESET_INNER_POSITION);
+    if (outerIndex === -1 || innerIndex === -1) return Promise.resolve();
+
+    const targetOuter = this.calculateFinalAngle(outerIndex, this.restingOuterAngle, true, this.RESET_ROTATIONS);
+    const targetInner = this.calculateFinalAngle(innerIndex, this.restingInnerAngle, false, this.RESET_ROTATIONS);
+
+    this.applySpinAnimation(this.outerWheel.nativeElement, targetOuter, this.RESET_DURATION_MS, 'ease-out');
+    this.applySpinAnimation(this.innerWheel.nativeElement, targetInner, this.RESET_DURATION_MS, 'ease-out');
+
+    return new Promise(resolve => {
+      setTimeout(() => {
+        this.restingOuterAngle = targetOuter;
+        this.restingInnerAngle = targetInner;
+        this.forceStopAnimation(this.outerWheel.nativeElement, targetOuter);
+        this.forceStopAnimation(this.innerWheel.nativeElement, targetInner);
+        resolve();
+      }, this.RESET_DURATION_MS);
+    });
+  }
+
   public getRouletteNumber(index: number): number | string {
     return this.ROULETTE_NUMBERS[index] ?? index;
   }
 
-  private applySpinAnimation(element: SVGGElement, targetAngle: number, duration?: number): void {
+  private applySpinAnimation(element: SVGGElement, targetAngle: number, duration?: number, easing = 'cubic-bezier(0.23, 1, 0.32, 1)'): void {
     const animationDuration = duration ?? this.spinDuration;
 
     // Safari fix: No leer element.style.transform (puede ser inconsistente)
@@ -502,7 +531,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     element.getBoundingClientRect();
 
     // Paso 3: Activar transición
-    element.style.transition = `transform ${animationDuration}ms cubic-bezier(0.23, 1, 0.32, 1)`;
+    element.style.transition = `transform ${animationDuration}ms ${easing}`;
 
     // Paso 4: Aplicar transform final (usar requestAnimationFrame para Safari)
     requestAnimationFrame(() => {
@@ -547,8 +576,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
    * @param isOuter - true para rueda externa, false para rueda interna
    * @returns Ángulo final en grados
    */
-  private calculateFinalAngle(index: number, currentAngle: number, isOuter: boolean): number {
-    const rotations = 10;
+  private calculateFinalAngle(index: number, currentAngle: number, isOuter: boolean, rotations = 10): number {
     const segmentCenterAngle = index * this.degreesPerSegment + (this.degreesPerSegment / 2);
     // En cualquier rueda con CSS rotate(φ), el segmento en la parte superior es el que
     // estaba en -φ (mod 360). Para mostrar segmentCenterAngle arriba: φ ≡ -segmentCenterAngle (mod 360)
