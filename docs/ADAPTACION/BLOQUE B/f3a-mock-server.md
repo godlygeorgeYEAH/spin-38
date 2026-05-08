@@ -1,7 +1,6 @@
 # Fase 3A — Mock server con contrato mínimo
 
 **Bloque:** B  
-**Estimación:** Paralela con Fase 3B (sin estimación independiente)  
 **Dependencias:** Fase 0 (estructura de monorepo con `apps/mock-server` creada)  
 **Entregable:** Servidor Express corriendo en `apps/mock-server` que simula un ciclo completo de ronda, levantado con `npm run mock-server`
 

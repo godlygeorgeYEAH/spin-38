@@ -1,7 +1,5 @@
 # Fase 5 — Componentes de UI auxiliar
 
-**Bloque:** B  
-**Estimación:** 3 días  
 **Dependencias:** `RoundOrchestratorService` con sus observables públicos definidos (puede desarrollarse en paralelo con Fase 4 si el contrato de observables se acuerda antes)  
 **Entregable:** Countdown, panel de historial y placeholder de jackpot funcionando e integrados en `home.page`, alimentados por el orquestador
 

@@ -1,7 +1,5 @@
 # Fase 7 — Concepto visual y assets finales
 
-**Bloque:** B
-**Estimación:** Sin estimación fija — depende de la aprobación del concepto y la entrega de assets.
 **Dependencias:** Concepto visual aprobado por Luis (cliente). Assets de los 38 animales venezolanos entregados por el diseñador. Fase 6 completada o en paralelo avanzado.
 **Entregable:** Aplicación visualmente terminada con los 38 animales del animalito venezolano en los segmentos y el estilo "acero aniquilado" aplicado en toda la interfaz.
 

@@ -1,7 +1,5 @@
 # Fase 8 — Resiliencia y polish
 
-**Bloque:** B
-**Estimación:** Sin estimación fija — depende de los resultados del testing en hardware real.
 **Dependencias:** Fase 7 completada. Acceso al hardware target de las agencias para pruebas presenciales.
 **Entregable:** Aplicación lista para operar en condiciones reales de agencia: sin supervisión técnica, con reconexión automática, y en modo kiosko.
 

@@ -1,7 +1,5 @@
 # Fase 6 — Integración con backend real
 
-**Bloque:** B
-**Estimación:** 3–4 días
 **Dependencias:** Fase 4 y Fase 5 completadas. Contrato formal validado y aprobado por Carlos y José Gregorio. Backend de Carlos disponible en un ambiente de pruebas accesible.
 **Entregable:** Aplicación corriendo contra el backend real de Carlos y José Gregorio en ambiente de pruebas, sin intervención del mock server.
 

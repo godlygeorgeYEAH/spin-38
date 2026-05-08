@@ -1,7 +1,6 @@
 # Fase 3B — Doble anillo con números placeholder
 
-**Bloque:** B  
-**Estimación:** 2–3 días  
+**Bloque:** B
 **Dependencias:** Fase 1 (motor `WheelContainerComponent` portado y limpiado)  
 **Entregable:** `WheelContainerComponent` mostrando los 38 números de la ruleta americana en ambos anillos, girando en sentidos opuestos hacia un resultado externo
 

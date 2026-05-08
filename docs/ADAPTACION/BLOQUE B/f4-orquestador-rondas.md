@@ -1,7 +1,6 @@
 # Fase 4 — Orquestador de rondas y home final
 
 **Bloque:** B  
-**Estimación:** 3–4 días  
 **Dependencias:** Fase 3A (mock server activo) y Fase 3B (`WheelContainerComponent` con 38 posiciones y doble giro)  
 **Entregable:** Aplicación corriendo end-to-end contra el mock server — la rueda gira, se detiene, y el ciclo se repite automáticamente
 
