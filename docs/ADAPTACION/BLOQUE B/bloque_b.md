@@ -7,7 +7,6 @@
 ## Fase 3A — Mock server con contrato mínimo
 *(Paralela con Fase 3B)*
 
-**Dependencias externas:** ninguna  
 **Entregable:** servidor Express corriendo en `apps/mock-server` que simula un ciclo completo de ronda
 
 ### Objetivo
@@ -35,8 +34,6 @@ Se levanta con `npm run mock-server` desde la raíz del monorepo.
 ## Fase 3B — Doble anillo con números placeholder
 *(Paralela con Fase 3A)*
 
-**Estimación:** 2–3 días  
-**Dependencias externas:** ninguna  
 **Entregable:** `WheelContainerComponent` mostrando los 38 números de la ruleta americana en ambos anillos, girando en sentidos opuestos hacia un resultado externo
 
 ### Objetivo
@@ -58,8 +55,6 @@ Hacer funcionar el motor portado del Bloque A como el cliente lo describió: dos
 ## Fase 4 — Orquestador de rondas y home final
 *(Depende de: Fase 3A y Fase 3B)*
 
-**Estimación:** 3–4 días  
-**Dependencias externas:** ninguna  
 **Entregable:** aplicación corriendo end-to-end contra el mock server — la rueda gira, se detiene, y el ciclo se repite solo
 
 ### Objetivo
@@ -77,8 +72,6 @@ Conectar el motor (Fase 3B) con la fuente de datos (Fase 3A) a través de un orq
 ## Fase 5 — Componentes de UI auxiliar
 *(Paralelizable con Fase 4)*
 
-**Estimación:** 3 días  
-**Dependencias externas:** ninguna  
 **Entregable:** countdown, panel de historial y placeholder de jackpot funcionando y alimentados por el orquestador
 
 ### Objetivo
@@ -98,8 +91,6 @@ Completar la pantalla con los elementos informativos que rodean la rueda. Cada c
 ## Fase 6 — Integración con backend real
 *(Depende de: contrato formal validado por Carlos y José Gregorio)*
 
-**Estimación:** 3–4 días  
-**Dependencias externas:** contrato formal aprobado, backend de Carlos disponible para pruebas  
 **Entregable:** aplicación corriendo contra el backend real en ambiente de pruebas
 
 ### Objetivo
@@ -117,7 +108,6 @@ El mock server se conserva activo en el repo como herramienta de desarrollo offl
 ## Fase 7 — Concepto visual y assets finales
 *(Depende de: concepto aprobado por Luis, assets de animales del diseñador)*
 
-**Dependencias externas:** propuesta visual elegida, assets de los 38 animales  
 **Entregable:** aplicación visualmente terminada con el estilo "acero aniquilado" y los animales del animalito venezolano
 
 ### Objetivo
@@ -137,7 +127,6 @@ Vestir el producto funcionalmente completo con la identidad visual definitiva. E
 ## Fase 8 — Resilencia y polish
 *(Depende de: Fase 7)*
 
-**Dependencias externas:** ninguna  
 **Entregable:** aplicación lista para operar en condiciones reales de agencia
 
 ### Objetivo
