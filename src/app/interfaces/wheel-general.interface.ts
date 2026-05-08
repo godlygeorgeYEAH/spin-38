@@ -17,8 +17,8 @@ export interface WheelItem {
 }
 
 export interface WheelSpinResult {
-  animal: Animal;           // Animal ganador (rueda externa)
-  innerAnimal: Animal;      // Animal ganador (rueda interna)
+  outerPosition: number | string;
+  innerPosition: number | string;
   isPositioningOnly?: boolean;
   outerWheelIndex?: number;
   innerWheelIndex?: number;

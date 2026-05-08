@@ -133,19 +133,9 @@
       <div class="result-content">
         <h3 class="result-title">{{ lastWin > 0 ? '¡HAS GANADO!' : 'SIGUE INTENTANDO' }}</h3>
 
-        <!-- Imagen completa del animal con multiplicador -->
-        <div class="result-animal-wrapper">
-          <img [src]="gameResult.animal.image"
-               [alt]="gameResult.animal.name"
-               class="result-animal-full-image">
-
-          <!-- Multiplicador sobre la imagen -->
-        </div>
-
-        <!-- Texto descriptivo del animal -->
+        <!-- Resultado de posiciones de ruleta -->
         <div class="result-animal-description">
-          <h4 class="animal-name">{{ gameResult.animal.name }}</h4>
-          <p class="animal-trait">{{ gameResult.animal.description || 'Animal del zodiaco chino' }}</p>
+          <h4 class="animal-name">{{ gameResult.outerPosition }} / {{ gameResult.innerPosition }}</h4>
           <p *ngIf="lastWin > 0" class="win-amount">+${{ lastWin }}</p>
         </div>
 

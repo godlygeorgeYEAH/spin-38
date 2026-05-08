@@ -33,7 +33,7 @@ Eliminar del home y del árbol de dependencias todo lo que corresponde al modelo
 
 - **Limpieza de assets.**
   - Se eliminan las carpetas `assets/images/fichas/`, `assets/images/multiplicadores/`, `assets/images/contenedores/` y `assets/images/botones/` — todos los assets del sistema de apuestas que no van a aparecer en ninguna pantalla de Ruleta de Dupla.
-  - Los 12 animales del zodiaco chino se reemplazan por imágenes placeholder hasta que lleguen los 38 animales del animalito venezolano.
+  - Las imágenes de animales del zodiaco chino (`assets/images/animales/`) se eliminan. F3B ya reemplazó las imágenes de la rueda por texto numérico — el wheel component ya no carga ninguna imagen de animal.
 
 ## Criterio de completitud
 
@@ -42,8 +42,7 @@ Eliminar del home y del árbol de dependencias todo lo que corresponde al modelo
 - `TutorialService` y `AdminAuthService` no existen en el repo.
 - `crypto-js` no aparece en `package.json` ni en `package-lock.json`.
 - `FindBetPipe` no existe en el repo.
-- Las carpetas `assets/images/fichas/`, `assets/images/multiplicadores/`, `assets/images/contenedores/` y `assets/images/botones/` no existen.
-- Los 12 animales del zodiaco han sido reemplazados por imágenes placeholder en `assets/images/animales/`.
+- Las carpetas `assets/images/fichas/`, `assets/images/multiplicadores/`, `assets/images/contenedores/`, `assets/images/botones/` y `assets/images/animales/` no existen.
 - `PerformanceDetectorService` está presente y funcional en el repo.
 - La decisión sobre `AudioService` está tomada y ejecutada (portado o eliminado).
 - La aplicación compila y corre sin errores en modo desarrollo.

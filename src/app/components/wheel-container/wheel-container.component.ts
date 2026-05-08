@@ -1,24 +1,10 @@
 import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnChanges, SimpleChanges, OnInit, AfterViewInit, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WheelSpinResult, Animal, WheelItem } from '../../interfaces/wheel-general.interface';
+import { WheelSpinResult, WheelItem } from '../../interfaces/wheel-general.interface';
 import { GameState } from '../../interfaces/game.enums';
 import { AudioService } from '../../services/audio.service';
 import { PerformanceDetectorService, PerformanceProfile } from '../../services/performance-detector.service';
 
-const animalMap: { [key: string]: Animal } = {
-  'Rata': { name: 'Rata', emoji: '🐀', image: '/assets/images/animales/RATA-MINGORE.png', description: 'Inteligencia' },
-  'Buey': { name: 'Buey', emoji: '🐂', image: '/assets/images/animales/BUEY-MINGORE.png', description: 'Fuerza' },
-  'Tigre': { name: 'Tigre', emoji: '🐅', image: '/assets/images/animales/TIGRE-MINGORE.png', description: 'Valentía' },
-  'Conejo': { name: 'Conejo', emoji: '🐇', image: '/assets/images/animales/CONEJO-MINGORE.png', description: 'Elegancia' },
-  'Dragón': { name: 'Dragón', emoji: '🐉', image: '/assets/images/animales/DRAGON-MINGORE.png', description: 'Poder' },
-  'Serpiente': { name: 'Serpiente', emoji: '🐍', image: '/assets/images/animales/SERPIENTE-MINGORE.png', description: 'Sabiduría' },
-  'Caballo': { name: 'Caballo', emoji: '🐎', image: '/assets/images/animales/CABALLO-MINGORE.png', description: 'Energía' },
-  'Cabra': { name: 'Cabra', emoji: '🐐', image: '/assets/images/animales/CABRA-MINGORE.png', description: 'Calma' },
-  'Mono': { name: 'Mono', emoji: '🐒', image: '/assets/images/animales/MONO-MINGORE.png', description: 'Ingenio' },
-  'Gallo': { name: 'Gallo', emoji: '🐓', image: '/assets/images/animales/GALLO-MINGORE.png', description: 'Confianza' },
-  'Perro': { name: 'Perro', emoji: '🐕', image: '/assets/images/animales/PERRO-MINGORE.png', description: 'Lealtad' },
-  'Cerdo': { name: 'Cerdo', emoji: '🐖', image: '/assets/images/animales/CERDO-MINGORE.png', description: 'Honestidad' }
-};
 
 @Component({
   selector: 'app-wheel-container',
@@ -43,8 +29,8 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   @ViewChild('innerWheel', { static: true }) innerWheel!: ElementRef<SVGGElement>;
 
   public spinning = false;
-  public displayItems: Animal[] = [];
-  public innerDisplayItems: Animal[] = [];
+  public displayItems: number[] = [];
+  public innerDisplayItems: number[] = [];
   public errorMessage: string = '';
   public winningInnerAnimalIndex: number | null = null;
   public showConfetti = false;
@@ -56,7 +42,11 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private targetOuterAngle = 0;
   private targetInnerAngle = 0;
 
-  private readonly fallbackZodiacs = ['Rata', 'Buey', 'Tigre', 'Conejo', 'Dragón', 'Serpiente', 'Caballo', 'Cabra', 'Mono', 'Gallo', 'Perro', 'Cerdo', 'Rata', 'Buey', 'Tigre', 'Conejo', 'Dragón', 'Serpiente', 'Caballo', 'Cabra', 'Mono', 'Gallo', 'Perro', 'Cerdo', 'Rata', 'Buey', 'Tigre', 'Conejo', 'Dragón', 'Serpiente', 'Caballo', 'Cabra', 'Mono', 'Gallo', 'Perro', 'Cerdo', 'Rata', 'Buey'];
+  private readonly ROULETTE_NUMBERS: (number | string)[] = [
+    0, '00', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+    13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+    26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36
+  ];
   @Input() segmentsCount: number = 38;
   get degreesPerSegment(): number { return 360 / this.segmentsCount; }
 
@@ -401,7 +391,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
    * @param result - Resultado del backend (animal ganador y multiplicador)
    * @returns Promise que se resuelve cuando la animación termina
    */
-  public spinToResult(result: { outerAnimal: Animal; innerAnimal: Animal }): Promise<WheelSpinResult> {
+  public spinToResult(result: { outerPosition: number | string; innerPosition: number | string }): Promise<WheelSpinResult> {
     if (this.spinning) {
       return Promise.reject(new Error("La ruleta ya está girando."));
     }
@@ -417,22 +407,19 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     }
 
     return new Promise((resolve, reject) => {
-      const outerResultIndex = this.displayItems.findIndex(item => item.name === result.outerAnimal.name);
+      const outerResultIndex = this.ROULETTE_NUMBERS.indexOf(result.outerPosition);
       if (outerResultIndex === -1) {
         this.spinning = false;
-        reject(new Error(`Animal externo ${result.outerAnimal.name} no encontrado`));
+        reject(new Error(`Posición exterior ${result.outerPosition} no encontrada en el pool de ruleta`));
         return;
       }
 
-      const innerResultIndex = this.innerDisplayItems.findIndex(item => item.name === result.innerAnimal.name);
+      const innerResultIndex = this.ROULETTE_NUMBERS.indexOf(result.innerPosition);
       if (innerResultIndex === -1) {
         this.spinning = false;
-        reject(new Error(`Animal interno ${result.innerAnimal.name} no encontrado`));
+        reject(new Error(`Posición interior ${result.innerPosition} no encontrada en el pool de ruleta`));
         return;
       }
-
-      const winningAnimalItem = this.displayItems[outerResultIndex];
-      const innerWheelAnimalItem = this.innerDisplayItems[innerResultIndex];
 
       this.targetOuterAngle = this.calculateFinalAngle(outerResultIndex, this.restingOuterAngle, true);
       this.targetInnerAngle = this.calculateFinalAngle(innerResultIndex, this.restingInnerAngle, false);
@@ -471,9 +458,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
         const resultDelay = playerWon ? 1500 : 300;
 
         setTimeout(() => {
-          const winningAnimal: Animal = animalMap[winningAnimalItem.name] || { name: winningAnimalItem.name, emoji: '❓' };
-          const innerAnimal: Animal = animalMap[innerWheelAnimalItem.name] || { name: innerWheelAnimalItem.name, emoji: '❓' };
-
           this.zone.run(() => {
             this.winningInnerAnimalIndex = null;
             this.showConfetti = false;
@@ -481,8 +465,8 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
           });
 
           resolve({
-            animal: winningAnimal,
-            innerAnimal,
+            outerPosition: result.outerPosition,
+            innerPosition: result.innerPosition,
             isPositioningOnly: this.isRandomPositioning,
             outerWheelIndex: outerResultIndex,
             innerWheelIndex: innerResultIndex,
@@ -493,15 +477,12 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   private prepareDisplayItems(): void {
-    this.displayItems = this.fallbackZodiacs.map(name => animalMap[name]);
-    this.innerDisplayItems = this.innerAnimals.length > 0
-      ? this.innerAnimals.map(item => animalMap[item.name] || { name: item.name, emoji: '❓' })
-      : this.fallbackZodiacs.map(name => animalMap[name]);
+    this.displayItems = Array.from({ length: this.segmentsCount }, (_, i) => i);
+    this.innerDisplayItems = [...this.displayItems];
   }
 
-  public getAnimalImage(animalName: string): string {
-    const animal = animalMap[animalName];
-    return (animal && animal.image) ? animal.image : '';
+  public getRouletteNumber(index: number): number | string {
+    return this.ROULETTE_NUMBERS[index] ?? index;
   }
 
   private applySpinAnimation(element: SVGGElement, targetAngle: number, duration?: number): void {

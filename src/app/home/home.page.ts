@@ -735,10 +735,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
       console.log('[HomePage] Girando ruleta hacia resultado del backend...');
 
-      // Usar el nuevo método spinToResult() que acepta el resultado del backend
+      // Usar el nuevo método spinToResult() que acepta posiciones de ruleta americana
       const result = await this.wheelContainer.spinToResult({
-        outerAnimal: winningAnimal,
-        innerAnimal: winningAnimal, // placeholder: el backend de Duplas enviará el animal interno real
+        outerPosition: backendResult.winningAnimal, // placeholder: el backend de Duplas enviará posición numérica real
+        innerPosition: backendResult.winningAnimal,
       });
 
       console.log('[HomePage] Ruleta completada. Resultado visual:', result);
@@ -774,7 +774,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
       // Agregar resultado al historial
       this.addToHistory(
-        result.animal,
+        { name: String(result.outerPosition), emoji: '' },
         0,
         this.lastWin,
         backendResult.isWin
@@ -1082,7 +1082,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     try {
       const shareTitle = '¡Gané en la Ruleta del Zodiaco Chino!';
-      const shareText = `¡Acabo de ganar $${this.lastWin} apostando a ${this.gameResult.animal.name}! 🎰🐉`;
+      const shareText = `¡Acabo de ganar $${this.lastWin}! 🎰`;
 
       // Verificar APIs disponibles
       const hasShare = !!navigator.share;
@@ -1226,7 +1226,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   public getDisplayedAnimals(): AnimalBet[] {
     if (this.lastWin > 0 && this.gameResult) {
-      const winningBet = this.selectedAnimals.find(bet => bet.animal.name === this.gameResult!.animal.name);
+      const winningBet = this.selectedAnimals.find(bet => String(bet.animal.name) === String(this.gameResult!.outerPosition));
       return winningBet ? [winningBet] : [];
     }
     return this.selectedAnimals;
@@ -1248,7 +1248,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private calculateWinnings(result: WheelSpinResult): void {
-    const winningBet = this.selectedAnimals.find(bet => bet.animal.name === result.animal.name);
+    const winningBet = this.selectedAnimals.find(bet => String(bet.animal.name) === String(result.outerPosition));
     if (winningBet) {
       this.lastWin = winningBet.amount;
     } else {

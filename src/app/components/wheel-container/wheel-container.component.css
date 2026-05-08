@@ -599,4 +599,24 @@ svg image {
   filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5)) !important;
 }
 
+.roulette-number-outer {
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-size: 18px;
+  font-weight: bold;
+  fill: #ffffff;
+  stroke: #000000;
+  stroke-width: 0.5px;
+}
+
+.roulette-number-inner {
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-size: 14px;
+  font-weight: bold;
+  fill: #ffffff;
+  stroke: #000000;
+  stroke-width: 0.5px;
+}
+
 
