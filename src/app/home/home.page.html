@@ -106,6 +106,13 @@
 
   <div class="game-area">
     <div class="wheel-side">
+      <div class="round-state-display">
+        <span *ngIf="(orchestrator.roundState$ | async) === 'COUNTING_DOWN'">
+          {{ orchestrator.secondsToNextRound$ | async }}s
+        </span>
+        <span *ngIf="(orchestrator.roundState$ | async) === 'SPINNING'">Girando...</span>
+        <span *ngIf="(orchestrator.roundState$ | async) === 'REVEALING'">Resultado</span>
+      </div>
       <div class="wheel-container-wrapper" [class.displaced]="isWheelDisplaced">
         <app-wheel-container [animals]="animalsForWheel"
           [gameState]="gameState" [spinDuration]="spinDuration"

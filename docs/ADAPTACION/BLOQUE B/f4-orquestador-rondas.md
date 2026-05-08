@@ -14,7 +14,6 @@ Conectar el motor visual (Fase 3B) con la fuente de datos (Fase 3A) a través de
   - Consume el mock server mediante HTTP polling adaptativo: cada 30 segundos en estado `idle`, cada 5 segundos cuando quedan menos de 60 segundos para el próximo giro. Esto reduce el tráfico de red en períodos de inactividad sin sacrificar reactividad cuando importa.
   - Gestiona la máquina de estados de la ronda con transiciones explícitas: `IDLE → COUNTING_DOWN → SPINNING → REVEALING → IDLE`.
   - Envía el ACK al servidor (`POST /api/round/:id/ack`) al recibir la orden de giro, antes de iniciar la animación.
-  - Llama a `resetToInitialPosition()` en el componente de rueda antes de cada nuevo giro.
   - Invoca `spinToResult` con las posiciones del servidor y espera la notificación de fin de animación antes de avanzar a `REVEALING`.
   - Expone observables públicos para que los componentes hijos se suscriban sin conocer la fuente de datos ni la lógica de polling:
     - `roundState$` — estado actual de la máquina de estados.
@@ -37,6 +36,65 @@ Conectar el motor visual (Fase 3B) con la fuente de datos (Fase 3A) a través de
 - El polling reduce su frecuencia a 30 segundos en `IDLE` y la aumenta a 5 segundos cuando `secondsToNextRound$` cae por debajo de 60.
 - `home.page` no contiene lógica de ronda directa — toda la coordinación está en `RoundOrchestratorService`.
 
+## Implementación
+
+### Archivos creados / modificados
+
+| Archivo | Cambio |
+|---|---|
+| `src/app/services/round-orchestrator.service.ts` | Nuevo servicio |
+| `src/app/home/home.page.ts` | Inyección del orquestador, suscripción a `spinCommand$` |
+| `src/app/home/home.page.html` | Round state display con `roundState$` y `secondsToNextRound$` |
+
+### `RoundOrchestratorService`
+
+- `baseUrl = environment.apiUrl` (`http://localhost:3000/api`)
+- Estado interno: `BehaviorSubject<RoundState>` con valores `'IDLE' | 'COUNTING_DOWN' | 'SPINNING' | 'REVEALING'`
+- Polling adaptativo via `setTimeout` encadenado: 30 000 ms en estado ocioso, 5 000 ms cuando `secondsRemaining < 60`
+- Al detectar `round.state === 'spinning'` con `roundId !== lastHandledRoundId`: llama `triggerSpin(roundId)`
+  - GET `/round/:id/result` → POST `/round/:id/ack` → emite `spinCommandSubject.next({ outerPosition, innerPosition })`
+  - Transiciona a `SPINNING`; no vuelve a polling hasta que `notifySpinComplete()` sea llamado
+- `notifySpinComplete()`: transiciona a `REVEALING`, llama `fetchHistory()`, programa retorno a `IDLE` tras 15 s
+- Polling se protege contra concurrencia: si estado es `SPINNING` o `REVEALING`, reprograma sin sobreescribir estado
+
+### Suscripción en `home.page.ts`
+
+```ts
+this.orchestrator.spinCommand$.subscribe(cmd => {
+  if (!this.wheelContainer || this.wheelContainer.spinning) return;
+  this.gameState = GameState.PLAYING;
+  this.cdr.markForCheck();
+  this.wheelContainer.spinToResult(cmd)
+    .then(() => {
+      this.orchestrator.notifySpinComplete();
+      return this.wheelContainer.resetToPosition();
+    })
+    .then(() => {
+      this.gameState = GameState.RESULT;
+      this.cdr.markForCheck();
+    })
+    .catch(err => {
+      console.error('[HomePage] spinToResult falló:', err);
+      this.orchestrator.notifySpinComplete();
+      this.gameState = GameState.IDLE;
+      this.cdr.markForCheck();
+    });
+});
+this.orchestrator.start();
+```
+
+### Round state display en template
+
+```html
+<div class="round-state-display">
+  <span *ngIf="(orchestrator.roundState$ | async) === 'COUNTING_DOWN'">
+    {{ orchestrator.secondsToNextRound$ | async }}s
+  </span>
+  <span *ngIf="(orchestrator.roundState$ | async) === 'SPINNING'">Girando...</span>
+  <span *ngIf="(orchestrator.roundState$ | async) === 'REVEALING'">Resultado</span>
+</div>
+```
+
 ## Estado
 
-Pendiente
+Implementado
