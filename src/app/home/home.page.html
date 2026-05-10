@@ -2,107 +2,11 @@
              [class.performance-low]="getPerformanceTier() === 'low'"
              [class.performance-medium]="getPerformanceTier() === 'medium'"
              [class.performance-high]="getPerformanceTier() === 'high'">
-  <!-- Pantalla de carga -->
-  <div class="loading-screen" *ngIf="isLoading">
-    <div class="loading-content">
-      <!-- Logo de la aplicación -->
-      <div class="loading-logo">
-        <img src="assets/images/logo/rexludus.png" alt="Logo" class="loading-logo-image">
-      </div>
 
-      <!-- Texto de carga -->
-      <h2 class="loading-title">Cargando<span class="loading-dots"></span></h2>
-
-      <!-- Barra de progreso -->
-      <div class="progress-bar-container">
-        <div class="progress-bar-background">
-          <div class="progress-bar-fill" [style.width.%]="loadingProgress"></div>
-        </div>
-        <p class="progress-text">{{ loadingProgress }}%</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Video de fondo para móviles (con fallback MP4 para Safari) -->
-  <video #backgroundVideo class="background-video" autoplay loop muted playsinline preload="auto" webkit-playsinline>
+  <video class="background-video" autoplay loop muted playsinline preload="auto" webkit-playsinline>
     <source src="assets/videos/fondo-azul.mp4" type="video/mp4">
     <source src="assets/videos/fondo-azul.webm" type="video/webm">
   </video>
-
-  <!-- Header - Contiene botones de ayuda -->
-  <div class="header">
-    <!-- Clear All Button - Esquina superior izquierda -->
-    <div class="clear-all-button-container" *ngIf="selectedAnimals.length > 0">
-      <button (click)="clearAllBets()" class="clear-all-button" title="Limpiar Todo">
-      </button>
-    </div>
-
-    <!-- Help Buttons - Esquina superior derecha -->
-    <div class="help-button-container">
-      <button (click)="openBetHistory()" class="help-button history-btn" title="Historial de Apuestas">
-        <span style="font-size: 24px; color: var(--gold-primary);">📊</span>
-      </button>
-      <button (click)="openSettings()" class="help-button settings-btn" title="Configuración de Audio">
-        <ion-icon name="settings-outline" style="font-size: 24px; color: var(--gold-primary);"></ion-icon>
-      </button>
-    </div>
-  </div>
-
-  <!-- Balance en parte inferior cuando betting-panel NO está visible -->
-  <div class="player-balance-display bottom-balance" *ngIf="!isBettingControlsVisible">
-    <img src="assets/images/contenedores/saldo.png" alt="Saldo" class="balance-container-image">
-    <div class="balance-value">${{ balance$ | async }}</div>
-  </div>
-
-  <!-- Betting Panel - Contenedor independiente y responsive -->
-  <div class="betting-panel"
-       *ngIf="isBettingControlsVisible"
-       [class.appearing]="bettingPanelAnimationState === 'appearing'"
-       [class.disappearing]="bettingPanelAnimationState === 'disappearing'">
-    <img src="assets/images/contenedores/panel-apuestas.png" alt="Panel de Apuestas" class="betting-panel-background">
-
-    <!-- Animal name tag - posicionado absolutamente en el top center -->
-    <div class="animal-name-tag" *ngIf="currentEditingAnimal">
-      <img src="assets/images/contenedores/nombre-animal.png" alt="Nombre Animal" class="animal-name-container-image">
-      <span class="animal-name-text">{{ currentEditingAnimal.name }}</span>
-    </div>
-
-    <!-- Animal image container - posicionado absolutamente en el top center -->
-    <div class="animal-image-container" *ngIf="currentEditingAnimal">
-      <img src="assets/images/contenedores/aro-dorado.png" alt="Aro Dorado" class="animal-container-frame">
-      <img [src]="currentEditingAnimal.image" alt="{{ currentEditingAnimal.name }}" class="selected-animal-image pulsate-bck-normal rotate-hor-center-normal">
-    </div>
-
-    <div class="chips-section">
-      <div *ngFor="let coinValue of coinValues" class="coin-chip-container"
-        (click)="addCoinToCurrentAnimal(coinValue)"
-        [class.disabled]="gameState === 'playing' || !currentEditingAnimal">
-        <img [src]="getCoinImage(coinValue)" [alt]="'Ficha ' + coinValue" class="coin-chip-image">
-        <span class="coin-chip-value">{{ coinValue }}</span>
-      </div>
-    </div>
-
-    <!-- Player balance - Esquina inferior izquierda -->
-    <div class="player-balance-display">
-      <img src="assets/images/contenedores/saldo.png" alt="Saldo" class="balance-container-image">
-      <div class="balance-value">${{ balance$ | async }}</div>
-    </div>
-
-    <!-- Bet amount display -->
-    <div class="bet-amount-display">
-      <img src="assets/images/contenedores/apuesta.png" alt="Tu Apuesta" class="bet-container-image">
-      <div class="bet-value">${{ (selectedAnimals | findBet:currentEditingAnimal)?.amount || 0 }}</div>
-    </div>
-
-    <button (click)="clearCurrentAnimalBet()" class="clear-button"
-      [disabled]="!currentEditingAnimal || gameState === 'playing'">
-      <img src="assets/images/botones/limpiar.png" alt="Limpiar" class="clear-button-image">
-    </button>
-    <div class="floating-total-bet" *ngIf="(totalBetAmount$ | async)! > 0">
-      <img src="assets/images/contenedores/apuesta-total.png" alt="Apuesta Total" class="total-bet-container-image">
-      <div class="total-bet-value">${{ totalBetAmount$ | async }}</div>
-    </div>
-  </div>
 
   <div class="game-area">
     <div class="wheel-side">
@@ -113,58 +17,14 @@
         <span *ngIf="(orchestrator.roundState$ | async) === 'SPINNING'">Girando...</span>
         <span *ngIf="(orchestrator.roundState$ | async) === 'REVEALING'">Resultado</span>
       </div>
-      <div class="wheel-container-wrapper" [class.displaced]="isWheelDisplaced">
-        <app-wheel-container [animals]="animalsForWheel"
-          [gameState]="gameState" [spinDuration]="spinDuration"
+      <div class="wheel-container-wrapper">
+        <app-wheel-container
+          [gameState]="gameState"
+          [spinDuration]="spinDuration"
           [innerWheelSpinDuration]="innerWheelSpinDuration">
         </app-wheel-container>
       </div>
     </div>
   </div>
 
-  <div *ngIf="errorMessage" class="error-overlay">
-    <div class="error-message">{{ errorMessage }}</div>
-  </div>
-
-  <div class="result-overlay" *ngIf="showResult && gameResult" [class.win-result]="lastWin > 0" [class.lose-result]="lastWin === 0" (click)="closeResultOverlay($event)">
-    <div #resultCard class="result-container" (click)="$event.stopPropagation()">
-      <!-- Logo de fondo traslúcido -->
-      <div class="result-background-logo">
-        <img src="assets/images/logo/logo.png" alt="Logo">
-      </div>
-
-      <button class="close-button" (click)="closeResultOverlay($event)" title="Cerrar">
-        <ion-icon name="close-outline"></ion-icon>
-      </button>
-
-      <div class="result-content">
-        <h3 class="result-title">{{ lastWin > 0 ? '¡HAS GANADO!' : 'SIGUE INTENTANDO' }}</h3>
-
-        <!-- Resultado de posiciones de ruleta -->
-        <div class="result-animal-description">
-          <h4 class="animal-name">{{ gameResult.outerPosition }} / {{ gameResult.innerPosition }}</h4>
-          <p *ngIf="lastWin > 0" class="win-amount">+${{ lastWin }}</p>
-        </div>
-
-        <!-- Botones de acción -->
-        <div class="result-actions">
-          <!-- Botón de compartir (solo visible cuando gana) -->
-          <button *ngIf="lastWin > 0" class="result-action-button share-button" (click)="shareWin(); $event.stopPropagation()" title="Compartir victoria">
-          </button>
-
-          <!-- Botón de girar de nuevo -->
-          <button class="result-action-button spin-again-button" (click)="spinAgain($event)" title="Girar de nuevo">
-          </button>
-
-          <!-- Botón de limpiar rueda -->
-          <button class="result-action-button clear-wheel-button" (click)="clearWheelAndClose($event)" title="Limpiar rueda">
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <app-game-settings *ngIf="showSettings" [isOpen]="showSettings" [uiVolume]="uiVolume"
-    (closeModal)="closeSettings()" (uiVolumeChange)="onUIVolumeChange($event)"></app-game-settings>
-  <app-bet-history *ngIf="showBetHistory" [isOpen]="showBetHistory" [historyData]="betHistory"
-    (closeModal)="closeBetHistory()"></app-bet-history>
 </ion-content>

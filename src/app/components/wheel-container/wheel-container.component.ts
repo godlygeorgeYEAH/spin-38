@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnChange
 import { CommonModule } from '@angular/common';
 import { WheelSpinResult, WheelItem } from '../../interfaces/wheel-general.interface';
 import { GameState } from '../../interfaces/game.enums';
-import { AudioService } from '../../services/audio.service';
 import { PerformanceDetectorService, PerformanceProfile } from '../../services/performance-detector.service';
 
 
@@ -259,7 +258,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
 
   constructor(
     private zone: NgZone,
-    private audioService: AudioService,
     private cdr: ChangeDetectorRef,
     private performanceDetector: PerformanceDetectorService
   ) {
@@ -457,7 +455,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
           this.zone.run(() => {
             this.winningInnerAnimalIndex = innerResultIndex;
             this.showConfetti = true;
-            this.audioService.playVictory();
             this.cdr.markForCheck();
           });
         }
@@ -747,8 +744,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
 
     // Si cambiamos de segmento, reproducir sonido y animar puntero
     if (this.lastSegmentIndex !== -1 && currentSegment !== this.lastSegmentIndex) {
-      this.audioService.playClick();
-
       // Activar animación del puntero
       this.zone.run(() => {
         this.pointerBounce = true;
