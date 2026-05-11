@@ -8,6 +8,18 @@
 
 Conectar el motor visual (Fase 3B) con la fuente de datos (Fase 3A) a través de un orquestador que gestiona el ciclo completo de cada ronda. Al terminar esta fase hay algo demostrable al cliente: la pantalla se comporta como se ve en agencia, con rondas automáticas cada 5 minutos y la rueda girando hacia resultados reales del servidor. Es el momento en que las piezas del Bloque B dejan de ser componentes individuales y se convierten en un producto que corre solo.
 
+## Estado
+
+Completado — 2026-05-10
+
+## Notas de implementación
+
+- Implementado según spec sin desvíos significativos.
+- `RoundOrchestratorService` creado como singleton con máquina de estados `IDLE → COUNTING_DOWN → SPINNING → REVEALING → IDLE`, polling adaptativo (30 s en idle, 5 s cuando `secondsRemaining < 60`) y `spinCommand$` como canal de comunicación con el template.
+- `home.page.ts` suscribe a `spinCommand$` en `ngAfterViewInit`, llama `spinToResult`, encadena `notifySpinComplete()` y `resetToPosition()`, y maneja el error path con `notifySpinComplete()` para no dejar el orquestador bloqueado en `SPINNING`.
+- `home.page.html` usa `roundState$` y `secondsToNextRound$` para el display de estado de ronda; no contiene lógica de coordinación propia.
+- Build verificado sin errores tras la integración completa.
+
 ## Qué se construye / Qué se hace
 
 - **`RoundOrchestratorService`.** Servicio singleton que centraliza toda la lógica de coordinación entre servidor y UI:
@@ -95,6 +107,3 @@ this.orchestrator.start();
 </div>
 ```
 
-## Estado
-
-Implementado
