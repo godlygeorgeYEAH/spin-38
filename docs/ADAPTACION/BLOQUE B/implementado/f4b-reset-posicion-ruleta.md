@@ -8,6 +8,18 @@
 
 Evitar que la rueda quede detenida en posiciones arbitrarias entre rondas. Después de que `spinToResult` resuelve, se ejecuta un reposicionamiento visual rápido que sirve como "estado neutro" entre rondas y facilita el debugging al siempre saber en qué posición arranca el próximo giro.
 
+## Estado
+
+Completado — 2026-05-10
+
+## Notas de implementación
+
+- Implementado según spec sin desvíos.
+- `resetToPosition()` añadido como método público en `WheelContainerComponent`; las 4 constantes configurables (`RESET_OUTER_POSITION`, `RESET_INNER_POSITION`, `RESET_DURATION_MS`, `RESET_ROTATIONS`) viven al inicio de la clase para fácil ajuste.
+- `calculateFinalAngle` y `applySpinAnimation` extendidos con parámetros opcionales (`rotations` y `easing` respectivamente) sin romper las llamadas existentes.
+- El encadenamiento en `home.page.ts` (`notifySpinComplete()` → `resetToPosition()`) garantiza que el orquestador transiciona a `REVEALING` antes de que comience el reset visual, lo cual es intencional.
+- Build verificado sin errores tras la integración.
+
 ## Implementación
 
 ### Constantes configurables en `wheel-container.component.ts`
@@ -110,6 +122,3 @@ this.wheelContainer.spinToResult(cmd)
 - Cambiando `RESET_DURATION_MS = 500` la animación es perceptiblemente más rápida.
 - No hay saltos ni glitches visuales entre el fin del giro principal y el inicio del reset.
 
-## Estado
-
-Implementado
