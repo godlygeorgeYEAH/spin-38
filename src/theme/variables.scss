@@ -4,9 +4,7 @@
 
 :root {
   // Wheel variables
-  // Valor por defecto para dispositivos sin media query específico
-  // Los media queries en home.page.css sobrescriben este valor para cada dispositivo
-  --wheel-diameter: 450px;
+  // --wheel-diameter se define en wheel.config.ts y es aplicada en runtime por WheelContainerComponent
   --wheel-border-transform-y: 0px;
 
   // Wheel displacement when betting panel is visible (default values)

@@ -602,7 +602,6 @@ svg image {
 .roulette-number-outer {
   text-anchor: middle;
   dominant-baseline: middle;
-  font-size: 18px;
   font-weight: bold;
   fill: #ffffff;
   stroke: #000000;
@@ -612,7 +611,6 @@ svg image {
 .roulette-number-inner {
   text-anchor: middle;
   dominant-baseline: middle;
-  font-size: 14px;
   font-weight: bold;
   fill: #ffffff;
   stroke: #000000;

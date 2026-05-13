@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnChanges, SimpleChanges, OnInit, AfterViewInit, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnChanges, SimpleChanges, OnInit, AfterViewInit, OnDestroy, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WheelSpinResult, WheelItem } from '../../interfaces/wheel-general.interface';
 import { GameState } from '../../interfaces/game.enums';
 import { AudioService } from '../../services/audio.service';
 import { PerformanceDetectorService, PerformanceProfile } from '../../services/performance-detector.service';
+import { WHEEL_SVG, getWheelDiameter } from './wheel.config';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { PerformanceDetectorService, PerformanceProfile } from '../../services/p
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges {
+export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   private static nextId = 0;
   public readonly componentId: number;
 
@@ -66,122 +67,28 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   // ==========================================
   // CONFIGURACIÓN DE POSICIONAMIENTO SVG
   // ==========================================
-  // El SVG tiene viewBox="-210 -210 420 420", lo que nos da un sistema de coordenadas
-  // que va de -210 a +210 en ambos ejes X e Y, centrado en (0,0).
-  // Todos los cálculos de radio son relativos a este espacio de coordenadas del viewBox.
+  // Todos los valores se leen desde wheel.config.ts.
+  // Para modificar radios y proporciones, editar WHEEL_SVG en ese archivo.
 
-  /**
-   * Radio máximo disponible en el sistema de coordenadas del viewBox SVG.
-   * Define el "canvas" donde se dibuja la rueda completa.
-   *
-   * IMPORTANTE: Este valor debe ser mayor que el outerRingRadius para que
-   * la rueda no se corte en los bordes. Debe haber espacio (padding) entre
-   * el anillo exterior y los límites del viewBox.
-   *
-   * Fórmula recomendada: SVG_VIEWBOX_RADIUS > outerRingRadius + padding
-   * Ejemplo: Si outerRingRadius = 200, usar radius >= 210 (10px de padding)
-   *
-   * Para aumentar límites de la rueda: incrementa este valor.
-   * Valor base: 210 (viewBox="420×420")
-   */
-  private readonly SVG_VIEWBOX_RADIUS = 300;
+  private readonly SVG_VIEWBOX_RADIUS        = WHEEL_SVG.viewboxRadius;
+  private readonly OUTER_RING_RATIO          = WHEEL_SVG.outerRingRatio;
+  private readonly INNER_RING_RATIO          = WHEEL_SVG.innerRingRatio;
+  private readonly ANIMAL_POSITION_RATIO     = WHEEL_SVG.animalPositionRatio;
+  private readonly NUMBER_POSITION_RATIO     = WHEEL_SVG.numberPositionRatio;
+  private readonly ANIMAL_IMAGE_SIZE_RATIO   = WHEEL_SVG.animalImageSizeRatio;
+  private readonly ANIMAL_TEXT_POSITION_RATIO = WHEEL_SVG.animalTextPositionRatio;
+  public readonly outerNumberFontSize        = WHEEL_SVG.outerNumberFontSize;
+  public readonly innerNumberFontSize        = WHEEL_SVG.innerNumberFontSize;
 
-  /**
-   * Ratio para posicionar las imágenes de animales en la rueda.
-   * Los animales se posicionan al 76.2% del radio del viewBox.
-   * Esto los mantiene en el anillo exterior de la rueda.
-   *
-   * Para ajustar: aumentar ratio para mover animales hacia afuera (máx 1.0),
-   *               disminuir para moverlos hacia adentro (mín 0.0)
-   */
-  private readonly ANIMAL_POSITION_RATIO = 0.720; // 160/210 ≈ 0.762
-
-  /**
-   * Ratio para posicionar las etiquetas numéricas en la rueda.
-   * Los números se posicionan al 47.6% del radio del viewBox.
-   * Esto los mantiene en el anillo interior, más cerca del centro.
-   *
-   * Para ajustar: aumentar ratio para mover números hacia afuera (máx < ANIMAL_POSITION_RATIO),
-   *               disminuir para moverlos hacia adentro (mín 0.0)
-   */
-  private readonly NUMBER_POSITION_RATIO = 0.450; // 100/210 ≈ 0.476
-
-  /**
-   * Ratio para posicionar el texto curvado de nombres de animales.
-   * El texto se posiciona al 88% del radio del anillo exterior.
-   * Esto lo coloca cerca del borde externo del segmento rojo.
-   *
-   * Para ajustar: aumentar para mover el texto hacia el borde exterior (máx ~0.95),
-   *               disminuir para moverlo hacia el centro (mín 0.0)
-   */
-  private readonly ANIMAL_TEXT_POSITION_RATIO = 0.88;
-
-  /**
-   * Radio calculado para posicionamiento de animales (en unidades SVG).
-   * Este es el radio real usado en los cálculos trigonométricos.
-   */
   private get animalRadius(): number {
     return this.SVG_VIEWBOX_RADIUS * this.ANIMAL_POSITION_RATIO;
   }
 
-  /**
-   * Radio calculado para posicionamiento de números (en unidades SVG).
-   * Este es el radio real usado en los cálculos trigonométricos.
-   */
   private get numberRadius(): number {
     return this.SVG_VIEWBOX_RADIUS * this.NUMBER_POSITION_RATIO;
   }
 
-  /**
-   * Offset angular para hacer que 0° apunte hacia arriba en lugar de derecha.
-   * En trigonometría estándar, 0° apunta a la derecha (3 en punto).
-   * Restar π/2 (90°) rota la referencia para que 0° apunte arriba (12 en punto).
-   */
   private readonly ANGLE_OFFSET_FOR_TOP = Math.PI / 2;
-
-  /**
-   * Ratio para el radio del anillo exterior (segmentos de animales).
-   * Define el tamaño del anillo exterior como porcentaje del radio del viewBox.
-   * Valor base: 200 unidades SVG / 210 radio = 0.952
-   *
-   * ⚠️ ADVERTENCIA CRÍTICA: Este ratio DEBE ser < 1.0
-   *
-   * Si OUTER_RING_RATIO ≥ 1.0, el anillo se dibujará FUERA del viewBox y se verá
-   * cuadrado/cortado porque el SVG no puede renderizar contenido fuera de sus límites.
-   *
-   * ✅ CORRECTO para aumentar tamaño:
-   * 1. Aumentar SVG_VIEWBOX_RADIUS primero
-   * 2. Mantener OUTER_RING_RATIO < 1.0 (recomendado ≤ 0.95)
-   *
-   * ❌ INCORRECTO:
-   * - OUTER_RING_RATIO = 2 → anillo 2x más grande que viewBox → se corta
-   * - OUTER_RING_RATIO = 1.5 → anillo 1.5x más grande que viewBox → se corta
-   * - OUTER_RING_RATIO = 1.01 → anillo excede viewBox → se corta
-   *
-   * Rango válido: 0.3 (pequeño) a 0.98 (muy cercano al borde)
-   */
-  private readonly OUTER_RING_RATIO = 0.999; // 200/210 ≈ 0.952
-
-  /**
-   * Ratio para el radio del anillo interior (segmentos de números).
-   * El anillo interior ocupa el 57.1% del radio del viewBox.
-   * Valor base: 120 unidades SVG / 210 radio = 0.571
-   *
-   * Para ajustar: aumentar para anillo más grande (máx < OUTER_RING_RATIO),
-   *               disminuir para anillo más pequeño (mín ~0.3 para visibilidad)
-   * esto controla el tamaño de la rueda de los numeros
-   */
-  private readonly INNER_RING_RATIO = 0.555; // 120/210 ≈ 0.571
-
-  /**
-   * Ratio para el tamaño de las imágenes de animales en la rueda.
-   * Las imágenes tienen un tamaño de 23.8% del radio del viewBox.
-   * Valor base: 50 unidades SVG / 210 radio = 0.238
-   *
-   * Para ajustar: aumentar para imágenes más grandes (máx ~0.4 sin solapamiento),
-   *               disminuir para imágenes más pequeñas (mín ~0.1 para visibilidad)
-   */
-  private readonly ANIMAL_IMAGE_SIZE_RATIO = 0.299; // 50/210 ≈ 0.238
 
   /**
    * Tamaño calculado de las imágenes de animales (en unidades SVG).
@@ -337,7 +244,14 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     return colors[index % colors.length];
   }
 
+  private readonly resizeListener = () => this.applyWheelDiameter();
+
+  private applyWheelDiameter(): void {
+    document.documentElement.style.setProperty('--wheel-diameter', getWheelDiameter());
+  }
+
   ngOnInit(): void {
+    this.applyWheelDiameter();
     this.spinning = false;
     this.displayItems = [];
     this.errorMessage = '';
@@ -350,10 +264,16 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   ngAfterViewInit(): void {
+    window.addEventListener('resize', this.resizeListener);
+
     // Safari fix: Inicializar transform explícitamente en las ruedas
     if (this.outerWheel && this.innerWheel) {
       this.initializeWheelTransforms();
     }
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('resize', this.resizeListener);
   }
 
   /**
