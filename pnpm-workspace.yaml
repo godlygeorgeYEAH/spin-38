@@ -1,0 +1,11 @@
+packages:
+  # include packages in subfolders (e.g. apps/ and packages/)
+  - "apps/**"
+  - 'packages/**'
+  # if required, exclude some directories
+  - '!**/test/**'
+allowBuilds:
+  '@parcel/watcher': false
+  esbuild: false
+  lmdb: false
+  msgpackr-extract: false
