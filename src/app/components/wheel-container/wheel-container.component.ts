@@ -73,6 +73,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private readonly SVG_VIEWBOX_RADIUS        = WHEEL_SVG.viewboxRadius;
   private readonly OUTER_RING_RATIO          = WHEEL_SVG.outerRingRatio;
   private readonly INNER_RING_RATIO          = WHEEL_SVG.innerRingRatio;
+  private readonly INNER_RING_GAP_RATIO       = WHEEL_SVG.innerRingGapRatio;
   private readonly ANIMAL_POSITION_RATIO     = WHEEL_SVG.animalPositionRatio;
   private readonly NUMBER_POSITION_RATIO     = WHEEL_SVG.numberPositionRatio;
   private readonly ANIMAL_IMAGE_SIZE_RATIO   = WHEEL_SVG.animalImageSizeRatio;
@@ -130,7 +131,9 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
    * Ejemplo: Si SVG_VIEWBOX_RADIUS = 210, innerRingRadius = 120
    */
   public get innerRingRadius(): number {
-    return this.SVG_VIEWBOX_RADIUS * this.INNER_RING_RATIO;
+    const configuredRadius = this.SVG_VIEWBOX_RADIUS * this.INNER_RING_RATIO;
+    const gapRadius = this.outerRingRadius - (this.SVG_VIEWBOX_RADIUS * this.INNER_RING_GAP_RATIO);
+    return Math.min(configuredRadius, gapRadius);
   }
 
   /**

@@ -21,6 +21,8 @@ export interface WheelSvgConfig {
   outerRingRatio: number;  
   /** Rueda interior (segmentos de números). Debe ser < outerRingRatio. */
   innerRingRatio: number;
+  /** Margen mínimo entre anillo exterior e interior (fracción del viewBox radius). */
+  innerRingGapRatio: number;
   /** Posición radial de las imágenes de animales (0.0 – 1.0). */
   animalPositionRatio: number;
   /** Posición radial de los números (0.0 – animalPositionRatio). */
@@ -39,6 +41,7 @@ export const WHEEL_SVG: WheelSvgConfig = {
   viewboxRadius:           300,
   outerRingRatio:          0.900,  // ⚠️ DEBE ser < 1.0 (si no, el SVG se corta)
   innerRingRatio:          0.550,
+  innerRingGapRatio:       0.020,  // Margen entre anillo exterior e interior
   animalPositionRatio:     0.600, // esto cambia los numeros no los animales
   numberPositionRatio:     0.450,
   animalImageSizeRatio:    0.299,
@@ -226,7 +229,7 @@ export const WHEEL_BORDER_BREAKPOINTS: WheelBorderBreakpoint[] = [
   // Breakpoint 4: Tablet (600–1023px)
   {
     mediaQuery: '(min-width: 1800px)',
-    borderSize: '70vh',  //este manipula el tamaño de la reuda externa
+    borderSize: '50vh',  //este manipula el tamaño de la reuda externa
   },
   {
     mediaQuery: '(min-width: 600px) and (max-width: 1023px)',
