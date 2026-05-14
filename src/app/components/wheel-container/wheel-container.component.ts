@@ -4,7 +4,7 @@ import { WheelSpinResult, WheelItem } from '../../interfaces/wheel-general.inter
 import { GameState } from '../../interfaces/game.enums';
 import { AudioService } from '../../services/audio.service';
 import { PerformanceDetectorService, PerformanceProfile } from '../../services/performance-detector.service';
-import { WHEEL_SVG, getWheelDiameter } from './wheel.config';
+import { WHEEL_SVG, getWheelDiameter, getWheelBorderSize } from './wheel.config';
 
 
 @Component({
@@ -244,14 +244,22 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     return colors[index % colors.length];
   }
 
-  private readonly resizeListener = () => this.applyWheelDiameter();
+  private readonly resizeListener = () => {
+    this.applyWheelDiameter();
+    this.applyWheelBorderSize();
+  };
 
   private applyWheelDiameter(): void {
     document.documentElement.style.setProperty('--wheel-diameter', getWheelDiameter());
   }
 
+  private applyWheelBorderSize(): void {
+    document.documentElement.style.setProperty('--wheel-border-size', getWheelBorderSize());
+  }
+
   ngOnInit(): void {
     this.applyWheelDiameter();
+    this.applyWheelBorderSize();
     this.spinning = false;
     this.displayItems = [];
     this.errorMessage = '';
