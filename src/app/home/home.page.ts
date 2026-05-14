@@ -56,9 +56,27 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   public transactions: Transaction[] = [];
   private readonly DEFAULT_BALANCE = 10000;
 
+  
   public showResult = false;
   public resultOverlayTimer: number = 0;
   private resultOverlayInterval: any = null;
+  // reloj
+  public clockTime: string = '';
+  public clockWidgetWidth: string = '400px';
+  public clockWidgetHeight: string = '400px';
+  public clockLabelFontSize: string = '0.72rem';
+  public clockLabelTop: string = '0px';
+  public clockLabelLeft: string = '0px';
+  public clockLabelRight: string = 'auto';
+  public clockLabelBottom: string = 'auto';
+  public clockLabelTransform: string = 'none';
+  public clockTimeFontSize: string = '1.1rem';
+  public clockTimeTop: string = '120px';
+  public clockTimeLeft: string = '200px';
+  public clockTimeRight: string = 'auto';
+  public clockTimeBottom: string = 'auto';
+  public clockTimeTransform: string = 'none';
+  private clockIntervalId: any = null;
   public errorMessage: string = '';
   private capturedScreenshot: File | null = null;
   public showSettings: boolean = false;
@@ -181,6 +199,23 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     // Iniciar precarga de assets
     this.preloadAssets();
+    this.startClock();
+  }
+
+  private startClock(): void {
+    this.updateClockTime();
+    this.clockIntervalId = window.setInterval(() => {
+      this.updateClockTime();
+    }, 1000);
+  }
+
+  private updateClockTime(): void {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    this.clockTime = `${hours}:${minutes}:${seconds}`;
+    this.cdr.markForCheck();
   }
 
   /**
@@ -292,6 +327,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.orchestrator.stop();
+
+    if (this.clockIntervalId !== null) {
+      window.clearInterval(this.clockIntervalId);
+      this.clockIntervalId = null;
+    }
 
     // Limpiar listeners del video
     if (this.backgroundVideo?.nativeElement) {
