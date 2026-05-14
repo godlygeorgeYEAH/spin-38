@@ -18,7 +18,7 @@ export interface WheelSvgConfig {
   /** Canvas total del SVG. Debe ser mayor que outerRingRatio * viewboxRadius. */
   viewboxRadius: number;
   /** Rueda exterior (segmentos de animales). ⚠️ DEBE ser < 1.0 */
-  outerRingRatio: number;
+  outerRingRatio: number;  
   /** Rueda interior (segmentos de números). Debe ser < outerRingRatio. */
   innerRingRatio: number;
   /** Posición radial de las imágenes de animales (0.0 – 1.0). */
@@ -37,9 +37,9 @@ export interface WheelSvgConfig {
 
 export const WHEEL_SVG: WheelSvgConfig = {
   viewboxRadius:           300,
-  outerRingRatio:          0.999,  // ⚠️ DEBE ser < 1.0 (si no, el SVG se corta)
-  innerRingRatio:          0.555,
-  animalPositionRatio:     0.720,
+  outerRingRatio:          0.900,  // ⚠️ DEBE ser < 1.0 (si no, el SVG se corta)
+  innerRingRatio:          0.500,
+  animalPositionRatio:     0.550, // esto cambia los numeros no los animales
   numberPositionRatio:     0.450,
   animalImageSizeRatio:    0.299,
   animalTextPositionRatio: 0.88,
@@ -66,7 +66,7 @@ export interface WheelBreakpoint {
 }
 
 /** Valor por defecto cuando ningún breakpoint coincide. */
-export const WHEEL_DEFAULT_DIAMETER = '450px';
+export const WHEEL_DEFAULT_DIAMETER = '800px';
 
 /**
  * Breakpoints en orden de cascada (último que coincide gana).
@@ -144,7 +144,7 @@ export const WHEEL_BREAKPOINTS: WheelBreakpoint[] = [
     // Large Desktop (≥ 1800px)
   {
      mediaQuery: '(min-width: 1800px)',
-     diameter: '650px',
+     diameter: '550px',
   },
   // 2K/QHD (2540–2600px, altura 1400–1480px)
   {
