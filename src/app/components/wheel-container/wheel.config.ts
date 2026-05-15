@@ -21,10 +21,8 @@ export interface WheelSvgConfig {
   outerRingRatio: number;
   /** Rueda interior (segmentos de números). Debe ser < outerRingRatio. */
   innerRingRatio: number;
-  /** Posición radial de las imágenes de animales (0.0 – 1.0). */
+  /** Posición radial de los ítems dentro de su anillo (0.0 – 1.0). Aplica a ambas ruedas. */
   animalPositionRatio: number;
-  /** Posición radial de los números (0.0 – animalPositionRatio). */
-  numberPositionRatio: number;
   /** Tamaño de las imágenes de animales relativo al viewboxRadius. */
   animalImageSizeRatio: number;
   /** Posición del texto curvado relativa al anillo exterior. */
@@ -38,9 +36,8 @@ export interface WheelSvgConfig {
 export const WHEEL_SVG: WheelSvgConfig = {
   viewboxRadius:           300,
   outerRingRatio:          0.999,  // ⚠️ DEBE ser < 1.0 (si no, el SVG se corta)
-  innerRingRatio:          0.555,
-  animalPositionRatio:     0.720,
-  numberPositionRatio:     0.450,
+  innerRingRatio:          0.785,
+  animalPositionRatio:     0.875,
   animalImageSizeRatio:    0.299,
   animalTextPositionRatio: 0.88,
   outerNumberFontSize:     24,     // unidades SVG (escalan con el viewBox)

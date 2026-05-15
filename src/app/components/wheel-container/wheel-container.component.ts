@@ -114,7 +114,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private readonly OUTER_RING_RATIO          = WHEEL_SVG.outerRingRatio;
   private readonly INNER_RING_RATIO          = WHEEL_SVG.innerRingRatio;
   private readonly ANIMAL_POSITION_RATIO     = WHEEL_SVG.animalPositionRatio;
-  private readonly NUMBER_POSITION_RATIO     = WHEEL_SVG.numberPositionRatio;
   private readonly ANIMAL_IMAGE_SIZE_RATIO   = WHEEL_SVG.animalImageSizeRatio;
   private readonly ANIMAL_TEXT_POSITION_RATIO = WHEEL_SVG.animalTextPositionRatio;
   public readonly outerNumberFontSize        = WHEEL_SVG.outerNumberFontSize;
@@ -125,7 +124,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   private get numberRadius(): number {
-    return this.SVG_VIEWBOX_RADIUS * this.NUMBER_POSITION_RATIO;
+    return this.innerRingRadius * this.ANIMAL_POSITION_RATIO;
   }
 
   private readonly ANGLE_OFFSET_FOR_TOP = Math.PI / 2;
