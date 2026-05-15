@@ -1639,19 +1639,8 @@ ion-content {
 
 /* 720x1612 - Samsung Galaxy S20+, S21+, Note 20 *
 @media (min-width: 720px) and (max-width: 720px) and (min-height: 1612px) and (max-height: 1612px) {
-  /* Tamaño y posición de la rueda *
-  :root {
-    --wheel-diameter: 550px;
-  }
-
   .wheel-side {
     margin-top: var(--wheel-margin-top);
-  }
-
-  .wheel-container-wrapper,
-  ::ng-deep .wheel-wrapper {
-    width: var(--wheel-diameter) !important;
-    height: var(--wheel-diameter) !important;
   }
 
   .betting-controls-container {
@@ -1879,18 +1868,8 @@ ion-content {
 
 /* 1366x768 - HD (Laptops comunes) */
 @media (min-width: 1366px) and (max-width: 1400px) and (min-height: 700px) and (max-height: 800px) {
-/* Tamaño y posición de la rueda */
-  :root {
-    --wheel-diameter: 500px;
-  }
-
   .wheel-side {
     margin-top: var(--wheel-margin-top);
-  }
-
-  .wheel-container-wrapper {
-    width: var(--wheel-diameter);
-    height: var(--wheel-diameter);
   }
 
   /* Animal Name Tag - Superior izquierda */
@@ -1954,18 +1933,8 @@ ion-content {
 
 /* 1600x900 - HD+ (Laptops grandes) */
 @media (min-width: 1580px) and (max-width: 1680px) and (min-height: 880px) and (max-height: 920px) {
-  :root {
-    --wheel-diameter: 520px;
-  }
-
   .wheel-side {
     margin-top: var(--wheel-margin-top);
-  }
-
-  .wheel-container-wrapper,
-  ::ng-deep .wheel-wrapper {
-    width: var(--wheel-diameter) !important;
-    height: var(--wheel-diameter) !important;
   }
 
   .betting-panel {
@@ -1979,18 +1948,8 @@ ion-content {
 
 /* 2560x1440 - 2K/QHD */
 @media (min-width: 2540px) and (max-width: 2600px) and (min-height: 1400px) and (max-height: 1480px) {
-  :root {
-    --wheel-diameter: 600px;
-  }
-
   .wheel-side {
     margin-top: var(--wheel-margin-top);
-  }
-
-  .wheel-container-wrapper,
-  ::ng-deep .wheel-wrapper {
-    width: var(--wheel-diameter) !important;
-    height: var(--wheel-diameter) !important;
   }
 
   .betting-panel {
@@ -2006,18 +1965,8 @@ ion-content {
 
 /* 3840x2160 - 4K/UHD */
 @media (min-width: 3800px) and (min-height: 2100px) {
-  :root {
-    --wheel-diameter: 700px;
-  }
-
   .wheel-side {
     margin-top: var(--wheel-margin-top);
-  }
-
-  .wheel-container-wrapper,
-  ::ng-deep .wheel-wrapper {
-    width: var(--wheel-diameter) !important;
-    height: var(--wheel-diameter) !important;
   }
 
   .betting-panel {
