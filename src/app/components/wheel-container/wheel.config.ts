@@ -25,6 +25,8 @@ export interface WheelSvgConfig {
   innerRingGapRatio: number;
   /** Posición radial de los ítems dentro de su anillo (0.0 – 1.0). Aplica a ambas ruedas. */
   animalPositionRatio: number;
+  /** Posición radial de los números dentro del anillo interior (0.0 – 1.0). */
+  numberPositionRatio: number;
   /** Tamaño de las imágenes de animales relativo al viewboxRadius. */
   animalImageSizeRatio: number;
   /** Posición del texto curvado relativa al anillo exterior. */

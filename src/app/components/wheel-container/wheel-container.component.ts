@@ -4,7 +4,14 @@ import { Animal, WheelSpinResult, WheelItem } from '../../interfaces/wheel-gener
 import { GameState } from '../../interfaces/game.enums';
 import { AudioService } from '../../services/audio.service';
 import { PerformanceDetectorService, PerformanceProfile } from '../../services/performance-detector.service';
-import { WHEEL_SVG, getWheelDiameter, getWheelBorderSize } from './wheel.config';
+import {
+  WHEEL_SVG,
+  getWheelDiameter,
+  getWheelBorderSize,
+  OUTER_WHEEL_COLORS,
+  INNER_WHEEL_COLORS,
+  SELECTED_SEGMENT_COLOR,
+} from './wheel.config';
 
 const animalMap: { [position: string]: Animal } = {
   '0':  { position: '0',  name: 'Delfin',   emoji: '🐬', image: 'assets/images/animales/DELFIN.png' },
