@@ -4,7 +4,7 @@ import { Animal, WheelSpinResult, WheelItem } from '../../interfaces/wheel-gener
 import { GameState } from '../../interfaces/game.enums';
 import { AudioService } from '../../services/audio.service';
 import { PerformanceDetectorService, PerformanceProfile } from '../../services/performance-detector.service';
-import { WHEEL_SVG, getWheelDiameter } from './wheel.config';
+import { WHEEL_SVG, getWheelDiameter, OUTER_WHEEL_COLORS, INNER_WHEEL_COLORS, SELECTED_SEGMENT_COLOR } from './wheel.config';
 
 const animalMap: { [position: string]: Animal } = {
   '0':  { position: '0',  name: 'Delfin',   emoji: '🐬', image: 'assets/images/animales/DELFIN.png' },
@@ -118,6 +118,9 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private readonly ANIMAL_TEXT_POSITION_RATIO = WHEEL_SVG.animalTextPositionRatio;
   public readonly outerAnimalFontSize        = WHEEL_SVG.outerAnimalFontSize;
   public readonly innerAnimalFontSize        = WHEEL_SVG.innerAnimalFontSize;
+  public readonly outerWheelColors           = OUTER_WHEEL_COLORS;
+  public readonly innerWheelColors           = INNER_WHEEL_COLORS;
+  public readonly selectedSegmentColor       = SELECTED_SEGMENT_COLOR;
 
   private get animalRadius(): number {
     return this.SVG_VIEWBOX_RADIUS * this.ANIMAL_POSITION_RATIO;

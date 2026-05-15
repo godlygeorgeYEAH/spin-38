@@ -45,6 +45,31 @@ export const WHEEL_SVG: WheelSvgConfig = {
 };
 
 // ------------------------------------------------------------
+// COLORES DE LAS RUEDAS
+// ------------------------------------------------------------
+
+export interface WheelGradient {
+  stops: [{ offset: string; color: string }, { offset: string; color: string }];
+}
+
+/** Dos gradientes alternados para la rueda exterior (i % 2). */
+export const OUTER_WHEEL_COLORS: [WheelGradient, WheelGradient] = [
+  { stops: [{ offset: '60%', color: '#2097FC' }, { offset: '100%', color: '#1167c0' }] },
+  { stops: [{ offset: '60%', color: '#2711A3' }, { offset: '100%', color: '#180b6b' }] },
+];
+
+/** Gradiente para el segmento seleccionado/ganador. */
+export const SELECTED_SEGMENT_COLOR: WheelGradient = {
+  stops: [{ offset: '60%', color: '#00ff88' }, { offset: '100%', color: '#00cc66' }],
+};
+
+/** Dos gradientes alternados para la rueda interior (i % 2). */
+export const INNER_WHEEL_COLORS: [WheelGradient, WheelGradient] = [
+  { stops: [{ offset: '60%', color: '#ffd890' }, { offset: '100%', color: '#c48a10' }] },
+  { stops: [{ offset: '60%', color: '#86ebf5' }, { offset: '100%', color: '#1da8bc' }] },
+];
+
+// ------------------------------------------------------------
 // BREAKPOINTS DE DIÁMETRO VISUAL (CSS --wheel-diameter)
 // ------------------------------------------------------------
 // Orden: los breakpoints se evalúan en secuencia y el ÚLTIMO

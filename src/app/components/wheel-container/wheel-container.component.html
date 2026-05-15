@@ -11,47 +11,25 @@
   </div>
   <svg class="wheel" [attr.viewBox]="viewBoxSize">
     <defs>
-      <radialGradient [attr.id]="'outerGradient-' + componentId" cx="50%" cy="50%" r="50%">
-        <stop offset="60%" stop-color="#f50b0b" />
-        <stop offset="100%" stop-color="#ac0505" />
-      </radialGradient>
-      <radialGradient [attr.id]="'outerGradientEven-' + componentId" cx="50%" cy="50%" r="50%">
-        <stop offset="60%" stop-color="#ac0505" />
-        <stop offset="100%" stop-color="#f50b0b" />
+      <radialGradient *ngFor="let g of outerWheelColors; let i = index"
+          [attr.id]="'outerGradient-' + i + '-' + componentId" cx="50%" cy="50%" r="50%">
+        <stop [attr.offset]="g.stops[0].offset" [attr.stop-color]="g.stops[0].color" />
+        <stop [attr.offset]="g.stops[1].offset" [attr.stop-color]="g.stops[1].color" />
       </radialGradient>
       <radialGradient [attr.id]="'selectedGradient-' + componentId" cx="50%" cy="50%" r="50%">
-        <stop offset="60%" stop-color="#00ff88" />
-        <stop offset="100%" stop-color="#00cc66" />
+        <stop [attr.offset]="selectedSegmentColor.stops[0].offset" [attr.stop-color]="selectedSegmentColor.stops[0].color" />
+        <stop [attr.offset]="selectedSegmentColor.stops[1].offset" [attr.stop-color]="selectedSegmentColor.stops[1].color" />
       </radialGradient>
-      <radialGradient [attr.id]="'innerGradient-0-' + componentId" cx="50%" cy="50%" r="50%">
-        <stop offset="60%" stop-color="#ff40ff" />
-        <stop offset="100%" stop-color="#c000c0" />
-      </radialGradient>
-      <radialGradient [attr.id]="'innerGradient-1-' + componentId" cx="50%" cy="50%" r="50%">
-        <stop offset="60%" stop-color="#34d399" />
-        <stop offset="100%" stop-color="#059669" />
-      </radialGradient>
-      <radialGradient [attr.id]="'innerGradient-2-' + componentId" cx="50%" cy="50%" r="50%">
-        <stop offset="60%" stop-color="#a78bfa" />
-        <stop offset="100%" stop-color="#7c3aed" />
-      </radialGradient>
-      <radialGradient [attr.id]="'innerGradient-3-' + componentId" cx="50%" cy="50%" r="50%">
-        <stop offset="60%" stop-color="#5eead4" />
-        <stop offset="100%" stop-color="#0d9488" />
-      </radialGradient>
-      <radialGradient [attr.id]="'innerGradient-4-' + componentId" cx="50%" cy="50%" r="50%">
-        <stop offset="60%" stop-color="#fcd34d" />
-        <stop offset="100%" stop-color="#f59e0b" />
-      </radialGradient>
-      <radialGradient [attr.id]="'innerGradient-5-' + componentId" cx="50%" cy="50%" r="50%">
-        <stop offset="60%" stop-color="#f87171" />
-        <stop offset="100%" stop-color="#dc2626" />
+      <radialGradient *ngFor="let g of innerWheelColors; let i = index"
+          [attr.id]="'innerGradient-' + i + '-' + componentId" cx="50%" cy="50%" r="50%">
+        <stop [attr.offset]="g.stops[0].offset" [attr.stop-color]="g.stops[0].color" />
+        <stop [attr.offset]="g.stops[1].offset" [attr.stop-color]="g.stops[1].color" />
       </radialGradient>
     </defs>
     <g #outerWheel>
       <g *ngFor="let item of displayItems; let i = index">
         <path [attr.d]="getSegmentPath(outerRingRadius, i)"
-          [attr.fill]="i % 2 === 0 ? 'url(#outerGradient-' + componentId + ')' : 'url(#outerGradientEven-' + componentId + ')'"
+          [attr.fill]="'url(#outerGradient-' + (i % 2) + '-' + componentId + ')'"
           stroke="#d4af37" stroke-width="2" />
       </g>
       <g *ngFor="let item of displayItems; let i = index" [attr.transform]="getAnimalTransform(i)">
@@ -66,7 +44,7 @@
     <g #innerWheel>
       <g *ngFor="let item of innerDisplayItems; let i = index">
         <path [attr.d]="getSegmentPath(innerRingRadius, i)"
-          [attr.fill]="'url(#innerGradient-' + (i % 6) + '-' + componentId + ')'"
+          [attr.fill]="'url(#innerGradient-' + (i % 2) + '-' + componentId + ')'"
           stroke="#d4af37" stroke-width="2" />
       </g>
       <g *ngFor="let item of innerDisplayItems; let i = index" [attr.transform]="getInnerAnimalTransform(i)">
