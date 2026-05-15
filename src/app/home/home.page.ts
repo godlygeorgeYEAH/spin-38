@@ -99,7 +99,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private readonly BET_HISTORY_KEY = 'betHistory';
 
   public readonly animalsForWheel = [
-    { name: 'Rata', emoji: '🐀', image: 'assets/images/RATA.png', description: 'Inteligencia' },
+    { name: 'Rata', emoji: '🐀', image: 'assets/images/animales/RATA.png', description: 'Inteligencia' },
     { name: 'Buey', emoji: '🐂', image: 'assets/images/BUEY.png', description: 'Fuerza' },
     { name: 'Tigre', emoji: '🐅', image: 'assets/images/TIGRE.png', description: 'Valentía' },
     { name: 'Conejo', emoji: '🐇', image: 'assets/images/CONEJO.png', description: 'Elegancia' },

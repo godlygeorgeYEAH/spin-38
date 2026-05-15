@@ -36,6 +36,8 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   public winningInnerAnimalIndex: number | null = null;
   public showConfetti = false;
   public pointerBounce = false;
+  @Input() pointerSize: string | null = null; // e.g. '95px' or '6vw'
+  @Input() pointerTop: string | null = null;  // e.g. '-20px'
 
   private restingOuterAngle = 0;
   private restingInnerAngle = 0;

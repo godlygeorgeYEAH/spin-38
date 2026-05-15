@@ -14,6 +14,12 @@ ion-content {
   position: relative;
   height: 100vh;
   overflow: hidden;
+  /* Fondo estático: cambiar la ruta a la imagen que prefieras */
+  background-image: url('../../assets/images/fondos/fondomontañadupla.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* fija el fondo */
 }
 
 .clock-widget {
