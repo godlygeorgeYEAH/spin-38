@@ -60,7 +60,7 @@
                [attr.x]="animalImageOffset" [attr.y]="animalImageOffset"
                [attr.width]="animalImageSize" [attr.height]="animalImageSize"
                (error)="onImageError($event, item)" />
-        <text *ngIf="!item.image" x="0" y="0" class="roulette-number-outer" [attr.font-size]="outerNumberFontSize">{{ item.emoji || item.position }}</text>
+        <text *ngIf="!item.image" x="0" y="0" class="roulette-animal-outer" [attr.font-size]="outerAnimalFontSize">{{ item.emoji || item.position }}</text>
       </g>
     </g>
     <g #innerWheel>
@@ -75,7 +75,7 @@
                [attr.x]="animalImageOffset" [attr.y]="animalImageOffset"
                [attr.width]="animalImageSize" [attr.height]="animalImageSize"
                (error)="onImageError($event, item)" />
-        <text *ngIf="!item.image" x="0" y="0" class="roulette-number-inner" [attr.font-size]="innerNumberFontSize">{{ item.emoji || item.position }}</text>
+        <text *ngIf="!item.image" x="0" y="0" class="roulette-animal-inner" [attr.font-size]="innerAnimalFontSize">{{ item.emoji || item.position }}</text>
       </g>
     </g>
   </svg>

@@ -599,7 +599,7 @@ svg image {
   filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5)) !important;
 }
 
-.roulette-number-outer {
+.roulette-animal-outer {
   text-anchor: middle;
   dominant-baseline: middle;
   font-weight: bold;
@@ -608,7 +608,7 @@ svg image {
   stroke-width: 0.5px;
 }
 
-.roulette-number-inner {
+.roulette-animal-inner {
   text-anchor: middle;
   dominant-baseline: middle;
   font-weight: bold;

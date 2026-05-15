@@ -95,7 +95,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private segmentPathCache = new Map<string, string>();
   private textPathCache = new Map<number, string>();
   private animalTransformCache = new Map<number, string>();
-  private numberTransformCache = new Map<number, string>();
+  private innerAnimalTransformCache = new Map<number, string>();
 
   // ── Posición de reset ──────────────────────────────────────────────────────
   // Cambia estos valores para ajustar a dónde vuelve la rueda después de cada giro
@@ -116,14 +116,14 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private readonly ANIMAL_POSITION_RATIO     = WHEEL_SVG.animalPositionRatio;
   private readonly ANIMAL_IMAGE_SIZE_RATIO   = WHEEL_SVG.animalImageSizeRatio;
   private readonly ANIMAL_TEXT_POSITION_RATIO = WHEEL_SVG.animalTextPositionRatio;
-  public readonly outerNumberFontSize        = WHEEL_SVG.outerNumberFontSize;
-  public readonly innerNumberFontSize        = WHEEL_SVG.innerNumberFontSize;
+  public readonly outerAnimalFontSize        = WHEEL_SVG.outerAnimalFontSize;
+  public readonly innerAnimalFontSize        = WHEEL_SVG.innerAnimalFontSize;
 
   private get animalRadius(): number {
     return this.SVG_VIEWBOX_RADIUS * this.ANIMAL_POSITION_RATIO;
   }
 
-  private get numberRadius(): number {
+  private get innerAnimalRadius(): number {
     return this.innerRingRadius * this.ANIMAL_POSITION_RATIO;
   }
 
@@ -349,7 +349,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
       this.segmentPathCache.clear();
       this.textPathCache.clear();
       this.animalTransformCache.clear();
-      this.numberTransformCache.clear();
+      this.innerAnimalTransformCache.clear();
     }
   }
 
@@ -659,10 +659,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   /**
-   * Calcula la transformación SVG para posicionar una etiqueta numérica en la rueda.
-   *
-   * Similar a getAnimalTransform, pero posiciona números en el anillo interior
-   * usando un radio menor (NUMBER_POSITION_RATIO).
+   * Calcula la transformación SVG para posicionar un animal en la rueda interior.
    *
    * @param index - Índice de posición (0-11 para 12 números)
    * @returns String de transformación SVG: "translate(x, y) rotate(ángulo)"
@@ -671,8 +668,8 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
    * sin importar su posición en la rueda.
    */
   public getInnerAnimalTransform(index: number): string {
-    if (this.numberTransformCache.has(index)) {
-      return this.numberTransformCache.get(index)!;
+    if (this.innerAnimalTransformCache.has(index)) {
+      return this.innerAnimalTransformCache.get(index)!;
     }
 
     // Calcula el ángulo para este segmento (en grados)
@@ -682,14 +679,14 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     const angleRad = angleDeg * (Math.PI / 180);
 
     // Calcula coordenadas X,Y en el círculo interior usando radio menor
-    const x = this.numberRadius * Math.cos(angleRad - this.ANGLE_OFFSET_FOR_TOP);
-    const y = this.numberRadius * Math.sin(angleRad - this.ANGLE_OFFSET_FOR_TOP);
+    const x = this.innerAnimalRadius * Math.cos(angleRad - this.ANGLE_OFFSET_FOR_TOP);
+    const y = this.innerAnimalRadius * Math.sin(angleRad - this.ANGLE_OFFSET_FOR_TOP);
 
     // Rota el texto +90° para mantener orientación vertical
     const rotation = angleDeg;
 
     const transform = `translate(${x}, ${y}) rotate(${rotation})`;
-    this.numberTransformCache.set(index, transform);
+    this.innerAnimalTransformCache.set(index, transform);
     return transform;
   }
 

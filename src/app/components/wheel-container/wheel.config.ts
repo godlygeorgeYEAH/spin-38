@@ -27,10 +27,10 @@ export interface WheelSvgConfig {
   animalImageSizeRatio: number;
   /** Posición del texto curvado relativa al anillo exterior. */
   animalTextPositionRatio: number;
-  /** Tamaño del texto de números en la rueda exterior (unidades SVG). */
-  outerNumberFontSize: number;
-  /** Tamaño del texto de números en la rueda interior (unidades SVG). */
-  innerNumberFontSize: number;
+  /** Tamaño del texto de animales en la rueda exterior (unidades SVG). */
+  outerAnimalFontSize: number;
+  /** Tamaño del texto de animales en la rueda interior (unidades SVG). */
+  innerAnimalFontSize: number;
 }
 
 export const WHEEL_SVG: WheelSvgConfig = {
@@ -40,8 +40,8 @@ export const WHEEL_SVG: WheelSvgConfig = {
   animalPositionRatio:     0.875,
   animalImageSizeRatio:    0.299,
   animalTextPositionRatio: 0.88,
-  outerNumberFontSize:     24,     // unidades SVG (escalan con el viewBox)
-  innerNumberFontSize:     16,     // unidades SVG (escalan con el viewBox)
+  outerAnimalFontSize:     24,     // unidades SVG (escalan con el viewBox)
+  innerAnimalFontSize:     16,     // unidades SVG (escalan con el viewBox)
 };
 
 // ------------------------------------------------------------
