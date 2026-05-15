@@ -18,9 +18,11 @@ export interface WheelSvgConfig {
   /** Canvas total del SVG. Debe ser mayor que outerRingRatio * viewboxRadius. */
   viewboxRadius: number;
   /** Rueda exterior (segmentos de animales). ⚠️ DEBE ser < 1.0 */
-  outerRingRatio: number;
+  outerRingRatio: number;  
   /** Rueda interior (segmentos de números). Debe ser < outerRingRatio. */
   innerRingRatio: number;
+  /** Margen mínimo entre anillo exterior e interior (fracción del viewBox radius). */
+  innerRingGapRatio: number;
   /** Posición radial de los ítems dentro de su anillo (0.0 – 1.0). Aplica a ambas ruedas. */
   animalPositionRatio: number;
   /** Tamaño de las imágenes de animales relativo al viewboxRadius. */
@@ -35,9 +37,11 @@ export interface WheelSvgConfig {
 
 export const WHEEL_SVG: WheelSvgConfig = {
   viewboxRadius:           300,
-  outerRingRatio:          0.999,  // ⚠️ DEBE ser < 1.0 (si no, el SVG se corta)
-  innerRingRatio:          0.785,
-  animalPositionRatio:     0.875,
+  outerRingRatio:          0.900,  // ⚠️ DEBE ser < 1.0 (si no, el SVG se corta)
+  innerRingRatio:          0.550,
+  innerRingGapRatio:       0.020,  // Margen entre anillo exterior e interior
+  animalPositionRatio:     0.600, // esto cambia los numeros no los animales
+  numberPositionRatio:     0.450,
   animalImageSizeRatio:    0.299,
   animalTextPositionRatio: 0.88,
   outerAnimalFontSize:     24,     // unidades SVG (escalan con el viewBox)
@@ -88,7 +92,7 @@ export interface WheelBreakpoint {
 }
 
 /** Valor por defecto cuando ningún breakpoint coincide. */
-export const WHEEL_DEFAULT_DIAMETER = '450px';
+export const WHEEL_DEFAULT_DIAMETER = '800px';
 
 /**
  * Breakpoints en orden de cascada (último que coincide gana).
@@ -166,7 +170,7 @@ export const WHEEL_BREAKPOINTS: WheelBreakpoint[] = [
     // Large Desktop (≥ 1800px)
   {
      mediaQuery: '(min-width: 1800px)',
-     diameter: '650px',
+     diameter: '600px',
   },
   // 2K/QHD (2540–2600px, altura 1400–1480px)
   {
@@ -189,6 +193,87 @@ export function getWheelDiameter(): string {
   for (const bp of WHEEL_BREAKPOINTS) {
     if (window.matchMedia(bp.mediaQuery).matches) {
       result = bp.diameter;
+    }
+  }
+  return result;
+}
+
+// ------------------------------------------------------------
+// BREAKPOINTS DE TAMAÑO DEL BORDE (--wheel-border-size)
+// ------------------------------------------------------------
+// Orden: los breakpoints se evalúan en secuencia y el ÚLTIMO
+// que coincida con el viewport activo es el que se aplica,
+// exactamente igual que las media queries en CSS.
+//
+// Regla: poner primero los breakpoints más generales,
+//        después los más específicos (éstos sobreescriben).
+// ------------------------------------------------------------
+
+export interface WheelBorderBreakpoint {
+  /** Media query exacta, tal como se usaría en CSS. */
+  mediaQuery: string;
+  /** Valor de --wheel-border-size: px o vh. */
+  borderSize: string;
+}
+
+/** Valor por defecto cuando ningún breakpoint coincide. */
+export const WHEEL_BORDER_DEFAULT_SIZE = '50vh';
+
+/**
+ * Breakpoints en orden de cascada (último que coincide gana).
+ * Valores extraídos de responsive-variables.scss.
+ */
+export const WHEEL_BORDER_BREAKPOINTS: WheelBorderBreakpoint[] = [
+  // Breakpoint 2: Mobile Standard (360–415px, altura 617–780px)
+  {
+    mediaQuery: '(min-width: 360px) and (max-width: 415px) and (min-height: 617px) and (max-height: 780px)',
+    borderSize: '50.3vh',
+  },
+  // Breakpoint 2B: iPhone 12/13/14 (388–393px, altura ≥ 840px)
+  {
+    mediaQuery: '(min-width: 388px) and (max-width: 393px) and (min-height: 840px)',
+    borderSize: '44vh',
+  },
+  // Breakpoint 2C: Samsung S21 (360–363px, altura 798–803px)
+  {
+    mediaQuery: '(min-width: 360px) and (max-width: 363px) and (min-height: 798px) and (max-height: 803px)',
+    borderSize: '50.5vh',
+  },
+  // Breakpoint 3: Mobile Large (414–599px)
+  {
+    mediaQuery: '(min-width: 414px) and (max-width: 599px)',
+    borderSize: '53vh',
+  },
+  // Breakpoint 3B: iPhone Pro Max (426–432px, altura ≥ 920px)
+  {
+    mediaQuery: '(min-width: 426px) and (max-width: 432px) and (min-height: 920px)',
+    borderSize: '54vh',
+  },
+  // Breakpoint 4: Tablet (600–1023px)
+  {
+    mediaQuery: '(min-width: 1800px)',
+    borderSize: '50vh',  //este manipula el tamaño de la reuda externa
+  },
+  {
+    mediaQuery: '(min-width: 600px) and (max-width: 1023px)',
+    borderSize: '58.5vh',
+  },
+  // Breakpoint 5: Desktop (1024–1799px)
+  {
+    mediaQuery: '(min-width: 1024px) and (max-width: 1799px)',
+    borderSize: '87vh',
+  },
+];
+
+/**
+ * Evalúa todos los breakpoints contra el viewport actual y retorna
+ * el tamaño del borde correspondiente. El último que coincide gana (igual que CSS).
+ */
+export function getWheelBorderSize(): string {
+  let result = WHEEL_BORDER_DEFAULT_SIZE;
+  for (const bp of WHEEL_BORDER_BREAKPOINTS) {
+    if (window.matchMedia(bp.mediaQuery).matches) {
+      result = bp.borderSize;
     }
   }
   return result;

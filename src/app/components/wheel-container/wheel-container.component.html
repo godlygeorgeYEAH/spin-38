@@ -6,8 +6,8 @@
   <div class="aurora-container" *ngIf="performanceProfile.auroraRings > 0" [class.no-filters]="!performanceProfile.auroraFilters">
     <div class="aurora-ring" *ngFor="let i of auroraRingsArray"></div>
   </div>
-  <div class="pointers-container">
-    <img src="assets/images/rueda/puntero.png" alt="Puntero" class="pointer-image" [class.bounce]="pointerBounce">
+  <div class="pointers-container" [style.--pointer-size]="pointerSize" [style.--pointer-top]="pointerTop">
+    <img src="assets/images/rueda/flechaleon.png" alt="Puntero" class="pointer-image" [class.bounce]="pointerBounce">
   </div>
   <svg class="wheel" [attr.viewBox]="viewBoxSize">
     <defs>
@@ -60,7 +60,7 @@
 
   <!-- Borde decorativo de la rueda -->
   <div class="wheel-border">
-    <img src="assets/images/rueda/borde.png" alt="Borde" class="wheel-border-image">
+    <img src="assets/images/rueda/bordedeagua.png" alt="Borde" class="wheel-border-image">
   </div>
 
   <!-- Confetti Animation - Explosión circular desde el centro (adaptativo) -->

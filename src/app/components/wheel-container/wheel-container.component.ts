@@ -4,7 +4,7 @@ import { Animal, WheelSpinResult, WheelItem } from '../../interfaces/wheel-gener
 import { GameState } from '../../interfaces/game.enums';
 import { AudioService } from '../../services/audio.service';
 import { PerformanceDetectorService, PerformanceProfile } from '../../services/performance-detector.service';
-import { WHEEL_SVG, getWheelDiameter, OUTER_WHEEL_COLORS, INNER_WHEEL_COLORS, SELECTED_SEGMENT_COLOR } from './wheel.config';
+import { WHEEL_SVG, getWheelDiameter, getWheelBorderSize } from './wheel.config';
 
 const animalMap: { [position: string]: Animal } = {
   '0':  { position: '0',  name: 'Delfin',   emoji: '🐬', image: 'assets/images/animales/DELFIN.png' },
@@ -76,6 +76,8 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   public winningInnerAnimalIndex: number | null = null;
   public showConfetti = false;
   public pointerBounce = false;
+  @Input() pointerSize: string | null = null; // e.g. '95px' or '6vw'
+  @Input() pointerTop: string | null = null;  // e.g. '-20px'
 
   private restingOuterAngle = 0;
   private restingInnerAngle = 0;
@@ -113,6 +115,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private readonly SVG_VIEWBOX_RADIUS        = WHEEL_SVG.viewboxRadius;
   private readonly OUTER_RING_RATIO          = WHEEL_SVG.outerRingRatio;
   private readonly INNER_RING_RATIO          = WHEEL_SVG.innerRingRatio;
+  private readonly INNER_RING_GAP_RATIO       = WHEEL_SVG.innerRingGapRatio;
   private readonly ANIMAL_POSITION_RATIO     = WHEEL_SVG.animalPositionRatio;
   private readonly ANIMAL_IMAGE_SIZE_RATIO   = WHEEL_SVG.animalImageSizeRatio;
   private readonly ANIMAL_TEXT_POSITION_RATIO = WHEEL_SVG.animalTextPositionRatio;
@@ -172,7 +175,9 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
    * Ejemplo: Si SVG_VIEWBOX_RADIUS = 210, innerRingRadius = 120
    */
   public get innerRingRadius(): number {
-    return this.SVG_VIEWBOX_RADIUS * this.INNER_RING_RATIO;
+    const configuredRadius = this.SVG_VIEWBOX_RADIUS * this.INNER_RING_RATIO;
+    const gapRadius = this.outerRingRadius - (this.SVG_VIEWBOX_RADIUS * this.INNER_RING_GAP_RATIO);
+    return Math.min(configuredRadius, gapRadius);
   }
 
   /**
@@ -286,14 +291,22 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     return colors[index % colors.length];
   }
 
-  private readonly resizeListener = () => this.applyWheelDiameter();
+  private readonly resizeListener = () => {
+    this.applyWheelDiameter();
+    this.applyWheelBorderSize();
+  };
 
   private applyWheelDiameter(): void {
     document.documentElement.style.setProperty('--wheel-diameter', getWheelDiameter());
   }
 
+  private applyWheelBorderSize(): void {
+    document.documentElement.style.setProperty('--wheel-border-size', getWheelBorderSize());
+  }
+
   ngOnInit(): void {
     this.applyWheelDiameter();
+    this.applyWheelBorderSize();
     this.spinning = false;
     this.displayItems = [];
     this.innerDisplayItems = [];

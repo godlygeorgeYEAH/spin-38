@@ -3,17 +3,17 @@
              [class.performance-medium]="getPerformanceTier() === 'medium'"
              [class.performance-high]="getPerformanceTier() === 'high'">
   <!-- Pantalla de carga -->
-  <div class="loading-screen" *ngIf="isLoading">
+  <!--<div class="loading-screen" *ngIf="isLoading">
     <div class="loading-content">
-      <!-- Logo de la aplicación -->
+       Logo de la aplicación 
       <div class="loading-logo">
         <img src="assets/images/logo/rexludus.png" alt="Logo" class="loading-logo-image">
       </div>
 
-      <!-- Texto de carga -->
+       Texto de carga 
       <h2 class="loading-title">Cargando<span class="loading-dots"></span></h2>
 
-      <!-- Barra de progreso -->
+       Barra de progreso 
       <div class="progress-bar-container">
         <div class="progress-bar-background">
           <div class="progress-bar-fill" [style.width.%]="loadingProgress"></div>
@@ -21,23 +21,23 @@
         <p class="progress-text">{{ loadingProgress }}%</p>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <!-- Video de fondo para móviles (con fallback MP4 para Safari) -->
+  <!-- Video de fondo para móviles (con fallback MP4 para Safari)
   <video #backgroundVideo class="background-video" autoplay loop muted playsinline preload="auto" webkit-playsinline>
     <source src="assets/videos/fondo-azul.mp4" type="video/mp4">
     <source src="assets/videos/fondo-azul.webm" type="video/webm">
-  </video>
+  </video> -->
 
-  <!-- Header - Contiene botones de ayuda -->
+  <!-- Header - Contiene botones de ayuda 
   <div class="header">
-    <!-- Clear All Button - Esquina superior izquierda -->
+     Clear All Button - Esquina superior izquierda 
     <div class="clear-all-button-container" *ngIf="selectedAnimals.length > 0">
       <button (click)="clearAllBets()" class="clear-all-button" title="Limpiar Todo">
       </button>
-    </div>
+    </div> -->
 
-    <!-- Help Buttons - Esquina superior derecha -->
+    <!-- Help Buttons - Esquina superior derecha 
     <div class="help-button-container">
       <button (click)="openBetHistory()" class="help-button history-btn" title="Historial de Apuestas">
         <span style="font-size: 24px; color: var(--gold-primary);">📊</span>
@@ -46,12 +46,36 @@
         <ion-icon name="settings-outline" style="font-size: 24px; color: var(--gold-primary);"></ion-icon>
       </button>
     </div>
-  </div>
+  </div> -->
 
   <!-- Balance en parte inferior cuando betting-panel NO está visible -->
   <div class="player-balance-display bottom-balance" *ngIf="!isBettingControlsVisible">
     <img src="assets/images/contenedores/saldo.png" alt="Saldo" class="balance-container-image">
     <div class="balance-value">${{ balance$ | async }}</div>
+  </div>
+
+  <!-- Reloj de esquina inferior izquierda -->
+  <div class="clock-widget" aria-label="Hora: "
+       [style.width]="clockWidgetWidth"
+       [style.min-height]="clockWidgetHeight">
+    <div class="clock-time-label"
+         [style.font-size]="clockLabelFontSize"
+         [style.top]="clockLabelTop"
+         [style.left]="clockLabelLeft"
+         [style.right]="clockLabelRight"
+         [style.bottom]="clockLabelBottom"
+         [style.transform]="clockLabelTransform">
+      RELOJ
+    </div>
+    <div class="clock-time-value"
+         [style.font-size]="clockTimeFontSize"
+         [style.top]="clockTimeTop"
+         [style.left]="clockTimeLeft"
+         [style.right]="clockTimeRight"
+         [style.bottom]="clockTimeBottom"
+         [style.transform]="clockTimeTransform">
+      {{ clockTime }}
+    </div>
   </div>
 
   <!-- Betting Panel - Contenedor independiente y responsive -->
