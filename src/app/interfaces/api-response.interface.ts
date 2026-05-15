@@ -77,11 +77,11 @@ export interface PlaceBetResponse {
  * Respuesta de resultado de giro
  */
 export interface SpinResponse {
-  /** Animal ganador */
-  winningAnimal: string;
+  /** Posición ruleta anillo exterior: '0', '28', '00', etc. */
+  outerPosition: string;
 
-  /** Multiplicador ganador */
-  winningMultiplier: number;
+  /** Posición ruleta anillo interior */
+  innerPosition: string;
 
   /** Monto ganado */
   winAmount: number;

@@ -4,51 +4,41 @@
 
 ---
 
-## Fase 3A — Mock server con contrato mínimo
-*(Paralela con Fase 3B)*
+## Fase 3 — Motor de la rueda adaptado al cliente
+*(3A y 3B en paralelo; 3C consolida el modelo de datos)*
 
-**Entregable:** servidor Express corriendo en `apps/mock-server` que simula un ciclo completo de ronda
+**Estado:** Implementado. Ver documentación detallada en [`f3c_mapping_rueda.md`](f3c-mapping-rueda.md).
 
 ### Objetivo
 
-Proveer al equipo de frontend una fuente de datos real contra la cual probar el motor de giro. Sin este servidor, las pruebas de `spinToResult` son manuales desde la consola del browser, lo que no representa el flujo real y no escala. El mock server es también documentación ejecutable del contrato: cuando llegue el momento de integrar con Carlos, el código de referencia ya existe y elimina ambigüedades sobre el comportamiento esperado.
+La Fase 3 cubre todo el funcionamiento de la rueda adaptado a los requerimientos actuales del cliente: el motor de doble anillo girando hacia posiciones reales de la ruleta americana, el mapping completo de los 38 animales venezolanos definidos por Carlos y JG, y el modelo de datos que conecta backend, componente y template sin dependencias de nombre.
 
 ### Qué se construye
 
-Un servidor Express en `apps/mock-server` que expone cuatro endpoints y gestiona el ciclo de ronda automáticamente cada X minutos:
+**Fase 3A — Mock server con contrato mínimo** *(paralela con 3B)*
 
-`GET /api/round/current` — devuelve el estado actual de la ronda: identificador, estado (`idle`, `spinning`, `revealing`), y segundos restantes hasta el próximo giro.
-
-`GET /api/round/:id/result` — devuelve el resultado de una ronda específica: el animal del anillo exterior y el animal del anillo interior. Se genera aleatoriamente a partir del pool de 38 posiciones de la ruleta americana.
-
-`POST /api/round/:id/ack` — recibe la confirmación del frontend de que recibió la orden de giro. Responde `200 OK`. Registra la recepción en consola para facilitar debugging.
-
-`GET /api/history` — devuelve los últimos N resultados en orden cronológico descendente.
-
-El servidor mantiene estado en memoria (no requiere base de datos), expone un log en consola con cada transición de estado, y acepta un parámetro de configuración para ajustar la duración del ciclo (por ejemplo, 30 segundos en vez de 5 minutos).
-
-Se levanta con `npm run mock-server` desde la raíz del monorepo.
+Un servidor Express en `apps/mock-server` que expone cuatro endpoints y gestiona el ciclo de ronda automáticamente: `GET /api/round/current`, `GET /api/round/:id/result`, `POST /api/round/:id/ack`, y `GET /api/history`. El servidor es documentación ejecutable del contrato con el backend real de Carlos y JG.
 
 ---
 
-## Fase 3B — Doble anillo con números placeholder
-*(Paralela con Fase 3A)*
+**Fase 3B — Doble anillo con números placeholder** *(paralela con 3A)*
 
-**Entregable:** `WheelContainerComponent` mostrando los 38 números de la ruleta americana en ambos anillos, girando en sentidos opuestos hacia un resultado externo
+`WheelContainerComponent` mostrando los 38 números de la ruleta americana en ambos anillos, girando en sentidos opuestos hacia un resultado dictado por `spinToResult({ outerPosition, innerPosition })`. Motor de animación operativo antes de tener los assets finales.
 
-### Objetivo
+---
 
-Hacer funcionar el motor portado del Bloque A como el cliente lo describió: dos anillos concéntricos girando en sentidos opuestos, cada uno deteniéndose en una posición distinta dictada por `spinToResult`. Los segmentos muestran los 38 números de la ruleta americana en vez de imágenes de animales placeholder repetidas. Esto cumple dos funciones: permite probar el motor con datos reales antes de tener los assets, y permite verificar visualmente que el orden de posiciones es correcto cuando llegue el mapeo de Carlos.
+**Fase 3C — Mapping de animales venezolanos** *(implementado)*
 
-### Qué se construye
+Modelo de datos reescrito con el número de posición como identificador primario. Incluye:
 
-**Orden de posiciones.** Los 38 segmentos de cada anillo se poblan con la secuencia real de la ruleta americana: `0, 28, 9, 26, 30, 11, 7, 20, 32, 17, 5, 22, 34, 15, 3, 24, 36, 13, 1, 00, 27, 10, 25, 29, 12, 8, 19, 31, 18, 6, 21, 33, 16, 4, 23, 35, 14, 2`. Estos números son el `name` de cada `WheelItem`. Cuando lleguen los assets, `image` se popula y el número desaparece del render automáticamente.
+- `animalMap` con los 38 animales venezolanos (posición → nombre, emoji, imagen)
+- `rouletteSequence` en orden físico correcto de la ruleta americana — corrige el bug donde `ROULETTE_NUMBERS` estaba en orden numérico
+- `prepareDisplayItems()` con lookup por posición y fallback consistente en ambos anillos
+- Render por prioridad: **imagen → emoji → número de posición**
+- Handler `onImageError` para activar fallback si el asset no existe en disco
+- `home.page` y `round-orchestrator.service` alineados al nuevo contrato de posiciones string
 
-**Render condicional.** El template muestra imagen cuando `item.image` existe, y texto del número cuando no. Ningún cambio de lógica necesario al sustituir los assets finales — solo se popula el campo.
-
-**Reset a posición inicial.** Antes de cada giro, el anillo exterior se posiciona en `0` (Delfín) y el interior en `00` (Ballena). Se implementa `resetToInitialPosition()` como método público del componente, llamable desde el orquestador.
-
-**`spinToResult` con dos objetivos.** Recibe `{ outerPosition, innerPosition }` como números de la ruleta americana, resuelve los índices correspondientes en cada anillo, y ejecuta las animaciones de ambos en paralelo con sentidos opuestos.
+El resultado es una rueda funcionalmente completa que muestra emojis hoy y sustituye a imágenes sin cambio de código cuando lleguen los assets.
 
 ---
 

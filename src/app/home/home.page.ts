@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { WheelContainerComponent } from '../components/wheel-container/wheel-container.component';
 import { GameSettingsComponent } from '../components/game-settings/game-settings.component';
 import { BetHistoryComponent } from '../components/bet-history/bet-history.component';
-import { Animal, AnimalBet, WheelSpinResult } from '../interfaces/wheel-general.interface';
+import { Animal, AnimalBet, WheelItem, WheelSpinResult } from '../interfaces/wheel-general.interface';
 import { GameSettings } from '../interfaces/game-settings.interface';
 import { GameState } from '../interfaces/game.enums';
 import { Transaction, TransactionType } from '../interfaces/transaction.interface';
@@ -80,19 +80,17 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private historyIdCounter = 0;
   private readonly BET_HISTORY_KEY = 'betHistory';
 
-  public readonly animalsForWheel = [
-    { name: 'Rata', emoji: '🐀', image: 'assets/images/RATA.png', description: 'Inteligencia' },
-    { name: 'Buey', emoji: '🐂', image: 'assets/images/BUEY.png', description: 'Fuerza' },
-    { name: 'Tigre', emoji: '🐅', image: 'assets/images/TIGRE.png', description: 'Valentía' },
-    { name: 'Conejo', emoji: '🐇', image: 'assets/images/CONEJO.png', description: 'Elegancia' },
-    { name: 'Dragón', emoji: '🐉', image: 'assets/images/DRAGON.png', description: 'Poder' },
-    { name: 'Serpiente', emoji: '🐍', image: 'assets/images/SERPIENTE.png', description: 'Sabiduría' },
-    { name: 'Caballo', emoji: '🐎', image: 'assets/images/CABALLO.png', description: 'Energía' },
-    { name: 'Cabra', emoji: '🐐', image: 'assets/images/CABRA.png', description: 'Calma' },
-    { name: 'Mono', emoji: '🐒', image: 'assets/images/MONO.png', description: 'Ingenio' },
-    { name: 'Gallo', emoji: '🐓', image: 'assets/images/GALLO.png', description: 'Confianza' },
-    { name: 'Perro', emoji: '🐕', image: 'assets/images/PERRO.png', description: 'Lealtad' },
-    { name: 'Cerdo', emoji: '🐖', image: 'assets/images/CERDO.png', description: 'Honestidad' }
+  public readonly animalsForWheel: WheelItem[] = [
+    { position: '0' }, { position: '28' }, { position: '9' },  { position: '26' },
+    { position: '30' }, { position: '11' }, { position: '7' },  { position: '20' },
+    { position: '32' }, { position: '17' }, { position: '5' },  { position: '22' },
+    { position: '34' }, { position: '15' }, { position: '3' },  { position: '24' },
+    { position: '36' }, { position: '13' }, { position: '1' },  { position: '00' },
+    { position: '27' }, { position: '10' }, { position: '25' }, { position: '29' },
+    { position: '12' }, { position: '8' },  { position: '19' }, { position: '31' },
+    { position: '18' }, { position: '6' },  { position: '21' }, { position: '33' },
+    { position: '16' }, { position: '4' },  { position: '23' }, { position: '35' },
+    { position: '14' }, { position: '2' },
   ];
   public coinValues: number[] = [1, 5, 10, 30, 50, 1000];
   public multiplierValues: number[] = [1, 1.5, 2, 3, 5, 10]; // 6 valores base que se duplican en la rueda
@@ -696,7 +694,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         bets: this.selectedAnimals.map(bet => ({
           animal: bet.animal.name,
           amount: bet.amount,
-          index: this.animalsForWheel.findIndex(a => a.name === bet.animal.name) + 1
+          index: this.animalsForWheel.findIndex(a => a.position === bet.animal.position) + 1
         })),
         totalAmount: totalBet
       };
@@ -741,18 +739,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
       const backendResult = spinResponse.data;
       console.log('[HomePage] Resultado del backend:', {
-        animal: backendResult.winningAnimal,
-        multiplier: backendResult.winningMultiplier,
+        outerPosition: backendResult.outerPosition,
+        innerPosition: backendResult.innerPosition,
         winAmount: backendResult.winAmount,
         isWin: backendResult.isWin
       });
-
-      // Encontrar el animal ganador en nuestro array
-      const winningAnimal = this.animalsForWheel.find(a => a.name === backendResult.winningAnimal);
-
-      if (!winningAnimal) {
-        throw new Error(`Animal ganador no encontrado: ${backendResult.winningAnimal}`);
-      }
 
       // ==================== ANIMAR RULETA HACIA RESULTADO DEL BACKEND ====================
       this.hideBettingPanel();
@@ -762,10 +753,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
       console.log('[HomePage] Girando ruleta hacia resultado del backend...');
 
-      // Usar el nuevo método spinToResult() que acepta posiciones de ruleta americana
       const result = await this.wheelContainer.spinToResult({
-        outerPosition: backendResult.winningAnimal, // placeholder: el backend de Duplas enviará posición numérica real
-        innerPosition: backendResult.winningAnimal,
+        outerPosition: backendResult.outerPosition,
+        innerPosition: backendResult.innerPosition,
       });
 
       console.log('[HomePage] Ruleta completada. Resultado visual:', result);
@@ -801,7 +791,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
       // Agregar resultado al historial
       this.addToHistory(
-        { name: String(result.outerPosition), emoji: '' },
+        { position: String(result.outerPosition), name: String(result.outerPosition), emoji: '' },
         0,
         this.lastWin,
         backendResult.isWin

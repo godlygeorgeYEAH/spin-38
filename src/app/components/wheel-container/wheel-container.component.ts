@@ -1,10 +1,50 @@
 import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnChanges, SimpleChanges, OnInit, AfterViewInit, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WheelSpinResult, WheelItem } from '../../interfaces/wheel-general.interface';
+import { Animal, WheelSpinResult, WheelItem } from '../../interfaces/wheel-general.interface';
 import { GameState } from '../../interfaces/game.enums';
 import { AudioService } from '../../services/audio.service';
 import { PerformanceDetectorService, PerformanceProfile } from '../../services/performance-detector.service';
 
+const animalMap: { [position: string]: Animal } = {
+  '0':  { position: '0',  name: 'Delfin',   emoji: '🐬', image: 'assets/images/animales/DELFIN.png' },
+  '28': { position: '28', name: 'Zamuro',   emoji: '🦅', image: 'assets/images/animales/ZAMURO.png' },
+  '9':  { position: '9',  name: 'Aguila',   emoji: '🦅', image: 'assets/images/animales/AGUILA.png' },
+  '26': { position: '26', name: 'Vaca',     emoji: '🐄', image: 'assets/images/animales/VACA.png' },
+  '30': { position: '30', name: 'Caiman',   emoji: '🐊', image: 'assets/images/animales/CAIMAN.png' },
+  '11': { position: '11', name: 'Gato',     emoji: '🐱', image: 'assets/images/animales/GATO.png' },
+  '7':  { position: '7',  name: 'Perico',   emoji: '🦜', image: 'assets/images/animales/PERICO.png' },
+  '20': { position: '20', name: 'Cochino',  emoji: '🐷', image: 'assets/images/animales/COCHINO.png' },
+  '32': { position: '32', name: 'Ardilla',  emoji: '🐿️', image: 'assets/images/animales/ARDILLA.png' },
+  '17': { position: '17', name: 'Pavo',     emoji: '🦃', image: 'assets/images/animales/PAVO.png' },
+  '5':  { position: '5',  name: 'Leon',     emoji: '🦁', image: 'assets/images/animales/LEON.png' },
+  '22': { position: '22', name: 'Camello',  emoji: '🐪', image: 'assets/images/animales/CAMELLO.png' },
+  '34': { position: '34', name: 'Venado',   emoji: '🦌', image: 'assets/images/animales/VENADO.png' },
+  '15': { position: '15', name: 'Zorro',    emoji: '🦊', image: 'assets/images/animales/ZORRO.png' },
+  '3':  { position: '3',  name: 'Cienpies', emoji: '🐛', image: 'assets/images/animales/CIENPIES.png' },
+  '24': { position: '24', name: 'Iguana',   emoji: '🦎', image: 'assets/images/animales/IGUANA.png' },
+  '36': { position: '36', name: 'Culebra',  emoji: '🐍', image: 'assets/images/animales/CULEBRA.png' },
+  '13': { position: '13', name: 'Mono',     emoji: '🐒', image: 'assets/images/animales/MONO.png' },
+  '1':  { position: '1',  name: 'Carnero',  emoji: '🐏', image: 'assets/images/animales/CARNERO.png' },
+  '00': { position: '00', name: 'Ballena',  emoji: '🐳', image: 'assets/images/animales/BALLENA.png' },
+  '27': { position: '27', name: 'Perro',    emoji: '🐕', image: 'assets/images/animales/PERRO.png' },
+  '10': { position: '10', name: 'Tigre',    emoji: '🐅', image: 'assets/images/animales/TIGRE.png' },
+  '25': { position: '25', name: 'Gallina',  emoji: '🐔', image: 'assets/images/animales/GALLINA.png' },
+  '29': { position: '29', name: 'Elefante', emoji: '🐘', image: 'assets/images/animales/ELEFANTE.png' },
+  '12': { position: '12', name: 'Caballo',  emoji: '🐴', image: 'assets/images/animales/CABALLO.png' },
+  '8':  { position: '8',  name: 'Raton',    emoji: '🐭', image: 'assets/images/animales/RATON.png' },
+  '19': { position: '19', name: 'Cabra',    emoji: '🐐', image: 'assets/images/animales/CABRA.png' },
+  '31': { position: '31', name: 'Lapa',     emoji: '🐾', image: 'assets/images/animales/LAPA.png' },
+  '18': { position: '18', name: 'Burro',    emoji: '🫏', image: 'assets/images/animales/BURRO.png' },
+  '6':  { position: '6',  name: 'Rana',     emoji: '🐸', image: 'assets/images/animales/RANA.png' },
+  '21': { position: '21', name: 'Gallo',    emoji: '🐓', image: 'assets/images/animales/GALLO.png' },
+  '33': { position: '33', name: 'Pescado',  emoji: '🐟', image: 'assets/images/animales/PESCADO.png' },
+  '16': { position: '16', name: 'Oso',      emoji: '🐻', image: 'assets/images/animales/OSO.png' },
+  '4':  { position: '4',  name: 'Alacran',  emoji: '🦂', image: 'assets/images/animales/ALACRAN.png' },
+  '23': { position: '23', name: 'Cebra',    emoji: '🦓', image: 'assets/images/animales/CEBRA.png' },
+  '35': { position: '35', name: 'Jirafa',   emoji: '🦒', image: 'assets/images/animales/JIRAFA.png' },
+  '14': { position: '14', name: 'Paloma',   emoji: '🕊️', image: 'assets/images/animales/PALOMA.png' },
+  '2':  { position: '2',  name: 'Toro',     emoji: '🐂', image: 'assets/images/animales/TORO.png' },
+};
 
 @Component({
   selector: 'app-wheel-container',
@@ -29,8 +69,8 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   @ViewChild('innerWheel', { static: true }) innerWheel!: ElementRef<SVGGElement>;
 
   public spinning = false;
-  public displayItems: number[] = [];
-  public innerDisplayItems: number[] = [];
+  public displayItems: Animal[] = [];
+  public innerDisplayItems: Animal[] = [];
   public errorMessage: string = '';
   public winningInnerAnimalIndex: number | null = null;
   public showConfetti = false;
@@ -42,10 +82,10 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private targetOuterAngle = 0;
   private targetInnerAngle = 0;
 
-  private readonly ROULETTE_NUMBERS: (number | string)[] = [
-    0, '00', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-    13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
-    26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36
+  private readonly rouletteSequence: string[] = [
+    '0','28','9','26','30','11','7','20','32','17','5','22','34','15','3',
+    '24','36','13','1','00','27','10','25','29','12','8','19','31','18',
+    '6','21','33','16','4','23','35','14','2'
   ];
   @Input() segmentsCount: number = 38;
   get degreesPerSegment(): number { return 360 / this.segmentsCount; }
@@ -58,8 +98,8 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
 
   // ── Posición de reset ──────────────────────────────────────────────────────
   // Cambia estos valores para ajustar a dónde vuelve la rueda después de cada giro
-  private readonly RESET_OUTER_POSITION: number | string = '00';
-  private readonly RESET_INNER_POSITION: number | string = '00';
+  private readonly RESET_OUTER_POSITION: string = '00';
+  private readonly RESET_INNER_POSITION: string = '00';
   private readonly RESET_DURATION_MS = 1200;
   private readonly RESET_ROTATIONS = 1;
 
@@ -340,6 +380,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   ngOnInit(): void {
     this.spinning = false;
     this.displayItems = [];
+    this.innerDisplayItems = [];
     this.errorMessage = '';
     this.restingOuterAngle = 0;
     this.restingInnerAngle = 0;
@@ -398,7 +439,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
    * @param result - Resultado del backend (animal ganador y multiplicador)
    * @returns Promise que se resuelve cuando la animación termina
    */
-  public spinToResult(result: { outerPosition: number | string; innerPosition: number | string }): Promise<WheelSpinResult> {
+  public spinToResult(result: { outerPosition: string; innerPosition: string }): Promise<WheelSpinResult> {
     if (this.spinning) {
       return Promise.reject(new Error("La ruleta ya está girando."));
     }
@@ -414,14 +455,14 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     }
 
     return new Promise((resolve, reject) => {
-      const outerResultIndex = this.ROULETTE_NUMBERS.indexOf(result.outerPosition);
+      const outerResultIndex = this.rouletteSequence.indexOf(result.outerPosition);
       if (outerResultIndex === -1) {
         this.spinning = false;
         reject(new Error(`Posición exterior ${result.outerPosition} no encontrada en el pool de ruleta`));
         return;
       }
 
-      const innerResultIndex = this.ROULETTE_NUMBERS.indexOf(result.innerPosition);
+      const innerResultIndex = this.rouletteSequence.indexOf(result.innerPosition);
       if (innerResultIndex === -1) {
         this.spinning = false;
         reject(new Error(`Posición interior ${result.innerPosition} no encontrada en el pool de ruleta`));
@@ -484,13 +525,21 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   private prepareDisplayItems(): void {
-    this.displayItems = Array.from({ length: this.segmentsCount }, (_, i) => i);
-    this.innerDisplayItems = [...this.displayItems];
+    this.displayItems = this.rouletteSequence.map(pos =>
+      animalMap[pos] || { position: pos, name: pos, emoji: '' }
+    );
+    this.innerDisplayItems = this.innerAnimals.length > 0
+      ? this.innerAnimals.map(item =>
+          animalMap[item.position] || { position: item.position, name: item.position, emoji: '' }
+        )
+      : this.rouletteSequence.map(pos =>
+          animalMap[pos] || { position: pos, name: pos, emoji: '' }
+        );
   }
 
   public resetToPosition(): Promise<void> {
-    const outerIndex = this.ROULETTE_NUMBERS.indexOf(this.RESET_OUTER_POSITION);
-    const innerIndex = this.ROULETTE_NUMBERS.indexOf(this.RESET_INNER_POSITION);
+    const outerIndex = this.rouletteSequence.indexOf(this.RESET_OUTER_POSITION);
+    const innerIndex = this.rouletteSequence.indexOf(this.RESET_INNER_POSITION);
     if (outerIndex === -1 || innerIndex === -1) return Promise.resolve();
 
     const targetOuter = this.calculateFinalAngle(outerIndex, this.restingOuterAngle, true, this.RESET_ROTATIONS);
@@ -510,8 +559,18 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     });
   }
 
-  public getRouletteNumber(index: number): number | string {
-    return this.ROULETTE_NUMBERS[index] ?? index;
+  public getRouletteNumber(index: number): string {
+    return this.rouletteSequence[index] ?? String(index);
+  }
+
+  public getAnimalImage(position: string): string {
+    const animal = animalMap[position];
+    return (animal && animal.image) ? animal.image : '';
+  }
+
+  public onImageError(_event: Event, item: Animal): void {
+    item.image = undefined;
+    this.cdr.markForCheck();
   }
 
   private applySpinAnimation(element: SVGGElement, targetAngle: number, duration?: number, easing = 'cubic-bezier(0.23, 1, 0.32, 1)'): void {

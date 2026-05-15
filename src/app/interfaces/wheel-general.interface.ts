@@ -1,4 +1,5 @@
 export interface Animal {
+  position: string;
   name: string;
   emoji: string;
   image?: string;
@@ -12,7 +13,7 @@ export interface AnimalBet {
 }
 
 export interface WheelItem {
-  name: string;
+  position: string;
   image?: string;
 }
 

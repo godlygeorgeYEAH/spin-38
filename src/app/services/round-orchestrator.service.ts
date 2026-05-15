@@ -13,8 +13,8 @@ export interface RoundCurrentResponse {
 
 export interface RoundResultResponse {
   roundId: number;
-  outerPosition: number | string;
-  innerPosition: number | string;
+  outerPosition: string;
+  innerPosition: string;
 }
 
 export interface RoundHistoryEntry {
@@ -25,8 +25,8 @@ export interface RoundHistoryEntry {
 }
 
 export interface SpinCommand {
-  outerPosition: number | string;
-  innerPosition: number | string;
+  outerPosition: string;
+  innerPosition: string;
 }
 
 @Injectable({ providedIn: 'root' })

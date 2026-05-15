@@ -55,7 +55,12 @@
           stroke="#d4af37" stroke-width="2" />
       </g>
       <g *ngFor="let item of displayItems; let i = index" [attr.transform]="getAnimalTransform(i)">
-        <text x="0" y="0" class="roulette-number-outer">{{ getRouletteNumber(i) }}</text>
+        <image *ngIf="item.image"
+               [attr.href]="item.image"
+               [attr.x]="animalImageOffset" [attr.y]="animalImageOffset"
+               [attr.width]="animalImageSize" [attr.height]="animalImageSize"
+               (error)="onImageError($event, item)" />
+        <text *ngIf="!item.image" x="0" y="0" class="roulette-number-outer">{{ item.emoji || item.position }}</text>
       </g>
     </g>
     <g #innerWheel>
@@ -65,7 +70,12 @@
           stroke="#d4af37" stroke-width="2" />
       </g>
       <g *ngFor="let item of innerDisplayItems; let i = index" [attr.transform]="getInnerAnimalTransform(i)">
-        <text x="0" y="0" class="roulette-number-inner">{{ getRouletteNumber(i) }}</text>
+        <image *ngIf="item.image"
+               [attr.href]="item.image"
+               [attr.x]="animalImageOffset" [attr.y]="animalImageOffset"
+               [attr.width]="animalImageSize" [attr.height]="animalImageSize"
+               (error)="onImageError($event, item)" />
+        <text *ngIf="!item.image" x="0" y="0" class="roulette-number-inner">{{ item.emoji || item.position }}</text>
       </g>
     </g>
   </svg>
