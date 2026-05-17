@@ -334,7 +334,7 @@
   paint-order: stroke fill;
   pointer-events: all !important; /* Ahora SÍ es clickeable */
   cursor: pointer;
-  user-select: none;
+  -webkit-user-select: none;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   /* Safari: mejorar renderizado de texto SVG */
@@ -370,7 +370,6 @@
   max-width: 80%;
   box-shadow: 0 0 20px rgba(0,0,0,0.5);
   --webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
   animation: errorFadeIn 0.3s ease-out;
 }
 
