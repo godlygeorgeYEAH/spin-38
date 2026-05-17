@@ -9,17 +9,21 @@ ion-content {
   --overflow: hidden;
 }
 
+ion-content.home-background::part(background) {
+  background: transparent !important;
+}
+
 .home-background {
-  --background: #87CEEB;
   position: relative;
   height: 100vh;
   overflow: hidden;
   /* Fondo estático: cambiar la ruta a la imagen que prefieras */
-  background-image: url('../../assets/images/fondos/fondomontañadupla.png');
+  background-image: url('../../assets/images/fondos/fondo1.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed; /* fija el fondo */
+  --background: transparent;
 }
 
 .clock-widget {
