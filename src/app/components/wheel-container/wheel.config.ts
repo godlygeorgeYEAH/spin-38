@@ -38,13 +38,13 @@ export interface WheelSvgConfig {
 }
 
 export const WHEEL_SVG: WheelSvgConfig = {
-  viewboxRadius:           300,
-  outerRingRatio:          0.900,  // ⚠️ DEBE ser < 1.0 (si no, el SVG se corta)
-  innerRingRatio:          0.550,
-  innerRingGapRatio:       0.020,  // Margen entre anillo exterior e interior
-  animalPositionRatio:     0.600, // esto cambia los numeros no los animales
+  viewboxRadius:           900,
+  outerRingRatio:          0.999,  // ⚠️ DEBE ser < 1.0 (si no, el SVG se corta)
+  innerRingRatio:          0.700,
+  innerRingGapRatio:       0.190,  // Margen entre anillo exterior e interior
+  animalPositionRatio:     0.840, // esto cambia los numeros no los animales
   numberPositionRatio:     0.450,
-  animalImageSizeRatio:    0.299,
+  animalImageSizeRatio:    0.125,
   animalTextPositionRatio: 0.88,
   outerAnimalFontSize:     24,     // unidades SVG (escalan con el viewBox)
   innerAnimalFontSize:     16,     // unidades SVG (escalan con el viewBox)
@@ -172,7 +172,7 @@ export const WHEEL_BREAKPOINTS: WheelBreakpoint[] = [
     // Large Desktop (≥ 1800px)
   {
      mediaQuery: '(min-width: 1800px)',
-     diameter: '600px', // este manipula el tamaño del aro interno
+     diameter: '960px', // este manipula el tamaño del aro interno
   },
   // 2K/QHD (2540–2600px, altura 1400–1480px)
   {
@@ -254,7 +254,7 @@ export const WHEEL_BORDER_BREAKPOINTS: WheelBorderBreakpoint[] = [
   // Breakpoint 4: Tablet (600–1023px)
   {
     mediaQuery: '(min-width: 1800px)',
-    borderSize: '50vh',  //este manipula el tamaño de la reuda externa
+    borderSize: '81vh',  //este manipula el tamaño del aro externo decorativo
   },
   {
     mediaQuery: '(min-width: 600px) and (max-width: 1023px)',
