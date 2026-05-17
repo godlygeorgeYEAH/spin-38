@@ -85,6 +85,8 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   public pointerBounce = false;
   @Input() pointerSize: string | null = null; // e.g. '95px' or '6vw'
   @Input() pointerTop: string | null = null;  // e.g. '-20px'
+  @Input() pointerContainerWidth: string | null = null;  // e.g. '100%', '200px'
+  @Input() pointerContainerHeight: string | null = null; // e.g. '100%', '120px'
 
   private restingOuterAngle = 0;
   private restingInnerAngle = 0;

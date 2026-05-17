@@ -172,7 +172,7 @@ export const WHEEL_BREAKPOINTS: WheelBreakpoint[] = [
     // Large Desktop (≥ 1800px)
   {
      mediaQuery: '(min-width: 1800px)',
-     diameter: '600px',
+     diameter: '600px', // este manipula el tamaño del aro interno
   },
   // 2K/QHD (2540–2600px, altura 1400–1480px)
   {
