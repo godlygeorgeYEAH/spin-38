@@ -18,7 +18,7 @@ ion-content.home-background::part(background) {
   height: 100vh;
   overflow: hidden;
   /* Fondo estático: cambiar la ruta a la imagen que prefieras */
-  background-image: url('../../assets/images/fondos/fondo1.png');
+  background-image: url('../../assets/images/fondos/fondoorinoco.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -33,21 +33,26 @@ ion-content.home-background::part(background) {
   width: 170px;
   min-height: 82px;
   padding: 1rem 1rem 0.85rem;
-  background-image: url('../../assets/images/contenedores/relojbuho2.png');
+  background-image: url('../../assets/images/contenedores/relojbuhoflip.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 0.25rem;
   color: #ffffff;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 18px;
-  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-radius: 25px;
+  box-shadow: 0 0 29px 15px rgba(0, 0, 0, 0.8);
   z-index: 1000;
   pointer-events: none;
+  
+
+
 }
 
 .clock-time-label {
