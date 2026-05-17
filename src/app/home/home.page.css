@@ -37,8 +37,8 @@ ion-content.home-background::part(background) {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -90,7 +90,7 @@ ion-content.home-background::part(background) {
   }
 }
 
-/* Video de fondo */
+/* Video de fondo 
 .background-video {
   position: fixed;
   top: 0;
@@ -100,18 +100,20 @@ ion-content.home-background::part(background) {
   object-fit: cover;
   z-index: -1;
   pointer-events: none;
-  display: none; /* Oculto por defecto, se mostrará solo en móviles */
-}
+  display: none; /* Oculto por defecto, se mostrará solo en móviles 
+}  */
 
 /* Logo en esquina superior izquierda */
 .logo-container {
   position: fixed;
-  top: var(--logo-top);
-  left: var(--logo-left);
+  top: var(--logo-top, 60px);
+  left: var(--logo-left, 80px);
+  transform: translate(var(--logo-translate-x, 0), var(--logo-translate-y, 0));
   z-index: 100;
   pointer-events: none;
 }
 
+/* Ajustes finos de posición: --logo-translate-x / --logo-translate-y */
 .game-logo {
   width: var(--logo-size);
   height: auto;
@@ -362,6 +364,7 @@ ion-content.home-background::part(background) {
   z-index: 100;
   width: var(--balance-display-width);
   height: var(--balance-display-height);
+  
 }
 
 .player-balance-display.bottom-balance .balance-value {
