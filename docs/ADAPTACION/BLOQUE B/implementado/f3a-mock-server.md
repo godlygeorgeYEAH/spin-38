@@ -20,7 +20,7 @@ Implementado
 (Sintaxis de PowerShell, linux wot?)
 
 # Ciclo normal (5 minutos por ronda)
-npm run mock-server
+pnpm run mock-server
 
 # Ciclo acortado para testing (30 segundos por ronda)
 $env:ROUND_DURATION_SEC=30; npm run mock-server
