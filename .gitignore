@@ -68,10 +68,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Mock server (development only)
-mock-server.js
-
-
 # .gitignore
 node_modules
 .pnpm-store/
