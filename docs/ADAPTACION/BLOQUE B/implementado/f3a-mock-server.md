@@ -23,10 +23,10 @@ Implementado
 pnpm run mock-server
 
 # Ciclo acortado para testing (30 segundos por ronda)
-$env:ROUND_DURATION_SEC=30; npm run mock-server
+$env:ROUND_DURATION_SEC=30; pnpm run mock-server
 
 # Puerto personalizado
-$env:PORT=4000; npm run mock-server
+$env:PORT=4000; pnpm run mock-server
 ```
 
 El servidor arranca en `http://localhost:3000` por defecto. La consola muestra cada transición de estado en tiempo real.
@@ -160,7 +160,7 @@ Invoke-RestMethod "http://localhost:3000/api/history?limit=5"
 **5. Ciclo completo con `ROUND_DURATION_SEC=30`**
 
 ```powershell
-$env:ROUND_DURATION_SEC=30; npm run mock-server
+$env:ROUND_DURATION_SEC=30; pnpm run mock-server
 ```
 Con ciclo de 30s (idle 1s → spinning 15s → revealing 15s), se puede verificar el ciclo completo en menos de un minuto observando los logs de consola:
 ```
