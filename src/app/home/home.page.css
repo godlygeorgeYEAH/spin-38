@@ -155,8 +155,6 @@ ion-content.home-background::part(background) {
   
   color: #fff;
   text-align: center;
-  /*backdrop-filter: blur(12px);*/
-  -webkit-backdrop-filter: blur(12px);
   pointer-events: auto;
 }
 
