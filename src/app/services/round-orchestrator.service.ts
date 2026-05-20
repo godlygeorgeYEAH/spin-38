@@ -13,8 +13,8 @@ export interface RoundCurrentResponse {
 
 export interface RoundResultResponse {
   roundId: number;
-  outerPosition: string;
-  innerPosition: string;
+  outerPosition: number | string;
+  innerPosition: number | string;
 }
 
 export interface RoundHistoryEntry {
@@ -117,8 +117,8 @@ export class RoundOrchestratorService implements OnDestroy {
         this.sendAck(roundId);
         this.transitionTo('SPINNING');
         this.spinCommandSubject.next({
-          outerPosition: result.outerPosition,
-          innerPosition: result.innerPosition,
+          outerPosition: String(result.outerPosition),
+          innerPosition: String(result.innerPosition),
         });
       },
       error: (err) => {
