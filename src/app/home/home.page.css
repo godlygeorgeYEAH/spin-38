@@ -121,6 +121,69 @@ ion-content.home-background::part(background) {
   object-fit: contain;
 }
 
+
+/* Panel de resultados futuros - Esquina superior derecha, solo en desktop */
+.right-results-panel {
+  position: fixed;
+  top: 5rem;
+  right: 0.3rem;
+  width: min(700px, 90vw);
+  max-width: 800px;
+  z-index: 950;
+  display: block;
+  pointer-events: none;
+  overflow: visible;
+  border-radius: 1rem;
+}
+
+.right-results-panel-background {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.right-results-panel-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem;
+  
+  color: #fff;
+  text-align: center;
+  /*backdrop-filter: blur(12px);*/
+  -webkit-backdrop-filter: blur(12px);
+  pointer-events: auto;
+}
+
+.right-results-panel-content h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold-primary);
+}
+
+.right-results-panel-content p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #f5f5f5;
+}
+
+@media (max-width: 1000px) {
+  .right-results-panel {
+    display: none;
+  }
+}
+/* fin panel de resultados */
+
+
 /* Header - Contiene solo balance cuando betting-panel NO está visible */
 .header {
   text-align: center;
