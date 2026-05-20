@@ -1,0 +1,61 @@
+.history-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.history-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--gold-primary, #c9a84c);
+  text-transform: uppercase;
+}
+
+.history-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.history-entry {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+
+.entry-image {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.entry-time {
+  font-size: 0.75rem;
+  color: var(--gold-primary, #c9a84c);
+  min-width: 36px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+}
+
+.entry-outer,
+.entry-inner {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ffffff;
+  min-width: 24px;
+  text-align: center;
+}
+
+.history-empty {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 1.2rem;
+}

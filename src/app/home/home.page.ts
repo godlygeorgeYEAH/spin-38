@@ -6,6 +6,9 @@ import { BehaviorSubject } from 'rxjs';
 import { WheelContainerComponent } from '../components/wheel-container/wheel-container.component';
 import { GameSettingsComponent } from '../components/game-settings/game-settings.component';
 import { BetHistoryComponent } from '../components/bet-history/bet-history.component';
+import { CountdownTimerComponent } from '../components/countdown-timer/countdown-timer.component';
+import { ResultsHistoryPanelComponent } from '../components/results-history-panel/results-history-panel.component';
+import { JackpotDisplayComponent } from '../components/jackpot-display/jackpot-display.component';
 import { Animal, AnimalBet, WheelItem, WheelSpinResult } from '../interfaces/wheel-general.interface';
 import { GameSettings } from '../interfaces/game-settings.interface';
 import { GameState } from '../interfaces/game.enums';
@@ -29,7 +32,8 @@ import html2canvas from 'html2canvas';
   standalone: true,
   imports: [
     IonContent, IonIcon, CommonModule, AsyncPipe,
-    WheelContainerComponent, GameSettingsComponent, BetHistoryComponent, FindBetPipe
+    WheelContainerComponent, GameSettingsComponent, BetHistoryComponent, FindBetPipe,
+    CountdownTimerComponent, ResultsHistoryPanelComponent, JackpotDisplayComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -81,6 +85,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private capturedScreenshot: File | null = null;
   public showSettings: boolean = false;
   public showBetHistory: boolean = false;
+  public showJackpot: boolean = false;
   public isBettingControlsVisible: boolean = true;
   public isWheelDisplaced: boolean = true; // Controla el desplazamiento de la rueda (separado de la visibilidad del panel)
   public bettingPanelAnimationState: 'hidden' | 'appearing' | 'visible' | 'disappearing' = 'visible';
@@ -294,6 +299,14 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.backgroundVideo.nativeElement.style.display = 'none';
     }
 
+    this.orchestrator.revealComplete$.subscribe(() => {
+      if (!this.wheelContainer) return;
+      this.wheelContainer.resetToPosition().then(() => {
+        this.gameState = GameState.IDLE;
+        this.cdr.markForCheck();
+      });
+    });
+
     this.orchestrator.spinCommand$.subscribe(cmd => {
       if (!this.wheelContainer || this.wheelContainer.spinning) return;
       this.gameState = GameState.PLAYING;
@@ -301,9 +314,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.wheelContainer.spinToResult(cmd)
         .then(() => {
           this.orchestrator.notifySpinComplete();
-          return this.wheelContainer.resetToPosition();
-        })
-        .then(() => {
           this.gameState = GameState.RESULT;
           this.cdr.markForCheck();
         })
@@ -321,6 +331,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private isXiaomiBrowser(): boolean {
     const ua = navigator.userAgent.toLowerCase();
     return ua.includes('miuibrowser') || ua.includes('xiaomi');
+  }
+
+  public onAnticipation(): void {
+    // Punto de extensión: disparar animación de anticipación en la rueda cuando el countdown llega a 0
   }
 
   ngOnDestroy(): void {

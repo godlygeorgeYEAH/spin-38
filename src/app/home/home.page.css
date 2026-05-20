@@ -913,6 +913,14 @@ ion-content.home-background::part(background) {
   align-items: center;
   margin-top: 0;
   flex-grow: 1;
+  position: relative;
+}
+
+.side-panel--right {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /* Wheel Side - Base definition with responsive variables */

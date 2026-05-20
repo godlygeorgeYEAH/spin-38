@@ -100,23 +100,33 @@ El reset usa `'ease-out'` para una desaceleración simple, a diferencia del `cub
 
 ### Integración en `home.page.ts`
 
-El reset se encadena después de `notifySpinComplete()`:
+El reset ya **no** se encadena inmediatamente tras `notifySpinComplete()`. Se ejecuta al terminar el período de `REVEALING`, suscribiéndose a `revealComplete$` del orquestador:
 
 ```ts
+// Reset al terminar revealing
+this.orchestrator.revealComplete$.subscribe(() => {
+  if (!this.wheelContainer) return;
+  this.wheelContainer.resetToPosition().then(() => {
+    this.gameState = GameState.IDLE;
+    this.cdr.markForCheck();
+  });
+});
+
+// Spin al recibir comando
 this.wheelContainer.spinToResult(cmd)
   .then(() => {
     this.orchestrator.notifySpinComplete();
-    return this.wheelContainer.resetToPosition();
-  })
-  .then(() => {
     this.gameState = GameState.RESULT;
     this.cdr.markForCheck();
   });
 ```
 
+**Motivación del cambio:** el reset visual se retrasó al fin de `REVEALING` para que el jugador vea el resultado en pantalla con la rueda detenida en la posición ganadora durante todo el período de revealing (~15 s), y solo entonces la rueda regrese a la posición neutra.
+
 ## Criterio de completitud
 
-- Al terminar el giro, ambos anillos se mueven hacia `00/00` con una animación visible (~1.2 s).
+- Al terminar el giro, la rueda permanece en la posición ganadora durante todo el período de `REVEALING`.
+- Al expirar `REVEALING`, ambos anillos se mueven hacia `00/00` con una animación visible (~1.2 s).
 - El movimiento incluye exactamente 1 vuelta antes de detenerse en `00`.
 - Cambiando `RESET_OUTER_POSITION = 7` y `RESET_INNER_POSITION = 14`, la rueda queda apuntando a esos números.
 - Cambiando `RESET_DURATION_MS = 500` la animación es perceptiblemente más rápida.

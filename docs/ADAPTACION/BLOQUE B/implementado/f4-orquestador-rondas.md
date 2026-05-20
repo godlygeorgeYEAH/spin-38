@@ -16,9 +16,20 @@ Completado — 2026-05-10
 
 - Implementado según spec sin desvíos significativos.
 - `RoundOrchestratorService` creado como singleton con máquina de estados `IDLE → COUNTING_DOWN → SPINNING → REVEALING → IDLE`, polling adaptativo (30 s en idle, 5 s cuando `secondsRemaining < 60`) y `spinCommand$` como canal de comunicación con el template.
-- `home.page.ts` suscribe a `spinCommand$` en `ngAfterViewInit`, llama `spinToResult`, encadena `notifySpinComplete()` y `resetToPosition()`, y maneja el error path con `notifySpinComplete()` para no dejar el orquestador bloqueado en `SPINNING`.
-- `home.page.html` usa `roundState$` y `secondsToNextRound$` para el display de estado de ronda; no contiene lógica de coordinación propia.
+- `home.page.ts` suscribe a `spinCommand$` en `ngAfterViewInit`, llama `spinToResult`, encadena `notifySpinComplete()`, y maneja el error path con `notifySpinComplete()` para no dejar el orquestador bloqueado en `SPINNING`.
+- El reset visual (`resetToPosition()`) se movió a la suscripción de `revealComplete$` — ver **Fase 4B** para detalles.
+- `home.page.html` delega el display del countdown al `CountdownTimerComponent` — ver **Fase 5** para detalles.
 - Build verificado sin errores tras la integración completa.
+
+### Cambios posteriores al spec original (Fase 5)
+
+Durante la implementación de la Fase 5 se modificó el orquestador para soportar el `CountdownTimerComponent`:
+
+- **`revealComplete$`** — nuevo `Subject<void>` público que emite al finalizar el período de `REVEALING`. Permite que `home.page.ts` reaccione al fin del revealing sin acoplar lógica de timing en el template.
+- **`lastKnownIdleDurationSec`** — campo privado que cachea la duración del período `idle` más reciente, obtenida del primer poll al entrar en `COUNTING_DOWN`. Se usa para calcular el tiempo combinado durante `REVEALING`.
+- **`notifySpinComplete()` actualizado** — al transicionar a `REVEALING`, emite `REVEAL_DURATION_SEC + lastKnownIdleDurationSec` en `secondsSubject` y arranca un `setInterval` local de 1 s que decrementa ese valor. Un único `setTimeout` de 15 s dispara `revealComplete$`, para a `IDLE` y hace un solo poll para resincronizar con el servidor.
+- **`handleRoundData()` durante `REVEALING`** — retorna sin hacer nada; la cuenta regresiva local se encarga. No se hace polling adicional durante este estado.
+- **`handleRoundData()` durante `idle`** — cuando `secondsRemaining` es alto (primer poll del nuevo período), actualiza `lastKnownIdleDurationSec`.
 
 ## Qué se construye / Qué se hace
 

@@ -81,6 +81,7 @@
          [style.transform]="clockTimeTransform">
       {{ clockTime }}
     </div>
+    <app-countdown-timer (anticipation)="onAnticipation()"></app-countdown-timer>
   </div>
 
   <!-- Betting Panel - Contenedor independiente y responsive -->
@@ -135,19 +136,17 @@
 
   <div class="game-area">
     <div class="wheel-side">
-      <div class="round-state-display">
-        <span *ngIf="(orchestrator.roundState$ | async) === 'COUNTING_DOWN'">
-          {{ orchestrator.secondsToNextRound$ | async }}s
-        </span>
-        <span *ngIf="(orchestrator.roundState$ | async) === 'SPINNING'">Girando...</span>
-        <span *ngIf="(orchestrator.roundState$ | async) === 'REVEALING'">Resultado</span>
-      </div>
       <div class="wheel-container-wrapper" [class.displaced]="isWheelDisplaced">
         <app-wheel-container [animals]="animalsForWheel"
           [gameState]="gameState" [spinDuration]="spinDuration"
           [innerWheelSpinDuration]="innerWheelSpinDuration">
         </app-wheel-container>
       </div>
+    </div>
+
+    <div class="side-panel side-panel--right">
+      <app-jackpot-display *ngIf="showJackpot"></app-jackpot-display>
+      <app-results-history-panel></app-results-history-panel>
     </div>
   </div>
 
