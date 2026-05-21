@@ -1,0 +1,21 @@
+<div class="history-panel">
+  <span class="history-label">ÚLTIMOS RESULTADOS</span>
+  <div class="history-entries">
+    <div *ngFor="let entry of history; trackBy: trackById" class="history-entry">
+      <span class="entry-time">{{ entry.spinTime || '—' }}</span>
+      <ng-container *ngIf="entry.outerImage; else numericOuter">
+        <img [src]="entry.outerImage" [alt]="entry.outerPosition" class="entry-image">
+      </ng-container>
+      <ng-template #numericOuter>
+        <span class="entry-outer">{{ entry.outerPosition }}</span>
+      </ng-template>
+      <ng-container *ngIf="entry.innerImage; else numericInner">
+        <img [src]="entry.innerImage" [alt]="entry.innerPosition" class="entry-image">
+      </ng-container>
+      <ng-template #numericInner>
+        <span class="entry-inner">{{ entry.innerPosition }}</span>
+      </ng-template>
+    </div>
+    <div *ngIf="history.length === 0" class="history-empty">—</div>
+  </div>
+</div>

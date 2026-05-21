@@ -1,58 +1,12 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnChanges, SimpleChanges, OnInit, AfterViewInit, OnDestroy, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnChanges, SimpleChanges, OnInit, AfterViewInit, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Animal, WheelSpinResult, WheelItem } from '../../interfaces/wheel-general.interface';
 import { GameState } from '../../interfaces/game.enums';
 import { AudioService } from '../../services/audio.service';
 import { PerformanceDetectorService, PerformanceProfile } from '../../services/performance-detector.service';
-import {
-  WHEEL_SVG,
-  getWheelDiameter,
-  getWheelBorderSize,
-  OUTER_WHEEL_COLORS,
-  INNER_WHEEL_COLORS,
-  SELECTED_SEGMENT_COLOR,
-} from './wheel.config';
+import { ANIMAL_MAP } from '../../data/animal-map';
 
-const animalMap: { [position: string]: Animal } = {
-  '0':  { position: '0',  name: 'Delfin',   emoji: '🐬', image: 'assets/images/animales/DELFIN.png' },
-  '28': { position: '28', name: 'Zamuro',   emoji: '🦅', image: 'assets/images/animales/ZAMURO.png' },
-  '9':  { position: '9',  name: 'Aguila',   emoji: '🦅', image: 'assets/images/animales/AGUILA.png' },
-  '26': { position: '26', name: 'Vaca',     emoji: '🐄', image: 'assets/images/animales/VACA.png' },
-  '30': { position: '30', name: 'Caiman',   emoji: '🐊', image: 'assets/images/animales/CAIMAN.png' },
-  '11': { position: '11', name: 'Gato',     emoji: '🐱', image: 'assets/images/animales/GATO.png' },
-  '7':  { position: '7',  name: 'Perico',   emoji: '🦜', image: 'assets/images/animales/PERICO.png' },
-  '20': { position: '20', name: 'Cochino',  emoji: '🐷', image: 'assets/images/animales/COCHINO.png' },
-  '32': { position: '32', name: 'Ardilla',  emoji: '🐿️', image: 'assets/images/animales/ARDILLA.png' },
-  '17': { position: '17', name: 'Pavo',     emoji: '🦃', image: 'assets/images/animales/PAVO.png' },
-  '5':  { position: '5',  name: 'Leon',     emoji: '🦁', image: 'assets/images/animales/LEON.png' },
-  '22': { position: '22', name: 'Camello',  emoji: '🐪', image: 'assets/images/animales/CAMELLO.png' },
-  '34': { position: '34', name: 'Venado',   emoji: '🦌', image: 'assets/images/animales/VENADO.png' },
-  '15': { position: '15', name: 'Zorro',    emoji: '🦊', image: 'assets/images/animales/ZORRO.png' },
-  '3':  { position: '3',  name: 'Cienpies', emoji: '🐛', image: 'assets/images/animales/CIENPIES.png' },
-  '24': { position: '24', name: 'Iguana',   emoji: '🦎', image: 'assets/images/animales/IGUANA.png' },
-  '36': { position: '36', name: 'Culebra',  emoji: '🐍', image: 'assets/images/animales/CULEBRA.png' },
-  '13': { position: '13', name: 'Mono',     emoji: '🐒', image: 'assets/images/animales/MONO.png' },
-  '1':  { position: '1',  name: 'Carnero',  emoji: '🐏', image: 'assets/images/animales/CARNERO.png' },
-  '00': { position: '00', name: 'Ballena',  emoji: '🐳', image: 'assets/images/animales/BALLENA.png' },
-  '27': { position: '27', name: 'Perro',    emoji: '🐕', image: 'assets/images/animales/PERRO.png' },
-  '10': { position: '10', name: 'Tigre',    emoji: '🐅', image: 'assets/images/animales/TIGRE.png' },
-  '25': { position: '25', name: 'Gallina',  emoji: '🐔', image: 'assets/images/animales/GALLINA.png' },
-  '29': { position: '29', name: 'Elefante', emoji: '🐘', image: 'assets/images/animales/ELEFANTE.png' },
-  '12': { position: '12', name: 'Caballo',  emoji: '🐴', image: 'assets/images/animales/CABALLO.png' },
-  '8':  { position: '8',  name: 'Raton',    emoji: '🐭', image: 'assets/images/animales/RATON.png' },
-  '19': { position: '19', name: 'Cabra',    emoji: '🐐', image: 'assets/images/animales/CABRA.png' },
-  '31': { position: '31', name: 'Lapa',     emoji: '🐾', image: 'assets/images/animales/LAPA.png' },
-  '18': { position: '18', name: 'Burro',    emoji: '🫏', image: 'assets/images/animales/BURRO.png' },
-  '6':  { position: '6',  name: 'Rana',     emoji: '🐸', image: 'assets/images/animales/RANA.png' },
-  '21': { position: '21', name: 'Gallo',    emoji: '🐓', image: 'assets/images/animales/GALLO.png' },
-  '33': { position: '33', name: 'Pescado',  emoji: '🐟', image: 'assets/images/animales/PESCADO.png' },
-  '16': { position: '16', name: 'Oso',      emoji: '🐻', image: 'assets/images/animales/OSO.png' },
-  '4':  { position: '4',  name: 'Alacran',  emoji: '🦂', image: 'assets/images/animales/ALACRAN.png' },
-  '23': { position: '23', name: 'Cebra',    emoji: '🦓', image: 'assets/images/animales/CEBRA.png' },
-  '35': { position: '35', name: 'Jirafa',   emoji: '🦒', image: 'assets/images/animales/JIRAFA.png' },
-  '14': { position: '14', name: 'Paloma',   emoji: '🕊️', image: 'assets/images/animales/PALOMA.png' },
-  '2':  { position: '2',  name: 'Toro',     emoji: '🐂', image: 'assets/images/animales/TORO.png' },
-};
+const animalMap = ANIMAL_MAP;
 
 @Component({
   selector: 'app-wheel-container',
@@ -62,7 +16,7 @@ const animalMap: { [position: string]: Animal } = {
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges {
   private static nextId = 0;
   public readonly componentId: number;
 
@@ -83,8 +37,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   public winningInnerAnimalIndex: number | null = null;
   public showConfetti = false;
   public pointerBounce = false;
-  @Input() pointerSize: string | null = null; // e.g. '95px' or '6vw'
-  @Input() pointerTop: string | null = null;  // e.g. '-20px'
   @Input() pointerContainerWidth: string | null = null;  // e.g. '100%', '200px'
   @Input() pointerContainerHeight: string | null = null; // e.g. '100%', '120px'
 
@@ -121,18 +73,26 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   // Todos los valores se leen desde wheel.config.ts.
   // Para modificar radios y proporciones, editar WHEEL_SVG en ese archivo.
 
-  private readonly SVG_VIEWBOX_RADIUS        = WHEEL_SVG.viewboxRadius;
-  private readonly OUTER_RING_RATIO          = WHEEL_SVG.outerRingRatio;
-  private readonly INNER_RING_RATIO          = WHEEL_SVG.innerRingRatio;
-  private readonly INNER_RING_GAP_RATIO       = WHEEL_SVG.innerRingGapRatio;
-  private readonly ANIMAL_POSITION_RATIO     = WHEEL_SVG.animalPositionRatio;
-  private readonly ANIMAL_IMAGE_SIZE_RATIO   = WHEEL_SVG.animalImageSizeRatio;
-  private readonly ANIMAL_TEXT_POSITION_RATIO = WHEEL_SVG.animalTextPositionRatio;
-  public readonly outerAnimalFontSize        = WHEEL_SVG.outerAnimalFontSize;
-  public readonly innerAnimalFontSize        = WHEEL_SVG.innerAnimalFontSize;
-  public readonly outerWheelColors           = OUTER_WHEEL_COLORS;
-  public readonly innerWheelColors           = INNER_WHEEL_COLORS;
-  public readonly selectedSegmentColor       = SELECTED_SEGMENT_COLOR;
+  private readonly SVG_VIEWBOX_RADIUS         = 900;
+  private readonly OUTER_RING_RATIO           = 0.999;
+  private readonly INNER_RING_RATIO           = 0.700;
+  private readonly INNER_RING_GAP_RATIO       = 0.190;
+  private readonly ANIMAL_POSITION_RATIO      = 0.840;
+  private readonly ANIMAL_IMAGE_SIZE_RATIO    = 0.125;
+  private readonly ANIMAL_TEXT_POSITION_RATIO = 0.88;
+  public readonly outerAnimalFontSize         = 24;
+  public readonly innerAnimalFontSize         = 16;
+  public readonly outerWheelColors = [
+    { stops: [{ offset: '60%', color: '#2097FC' }, { offset: '100%', color: '#1167c0' }] },
+    { stops: [{ offset: '60%', color: '#2711A3' }, { offset: '100%', color: '#180b6b' }] },
+  ];
+  public readonly innerWheelColors = [
+    { stops: [{ offset: '60%', color: '#ffd890' }, { offset: '100%', color: '#c48a10' }] },
+    { stops: [{ offset: '60%', color: '#86ebf5' }, { offset: '100%', color: '#1da8bc' }] },
+  ];
+  public readonly selectedSegmentColor = {
+    stops: [{ offset: '60%', color: '#00ff88' }, { offset: '100%', color: '#00cc66' }],
+  };
 
   private get animalRadius(): number {
     return this.SVG_VIEWBOX_RADIUS * this.ANIMAL_POSITION_RATIO;
@@ -300,22 +260,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     return colors[index % colors.length];
   }
 
-  private readonly resizeListener = () => {
-    this.applyWheelDiameter();
-    this.applyWheelBorderSize();
-  };
-
-  private applyWheelDiameter(): void {
-    document.documentElement.style.setProperty('--wheel-diameter', getWheelDiameter());
-  }
-
-  private applyWheelBorderSize(): void {
-    document.documentElement.style.setProperty('--wheel-border-size', getWheelBorderSize());
-  }
-
   ngOnInit(): void {
-    this.applyWheelDiameter();
-    this.applyWheelBorderSize();
     this.spinning = false;
     this.displayItems = [];
     this.innerDisplayItems = [];
@@ -329,16 +274,10 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   ngAfterViewInit(): void {
-    window.addEventListener('resize', this.resizeListener);
-
     // Safari fix: Inicializar transform explícitamente en las ruedas
     if (this.outerWheel && this.innerWheel) {
       this.initializeWheelTransforms();
     }
-  }
-
-  ngOnDestroy(): void {
-    window.removeEventListener('resize', this.resizeListener);
   }
 
   /**

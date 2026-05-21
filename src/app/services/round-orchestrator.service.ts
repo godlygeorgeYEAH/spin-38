@@ -13,8 +13,8 @@ export interface RoundCurrentResponse {
 
 export interface RoundResultResponse {
   roundId: number;
-  outerPosition: string;
-  innerPosition: string;
+  outerPosition: number | string;
+  innerPosition: number | string;
 }
 
 export interface RoundHistoryEntry {
@@ -22,6 +22,8 @@ export interface RoundHistoryEntry {
   outerPosition: number | string;
   innerPosition: number | string;
   timestamp: string;
+  image?: string;
+  spinTime?: string;
 }
 
 export interface SpinCommand {
@@ -38,15 +40,23 @@ export class RoundOrchestratorService implements OnDestroy {
   private historySubject = new BehaviorSubject<RoundHistoryEntry[]>([]);
   private spinCommandSubject = new Subject<SpinCommand>();
   private spinCompleteSubject = new Subject<void>();
+  private revealCompleteSubject = new Subject<void>();
 
   public roundState$ = this.stateSubject.asObservable();
   public secondsToNextRound$ = this.secondsSubject.asObservable();
   public recentHistory$ = this.historySubject.asObservable();
   public spinCommand$ = this.spinCommandSubject.asObservable();
+  public revealComplete$ = this.revealCompleteSubject.asObservable();
+
+  private readonly REVEAL_DURATION_SEC = 15;
 
   private pollTimeout: any = null;
   private revealTimeout: any = null;
+  private revealTickInterval: any = null;
   private lastHandledRoundId: number | null = null;
+  private lastSpinCommand: SpinCommand | null = null;
+  private lastSpinStartTime: string | null = null;
+  private lastKnownIdleDurationSec = 0;
   private running = false;
 
   constructor(private http: HttpClient) {}
@@ -54,6 +64,7 @@ export class RoundOrchestratorService implements OnDestroy {
   public start(): void {
     if (this.running) return;
     this.running = true;
+    this.fetchHistory();
     this.poll();
   }
 
@@ -61,18 +72,49 @@ export class RoundOrchestratorService implements OnDestroy {
     this.running = false;
     if (this.pollTimeout) clearTimeout(this.pollTimeout);
     if (this.revealTimeout) clearTimeout(this.revealTimeout);
+    if (this.revealTickInterval) clearInterval(this.revealTickInterval);
   }
 
   public notifySpinComplete(): void {
     this.spinCompleteSubject.next();
     this.transitionTo('REVEALING');
-    this.fetchHistory();
 
-    // Volver a IDLE después del período de revealing (15s)
+    // Agregar el resultado actual al historial inmediatamente sin esperar al servidor
+    if (this.lastSpinCommand && this.lastHandledRoundId !== null) {
+      const current: RoundHistoryEntry = {
+        roundId: this.lastHandledRoundId,
+        outerPosition: this.lastSpinCommand.outerPosition,
+        innerPosition: this.lastSpinCommand.innerPosition,
+        timestamp: new Date().toISOString(),
+        spinTime: this.lastSpinStartTime ?? '',
+      };
+      this.historySubject.next([current, ...this.historySubject.value].slice(0, 10));
+    }
+
+    // Arrancar cuenta regresiva local desde revealing + idle conocido
+    let remaining = this.REVEAL_DURATION_SEC + this.lastKnownIdleDurationSec;
+    this.secondsSubject.next(remaining);
+
+    if (this.revealTickInterval) clearInterval(this.revealTickInterval);
+    this.revealTickInterval = setInterval(() => {
+      remaining--;
+      this.secondsSubject.next(Math.max(0, remaining));
+      if (remaining <= 0) {
+        clearInterval(this.revealTickInterval);
+        this.revealTickInterval = null;
+      }
+    }, 1000);
+
+    // Al terminar el período de revealing: un único poll para sincronizar con servidor
     this.revealTimeout = setTimeout(() => {
+      if (this.revealTickInterval) {
+        clearInterval(this.revealTickInterval);
+        this.revealTickInterval = null;
+      }
+      this.revealCompleteSubject.next();
       this.transitionTo('IDLE');
-      this.scheduleNextPoll(30000);
-    }, 15000);
+      this.scheduleNextPoll(0);
+    }, this.REVEAL_DURATION_SEC * 1000);
   }
 
   private poll(): void {
@@ -88,8 +130,6 @@ export class RoundOrchestratorService implements OnDestroy {
   }
 
   private handleRoundData(round: RoundCurrentResponse): void {
-    this.secondsSubject.next(round.secondsRemaining);
-
     const currentState = this.stateSubject.value;
 
     if (round.state === 'spinning' && round.id !== this.lastHandledRoundId) {
@@ -98,13 +138,18 @@ export class RoundOrchestratorService implements OnDestroy {
       return;
     }
 
-    // Si estamos en SPINNING o REVEALING, no sobreescribir el estado
+    // Durante SPINNING o REVEALING no interferir — la cuenta regresiva local se encarga
     if (currentState === 'SPINNING' || currentState === 'REVEALING') {
-      this.scheduleNextPoll(5000);
       return;
     }
 
     if (round.state === 'idle' || round.state === 'revealing') {
+      // Cachear la duración completa del período idle cuando llega fresca del servidor
+      if (round.state === 'idle' && round.secondsRemaining > this.lastKnownIdleDurationSec * 0.9) {
+        this.lastKnownIdleDurationSec = round.secondsRemaining;
+      }
+
+      this.secondsSubject.next(round.secondsRemaining);
       this.transitionTo(round.secondsRemaining > 0 ? 'COUNTING_DOWN' : 'IDLE');
       const interval = round.secondsRemaining < 60 ? 5000 : 30000;
       this.scheduleNextPoll(interval);
@@ -116,10 +161,12 @@ export class RoundOrchestratorService implements OnDestroy {
       next: (result) => {
         this.sendAck(roundId);
         this.transitionTo('SPINNING');
-        this.spinCommandSubject.next({
-          outerPosition: result.outerPosition,
-          innerPosition: result.innerPosition,
-        });
+        this.lastSpinStartTime = new Date().toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit', hour12: false });
+        this.lastSpinCommand = {
+          outerPosition: String(result.outerPosition),
+          innerPosition: String(result.innerPosition),
+        };
+        this.spinCommandSubject.next(this.lastSpinCommand);
       },
       error: (err) => {
         console.error('[Orchestrator] Error al obtener resultado:', err);

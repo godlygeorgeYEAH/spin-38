@@ -60,27 +60,11 @@
   </div>
 
   <!-- Reloj de esquina inferior izquierda -->
-  <div class="clock-widget" aria-label="Hora: "
-       [style.width]="clockWidgetWidth"
-       [style.min-height]="clockWidgetHeight">
-    <div class="clock-time-label"
-         [style.font-size]="clockLabelFontSize"
-         [style.top]="clockLabelTop"
-         [style.left]="clockLabelLeft"
-         [style.right]="clockLabelRight"
-         [style.bottom]="clockLabelBottom"
-         [style.transform]="clockLabelTransform">
-      RELOJ
-    </div>
-    <div class="clock-time-value"
-         [style.font-size]="clockTimeFontSize"
-         [style.top]="clockTimeTop"
-         [style.left]="clockTimeLeft"
-         [style.right]="clockTimeRight"
-         [style.bottom]="clockTimeBottom"
-         [style.transform]="clockTimeTransform">
+  <div class="clock-widget" aria-label="Hora: ">
+    <div class="clock-time-value">
       {{ clockTime }}
     </div>
+    <app-countdown-timer (anticipation)="onAnticipation()"></app-countdown-timer>
   </div>
 
   <!-- Betting Panel - Contenedor independiente y responsive -->
@@ -135,19 +119,17 @@
 
   <div class="game-area">
     <div class="wheel-side">
-      <div class="round-state-display">
-        <span *ngIf="(orchestrator.roundState$ | async) === 'COUNTING_DOWN'">
-          {{ orchestrator.secondsToNextRound$ | async }}s
-        </span>
-        <span *ngIf="(orchestrator.roundState$ | async) === 'SPINNING'">Girando...</span>
-        <span *ngIf="(orchestrator.roundState$ | async) === 'REVEALING'">Resultado</span>
-      </div>
       <div class="wheel-container-wrapper" [class.displaced]="isWheelDisplaced">
         <app-wheel-container [animals]="animalsForWheel"
           [gameState]="gameState" [spinDuration]="spinDuration"
           [innerWheelSpinDuration]="innerWheelSpinDuration">
         </app-wheel-container>
       </div>
+    </div>
+
+    <div class="side-panel side-panel--right">
+      <app-jackpot-display *ngIf="showJackpot"></app-jackpot-display>
+      <app-results-history-panel></app-results-history-panel>
     </div>
   </div>
 
