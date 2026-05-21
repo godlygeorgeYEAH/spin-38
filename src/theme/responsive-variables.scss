@@ -874,17 +874,17 @@
 @media (min-width: 1800px) {
   :root {
     /* === WHEEL & GAME AREA === */
-    --wheel-margin-top: 50px;
-    --wheel-border-size: 88vh;
+    --wheel-margin-top: 170px; 
+    --wheel-border-size: 75vh; // control de aro externo 
     --wheel-margin-left:25%;
-    --wheel-diameter: 800px;
+    --wheel-diameter: 900px;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
-    --pointer-size: 115px;
-    --pointer-top: 0px;
+    --pointer-size: 300px; // tamaño del puntero
+    --pointer-top: -50px;
 
     /* === ANIMAL DISPLAY === */
-    --animal-image-size: 240px;
+    --animal-image-size: 225px;
     --animal-image-translate-x: 0%;
     --animal-image-translate-y: -10%;
     --animal-name-tag-width: 24%;
@@ -911,21 +911,21 @@
     --balance-font-size: 1.55rem;
 
     /* === CLOCK === */
-    --clock-widget-width: 400px;
-    --clock-widget-min-height: 400px;
-    --clock-widget-bottom: 1.5rem;
-    --clock-widget-left: 1.5rem;
-    --clock-value-font-size: 1.4rem;
-    --clock-value-top: 12vh;
-    --clock-value-left: 9vh;
-    --countdown-font-size: 1.6rem;
-    --countdown-top: 12vh;
-    --countdown-left: -5vh;
+    --clock-widget-width: 300px;
+    --clock-widget-min-height: 300px;
+    --clock-widget-bottom: 1.6rem;
+    --clock-widget-left: 1.6rem;
+    --clock-value-font-size: 1.8rem;
+    --clock-value-top: -6vh;
+    --clock-value-left: 12vh;
+    --countdown-font-size: 1.8rem;
+    --countdown-top: 6vh;
+    --countdown-left: -4vh;
 
     /* === LOGO === */
-    --logo-size: 215px;
-    --logo-top: 20px;
-    --logo-left: 20px;
+    --logo-size: 256px;
+    --logo-top: 25px;
+    --logo-left: 25px;
     --logo-translate-x: 0px;
     --logo-translate-y: 0px;
 
