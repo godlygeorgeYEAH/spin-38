@@ -111,17 +111,17 @@
       </div>
     </div>
 
-    <!-- Player balance - Esquina inferior izquierda -->
+    <!-- Player balance - Esquina inferior izquierda 
     <div class="player-balance-display">
       <img src="assets/images/contenedores/saldo.png" alt="Saldo" class="balance-container-image">
       <div class="balance-value">${{ balance$ | async }}</div>
-    </div>
+    </div> -->
 
-    <!-- Bet amount display -->
+    <!-- Bet amount display 
     <div class="bet-amount-display">
       <img src="assets/images/contenedores/apuesta.png" alt="Tu Apuesta" class="bet-container-image">
       <div class="bet-value">${{ (selectedAnimals | findBet:currentEditingAnimal)?.amount || 0 }}</div>
-    </div>
+    </div> -->
 
     <button (click)="clearCurrentAnimalBet()" class="clear-button"
       [disabled]="!currentEditingAnimal || gameState === 'playing'">
@@ -157,7 +157,7 @@
       <h3>Resultados</h3>
       <p>Próximamente aquí se mostrarán los resultados disponibles.</p>
     </div>
-  </div>
+  </div> 
 
   <div *ngIf="errorMessage" class="error-overlay">
     <div class="error-message">{{ errorMessage }}</div>
