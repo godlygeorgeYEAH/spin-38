@@ -23,11 +23,17 @@
 }
 
 .countdown-value {
-  font-size: 1.6rem;
+  font-size: var(--countdown-font-size, 1.6rem);
   font-weight: bold;
   color: #ffffff;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.05em;
+}
+
+:host {
+  position: relative;
+  top: var(--countdown-top, 0px);
+  left: var(--countdown-left, 0px);
 }
 
 @keyframes pulse-anticipation {

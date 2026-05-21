@@ -4,8 +4,40 @@
 
 :root {
   // Wheel variables
-  // --wheel-diameter se define en wheel.config.ts y es aplicada en runtime por WheelContainerComponent
+  --wheel-diameter: 800px;
   --wheel-border-transform-y: 0px;
+
+  // Results history panel
+  --history-panel-right: 0px;
+  --history-panel-top: 50%;
+  --history-panel-transform: translateY(-50%);
+  --history-panel-width: auto;
+  --history-label-font-size: 0.65rem;
+  --history-entry-gap: 4px;
+  --history-entry-padding: 4px 8px;
+  --history-entry-image-size: 36px;
+  --history-time-font-size: 0.75rem;
+  --history-entry-font-size: 0.9rem;
+
+  // Clock widget — posición y tamaño del contenedor
+  --clock-widget-width: 170px;
+  --clock-widget-min-height: 82px;
+  --clock-widget-bottom: 1.5rem;
+  --clock-widget-left: 1.5rem;
+  // Clock widget — contenido interno
+  --clock-value-font-size: 1.4rem;
+  --clock-value-top: 0px;
+  --clock-value-left: 0px;
+  --countdown-font-size: 1.6rem;
+  --countdown-top: 0px;
+  --countdown-left: 0px;
+
+  // Logo position & size (mobile-first defaults)
+  --logo-size: 80px;
+  --logo-top: 10px;
+  --logo-left: 10px;
+  --logo-translate-x: 0px;
+  --logo-translate-y: 0px;
 
   // Wheel displacement when betting panel is visible (default values)
   --wheel-displacement-x: 0px;

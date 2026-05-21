@@ -1,3 +1,9 @@
+# ~~wheel.config.ts~~ — OBSOLETO (eliminado 2026-05-20)
+
+> Este archivo fue eliminado. Ver `responsive-wheel-sizing.md` para la implementación actual.
+
+---
+
 # wheel.config.ts — Fuente única de verdad de la rueda
 
 `src/app/components/wheel-container/wheel.config.ts`

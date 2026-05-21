@@ -66,20 +66,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private resultOverlayInterval: any = null;
   // reloj
   public clockTime: string = '';
-  public clockWidgetWidth: string = '400px';
-  public clockWidgetHeight: string = '400px';
-  public clockLabelFontSize: string = '0.72rem';
-  public clockLabelTop: string = '0px';
-  public clockLabelLeft: string = '0px';
-  public clockLabelRight: string = 'auto';
-  public clockLabelBottom: string = 'auto';
-  public clockLabelTransform: string = 'none';
-  public clockTimeFontSize: string = '1.1rem';
-  public clockTimeTop: string = '120px';
-  public clockTimeLeft: string = '200px';
-  public clockTimeRight: string = 'auto';
-  public clockTimeBottom: string = 'auto';
-  public clockTimeTransform: string = 'none';
   private clockIntervalId: any = null;
   public errorMessage: string = '';
   private capturedScreenshot: File | null = null;

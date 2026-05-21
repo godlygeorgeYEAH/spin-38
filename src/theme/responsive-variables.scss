@@ -1,31 +1,31 @@
-/* ============================================
+﻿/* ============================================
  * RESPONSIVE VARIABLES - SISTEMA FINAL
- * Archivo único de prueba con viewports reales
+ * Archivo Ãºnico de prueba con viewports reales
  *
- * Basado en análisis de 110+ dispositivos reales
- * Dataset: Device Viewports 2021 + Actualización 2026
+ * Basado en anÃ¡lisis de 110+ dispositivos reales
+ * Dataset: Device Viewports 2021 + ActualizaciÃ³n 2026
  *
  * BREAKPOINTS (10 total):
  * 1. Mobile Base:         0-359px         (iPhone 4-5, legacy)
- * 2. Mobile Standard:     360-415px       (Galaxy S3-S24, iPhone 6-8) ← 65% usuarios
- * 2B. iPhone 12/13/14:    390×844px       (iPhones modernos con notch/Dynamic Island)
- * 2C. Samsung S21:        360×800px       (Samsung S21 series altura extendida)
+ * 2. Mobile Standard:     360-415px       (Galaxy S3-S24, iPhone 6-8) â† 65% usuarios
+ * 2B. iPhone 12/13/14:    390Ã—844px       (iPhones modernos con notch/Dynamic Island)
+ * 2C. Samsung S21:        360Ã—800px       (Samsung S21 series altura extendida)
  * 3. Mobile Large:        414-599px       (iPhone Plus, phablets)
- * 3B. iPhone Pro Max:     428-430×926px   (iPhone 13/14/15 Pro Max premium)
+ * 3B. iPhone Pro Max:     428-430Ã—926px   (iPhone 13/14/15 Pro Max premium)
  * 4. Tablet:              600-1023px      (iPad, Android tablets)
  * 5. Desktop:             1024-1799px     (Laptops, monitors)
  * 6. Large Desktop:       1800px+         (2K, 4K monitors)
- * 7. Redmi Note 14:       1220×2712       (Gold Standard mobile portrait)
+ * 7. Redmi Note 14:       1220Ã—2712       (Gold Standard mobile portrait)
  *
- * CÓMO USAR:
- * 1. Importar en global.scss después de variables.scss
+ * CÃ“MO USAR:
+ * 1. Importar en global.scss despuÃ©s de variables.scss
  * 2. Probar redimensionando viewport en DevTools
  * 3. Profit.
  *
- * ACTUALIZACIÓN 2026:
- * ✅ Añadidos breakpoints específicos para iPhone 12/13/14 (390px)
- * ✅ Añadido breakpoint para Samsung S21 (360×800px)
- * ✅ Añadido breakpoint para iPhone Pro Max (428-430px)
+ * ACTUALIZACIÃ“N 2026:
+ * âœ… AÃ±adidos breakpoints especÃ­ficos para iPhone 12/13/14 (390px)
+ * âœ… AÃ±adido breakpoint para Samsung S21 (360Ã—800px)
+ * âœ… AÃ±adido breakpoint para iPhone Pro Max (428-430px)
  * ============================================ */
 
 /* ============================================
@@ -33,108 +33,83 @@
  * ~5% de usuarios
  *
  * DISPOSITIVOS REALES:
- * - iPhone 4: 320×480px (pixel ratio 2)
- * - iPhone 5: 320×568px (pixel ratio 2)
- * - Samsung Galaxy S, S2: 320×533px
- * - Samsung Galaxy S3 mini: 320×533px
- * - Microsoft Lumia 620, 830, 900: 320×480px
- * - Microsoft Lumia 920, 925, 1020: 320×480px
- * - Blackberry Torch 9800: 360×480px
- * - ZTE Open (Firefox OS): 320×480px
+ * - iPhone 4: 320Ã—480px (pixel ratio 2)
+ * - iPhone 5: 320Ã—568px (pixel ratio 2)
+ * - Samsung Galaxy S, S2: 320Ã—533px
+ * - Samsung Galaxy S3 mini: 320Ã—533px
+ * - Microsoft Lumia 620, 830, 900: 320Ã—480px
+ * - Microsoft Lumia 920, 925, 1020: 320Ã—480px
+ * - Blackberry Torch 9800: 360Ã—480px
+ * - ZTE Open (Firefox OS): 320Ã—480px
  *
  * VALORES BASE definidos en variables.scss
  * ============================================ */
-
-
 /* ============================================
  * BREAKPOINT 2: MOBILE STANDARD (360-413px)
- * ~65% de usuarios - CRÍTICO
+ * ~65% de usuarios - CRÃTICO
  *
  * DISPOSITIVOS REALES (24+ modelos):
  * SAMSUNG GALAXY:
- * - Galaxy S3: 360×640px (pixel ratio 2)
- * - Galaxy S4: 360×640px (pixel ratio 3)
- * - Galaxy S5: 360×640px (pixel ratio 3)
- * - Galaxy S6: 360×640px (pixel ratio 4)
- * - Galaxy S7, S7 edge: 360×640px (pixel ratio 4)
- * - Galaxy S8: 360×740px (pixel ratio 4)
- * - Galaxy S8+: 360×740px (pixel ratio 4)
- * - Galaxy S9: 360×740px (pixel ratio 4)
- * - Galaxy S9+: 360×740px (pixel ratio 4)
- * - Galaxy S10: 360×740px (pixel ratio 4)
- * - Galaxy S10+: 360×740px (pixel ratio 4)
- * - Galaxy Note 2: 360×640px (pixel ratio 2)
- * - Galaxy Note 3: 360×640px (pixel ratio 3)
- * - Galaxy Note 4: 360×640px (pixel ratio 4)
- * - Galaxy Note 8: 360×740px (pixel ratio 4)
- * - Galaxy Note 9: 360×740px (pixel ratio 4)
- * - Galaxy Note 10: 360×718px (pixel ratio 4)
- * - Galaxy Note 10+: 360×718px (pixel ratio 4)
- * - Galaxy Nexus: 360×600px (pixel ratio 2)
+ * - Galaxy S3: 360Ã—640px (pixel ratio 2)
+ * - Galaxy S4: 360Ã—640px (pixel ratio 3)
+ * - Galaxy S5: 360Ã—640px (pixel ratio 3)
+ * - Galaxy S6: 360Ã—640px (pixel ratio 4)
+ * - Galaxy S7, S7 edge: 360Ã—640px (pixel ratio 4)
+ * - Galaxy S8: 360Ã—740px (pixel ratio 4)
+ * - Galaxy S8+: 360Ã—740px (pixel ratio 4)
+ * - Galaxy S9: 360Ã—740px (pixel ratio 4)
+ * - Galaxy S9+: 360Ã—740px (pixel ratio 4)
+ * - Galaxy S10: 360Ã—740px (pixel ratio 4)
+ * - Galaxy S10+: 360Ã—740px (pixel ratio 4)
+ * - Galaxy Note 2: 360Ã—640px (pixel ratio 2)
+ * - Galaxy Note 3: 360Ã—640px (pixel ratio 3)
+ * - Galaxy Note 4: 360Ã—640px (pixel ratio 4)
+ * - Galaxy Note 8: 360Ã—740px (pixel ratio 4)
+ * - Galaxy Note 9: 360Ã—740px (pixel ratio 4)
+ * - Galaxy Note 10: 360Ã—718px (pixel ratio 4)
+ * - Galaxy Note 10+: 360Ã—718px (pixel ratio 4)
+ * - Galaxy Nexus: 360Ã—600px (pixel ratio 2)
  *
  * LG:
- * - LG G3: 360×640px (pixel ratio 4)
- * - LG G4: 360×640px (pixel ratio 4)
- * - LG G5: 360×640px (pixel ratio 4)
- * - LG Nexus 5: 360×640px (pixel ratio 3)
- * - LG Nexus 4: 384×640px (pixel ratio 2)
+ * - LG G3: 360Ã—640px (pixel ratio 4)
+ * - LG G4: 360Ã—640px (pixel ratio 4)
+ * - LG G5: 360Ã—640px (pixel ratio 4)
+ * - LG Nexus 5: 360Ã—640px (pixel ratio 3)
+ * - LG Nexus 4: 384Ã—640px (pixel ratio 2)
  *
  * APPLE:
- * - iPhone 6, 6s: 375×667px (pixel ratio 2)
- * - iPhone 7, 8: 375×667px (pixel ratio 2)
- * - iPhone X: 375×812px (pixel ratio 3)
+ * - iPhone 6, 6s: 375Ã—667px (pixel ratio 2)
+ * - iPhone 7, 8: 375Ã—667px (pixel ratio 2)
+ * - iPhone X: 375Ã—812px (pixel ratio 3)
  *
  * OTROS:
- * - HTC One: 360×640px (pixel ratio 3)
- * - Sony Xperia S: 360×640px (pixel ratio 2)
- * - Sony Xperia Z: 360×640px (pixel ratio 3)
- * - Sony Xperia Z3: 360×598px (pixel ratio 3)
- * - Sony Xperia P: 360×640px (pixel ratio 1.5)
- * - Xiaomi Mi 3: 360×640px (pixel ratio 3)
- * - Xiaomi Mi 4: 360×640px (pixel ratio 3)
- * - Xiaomi Redmi Note 5: 393×786px (pixel ratio 2.75)
- * - Lenovo K900: 360×640px (pixel ratio 3)
- * - Pantech Vega n°6: 360×640px (pixel ratio 3)
- * - ZTE Grand S: 360×640px (pixel ratio 3)
- * - HTC Evo 3D: 360×640px (pixel ratio 1.5)
- * - Google Pixel: 411×731px (pixel ratio 2.6)
- * - Google Pixel XL: 411×731px (pixel ratio 3.5)
+ * - HTC One: 360Ã—640px (pixel ratio 3)
+ * - Sony Xperia S: 360Ã—640px (pixel ratio 2)
+ * - Sony Xperia Z: 360Ã—640px (pixel ratio 3)
+ * - Sony Xperia Z3: 360Ã—598px (pixel ratio 3)
+ * - Sony Xperia P: 360Ã—640px (pixel ratio 1.5)
+ * - Xiaomi Mi 3: 360Ã—640px (pixel ratio 3)
+ * - Xiaomi Mi 4: 360Ã—640px (pixel ratio 3)
+ * - Xiaomi Redmi Note 5: 393Ã—786px (pixel ratio 2.75)
+ * - Lenovo K900: 360Ã—640px (pixel ratio 3)
+ * - Pantech Vega nÂ°6: 360Ã—640px (pixel ratio 3)
+ * - ZTE Grand S: 360Ã—640px (pixel ratio 3)
+ * - HTC Evo 3D: 360Ã—640px (pixel ratio 1.5)
+ * - Google Pixel: 411Ã—731px (pixel ratio 2.6)
+ * - Google Pixel XL: 411Ã—731px (pixel ratio 3.5)
  *
- * ESTE ES EL RANGO MÁS IMPORTANTE - OPTIMIZA AQUÍ PRIMERO
+ * ESTE ES EL RANGO MÃS IMPORTANTE - OPTIMIZA AQUÃ PRIMERO
  * ============================================ */
 @media (min-width: 360px) and (max-width: 415px) and (min-height: 617px) and (max-height: 780px) {
   :root {
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: -10%;
-    --wheel-margin-left: 0px;  /* Sin ajuste horizontal en móvil */
     --wheel-border-size: 50.3vh;
+    --wheel-diameter: 49vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
     --pointer-size: 59px;
     --pointer-top: 0px;
-
-    /* Wheel displacement when betting panel is visible */
-    --wheel-displacement-x: 0px;        /* Horizontal displacement (right on desktop) */
-    --wheel-displacement-y: -15vh;      /* Vertical displacement (up on mobile) */
-
-    /* === BETTING PANEL === */
-    --betting-panel-width: 95vw;
-    --betting-panel-height: 30vh;
-    --betting-panel-translate-x: 0px;
-    --betting-panel-translate-y: -2%;
-
-    /* Betting panel animation offsets */
-    --betting-panel-appear-offset-x: 0px;     /* No horizontal offset on mobile */
-    --betting-panel-appear-offset-y: -35vh;   /* Appears from top center (increased displacement) */
-
-    /* === CHIPS === */
-    --chips-scale: 1;
-    --chips-left: 5%;
-    --chips-top: 43%;
-    --chips-columns: 3;
-    --chips-section-width: 140px;
-    --chips-gap-horizontal: 0px;
-    --chips-gap-vertical: 0px;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 140px;
@@ -152,7 +127,6 @@
     --balance-display-width: 25vh;
     --balance-display-height: 20vh;
     --balance-display-bottom: 0vh;
-    --balance-display-left: 25%;
     --balance-display-translate-x-panel: 0%;
     --balance-display-translate-y-panel: 0%;
     --balance-display-translate-x-bottom: 0%;
@@ -166,59 +140,32 @@
     --balance-panel-font-size: 1.35rem;
     --balance-font-size: 1.35rem;
 
-
-    /* === TOTAL BET DISPLAY === */
-    --total-bet-bottom: -10%;
-    --total-bet-right: 15%;
-    --pill-total-bet-width: 30%;
-    --pill-total-bet-height: 30%;
-    --total-bet-font-size: 1.35rem;
-
-
-    /* === BET DISPLAY === */
-    --bet-display-width: 37%;
-    --bet-display-height: 50%;
-    --bet-display-top: 50%;
-    --bet-display-right: 8%;
-    --bet-font-size: 1.35rem;
-
     
-    /* === UI ELEMENTS === */
+    /* === CLOCK === */
+    --clock-widget-width: 145px;
+    --clock-widget-min-height: 70px;
+    --clock-widget-bottom: 1rem;
+    --clock-widget-left: 1rem;
+    --clock-value-font-size: 0.9rem;
+    --clock-value-top: 0px;
+    --clock-value-left: 0px;
+    --countdown-font-size: 1.0rem;
+    --countdown-top: 0px;
+    --countdown-left: 0px;
+
+    /* === LOGO === */
     --logo-size: 80px;
     --logo-top: 10px;
     --logo-left: 10px;
-    --help-button-size: 35px;
-    --help-button-top: 4%;
-    --help-button-icon-size: 100%;
-    --help-button-transform-x: 0;
-    --help-buttons-direction: row;
-    --help-buttons-gap: 1rem;
-    --clear-all-button-size: 35px;
-    --clear-all-button-top: 2%;
-    --clear-all-button-left: 4%;
-    --clear-button-width: 20%;
-    --clear-button-height: 20%;
-    --clear-button-left: 73%;
-    --clear-button-top: 10%;
-    --coin-chip-font-size: 0.88rem;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
+
 
     /* === MODALS === */
     --modal-width: 85%;
     --modal-max-width: 550px;
-    --modal-title-font-size: 2.2rem;
-    --modal-close-icon-size: 3.3rem;
-    --modal-padding: 1.3rem;
     --history-title-font-size: 2rem;
-    --history-content-font-size: 0.9rem;
     --settings-title-font-size: 2rem;
-    --settings-content-font-size: 1rem;
-
-    /* Posicionamiento de menús/modales */
-    --menu-history-top: 5%;
-    --menu-history-left: 7%;
-    --menu-settings-top: 10%;
-    --menu-settings-left: 7%;
-
     /* === RESULT CARD === */
     --result-card-width: 90%;
     --result-card-max-width: 95vh;
@@ -226,17 +173,19 @@
     --result-card-max-height: 82.5vh;
     --result-card-padding: 20px;
     --result-title-font-size: 2rem;
-    --result-animal-wrapper-width: 100%;
-    --result-animal-wrapper-max-width: 280px;
-    --result-animal-wrapper-height: auto;
-    --result-animal-wrapper-max-height: 40vh;
-    --result-animal-image-size: 90%;
-    --result-multiplier-badge-width:50%;
-    --result-multiplier-badge-height:50%;
-    --result-multiplier-badge-top: 5%;
-    --result-multiplier-badge-right:2%;
     --win-amount-font-size: 2.8rem;
 
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 60px;
+    --history-label-font-size: 0.5rem;
+    --history-entry-gap: 2px;
+    --history-entry-padding: 2px 4px;
+    --history-entry-image-size: 24px;
+    --history-time-font-size: 0.6rem;
+    --history-entry-font-size: 0.7rem;
 
     /* Globales */
 
@@ -248,18 +197,18 @@
  * ~15-20% de usuarios iOS modernos
  *
  * DISPOSITIVOS REALES:
- * - iPhone 12: 390×844px (pixel ratio 3)
- * - iPhone 12 Pro: 390×844px (pixel ratio 3)
- * - iPhone 13: 390×844px (pixel ratio 3)
- * - iPhone 13 Pro: 390×844px (pixel ratio 3)
- * - iPhone 14: 390×852px (pixel ratio 3)
+ * - iPhone 12: 390Ã—844px (pixel ratio 3)
+ * - iPhone 12 Pro: 390Ã—844px (pixel ratio 3)
+ * - iPhone 13: 390Ã—844px (pixel ratio 3)
+ * - iPhone 13 Pro: 390Ã—844px (pixel ratio 3)
+ * - iPhone 14: 390Ã—852px (pixel ratio 3)
  *
- * CARACTERÍSTICAS:
+ * CARACTERÃSTICAS:
  * - Viewport ancho: 390px (entre 360-414px)
- * - Altura extendida: 844-852px (más alto que Mobile Standard)
+ * - Altura extendida: 844-852px (mÃ¡s alto que Mobile Standard)
  * - Notch/Dynamic Island: requiere consideraciones especiales
  *
- * Este breakpoint captura iPhones modernos que son más altos
+ * Este breakpoint captura iPhones modernos que son mÃ¡s altos
  * que el rango Mobile Standard pero tienen ancho similar
  * ============================================ */
 @media (min-width: 388px) and (max-width: 393px) and (min-height: 840px) {
@@ -268,35 +217,12 @@
 
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: -10%;
-    --wheel-margin-left: 0px;
     --wheel-border-size: 44vh;
+    --wheel-diameter: 43vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
     --pointer-size: 60px;
     --pointer-top: 0px;
-
-    /* Wheel displacement when betting panel is visible */
-    --wheel-displacement-x: 0px;
-    --wheel-displacement-y: -25vh;  /* Desplazamiento hacia arriba para dar espacio al panel */
-
-    /* === BETTING PANEL === */
-    --betting-panel-width: 95vw;
-    --betting-panel-height: 28vh;
-    --betting-panel-translate-x: 0px;
-    --betting-panel-translate-y: 73vh;
-
-    /* Betting panel animation offsets */
-    --betting-panel-appear-offset-x: 0px;
-    --betting-panel-appear-offset-y: -15vh;
-
-    /* === CHIPS === */
-    --chips-scale: 1;
-    --chips-left: 5%;
-    --chips-top: 43%;
-    --chips-columns: 3;
-    --chips-section-width: 140px;
-    --chips-gap-horizontal: 0px;
-    --chips-gap-vertical: 0px;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 140px;
@@ -314,7 +240,6 @@
     --balance-display-width: 25vh;
     --balance-display-height: 20vh;
     --balance-display-bottom: 0vh;
-    --balance-display-left: 25%;
     --balance-display-translate-x-panel: 0%;
     --balance-display-translate-y-panel: 0%;
     --balance-display-translate-x-bottom: 0%;
@@ -325,58 +250,31 @@
     --balance-panel-bottom: -12%;
     --balance-panel-left: 15%;
     --balance-panel-font-size: 1.35rem;
-    --balance-font-size: 1.35rem;
+    /* === CLOCK === */
+    --clock-widget-width: 145px;
+    --clock-widget-min-height: 70px;
+    --clock-widget-bottom: 1rem;
+    --clock-widget-left: 1rem;
+    --clock-value-font-size: 0.9rem;
+    --clock-value-top: 0px;
+    --clock-value-left: 0px;
+    --countdown-font-size: 1.0rem;
+    --countdown-top: 0px;
+    --countdown-left: 0px;
 
-    /* === TOTAL BET DISPLAY === */
-    --total-bet-bottom: -10%;
-    --total-bet-right: 15%;
-    --pill-total-bet-width: 30%;
-    --pill-total-bet-height: 30%;
-    --total-bet-font-size: 1.35rem;
-
-    /* === BET DISPLAY === */
-    --bet-display-width: 37%;
-    --bet-display-height: 50%;
-    --bet-display-top: 50%;
-    --bet-display-right: 8%;
-    --bet-font-size: 1.35rem;
-
-    /* === UI ELEMENTS === */
+    /* === LOGO === */
     --logo-size: 80px;
     --logo-top: 10px;
     --logo-left: 10px;
-    --help-button-size: 35px;
-    --help-button-top: 4%;
-    --help-button-icon-size: 100%;
-    --help-button-transform-x: 0;
-    --help-buttons-direction: row;
-    --help-buttons-gap: 1rem;
-    --clear-all-button-size: 35px;
-    --clear-all-button-top: 2%;
-    --clear-all-button-left: 4%;
-    --clear-button-width: 20%;
-    --clear-button-height: 20%;
-    --clear-button-left: 73%;
-    --clear-button-top: 10%;
-    --coin-chip-font-size: 0.88rem;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
 
+    --balance-font-size: 1.35rem;
     /* === MODALS === */
     --modal-width: 85%;
     --modal-max-width: 550px;
-    --modal-title-font-size: 2.2rem;
-    --modal-close-icon-size: 3.3rem;
-    --modal-padding: 1.3rem;
     --history-title-font-size: 2rem;
-    --history-content-font-size: 0.9rem;
     --settings-title-font-size: 2rem;
-    --settings-content-font-size: 1rem;
-
-    /* Posicionamiento de menús/modales */
-    --menu-history-top: 5%;
-    --menu-history-left: 7%;
-    --menu-settings-top: 10%;
-    --menu-settings-left: 7%;
-
     /* === RESULT CARD === */
     --result-card-width: 90%;
     --result-card-max-width: 95vh;
@@ -384,17 +282,19 @@
     --result-card-max-height: 85vh;
     --result-card-padding: 20px;
     --result-title-font-size: 2rem;
-    --result-animal-wrapper-width: 100%;
-    --result-animal-wrapper-max-width: 280px;
-    --result-animal-wrapper-height: auto;
-    --result-animal-wrapper-max-height: 42vh;
-    --result-animal-image-size: 90%;
-    --result-multiplier-badge-width:50%;
-    --result-multiplier-badge-height:50%;
-    --result-multiplier-badge-top: 5%;
-    --result-multiplier-badge-right:2%;
     --win-amount-font-size: 2.8rem;
 
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 60px;
+    --history-label-font-size: 0.5rem;
+    --history-entry-gap: 2px;
+    --history-entry-padding: 2px 4px;
+    --history-entry-image-size: 24px;
+    --history-time-font-size: 0.6rem;
+    --history-entry-font-size: 0.7rem;
 
     /* Globales */
 
@@ -402,21 +302,21 @@
 }
 
 /* ============================================
- * BREAKPOINT 2C: SAMSUNG S21 (360×800px)
+ * BREAKPOINT 2C: SAMSUNG S21 (360Ã—800px)
  * ~8-10% de usuarios Samsung modernos
  *
  * DISPOSITIVOS REALES:
- * - Samsung Galaxy S21: 360×800px (pixel ratio 3)
- * - Samsung Galaxy S21+: 360×800px (pixel ratio 3)
- * - Samsung Galaxy S21 FE: 360×800px (pixel ratio 3)
+ * - Samsung Galaxy S21: 360Ã—800px (pixel ratio 3)
+ * - Samsung Galaxy S21+: 360Ã—800px (pixel ratio 3)
+ * - Samsung Galaxy S21 FE: 360Ã—800px (pixel ratio 3)
  *
- * CARACTERÍSTICAS:
+ * CARACTERÃSTICAS:
  * - Viewport ancho: 360px (igual que Mobile Standard)
- * - Altura: 800px (ligeramente más alto que el límite de 780px)
+ * - Altura: 800px (ligeramente mÃ¡s alto que el lÃ­mite de 780px)
  * - Pantalla Full HD+ AMOLED
  *
  * Este breakpoint captura Samsung S21 series que excede
- * la altura máxima del Mobile Standard por 20px
+ * la altura mÃ¡xima del Mobile Standard por 20px
  * ============================================ */
 @media (min-width: 360px) and (max-width: 363px) and (min-height: 798px) and (max-height: 803px) {
   :root {
@@ -424,35 +324,12 @@
 
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: -10%;
-    --wheel-margin-left: 0px;
     --wheel-border-size: 50.5vh;
+    --wheel-diameter: 49vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
     --pointer-size: 59px;
     --pointer-top: 0px;
-
-    /* Wheel displacement when betting panel is visible */
-    --wheel-displacement-x: 0px;
-    --wheel-displacement-y: -15vh;
-
-    /* === BETTING PANEL === */
-    --betting-panel-width: 95vw;
-    --betting-panel-height: 29vh;
-    --betting-panel-translate-x: 0px;
-    --betting-panel-translate-y: -2%;
-
-    /* Betting panel animation offsets */
-    --betting-panel-appear-offset-x: 0px;
-    --betting-panel-appear-offset-y: -34vh;
-
-    /* === CHIPS === */
-    --chips-scale: 1;
-    --chips-left: 5%;
-    --chips-top: 43%;
-    --chips-columns: 3;
-    --chips-section-width: 140px;
-    --chips-gap-horizontal: 0px;
-    --chips-gap-vertical: 0px;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 140px;
@@ -470,7 +347,6 @@
     --balance-display-width: 25vh;
     --balance-display-height: 20vh;
     --balance-display-bottom: 0vh;
-    --balance-display-left: 25%;
     --balance-display-translate-x-panel: 0%;
     --balance-display-translate-y-panel: 0%;
     --balance-display-translate-x-bottom: 0%;
@@ -481,58 +357,31 @@
     --balance-panel-bottom: -12%;
     --balance-panel-left: 15%;
     --balance-panel-font-size: 1.35rem;
-    --balance-font-size: 1.35rem;
+    /* === CLOCK === */
+    --clock-widget-width: 145px;
+    --clock-widget-min-height: 70px;
+    --clock-widget-bottom: 1rem;
+    --clock-widget-left: 1rem;
+    --clock-value-font-size: 0.9rem;
+    --clock-value-top: 0px;
+    --clock-value-left: 0px;
+    --countdown-font-size: 1.0rem;
+    --countdown-top: 0px;
+    --countdown-left: 0px;
 
-    /* === TOTAL BET DISPLAY === */
-    --total-bet-bottom: -10%;
-    --total-bet-right: 15%;
-    --pill-total-bet-width: 30%;
-    --pill-total-bet-height: 30%;
-    --total-bet-font-size: 1.35rem;
-
-    /* === BET DISPLAY === */
-    --bet-display-width: 37%;
-    --bet-display-height: 50%;
-    --bet-display-top: 50%;
-    --bet-display-right: 8%;
-    --bet-font-size: 1.35rem;
-
-    /* === UI ELEMENTS === */
+    /* === LOGO === */
     --logo-size: 80px;
     --logo-top: 10px;
     --logo-left: 10px;
-    --help-button-size: 35px;
-    --help-button-top: 4%;
-    --help-button-icon-size: 100%;
-    --help-button-transform-x: 0;
-    --help-buttons-direction: row;
-    --help-buttons-gap: 1rem;
-    --clear-all-button-size: 35px;
-    --clear-all-button-top: 2%;
-    --clear-all-button-left: 4%;
-    --clear-button-width: 20%;
-    --clear-button-height: 20%;
-    --clear-button-left: 73%;
-    --clear-button-top: 10%;
-    --coin-chip-font-size: 0.88rem;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
 
+    --balance-font-size: 1.35rem;
     /* === MODALS === */
     --modal-width: 85%;
     --modal-max-width: 550px;
-    --modal-title-font-size: 2.2rem;
-    --modal-close-icon-size: 3.3rem;
-    --modal-padding: 1.3rem;
     --history-title-font-size: 2rem;
-    --history-content-font-size: 0.9rem;
     --settings-title-font-size: 2rem;
-    --settings-content-font-size: 1rem;
-
-    /* Posicionamiento de menús/modales */
-    --menu-history-top: 5%;
-    --menu-history-left: 7%;
-    --menu-settings-top: 10%;
-    --menu-settings-left: 7%;
-
     /* === RESULT CARD === */
     --result-card-width: 90%;
     --result-card-max-width: 95vh;
@@ -540,17 +389,19 @@
     --result-card-max-height: 84vh;
     --result-card-padding: 20px;
     --result-title-font-size: 2rem;
-    --result-animal-wrapper-width: 100%;
-    --result-animal-wrapper-max-width: 280px;
-    --result-animal-wrapper-height: auto;
-    --result-animal-wrapper-max-height: 41vh;
-    --result-animal-image-size: 90%;
-    --result-multiplier-badge-width:50%;
-    --result-multiplier-badge-height:50%;
-    --result-multiplier-badge-top: 5%;
-    --result-multiplier-badge-right:2%;
     --win-amount-font-size: 2.8rem;
 
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 60px;
+    --history-label-font-size: 0.5rem;
+    --history-entry-gap: 2px;
+    --history-entry-padding: 2px 4px;
+    --history-entry-image-size: 24px;
+    --history-time-font-size: 0.6rem;
+    --history-entry-font-size: 0.7rem;
 
     /* Globales */
 
@@ -563,18 +414,18 @@
  *
  * DISPOSITIVOS REALES:
  * APPLE:
- * - iPhone 6+, 6s+: 414×736px (pixel ratio 3)
- * - iPhone 7+, 8+: 414×736px (pixel ratio 3)
+ * - iPhone 6+, 6s+: 414Ã—736px (pixel ratio 3)
+ * - iPhone 7+, 8+: 414Ã—736px (pixel ratio 3)
  *
  * GOOGLE:
- * - Motorola Nexus 6: 412×690px (pixel ratio 3.5)
+ * - Motorola Nexus 6: 412Ã—690px (pixel ratio 3.5)
  *
  * MICROSOFT:
- * - Microsoft Lumia 1520: 432×768px (pixel ratio 2.5)
+ * - Microsoft Lumia 1520: 432Ã—768px (pixel ratio 2.5)
  *
  * BLACKBERRY:
- * - Blackberry Passport: 504×504px (pixel ratio 3) [cuadrado]
- * - Blackberry Leap: 390×695px (pixel ratio 2)
+ * - Blackberry Passport: 504Ã—504px (pixel ratio 3) [cuadrado]
+ * - Blackberry Leap: 390Ã—695px (pixel ratio 2)
  *
  * Phablets y dispositivos grandes
  * ============================================ */
@@ -582,35 +433,12 @@
   :root {
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: -12%;
-    --wheel-margin-left: 0px;  /* Sin ajuste horizontal en móvil */
     --wheel-border-size: 53vh;
+    --wheel-diameter: 52vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
     --pointer-size: 55px;
     --pointer-top: 0px;
-
-    /* Wheel displacement when betting panel is visible */
-    --wheel-displacement-x: 0px;        /* Horizontal displacement (right on desktop) */
-    --wheel-displacement-y: -15vh;      /* Vertical displacement (up on mobile) */
-
-    /* === BETTING PANEL === */
-    --betting-panel-width: 95vw;
-    --betting-panel-height: 30vh;
-    --betting-panel-translate-x: 0px;
-    --betting-panel-translate-y: -2%;
-
-    /* Betting panel animation offsets */
-    --betting-panel-appear-offset-x: 0px;     /* No horizontal offset on mobile */
-    --betting-panel-appear-offset-y: -35vh;   /* Appears from top center (increased displacement) */
-
-    /* === CHIPS === */
-    --chips-scale: 1;
-    --chips-left: 5%;
-    --chips-top: 43%;
-    --chips-columns: 3;
-    --chips-section-width: 140px;
-    --chips-gap-horizontal: 0px;
-    --chips-gap-vertical: 0px;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 140px;
@@ -628,7 +456,6 @@
     --balance-display-width: 25vh;
     --balance-display-height: 20vh;
     --balance-display-bottom: 0vh;
-    --balance-display-left: 25%;
     --balance-display-translate-x-panel: 0%;
     --balance-display-translate-y-panel: 0%;
     --balance-display-translate-x-bottom: 0%;
@@ -641,50 +468,31 @@
     --balance-panel-left: 15%;
     --balance-panel-font-size: 1.35rem;
     --balance-font-size: 1.35rem;
+    /* === CLOCK === */
+    --clock-widget-width: 145px;
+    --clock-widget-min-height: 70px;
+    --clock-widget-bottom: 1rem;
+    --clock-widget-left: 1rem;
+    --clock-value-font-size: 0.9rem;
+    --clock-value-top: 0px;
+    --clock-value-left: 0px;
+    --countdown-font-size: 1.0rem;
+    --countdown-top: 0px;
+    --countdown-left: 0px;
 
-    /* === TOTAL BET DISPLAY === */
-    --total-bet-bottom: -10%;
-    --total-bet-right: 15%;
-    --pill-total-bet-width: 30%;
-    --pill-total-bet-height: 30%;
-    --total-bet-font-size: 1.35rem;
-
-    /* === UI ELEMENTS === */
+    /* === LOGO === */
     --logo-size: 80px;
     --logo-top: 10px;
     --logo-left: 10px;
-    --help-button-size: 35px;
-    --help-button-top: 4%;
-    --help-button-icon-size: 100%;
-    --help-button-transform-x: 0;
-    --help-buttons-direction: row;
-    --help-buttons-gap: 1rem;
-    --clear-all-button-size: 35px;
-    --clear-all-button-top: 2%;
-    --clear-all-button-left: 4%;
-    --clear-button-width: 20%;
-    --clear-button-height: 20%;
-    --clear-button-left: 73%;
-    --clear-button-top: 10%;
-    --coin-chip-font-size: 0.88rem;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
+
 
     /* === MODALS === */
     --modal-width: 90%;
     --modal-max-width: 600px;
-    --modal-title-font-size: 2.5rem;
-    --modal-close-icon-size: 3.7rem;
-    --modal-padding: 5.5rem;
     --history-title-font-size: 1.1rem;
-    --history-content-font-size: 0.9rem;
     --settings-title-font-size: 2.2rem;
-    --settings-content-font-size: 1rem;
-
-    /* Posicionamiento de menús/modales */
-    --menu-history-top: 5%;
-    --menu-history-left: 5%;
-    --menu-settings-top: 15%;
-    --menu-settings-left: 5%;
-
     /* === RESULT CARD === */
     --result-card-width: 90%;
     --result-card-max-width: 95vh;
@@ -692,23 +500,19 @@
     --result-card-max-height: 93.5vh;
     --result-card-padding: 20px;
     --result-title-font-size: 2rem;
-    --result-animal-wrapper-width: 100%;
-    --result-animal-wrapper-max-width: 300px;
-    --result-animal-wrapper-height: 48vh;
-    --result-animal-wrapper-max-height: 48vh;
-    --result-animal-image-size: 60%;
-    --result-multiplier-badge-width:50%;
-    --result-multiplier-badge-height:50%;
-    --result-multiplier-badge-top: 5%;
-    --result-multiplier-badge-right:2%;
     --win-amount-font-size: 2.8rem;
 
-
-    /* Spotlight - Welcome */
-    /* (No spotlight in welcome stage) */
-
-
-    /* Indicador - Manual Spin */
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 60px;
+    --history-label-font-size: 0.5rem;
+    --history-entry-gap: 2px;
+    --history-entry-padding: 2px 4px;
+    --history-entry-image-size: 24px;
+    --history-time-font-size: 0.6rem;
+    --history-entry-font-size: 0.7rem;
 
     /* Globales */
 
@@ -720,18 +524,18 @@
  * ~5-8% de usuarios iOS Premium
  *
  * DISPOSITIVOS REALES:
- * - iPhone 13 Pro Max: 428×926px (pixel ratio 3)
- * - iPhone 14 Pro Max: 430×932px (pixel ratio 3)
- * - iPhone 15 Pro Max: 430×932px (pixel ratio 3)
+ * - iPhone 13 Pro Max: 428Ã—926px (pixel ratio 3)
+ * - iPhone 14 Pro Max: 430Ã—932px (pixel ratio 3)
+ * - iPhone 15 Pro Max: 430Ã—932px (pixel ratio 3)
  *
- * CARACTERÍSTICAS:
+ * CARACTERÃSTICAS:
  * - Viewport ancho: 428-430px (phablet size)
  * - Altura extendida: 926-932px (pantallas extra largas)
  * - ProMotion 120Hz, Always-On Display, Dynamic Island
  * - Pantalla 6.7" con notch/Dynamic Island
  *
  * Este breakpoint captura iPhones Pro Max que tienen
- * pantallas más grandes que los modelos estándar
+ * pantallas mÃ¡s grandes que los modelos estÃ¡ndar
  * ============================================ */
 @media (min-width: 426px) and (max-width: 432px) and (min-height: 920px) {
   :root {
@@ -739,35 +543,12 @@
 
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: -12%;
-    --wheel-margin-left: 0px;
     --wheel-border-size: 54vh;
+    --wheel-diameter: 53vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
     --pointer-size: 58px;
     --pointer-top: 0px;
-
-    /* Wheel displacement when betting panel is visible */
-    --wheel-displacement-x: 0px;
-    --wheel-displacement-y: -14vh;
-
-    /* === BETTING PANEL === */
-    --betting-panel-width: 95vw;
-    --betting-panel-height: 29vh;
-    --betting-panel-translate-x: 0px;
-    --betting-panel-translate-y: -2%;
-
-    /* Betting panel animation offsets */
-    --betting-panel-appear-offset-x: 0px;
-    --betting-panel-appear-offset-y: -33vh;
-
-    /* === CHIPS === */
-    --chips-scale: 1.05;
-    --chips-left: 5%;
-    --chips-top: 43%;
-    --chips-columns: 3;
-    --chips-section-width: 145px;
-    --chips-gap-horizontal: 0px;
-    --chips-gap-vertical: 0px;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 145px;
@@ -785,7 +566,6 @@
     --balance-display-width: 25vh;
     --balance-display-height: 20vh;
     --balance-display-bottom: 0vh;
-    --balance-display-left: 25%;
     --balance-display-translate-x-panel: 0%;
     --balance-display-translate-y-panel: 0%;
     --balance-display-translate-x-bottom: 0%;
@@ -796,58 +576,31 @@
     --balance-panel-bottom: -12%;
     --balance-panel-left: 15%;
     --balance-panel-font-size: 1.4rem;
-    --balance-font-size: 1.4rem;
+    /* === CLOCK === */
+    --clock-widget-width: 145px;
+    --clock-widget-min-height: 70px;
+    --clock-widget-bottom: 1rem;
+    --clock-widget-left: 1rem;
+    --clock-value-font-size: 0.9rem;
+    --clock-value-top: 0px;
+    --clock-value-left: 0px;
+    --countdown-font-size: 1.0rem;
+    --countdown-top: 0px;
+    --countdown-left: 0px;
 
-    /* === TOTAL BET DISPLAY === */
-    --total-bet-bottom: -10%;
-    --total-bet-right: 15%;
-    --pill-total-bet-width: 30%;
-    --pill-total-bet-height: 30%;
-    --total-bet-font-size: 1.4rem;
-
-    /* === BET DISPLAY === */
-    --bet-display-width: 37%;
-    --bet-display-height: 50%;
-    --bet-display-top: 50%;
-    --bet-display-right: 8%;
-    --bet-font-size: 1.4rem;
-
-    /* === UI ELEMENTS === */
+    /* === LOGO === */
     --logo-size: 85px;
     --logo-top: 10px;
     --logo-left: 10px;
-    --help-button-size: 38px;
-    --help-button-top: 4%;
-    --help-button-icon-size: 100%;
-    --help-button-transform-x: 0;
-    --help-buttons-direction: row;
-    --help-buttons-gap: 1rem;
-    --clear-all-button-size: 38px;
-    --clear-all-button-top: 2%;
-    --clear-all-button-left: 4%;
-    --clear-button-width: 20%;
-    --clear-button-height: 20%;
-    --clear-button-left: 73%;
-    --clear-button-top: 10%;
-    --coin-chip-font-size: 0.9rem;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
 
+    --balance-font-size: 1.4rem;
     /* === MODALS === */
     --modal-width: 88%;
     --modal-max-width: 580px;
-    --modal-title-font-size: 2.3rem;
-    --modal-close-icon-size: 3.5rem;
-    --modal-padding: 1.4rem;
     --history-title-font-size: 2.1rem;
-    --history-content-font-size: 0.95rem;
     --settings-title-font-size: 2.1rem;
-    --settings-content-font-size: 1.05rem;
-
-    /* Posicionamiento de menús/modales */
-    --menu-history-top: 5%;
-    --menu-history-left: 6%;
-    --menu-settings-top: 10%;
-    --menu-settings-left: 6%;
-
     /* === RESULT CARD === */
     --result-card-width: 90%;
     --result-card-max-width: 95vh;
@@ -855,17 +608,19 @@
     --result-card-max-height: 86vh;
     --result-card-padding: 22px;
     --result-title-font-size: 2.1rem;
-    --result-animal-wrapper-width: 100%;
-    --result-animal-wrapper-max-width: 290px;
-    --result-animal-wrapper-height: auto;
-    --result-animal-wrapper-max-height: 43vh;
-    --result-animal-image-size: 92%;
-    --result-multiplier-badge-width:50%;
-    --result-multiplier-badge-height:50%;
-    --result-multiplier-badge-top: 5%;
-    --result-multiplier-badge-right:2%;
     --win-amount-font-size: 2.9rem;
 
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 60px;
+    --history-label-font-size: 0.5rem;
+    --history-entry-gap: 2px;
+    --history-entry-padding: 2px 4px;
+    --history-entry-image-size: 24px;
+    --history-time-font-size: 0.6rem;
+    --history-entry-font-size: 0.7rem;
 
     /* Globales */
 
@@ -878,67 +633,44 @@
  *
  * DISPOSITIVOS REALES:
  * APPLE iPAD:
- * - iPad 1, 2: 768×1024px (pixel ratio 1)
- * - iPad 3, 4: 768×1024px (pixel ratio 2)
- * - iPad Air, Air2: 768×1024px (pixel ratio 2)
- * - iPad mini: 768×1024px (pixel ratio 1)
- * - iPad mini 2, 3, 4: 768×1024px (pixel ratio 2)
- * - iPad Pro 9.7: 768×1024px (pixel ratio 2)
+ * - iPad 1, 2: 768Ã—1024px (pixel ratio 1)
+ * - iPad 3, 4: 768Ã—1024px (pixel ratio 2)
+ * - iPad Air, Air2: 768Ã—1024px (pixel ratio 2)
+ * - iPad mini: 768Ã—1024px (pixel ratio 1)
+ * - iPad mini 2, 3, 4: 768Ã—1024px (pixel ratio 2)
+ * - iPad Pro 9.7: 768Ã—1024px (pixel ratio 2)
  *
  * GOOGLE NEXUS:
- * - Asus Nexus 7 v2: 600×960px (pixel ratio 2)
- * - Asus Nexus 7 v1: 604×966px (pixel ratio 1.325)
- * - HTC Nexus 9: 768×1024px (pixel ratio 2)
- * - Samsung Nexus 10: 800×1280px (pixel ratio 2)
+ * - Asus Nexus 7 v2: 600Ã—960px (pixel ratio 2)
+ * - Asus Nexus 7 v1: 604Ã—966px (pixel ratio 1.325)
+ * - HTC Nexus 9: 768Ã—1024px (pixel ratio 2)
+ * - Samsung Nexus 10: 800Ã—1280px (pixel ratio 2)
  *
  * SAMSUNG GALAXY TAB:
- * - Galaxy Tab 3 10": 800×1280px (pixel ratio 1)
- * - Galaxy Tab 2 10": 800×1280px (pixel ratio 1)
- * - Galaxy Tab 8.9": 800×1280px (pixel ratio 1)
- * - Galaxy Tab 2 7": 600×1024px (pixel ratio 1)
+ * - Galaxy Tab 3 10": 800Ã—1280px (pixel ratio 1)
+ * - Galaxy Tab 2 10": 800Ã—1280px (pixel ratio 1)
+ * - Galaxy Tab 8.9": 800Ã—1280px (pixel ratio 1)
+ * - Galaxy Tab 2 7": 600Ã—1024px (pixel ratio 1)
  *
  * OTROS:
- * - LG G Pad 8.3: 600×960px (pixel ratio 2)
- * - Amazon Kindle Fire HD 8.9: 800×1280px (pixel ratio 1.5)
- * - Amazon Kindle Fire HD 7: 480×800px (pixel ratio 1.5)
- * - Amazon Kindle Fire: 600×1024px (pixel ratio 1)
- * - Blackberry Playbook: 600×1024px (pixel ratio 1)
+ * - LG G Pad 8.3: 600Ã—960px (pixel ratio 2)
+ * - Amazon Kindle Fire HD 8.9: 800Ã—1280px (pixel ratio 1.5)
+ * - Amazon Kindle Fire HD 7: 480Ã—800px (pixel ratio 1.5)
+ * - Amazon Kindle Fire: 600Ã—1024px (pixel ratio 1)
+ * - Blackberry Playbook: 600Ã—1024px (pixel ratio 1)
  *
- * La mayoría de tablets están en este rango
+ * La mayorÃ­a de tablets estÃ¡n en este rango
  * ============================================ */
 @media (min-width: 600px) and (max-width: 1023px) {
   :root {
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: -15%;
-    --wheel-margin-left: 0px;  /* Sin ajuste horizontal en móvil */
     --wheel-border-size: 58.5vh;
+    --wheel-diameter: 57vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
     --pointer-size: 130px;
     --pointer-top: -50px;
-
-    /* Wheel displacement when betting panel is visible */
-    --wheel-displacement-x: 0px;        /* Horizontal displacement (right on desktop) */
-    --wheel-displacement-y: -12vh;      /* Vertical displacement (up on tablet) */
-
-    /* === BETTING PANEL === */
-    --betting-panel-width: 85vw;
-    --betting-panel-height: 28vh;
-    --betting-panel-translate-x: 0px;
-    --betting-panel-translate-y: 0%;
-
-    /* Betting panel animation offsets */
-    --betting-panel-appear-offset-x: 0px;     /* No horizontal offset on tablet */
-    --betting-panel-appear-offset-y: -30vh;   /* Appears from top center (increased displacement) */
-
-    /* === CHIPS === */
-    --chips-scale: 1.235;
-    --chips-left: 5%;
-    --chips-top: 45%;
-    --chips-columns: 3;
-    --chips-section-width: 0px;
-    --chips-gap-horizontal: 10px;
-    --chips-gap-vertical: 0px;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 250px;
@@ -956,7 +688,6 @@
     --balance-display-width: 25vh;
     --balance-display-height: 20vh;
     --balance-display-bottom: 0vh;
-    --balance-display-left: 19vh;
     --balance-display-translate-x-panel: 0%;
     --balance-display-translate-y-panel: 0%;
     --balance-display-translate-x-bottom: 0%;
@@ -968,56 +699,31 @@
     --balance-panel-font-size: 2.0rem;
     --balance-font-size: 1.55rem;
 
-    /* === BET DISPLAY === */
-    --bet-display-width: 37%;
-    --bet-display-height: 50%;
-    --bet-display-top: 50%;
-    --bet-display-right: 8%;
-    --bet-font-size: 2.35rem;
-      
-    /* === TOTAL BET DISPLAY === */
-    --total-bet-bottom: -6%;
-    --total-bet-right: 15%;
-    --pill-total-bet-width: 26%;
-    --pill-total-bet-height: 26%;
-    --total-bet-font-size: 1.35rem;
+    /* === CLOCK === */
+    --clock-widget-width: 160px;
+    --clock-widget-min-height: 78px;
+    --clock-widget-bottom: 1.5rem;
+    --clock-widget-left: 1.5rem;
+    --clock-value-font-size: 1.2rem;
+    --clock-value-top: 0px;
+    --clock-value-left: 0px;
+    --countdown-font-size: 1.4rem;
+    --countdown-top: 0px;
+    --countdown-left: 0px;
 
-    /* === UI ELEMENTS === */
+    /* === LOGO === */
     --logo-size: 80px;
     --logo-top: 10px;
     --logo-left: 10px;
-    --help-button-size: 65px;
-    --help-button-top: 4%;
-    --help-button-icon-size: 200%;
-    --help-button-transform-x: 0;
-    --help-buttons-direction: row;
-    --help-buttons-gap: 1rem;
-    --clear-all-button-size: 65px;
-    --clear-all-button-top: 2%;
-    --clear-all-button-left: 4%;
-    --clear-button-width: 20%;
-    --clear-button-height: 20%;
-    --clear-button-left: 73%;
-    --clear-button-top: 10%;
-    --coin-chip-font-size: 0.88rem;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
 
+      
     /* === MODALS === */
     --modal-width: 90%;
     --modal-max-width: 600px;
-    --modal-title-font-size: 2.5rem;
-    --modal-close-icon-size: 3.7rem;
-    --modal-padding: 5.5rem;
     --history-title-font-size: 2.1rem;
-    --history-content-font-size: 1.25rem;
     --settings-title-font-size: 2.2rem;
-    --settings-content-font-size: 1.5rem;
-
-    /* Posicionamiento de menús/modales */
-    --menu-history-top: 5%;
-    --menu-history-left: 15%;
-    --menu-settings-top: 25%;
-    --menu-settings-left: 15%;
-
     /* === RESULT CARD === */
     --result-card-width: 90%;
     --result-card-max-width: 95vh;
@@ -1025,23 +731,19 @@
     --result-card-max-height: 93.5vh;
     --result-card-padding: 20px;
     --result-title-font-size: 2rem;
-    --result-animal-wrapper-width: 100%;
-    --result-animal-wrapper-max-width: 300px;
-    --result-animal-wrapper-height: 48vh;
-    --result-animal-wrapper-max-height: 48vh;
-    --result-animal-image-size: 60%;
-    --result-multiplier-badge-width:50%;
-    --result-multiplier-badge-height:50%;
-    --result-multiplier-badge-top: 5%;
-    --result-multiplier-badge-right:2%;
     --win-amount-font-size: 2.8rem;
 
-
-    /* Spotlight - Welcome */
-    /* (No spotlight in welcome stage) */
-
-
-    /* Indicador - Manual Spin */
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 80px;
+    --history-label-font-size: 0.6rem;
+    --history-entry-gap: 3px;
+    --history-entry-padding: 3px 6px;
+    --history-entry-image-size: 32px;
+    --history-time-font-size: 0.7rem;
+    --history-entry-font-size: 0.8rem;
 
     /* Globales */
 
@@ -1050,57 +752,34 @@
 
 /* ============================================
  * BREAKPOINT 5: DESKTOP (1024-1799px)
- * ~4% de usuarios móviles + mayoría desktop
+ * ~4% de usuarios mÃ³viles + mayorÃ­a desktop
  *
  * DISPOSITIVOS REALES:
  * APPLE:
- * - iPad Pro 12.9: 1024×1366px (pixel ratio 2)
+ * - iPad Pro 12.9: 1024Ã—1366px (pixel ratio 2)
  *
  * MICROSOFT SURFACE:
- * - Surface Pro 3: 1024×1440px (pixel ratio 1.5/1.4)
- * - Surface Pro 2: 720×1280px (pixel ratio 1.5)
- * - Surface Pro: 720×1280px (pixel ratio 1.5)
- * - Surface: 768×1366px (pixel ratio 1)
+ * - Surface Pro 3: 1024Ã—1440px (pixel ratio 1.5/1.4)
+ * - Surface Pro 2: 720Ã—1280px (pixel ratio 1.5)
+ * - Surface Pro: 720Ã—1280px (pixel ratio 1.5)
+ * - Surface: 768Ã—1366px (pixel ratio 1)
  *
  * LAPTOPS COMUNES (no listados en dataset pero comunes):
- * - 1366×768px (HD)
- * - 1440×900px (MacBook Air)
+ * - 1366Ã—768px (HD)
+ * - 1440Ã—900px (MacBook Air)
  *
- * Desktop y laptops estándar
+ * Desktop y laptops estÃ¡ndar
  * ============================================ */
 @media (min-width: 1024px) and (max-width: 1799px) {
   :root {
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: -5%;
-    --wheel-margin-left: 0px;  /* Sin ajuste horizontal en móvil */
     --wheel-border-size: 87vh;
+    --wheel-diameter: 85vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
     --pointer-size: 95px;
     --pointer-top: -20px;
-
-    /* Wheel displacement when betting panel is visible */
-    --wheel-displacement-x: 10vw;       /* Horizontal displacement (right on desktop) */
-    --wheel-displacement-y: 0px;        /* Vertical displacement (up on mobile) */
-
-    /* === BETTING PANEL === */
-    --betting-panel-width: 30vw;
-    --betting-panel-height: 37vh;
-    --betting-panel-translate-x: -60vh;
-    --betting-panel-translate-y: -70%;
-
-    /* Betting panel animation offsets */
-    --betting-panel-appear-offset-x: -50vw;   /* Appears from right center (increased displacement) */
-    --betting-panel-appear-offset-y: 0px;     /* No vertical offset on desktop */
-
-    /* === CHIPS === */
-    --chips-scale: 0.9;
-    --chips-left: 30px;
-    --chips-top: 50%;
-    --chips-columns: 3;
-    --chips-section-width: 160px;
-    --chips-gap-horizontal: 0px;
-    --chips-gap-vertical: 0px;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 240px;
@@ -1118,7 +797,6 @@
     --balance-display-width: 15%;
     --balance-display-height: 20%;
     --balance-display-bottom: 39%;
-    --balance-display-left: 5%;
     --balance-display-translate-x-panel: 0%;
     --balance-display-translate-y-panel: 0%;
     --balance-display-translate-x-bottom: 0%;
@@ -1130,56 +808,31 @@
     --balance-panel-font-size: 1.50rem;
     --balance-font-size: 1.55rem;
 
-    /* === BET DISPLAY === */
-    --bet-display-width: 37%;
-    --bet-display-height: 50%;
-    --bet-display-top: 50%;
-    --bet-display-right: 8%;
-    --bet-font-size: 1.65rem;
-      
-    /* === TOTAL BET DISPLAY === */
-    --total-bet-bottom: -6%;
-    --total-bet-right: 15%;
-    --pill-total-bet-width: 26%;
-    --pill-total-bet-height: 26%;
-    --total-bet-font-size: 1.25rem;
+    /* === CLOCK === */
+    --clock-widget-width: 170px;
+    --clock-widget-min-height: 82px;
+    --clock-widget-bottom: 1.5rem;
+    --clock-widget-left: 1.5rem;
+    --clock-value-font-size: 1.4rem;
+    --clock-value-top: 0px;
+    --clock-value-left: 0px;
+    --countdown-font-size: 1.6rem;
+    --countdown-top: 0px;
+    --countdown-left: 0px;
 
-    /* === UI ELEMENTS === */
+    /* === LOGO === */
     --logo-size: 215px;
     --logo-top: 20px;
     --logo-left: 20px;
-    --help-button-size: 108px;
-    --help-button-top: 50%;
-    --help-button-icon-size: 46px;
-    --help-button-transform-x: -20%;
-    --help-buttons-direction: column;
-    --help-buttons-gap: 2.5rem;
-    --clear-all-button-size: 65px;
-    --clear-all-button-top: 4%;
-    --clear-all-button-left: 4%;
-    --clear-button-width: 22%;
-    --clear-button-height: 20%;
-    --clear-button-left: 72%;
-    --clear-button-top: 10%;
-    --coin-chip-font-size: 1.15rem;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
+
 
     /* === MODALS === */
     --modal-width: 80%;
     --modal-max-width: 850px;
-    --modal-title-font-size: 3.4rem;
-    --modal-close-icon-size: 5.1rem;
-    --modal-padding: 2.4rem;
     --history-title-font-size: 1.2rem;
-    --history-content-font-size: 1.3rem;
     --settings-title-font-size: 3.2rem;
-    --settings-content-font-size: 1.4rem;
-
-    /* Posicionamiento de menús/modales */
-    --menu-history-top: 5%;
-    --menu-history-left: 20%;
-    --menu-settings-top: 20%;
-    --menu-settings-left: 20%;
-
     /* === RESULT CARD === */
     --result-card-width: 90%;
     --result-card-max-width: 850px;
@@ -1187,24 +840,19 @@
     --result-card-max-height: 93.5vh;
     --result-card-padding:20px;
     --result-title-font-size: 3.5rem;
-    --result-animal-wrapper-width: 100%;
-    --result-animal-wrapper-max-width: 600px;
-    --result-animal-wrapper-height: auto;
-    --result-animal-wrapper-max-height: 55vh;
-    --result-animal-image-size: 60%;
-    --result-multiplier-badge-size: 145px;
-    --result-multiplier-badge-width:110px;
-    --result-multiplier-badge-height:110px;
-    --result-multiplier-badge-top: 0px;
-    --result-multiplier-badge-right:40px;
     --win-amount-font-size: 3.0rem;
 
-
-    /* Spotlight - Welcome */
-    /* (No spotlight in welcome stage) */
-
-
-    /* Indicador - Manual Spin */
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 100px;
+    --history-label-font-size: 0.65rem;
+    --history-entry-gap: 4px;
+    --history-entry-padding: 4px 8px;
+    --history-entry-image-size: 36px;
+    --history-time-font-size: 0.75rem;
+    --history-entry-font-size: 0.9rem;
 
     /* Globales */
 
@@ -1217,45 +865,23 @@
  *
  * DISPOSITIVOS REALES:
  * Monitores grandes:
- * - 2K: 2560×1440px
- * - 4K: 3840×2160px
- * - Ultra-wide: 3440×1440px
+ * - 2K: 2560Ã—1440px
+ * - 4K: 3840Ã—2160px
+ * - Ultra-wide: 3440Ã—1440px
  *
- * No listados en el dataset móvil, pero comunes en desktop
+ * No listados en el dataset mÃ³vil, pero comunes en desktop
  * ============================================ */
 @media (min-width: 1800px) {
   :root {
     /* === WHEEL & GAME AREA === */
-    --wheel-margin-top: 0px;
-    --wheel-margin-left: 350px;  /* Ajuste horizontal para pantallas grandes con sidebar */
-    --wheel-border-size: 660px;
+    --wheel-margin-top: 50px;
+    --wheel-border-size: 88vh;
+    --wheel-margin-left:25%;
+    --wheel-diameter: 800px;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
     --pointer-size: 115px;
-    --pointer-top: -40px;
-
-    /* Wheel displacement when betting panel is visible */
-    --wheel-displacement-x: 10vw;       /* Horizontal displacement (right on desktop) */
-    --wheel-displacement-y: 0px;        /* Vertical displacement (up on mobile) */
-
-    /* === BETTING PANEL === */
-    --betting-panel-width: 25vw;
-    --betting-panel-height: 37vh;
-    --betting-panel-translate-x: -60vh;
-    --betting-panel-translate-y: -70%;
-
-    /* Betting panel animation offsets */
-    --betting-panel-appear-offset-x: -50vw;   /* Appears from right center (increased displacement) */
-    --betting-panel-appear-offset-y: 0px;     /* No vertical offset on desktop */
-
-    /* === CHIPS === */
-    --chips-scale: 1.1;
-    --chips-left: 30px;
-    --chips-top: 50%;
-    --chips-columns: 3;
-    --chips-section-width: 160px;
-    --chips-gap-horizontal: 0px;
-    --chips-gap-vertical: 0px;
+    --pointer-top: 0px;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 240px;
@@ -1273,68 +899,42 @@
     --balance-display-width: 15%;
     --balance-display-height: 20%;
     --balance-display-bottom: 39%;
-    --balance-display-left: 5%;
     --balance-display-translate-x-panel: 0%;
     --balance-display-translate-y-panel: 0%;
-    --balance-display-translate-x-bottom: 0%;
-    --balance-display-translate-y-bottom: 0%;
+    --balance-display-translate-x-bottom: -300%;
+    --balance-display-translate-y-bottom: -30%;
     --balance-panel-width: 35%;
     --balance-panel-height: 25%;
-    --balance-panel-bottom: -6.5%;
+    --balance-panel-bottom: 6.5%;
     --balance-panel-left: 15%;
     --balance-panel-font-size: 1.50rem;
     --balance-font-size: 1.55rem;
 
-    /* === BET DISPLAY === */
-    --bet-display-width: 37%;
-    --bet-display-height: 50%;
-    --bet-display-top: 50%;
-    --bet-display-right: 8%;
-    --bet-font-size: 1.65rem;
-      
-    /* === TOTAL BET DISPLAY === */
-    --total-bet-bottom: -6%;
-    --total-bet-right: 15%;
-    --pill-total-bet-width: 26%;
-    --pill-total-bet-height: 26%;
-    --total-bet-font-size: 1.25rem;
+    /* === CLOCK === */
+    --clock-widget-width: 400px;
+    --clock-widget-min-height: 400px;
+    --clock-widget-bottom: 1.5rem;
+    --clock-widget-left: 1.5rem;
+    --clock-value-font-size: 1.4rem;
+    --clock-value-top: 12vh;
+    --clock-value-left: 9vh;
+    --countdown-font-size: 1.6rem;
+    --countdown-top: 12vh;
+    --countdown-left: -5vh;
 
-    /* === UI ELEMENTS === */
+    /* === LOGO === */
     --logo-size: 215px;
     --logo-top: 20px;
     --logo-left: 20px;
-    --help-button-size: 108px;
-    --help-button-top: 50%;
-    --help-button-icon-size: 46px;
-    --help-button-transform-x: -20%;
-    --help-buttons-direction: column;
-    --help-buttons-gap: 2.5rem;
-    --clear-all-button-size: 65px;
-    --clear-all-button-top: 4%;
-    --clear-all-button-left: 4%;
-    --clear-button-width: 22%;
-    --clear-button-height: 20%;
-    --clear-button-left: 72%;
-    --clear-button-top: 10%;
-    --coin-chip-font-size: 1.15rem;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
 
+      
     /* === MODALS === */
     --modal-width: 80%;
     --modal-max-width: 850px;
-    --modal-title-font-size: 3.4rem;
-    --modal-close-icon-size: 5.1rem;
-    --modal-padding: 2.4rem;
     --history-title-font-size: 1.2rem;
-    --history-content-font-size: 1.3rem;
     --settings-title-font-size: 3.2rem;
-    --settings-content-font-size: 1.4rem;
-
-    /* Posicionamiento de menús/modales */
-    --menu-history-top: 5%;
-    --menu-history-left: 30%;
-    --menu-settings-top: 20%;
-    --menu-settings-left: 30%;
-
     /* === RESULT CARD === */
     --result-card-width: 70%;
     --result-card-max-width: 1200px;
@@ -1342,24 +942,19 @@
     --result-card-max-height: 93.5vh;
     --result-card-padding:20px;
     --result-title-font-size: 3.5rem;
-    --result-animal-wrapper-width: 100%;
-    --result-animal-wrapper-max-width: 600px;
-    --result-animal-wrapper-height: auto;
-    --result-animal-wrapper-max-height: 55vh;
-    --result-animal-image-size: 60%;
-    --result-multiplier-badge-size: 145px;
-    --result-multiplier-badge-width:110px;
-    --result-multiplier-badge-height:110px;
-    --result-multiplier-badge-top: 0px;
-    --result-multiplier-badge-right:40px;
     --win-amount-font-size: 3.0rem;
 
-
-    /* Spotlight - Welcome */
-    /* (No spotlight in welcome stage) */
-
-
-    /* Indicador - Manual Spin */
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: -25%;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 130px;
+    --history-label-font-size: 0.75rem;
+    --history-entry-gap: 6px;
+    --history-entry-padding: 6px 10px;
+    --history-entry-image-size: 48px;
+    --history-time-font-size: 0.85rem;
+    --history-entry-font-size: 1rem;
 
     /* Globales */
 
@@ -1367,50 +962,28 @@
 }
 
 /* ============================================
- * BREAKPOINT 7: REDMI NOTE 14 PRO (1216-1224×2708-2716)
- * GOLD STANDARD - Referencia móvil portrait
+ * BREAKPOINT 7: REDMI NOTE 14 PRO (1216-1224Ã—2708-2716)
+ * GOLD STANDARD - Referencia mÃ³vil portrait
  *
  *
- * Características:
+ * CaracterÃ­sticas:
  * - Pantalla muy alta (2712px portrait)
  * - Ancho: 1220px CSS
  * - Pixel ratio estimado: ~3
  * - Escala ~3.5x desde mobile base (320px)
  *
- * TODOS los elementos deben verse perfectos aquí
+ * TODOS los elementos deben verse perfectos aquÃ­
  * ============================================ */
 @media (min-width: 1216px) and (max-width: 1224px) and (min-height: 2708px) and (max-height: 2716px) {
   :root {
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: -500px;
-    --wheel-margin-left: 0px;
     --wheel-border-size: 1155px;
+    --wheel-diameter: 1080px;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
     --pointer-size: 120px;
     --pointer-top: 0px;
-
-    /* Wheel displacement when betting panel is visible */
-    --wheel-displacement-x: 0px;        /* Horizontal displacement (right on desktop) */
-    --wheel-displacement-y: -320px;     /* Vertical displacement (up on mobile) */
-
-    /* === BETTING PANEL === */
-    --betting-panel-width: 1040px;
-    --betting-panel-height: 640px;
-    --betting-panel-translate-x: -28%;
-    --betting-panel-translate-y: -10%;
-
-    /* Betting panel animation offsets */
-    --betting-panel-appear-offset-x: 0px;     /* No horizontal offset on Redmi */
-    --betting-panel-appear-offset-y: -700px;  /* Appears from top center (increased displacement) */
-
-    /* === CHIPS === */
-    --chips-scale: 2;
-    --chips-left: 80px;
-    --chips-top: 50%;
-    --chips-columns: 3;
-    --chips-section-width: 180px;
-    --chips-gap-vertical: 14px;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 560px;
@@ -1424,65 +997,36 @@
     --balance-display-width: 620px;
     --balance-display-height: 400px;
     --balance-display-bottom: 50px;
-    --balance-display-left: 50%;
     --balance-font-size: 4.2rem;
     --balance-panel-width: 360px;
     --balance-panel-height: 200px;
     --balance-panel-font-size: 2rem;
     --balance-panel-bottom: -65px;
-    --balance-panel-left: 140px;
+    /* === CLOCK === */
+    --clock-widget-width: 300px;
+    --clock-widget-min-height: 150px;
+    --clock-widget-bottom: 2rem;
+    --clock-widget-left: 2rem;
+    --clock-value-font-size: 2.5rem;
+    --clock-value-top: 0px;
+    --clock-value-left: 0px;
+    --countdown-font-size: 3.0rem;
+    --countdown-top: 0px;
+    --countdown-left: 0px;
 
-    /* === BET DISPLAY === */
-    --bet-display-width: 450px;
-    --bet-display-height: 200px;
-    --bet-display-top: 50%;
-    --bet-display-right: 60px;
-    --bet-font-size: 3rem;
-    --bet-font-size-alt: 1.6rem;
-
-    /* === TOTAL BET DISPLAY === */
-    --total-bet-bottom: -30px;
-    --total-bet-right: 90px;
-    --pill-total-bet-width: 180px;
-    --pill-total-bet-height: 85px;
-    --total-bet-font-size: 2.2rem;
-
-    /* === UI ELEMENTS === */
+    /* === LOGO === */
     --logo-size: 300px;
     --logo-top: 40px;
     --logo-left: 40px;
-    --help-button-size: 150px;
-    --help-button-top: 3.5rem;
-    --help-button-icon-size: 60px;
-    --help-button-transform-x: 15%;
-    --help-buttons-direction: row;
-    --help-buttons-gap: 3.5rem;
-    --clear-all-button-size: 120px;
-    --clear-all-button-top: 3.5rem;
-    --clear-all-button-left: 3.5rem;
-    --clear-button-width: 300px;
-    --clear-button-height: 135px;
-    --clear-button-left: -40px;
-    --clear-button-top: -120px;
-    --coin-chip-font-size: 1rem;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
 
+    --balance-panel-left: 140px;
     /* === MODALS === */
     --modal-width: 85%;
     --modal-max-width: 95vw;
-    --modal-title-font-size: 4rem;
-    --modal-close-icon-size: 6rem;
-    --modal-padding: 3rem;
     --history-title-font-size: 4rem;
-    --history-content-font-size: 1.8rem;
     --settings-title-font-size: 4rem;
-    --settings-content-font-size: 2rem;
-
-    /* Posicionamiento de menús/modales */
-    --menu-history-top: 25%;
-    --menu-history-left: 25%;
-    --menu-settings-top: 25%;
-    --menu-settings-left: 25%;
-
     /* === RESULT CARD === */
     --result-card-width: 95%;
     --result-card-max-width: 1200px;
@@ -1490,23 +1034,52 @@
     --result-card-max-height: 93.5vh;
     --result-card-padding: 60px;
     --result-title-font-size: 5rem;
-    --result-animal-wrapper-width: 100%;
-    --result-animal-wrapper-max-width: 800px;
-    --result-animal-wrapper-height: auto;
-    --result-animal-wrapper-max-height: 65vh;
-    --result-animal-image-size: 650px;
-    --result-multiplier-badge-size: 300px;
     --win-amount-font-size: 6rem;
 
-
-    /* Spotlight - Welcome */
-    /* (No spotlight in welcome stage) */
-
-
-    /* Indicador - Manual Spin */
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 280px;
+    --history-label-font-size: 1.2rem;
+    --history-entry-gap: 10px;
+    --history-entry-padding: 10px 16px;
+    --history-entry-image-size: 80px;
+    --history-time-font-size: 1rem;
+    --history-entry-font-size: 1.4rem;
 
     /* Globales */
 
+  }
+}
+
+/* ============================================
+ * BREAKPOINT HD+: HD+ LAPTOPS / 1600Ã—900 (1580-1680px, altura 880-920px)
+ * Monitores HD+ y laptops 1600Ã—900
+ * ============================================ */
+@media (min-width: 1580px) and (max-width: 1680px) and (min-height: 880px) and (max-height: 920px) {
+  :root {
+    --wheel-diameter: 520px;
+  }
+}
+
+/* ============================================
+ * BREAKPOINT 2K: QHD (2540-2600px, altura 1400-1480px)
+ * Monitores 2K/QHD 2560Ã—1440
+ * ============================================ */
+@media (min-width: 2540px) and (max-width: 2600px) and (min-height: 1400px) and (max-height: 1480px) {
+  :root {
+    --wheel-diameter: 600px;
+  }
+}
+
+/* ============================================
+ * BREAKPOINT 4K: UHD (â‰¥3800px, altura â‰¥2100px)
+ * Monitores 4K/UHD 3840Ã—2160
+ * ============================================ */
+@media (min-width: 3800px) and (min-height: 2100px) {
+  :root {
+    --wheel-diameter: 700px;
   }
 }
 
@@ -1520,11 +1093,11 @@
  * - 6 otros (Microsoft Lumia, Blackberry, Google Glass)
  * - 1 dispositivo custom (Redmi Note 14 Pro)
  *
- * Distribución aproximada:
+ * DistribuciÃ³n aproximada:
  * - Mobile Base (0-359px):             5% usuarios
- * - Mobile Standard (360-413):         65% usuarios ← MAYORÍA
+ * - Mobile Standard (360-413):         65% usuarios â† MAYORÃA
  * - iPhone 12/13/14 (390px):           15-20% usuarios (iOS modernos)
- * - Samsung S21 (360×800px):           8-10% usuarios (Samsung modernos)
+ * - Samsung S21 (360Ã—800px):           8-10% usuarios (Samsung modernos)
  * - Mobile Large (414-599):            10% usuarios
  * - iPhone Pro Max (428-430px):        5-8% usuarios (iOS Premium)
  * - Tablet (600-1023):                 15% usuarios
@@ -1532,19 +1105,19 @@
  * - Large Desktop (1800+):             1% usuarios
  * - Redmi Note 14:                     Gold Standard
  *
- * NUEVOS BREAKPOINTS AÑADIDOS (2026):
- * ✅ Breakpoint 2B: iPhone 12/13/14 Standard (390×844px) - Captura notch/Dynamic Island
- * ✅ Breakpoint 2C: Samsung S21 (360×800px) - Optimizado para altura extendida
- * ✅ Breakpoint 3B: iPhone 13/14 Pro Max (428-430×926-932px) - Phablets premium
+ * NUEVOS BREAKPOINTS AÃ‘ADIDOS (2026):
+ * âœ… Breakpoint 2B: iPhone 12/13/14 Standard (390Ã—844px) - Captura notch/Dynamic Island
+ * âœ… Breakpoint 2C: Samsung S21 (360Ã—800px) - Optimizado para altura extendida
+ * âœ… Breakpoint 3B: iPhone 13/14 Pro Max (428-430Ã—926-932px) - Phablets premium
  *
- * DISPOSITIVOS ESPECÍFICOS CUBIERTOS:
- * 📱 iPhone 12, 12 Pro: 390×844px → Breakpoint 2B
- * 📱 iPhone 13, 13 Pro: 390×844px → Breakpoint 2B
- * 📱 iPhone 14: 390×852px → Breakpoint 2B
- * 📱 iPhone 13 Pro Max: 428×926px → Breakpoint 3B
- * 📱 iPhone 14 Pro Max: 430×932px → Breakpoint 3B
- * 📱 Samsung S21: 360×800px → Breakpoint 2C
- * 📱 Samsung S24: 360×780px → Mobile Standard (ya cubierto)
+ * DISPOSITIVOS ESPECÃFICOS CUBIERTOS:
+ * ðŸ“± iPhone 12, 12 Pro: 390Ã—844px â†’ Breakpoint 2B
+ * ðŸ“± iPhone 13, 13 Pro: 390Ã—844px â†’ Breakpoint 2B
+ * ðŸ“± iPhone 14: 390Ã—852px â†’ Breakpoint 2B
+ * ðŸ“± iPhone 13 Pro Max: 428Ã—926px â†’ Breakpoint 3B
+ * ðŸ“± iPhone 14 Pro Max: 430Ã—932px â†’ Breakpoint 3B
+ * ðŸ“± Samsung S21: 360Ã—800px â†’ Breakpoint 2C
+ * ðŸ“± Samsung S24: 360Ã—780px â†’ Mobile Standard (ya cubierto)
  *
  * TOTAL COBERTURA: ~100% de dispositivos modernos + iOS/Samsung 2020-2026
  * ============================================ */

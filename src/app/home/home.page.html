@@ -60,25 +60,8 @@
   </div>
 
   <!-- Reloj de esquina inferior izquierda -->
-  <div class="clock-widget" aria-label="Hora: "
-       [style.width]="clockWidgetWidth"
-       [style.min-height]="clockWidgetHeight">
-    <div class="clock-time-label"
-         [style.font-size]="clockLabelFontSize"
-         [style.top]="clockLabelTop"
-         [style.left]="clockLabelLeft"
-         [style.right]="clockLabelRight"
-         [style.bottom]="clockLabelBottom"
-         [style.transform]="clockLabelTransform">
-      RELOJ
-    </div>
-    <div class="clock-time-value"
-         [style.font-size]="clockTimeFontSize"
-         [style.top]="clockTimeTop"
-         [style.left]="clockTimeLeft"
-         [style.right]="clockTimeRight"
-         [style.bottom]="clockTimeBottom"
-         [style.transform]="clockTimeTransform">
+  <div class="clock-widget" aria-label="Hora: ">
+    <div class="clock-time-value">
       {{ clockTime }}
     </div>
     <app-countdown-timer (anticipation)="onAnticipation()"></app-countdown-timer>
