@@ -33,7 +33,7 @@ ion-content.home-background::part(background) {
   width: var(--clock-widget-width, 170px);
   min-height: var(--clock-widget-min-height, 82px);
   padding: 1rem 1rem 0.85rem;
-  background-image: url('../../assets/images/contenedores/relojbuhoflip.png');
+  background-image: url('../../assets/images/contenedores/relojbuho3.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

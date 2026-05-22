@@ -411,13 +411,13 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     this.displayItems = this.rouletteSequence.map(pos =>
       animalMap[pos] || { position: pos, name: pos, emoji: '' }
     );
+    const toInnerItem = (pos: string) => {
+      const animal = animalMap[pos] || { position: pos, name: pos, emoji: '' };
+      return animal.innerImage ? { ...animal, image: animal.innerImage } : animal;
+    };
     this.innerDisplayItems = this.innerAnimals.length > 0
-      ? this.innerAnimals.map(item =>
-          animalMap[item.position] || { position: item.position, name: item.position, emoji: '' }
-        )
-      : this.rouletteSequence.map(pos =>
-          animalMap[pos] || { position: pos, name: pos, emoji: '' }
-        );
+      ? this.innerAnimals.map(item => toInnerItem(item.position))
+      : this.rouletteSequence.map(pos => toInnerItem(pos));
   }
 
   public resetToPosition(): Promise<void> {
