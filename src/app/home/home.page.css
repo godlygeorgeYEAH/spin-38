@@ -115,15 +115,16 @@ ion-content.home-background::part(background) {
 /* Panel de resultados futuros - Esquina superior derecha, solo en desktop */
 .right-results-panel {
   position: fixed;
-  top: 5rem;
-  right: 0.3rem;
-  width: min(700px, 90vw);
-  max-width: 800px;
-  z-index: 950;
+  top: var(--right-panel-top, 5rem);
+  right: var(--right-panel-right, 0.3rem);
+  width: var(--right-panel-width, min(700px, 90vw));
+  max-width: var(--right-panel-max-width, 800px);
+  z-index: var(--right-panel-z-index, 950);
   display: block;
   pointer-events: none;
   overflow: visible;
-  border-radius: 1rem;
+  border-radius: var(--right-panel-border-radius, 1rem);
+  transform: var(--right-panel-transform, none);
 }
 
 .right-results-panel-background {
@@ -136,13 +137,17 @@ ion-content.home-background::part(background) {
 
 .right-results-panel-content {
   position: absolute;
-  inset: 0;
+  top: var(--right-panel-content-top, 0);
+  right: var(--right-panel-content-right, 0);
+  bottom: var(--right-panel-content-bottom, 0);
+  left: var(--right-panel-content-left, 0);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1.25rem;
-  
+  padding: var(--right-panel-content-padding, 1.25rem);
+  transform: var(--right-panel-content-transform, none);
+
   color: #fff;
   text-align: center;
   pointer-events: auto;
@@ -150,7 +155,7 @@ ion-content.home-background::part(background) {
 
 .right-results-panel-content h3 {
   margin: 0 0 0.4rem;
-  font-size: 1rem;
+  font-size: var(--right-panel-content-h3-font-size, 1rem);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -159,8 +164,8 @@ ion-content.home-background::part(background) {
 
 .right-results-panel-content p {
   margin: 0;
-  font-size: 0.85rem;
-  line-height: 1.4;
+  font-size: var(--right-panel-content-p-font-size, 0.85rem);
+  line-height: var(--right-panel-content-p-line-height, 1.4);
   color: #f5f5f5;
 }
 

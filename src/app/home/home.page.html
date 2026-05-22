@@ -129,15 +129,13 @@
 
     <div class="side-panel side-panel--right">
       <app-jackpot-display *ngIf="showJackpot"></app-jackpot-display>
-      <app-results-history-panel></app-results-history-panel>
     </div>
   </div>
 
   <div class="right-results-panel" aria-label="Panel de resultados futuros">
     <img src="assets/images/contenedores/scorepanel.png" alt="Resultado" class="right-results-panel-background">
     <div class="right-results-panel-content">
-      <h3>Resultados</h3>
-      <p>Próximamente aquí se mostrarán los resultados disponibles.</p>
+      <app-results-history-panel></app-results-history-panel>
     </div>
   </div> 
 
