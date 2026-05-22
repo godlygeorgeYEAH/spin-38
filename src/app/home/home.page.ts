@@ -14,7 +14,6 @@ import { GameSettings } from '../interfaces/game-settings.interface';
 import { GameState } from '../interfaces/game.enums';
 import { Transaction, TransactionType } from '../interfaces/transaction.interface';
 import { BetHistory, BetEntry } from '../interfaces/bet-history.interface';
-import { FindBetPipe } from '../pipes/find-bet.pipe';
 import { addIcons } from 'ionicons';
 import { settingsOutline, closeOutline } from 'ionicons/icons';
 import { IonIcon } from '@ionic/angular/standalone';
@@ -32,7 +31,7 @@ import html2canvas from 'html2canvas';
   standalone: true,
   imports: [
     IonContent, IonIcon, CommonModule, AsyncPipe,
-    WheelContainerComponent, GameSettingsComponent, BetHistoryComponent, FindBetPipe,
+    WheelContainerComponent, GameSettingsComponent, BetHistoryComponent,
     CountdownTimerComponent, ResultsHistoryPanelComponent, JackpotDisplayComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

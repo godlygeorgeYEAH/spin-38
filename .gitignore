@@ -72,3 +72,7 @@ Thumbs.db
 node_modules
 .pnpm-store/
 .pnpm-debug.log
+
+# WIP
+buho.png
+scorepanel2.png
