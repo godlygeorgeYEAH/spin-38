@@ -1051,17 +1051,17 @@
     --balance-font-size: 1.55rem;
 
     /* === CLOCK === */
-    --clock-widget-width: 300px;
-    --clock-widget-min-height: 300px;
-    --clock-widget-bottom: 1.6rem;
-    --clock-widget-left: 1.6rem;
+    --clock-widget-width: 480px;
+    --clock-widget-min-height: 432px;
+    --clock-widget-bottom: 0em;
+    --clock-widget-left: 0rem;
     --clock-value-font-size: 1.8rem;
-    --clock-value-top: -6vh;
-    --clock-value-left: 12vh;
+    --clock-value-top: 15vh;
+    --clock-value-left: 5.5vh;
     --countdown-font-size: 1.8rem;
     --countdown-color-font: #fff;
-    --countdown-top: 6vh;
-    --countdown-left: -4vh;
+    --countdown-top: 14.5vh;
+    --countdown-left: -11.5vh;
 
     /* === LOGO === */
     --logo-size: 256px;

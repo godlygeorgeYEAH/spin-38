@@ -33,7 +33,7 @@ ion-content.home-background::part(background) {
   width: var(--clock-widget-width, 170px);
   min-height: var(--clock-widget-min-height, 82px);
   padding: 1rem 1rem 0.85rem;
-  background-image: url('../../assets/images/contenedores/relojbuhoflip.png');
+  background-image: url('../../assets/images/contenedores/relojbuho3.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -46,8 +46,6 @@ ion-content.home-background::part(background) {
   color: #ffffff;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
   border: 1px solid rgba(255, 255, 255, 0);
-  border-radius: 25px;
-  box-shadow: 0 0 29px 15px rgba(0, 0, 0, 0.8);
   z-index: 1000;
   pointer-events: none;
   
