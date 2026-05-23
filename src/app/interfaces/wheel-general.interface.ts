@@ -3,6 +3,7 @@ export interface Animal {
   name: string;
   emoji: string;
   image?: string;
+  innerImage?: string;
   description?: string;
 }
 
