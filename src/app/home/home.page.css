@@ -115,18 +115,19 @@ ion-content.home-background::part(background) {
   width: var(--right-panel-width, min(700px, 90vw));
   max-width: var(--right-panel-max-width, 800px);
   z-index: var(--right-panel-z-index, 950);
-  display: block;
-  pointer-events: none;
-  overflow: visible;
+  display: var(--right-panel-display, block);
+  pointer-events: var(--right-panel-pointer-events, none);
+  overflow: var(--right-panel-overflow, visible);
   border-radius: var(--right-panel-border-radius, 1rem);
   transform: var(--right-panel-transform, none);
+  opacity: var(--right-panel-opacity, 1);
 }
 
 .right-results-panel-background {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  object-position: center;
+  width: var(--right-panel-background-width, 100%);
+  height: var(--right-panel-background-height, auto);
+  object-fit: var(--right-panel-background-object-fit, contain);
+  object-position: var(--right-panel-background-object-position, center);
   display: block;
 }
 
@@ -136,16 +137,17 @@ ion-content.home-background::part(background) {
   right: var(--right-panel-content-right, 0);
   bottom: var(--right-panel-content-bottom, 0);
   left: var(--right-panel-content-left, 0);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: var(--right-panel-content-display, flex);
+  flex-direction: var(--right-panel-content-flex-direction, column);
+  justify-content: var(--right-panel-content-justify-content, center);
+  align-items: var(--right-panel-content-align-items, center);
   padding: var(--right-panel-content-padding, 1.25rem);
+  gap: var(--right-panel-content-gap, 0.5rem);
   transform: var(--right-panel-content-transform, none);
 
-  color: #fff;
-  text-align: center;
-  pointer-events: auto;
+  color: var(--right-panel-content-color, #fff);
+  text-align: var(--right-panel-content-text-align, center);
+  pointer-events: var(--right-panel-content-pointer-events, auto);
 }
 
 .right-results-panel-content h3 {
@@ -154,19 +156,19 @@ ion-content.home-background::part(background) {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--gold-primary);
+  color: var(--right-panel-content-h3-color, var(--gold-primary));
 }
 
 .right-results-panel-content p {
   margin: 0;
   font-size: var(--right-panel-content-p-font-size, 0.85rem);
   line-height: var(--right-panel-content-p-line-height, 1.4);
-  color: #f5f5f5;
+  color: var(--right-panel-content-p-color, #f5f5f5);
 }
 
 @media (max-width: 1000px) {
   .right-results-panel {
-    display: none;
+    display: var(--right-panel-mobile-display, none);
   }
 }
 /* fin panel de resultados */

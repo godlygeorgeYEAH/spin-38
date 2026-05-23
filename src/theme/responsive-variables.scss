@@ -28,6 +28,30 @@
  * âœ… AÃ±adido breakpoint para iPhone Pro Max (428-430px)
  * ============================================ */
 
+:root {
+  /* === RIGHT RESULTS PANEL BASE === */
+  --right-panel-display: block;
+  --right-panel-pointer-events: none;
+  --right-panel-overflow: visible;
+  --right-panel-opacity: 1;
+
+  --right-panel-background-width: 100%;
+  --right-panel-background-height: auto;
+  --right-panel-background-object-fit: contain;
+  --right-panel-background-object-position: center;
+
+  --right-panel-content-display: flex;
+  --right-panel-content-flex-direction: column;
+  --right-panel-content-justify-content: center;
+  --right-panel-content-align-items: center;
+  --right-panel-content-gap: 0.5rem;
+  --right-panel-content-color: #fff;
+  --right-panel-content-text-align: center;
+  --right-panel-content-pointer-events: auto;
+  --right-panel-content-h3-color: var(--gold-primary);
+  --right-panel-content-p-color: #f5f5f5;
+}
+
 /* ============================================
  * BREAKPOINT 1: MOBILE BASE (0-359px)
  * ~5% de usuarios

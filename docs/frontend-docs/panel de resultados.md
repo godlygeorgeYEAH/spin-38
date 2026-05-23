@@ -34,3 +34,13 @@ Se añadió un nuevo panel visual fijo en el lado derecho de la pantalla del hom
 ### Notas
 - El panel está oculto en pantallas pequeñas mediante la regla del diseño responsivo.
 - El contenido del panel ya está contenido dentro del propio panel derecho y no debe cortarse.
+
+### Actualización de la sesión actual
+- Se expusieron variables CSS para `right-results-panel` en `src/app/home/home.page.css`.
+- Se agregó la configuración base de variables en `src/theme/responsive-variables.scss` para permitir la manipulación del panel desde cualquier breakpoint.
+- Variables añadidas incluyen control de:
+  - `display`, `pointer-events`, `overflow`, `opacity`
+  - ancho/alto/fit/posición del fondo del panel
+  - layout del contenido (`display`, `flex-direction`, `justify-content`, `align-items`, `gap`)
+  - colores de texto de `h3` y `p`
+- Se cambió la regla móvil de `display: none` fija por `--right-panel-mobile-display`, de modo que el ocultado también sea configurable por breakpoint.
