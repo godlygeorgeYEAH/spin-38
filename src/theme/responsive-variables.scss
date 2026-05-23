@@ -906,10 +906,10 @@
 @media (min-width: 1800px) {
   :root {
     /* === WHEEL & GAME AREA === */
-    --wheel-margin-top: 3rem; 
-    --wheel-border-size: 90vh; // control de aro externo 
-    --wheel-margin-left:25%;
-    --wheel-diameter: 800px;
+    --wheel-margin-top: 10rem; 
+    --wheel-border-size: 75vh; // control de aro externo 
+    --wheel-margin-left:20%;
+    --wheel-diameter: 900px;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
     --pointer-size: 300px; // tamaño del puntero
@@ -930,15 +930,15 @@
     /* === CLOCK === */
     --clock-widget-width: 480px;
     --clock-widget-min-height: 432px;
-    --clock-widget-bottom: 0em;
+    --clock-widget-bottom: 0.1em;
     --clock-widget-left: 0rem;
     --clock-value-font-size: 1.8rem;
-    --clock-value-top: 15vh;
-    --clock-value-left: 5.5vh;
+    --clock-value-top: 3vh;
+    --clock-value-left: 3vh;
     --countdown-font-size: 1.8rem;
     --countdown-color-font: #fff;
-    --countdown-top: 14.5vh;
-    --countdown-left: -11.5vh;
+    --countdown-top: 9vh;
+    --countdown-left: -9vh;
 
     /* === LOGO === */
     --logo-size: 256px;
@@ -975,9 +975,9 @@
     --history-entry-font-size: 1rem;
 
     /* === RIGHT RESULTS PANEL === */
-    --right-panel-top: 7rem;
-    --right-panel-right: 0.3rem;
-    --right-panel-width: min(400px, 45vw);
+    --right-panel-top: 8rem;
+    --right-panel-right: 1rem;
+    --right-panel-width: min(600px, 45vw);
     --right-panel-max-width: 900px;
     --right-panel-z-index: 950;
     --right-panel-border-radius: 1rem;
