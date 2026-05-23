@@ -1607,8 +1607,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       const profile = this.wheelContainer['performanceProfile'];
       console.log('%c📊 PERFIL DE RENDIMIENTO ACTUAL', 'color: #10b981; font-weight: bold;');
       console.log('🎯 Tier:', profile.tier.toUpperCase());
-      console.log('🌀 Aurora Rings:', profile.auroraRings);
-      console.log('✨ Aurora Filters:', profile.auroraFilters ? 'ON' : 'OFF');
       console.log('🎊 Confetti Particles:', profile.confettiParticles);
       console.log('🎬 Video Background:', profile.videoBackground ? 'ON' : 'OFF');
       console.log('💨 Backdrop Blur:', profile.backdropBlur ? 'ON' : 'OFF');

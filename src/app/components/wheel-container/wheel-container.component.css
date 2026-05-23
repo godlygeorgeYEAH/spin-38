@@ -7,23 +7,15 @@
   overflow: visible; /* Permite que el glow se extienda más allá del contenedor */
 }
 
-.wheel-wrapper::before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  width: calc(100% + 10px);
-  height: calc(100% + 10px);
-  background: conic-gradient(var(--aurora-purple), var(--aurora-magenta), var(--aurora-cyan), var(--aurora-purple));
-  border-radius: 50%;
-  z-index: 2;
-  filter: blur(40px) opacity(0.5);
-  animation: rotate-hue 10s linear infinite;
-}
 
-@keyframes rotate-hue {
-  from { filter: blur(40px) opacity(0.5) hue-rotate(0deg); }
-  to { filter: blur(40px) opacity(0.5) hue-rotate(360deg); }
+.water-ring-anchor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* Wheel */
@@ -226,7 +218,7 @@
 .selected-segment {
   stroke: var(--electric-green) !important;
   stroke-width: 3.5px !important;
-  filter: drop-shadow(0 0 10px var(--electric-green)) drop-shadow(0 0 20px var(--aurora-cyan));
+  filter: drop-shadow(0 0 10px var(--electric-green));
 }
 
 @keyframes selectedPulse {
@@ -239,9 +231,7 @@
     transform: scale(1.1) rotate(-1deg) translateZ(0);
   }
   to {
-    filter: drop-shadow(0 0 40px var(--aurora-cyan))
-            drop-shadow(0 0 60px var(--aurora-cyan))
-            drop-shadow(0 0 85px rgba(0, 255, 255, 0.3))
+    filter: drop-shadow(0 0 85px rgba(0, 255, 255, 0.3))
             brightness(1.2) contrast(1.25) saturate(1.15);
     -webkit-transform: scale(1.15) rotate(1deg) translateZ(0);
     transform: scale(1.15) rotate(1deg) translateZ(0);
@@ -274,7 +264,7 @@
   paint-order: stroke fill;
   stroke-linejoin: round;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 4px var(--aurora-magenta));
+  filter: none;
   transition: all 0.3s ease;
   /* Safari: mejorar renderizado de texto SVG */
   -webkit-font-smoothing: antialiased;
@@ -378,56 +368,6 @@
   to { opacity: 1; transform: scale(1); }
 }
 
-/* Aurora Rings */
-.aurora-container {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: calc(var(--wheel-diameter) + 60px);
-  height: calc(var(--wheel-diameter) + 60px);
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  pointer-events: none;
-  filter: blur(12px) contrast(10) brightness(1.2);
-  mix-blend-mode: screen;
-}
-
-/* Aurora sin filtros pesados (dispositivos gama media/baja) */
-.aurora-container.no-filters {
-  filter: none;  /* Remueve blur/contrast/brightness costosos */
-  opacity: 0.7;  /* Compensa visualmente la pérdida de brillo */
-}
-
-.aurora-ring {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  border-radius: 50%;
-  animation-name: rotate-aurora;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.aurora-ring:nth-child(1) {
-  background: conic-gradient(from 0deg, transparent 0%, #ff00ff 5%, #3c00ff 15%, transparent 30%, transparent 70%, #00ffff 75%, #3c00ff 85%, transparent 100%);
-  animation-duration: 8s;
-}
-
-.aurora-ring:nth-child(2) {
-  background: conic-gradient(from 180deg, transparent 0%, #ff00c3 10%, #00a2ff 25%, transparent 40%, transparent 80%, #00ffff 88%, transparent 100%);
-  animation-duration: 10s;
-  animation-direction: reverse;
-}
-
-.aurora-ring:nth-child(3) {
-  background: conic-gradient(from 90deg, transparent 0%, #00a2ff 15%, transparent 25%, transparent 60%, #ff00ff 70%, transparent 80%);
-  animation-duration: 12s;
-  opacity: 0.8;
-}
-
-@keyframes rotate-aurora {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
 
 .emoji-text {
   font-size: 3rem;

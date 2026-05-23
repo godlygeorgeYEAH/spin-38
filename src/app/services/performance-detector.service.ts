@@ -8,8 +8,6 @@ export enum DevicePerformanceTier {
 
 export interface PerformanceProfile {
   tier: DevicePerformanceTier;
-  auroraRings: number;          // Cantidad de anillos aurora (0-3)
-  auroraFilters: boolean;       // Aplicar filtros blur/contrast
   dropShadowsEnabled: boolean;  // Sombras en elementos
   confettiParticles: number;    // Cantidad de partículas de confetti
   videoBackground: boolean;     // Video de fondo o imagen estática
@@ -117,8 +115,6 @@ export class PerformanceDetectorService {
       case DevicePerformanceTier.HIGH:
         return {
           tier: DevicePerformanceTier.HIGH,
-          auroraRings: 3,
-          auroraFilters: true,
           dropShadowsEnabled: true,
           confettiParticles: 60,
           videoBackground: true,
@@ -129,8 +125,6 @@ export class PerformanceDetectorService {
       case DevicePerformanceTier.MEDIUM:
         return {
           tier: DevicePerformanceTier.MEDIUM,
-          auroraRings: 2,              // Solo 1 anillo
-          auroraFilters: true,        // Sin filtros pesados
           dropShadowsEnabled: true,    // Sombras simples OK
           confettiParticles: 30,       // Mitad de confetti
           videoBackground: false,      // Imagen estática
@@ -141,8 +135,6 @@ export class PerformanceDetectorService {
       case DevicePerformanceTier.LOW:
         return {
           tier: DevicePerformanceTier.LOW,
-          auroraRings: 2,              // Sin anillos aurora
-          auroraFilters: false,
           dropShadowsEnabled: false,   // Sin sombras
           confettiParticles: 15,       // Mínimo confetti
           videoBackground: false,

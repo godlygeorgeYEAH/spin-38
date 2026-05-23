@@ -2,9 +2,13 @@
      [class.performance-low]="performanceProfile.tier === 'low'"
      [class.performance-medium]="performanceProfile.tier === 'medium'"
      [class.performance-high]="performanceProfile.tier === 'high'">
-  <!-- Aurora Rings adaptativo según rendimiento del dispositivo -->
-  <div class="aurora-container" *ngIf="performanceProfile.auroraRings > 0" [class.no-filters]="!performanceProfile.auroraFilters">
-    <div class="aurora-ring" *ngFor="let i of auroraRingsArray"></div>
+  <div class="water-ring-anchor">
+    <app-water-ring
+      [size]="waterRingSize"
+      [style.position]="'relative'"
+      [style.left.px]="-(waterRingSize / 2)"
+      [style.top.px]="-(waterRingSize / 2)"
+    ></app-water-ring>
   </div>
   <div class="pointers-container"
        [style.--pointer-container-width]="pointerContainerWidth"

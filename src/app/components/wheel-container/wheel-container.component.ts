@@ -5,6 +5,7 @@ import { GameState } from '../../interfaces/game.enums';
 import { AudioService } from '../../services/audio.service';
 import { PerformanceDetectorService, PerformanceProfile } from '../../services/performance-detector.service';
 import { ANIMAL_MAP } from '../../data/animal-map';
+import { WaterRingComponent } from './wheel-water-ring.component';
 
 const animalMap = ANIMAL_MAP;
 
@@ -13,7 +14,7 @@ const animalMap = ANIMAL_MAP;
   templateUrl: './wheel-container.component.html',
   styleUrls: ['./wheel-container.component.css'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, WaterRingComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges {
@@ -31,6 +32,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   @ViewChild('innerWheel', { static: true }) innerWheel!: ElementRef<SVGGElement>;
 
   public spinning = false;
+  public waterRingSize = 850;
   public displayItems: Animal[] = [];
   public innerDisplayItems: Animal[] = [];
   public errorMessage: string = '';
@@ -176,7 +178,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private spinDurationMs: number = 0;
 
   public performanceProfile: PerformanceProfile;
-  public auroraRingsArray: number[] = [];
   public confettiArray: { index: number; angle: number; distance: number; delay: number; duration: number }[] = [];
   public isSafari: boolean = false; // Detectar Safari para desactivar animación problemática
 
@@ -195,13 +196,9 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
       console.log('🦁 Safari detectado - Animación de tutorial desactivada');
     }
 
-    // Generar arrays basados en el perfil de rendimiento
-    this.auroraRingsArray = Array.from({ length: this.performanceProfile.auroraRings }, (_, i) => i);
-
     // Generar confetti con distribución uniforme en 360°
     this.generateConfettiDistribution();
 
-    console.log(`🎨 Aurora Rings: ${this.performanceProfile.auroraRings}`);
     console.log(`🎊 Confetti: ${this.performanceProfile.confettiParticles} partículas`);
   }
 
@@ -277,6 +274,14 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     // Safari fix: Inicializar transform explícitamente en las ruedas
     if (this.outerWheel && this.innerWheel) {
       this.initializeWheelTransforms();
+    }
+    const svgEl = this.outerWheel?.nativeElement?.ownerSVGElement;
+    if (svgEl) {
+      const { width } = svgEl.getBoundingClientRect();
+      if (width > 0) {
+        this.waterRingSize = Math.round(width);
+        this.cdr.markForCheck();
+      }
     }
   }
 
