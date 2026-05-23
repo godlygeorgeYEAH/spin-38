@@ -18,7 +18,7 @@
 .countdown-label {
   font-size: 0.65rem;
   letter-spacing: 0.1em;
-  color: var(--gold-primary, #c9a84c);
+  color: var(--gold-primary, #ffffff);
   text-transform: uppercase;
 }
 
