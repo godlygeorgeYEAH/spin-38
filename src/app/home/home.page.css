@@ -387,82 +387,6 @@ ion-content.home-background::part(background) {
 
 /* === ESTILOS DEL DISPLAY DE BALANCE DEL JUGADOR === */
 /* Por defecto: Posicionado en parte inferior del betting-panel, sobresaliendo del borde */
-.player-balance-display {
-  position: absolute;
-  bottom: var(--balance-panel-bottom);
-  left: var(--balance-panel-left);
-  transform: translate(var(--balance-display-translate-x-panel), var(--balance-display-translate-y-panel));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  width: var(--balance-panel-width);
-  height: var(--balance-panel-height);
-}
-
-/* Balance en header - Centro-derecha cuando betting-panel NO está visible */
-.player-balance-display.header-balance {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 100;
-}
-
-/* Balance en parte inferior cuando betting-panel NO está visible */
-.player-balance-display.bottom-balance {
-  position: fixed;
-  bottom: var(--balance-display-bottom);
-  left: var(--balance-display-left, 50%);
-  transform: translate(var(--balance-display-translate-x-bottom), var(--balance-display-translate-y-bottom));
-  z-index: 100;
-  width: var(--balance-display-width);
-  height: var(--balance-display-height);
-  
-}
-
-.player-balance-display.bottom-balance .balance-value {
-  font-size: var(--balance-font-size);
-}
-
-.balance-container-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.balance-label {
-  font-size: 0.75rem;
-  color: var(--gold-secondary);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 2px;
-}
-
-.balance-value {
-  position: relative;
-  z-index: 1;
-  font-size: var(--balance-panel-font-size);
-  font-weight: 900;
-  color: white;
-  text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000,
-    0 0 3px rgba(0, 0, 0, 0.8);
-  letter-spacing: 0.05em;
-  transform: translateY(30%);
-}
-
-/* Posición Y del texto del balance solo en el panel de apuestas (no afecta bottom-balance) */
-.betting-panel .player-balance-display .balance-value {
-  transform: translateY(22%); /* Ajusta este valor: positivo baja, negativo sube */
-}
 
 
 /* CSS DEPRECADO - Lanterns eliminadas */
@@ -494,7 +418,7 @@ ion-content.home-background::part(background) {
 } */
 
 /* === ESTILOS DEL PANEL DE ESTADO === */
-/* === TOTAL BET DISPLAY - Sigue el patrón de player-balance-display === */
+/* === TOTAL BET DISPLAY === */
 .floating-total-bet {
   position: absolute;
   bottom: var(--total-bet-bottom);
@@ -1733,23 +1657,6 @@ ion-content.home-background::part(background) {
     z-index: 10;
   }
 
-  /* Player Balance Display - Inferior izquierda (sobresale) */
-  .player-balance-display {
-    position: absolute;
-    /* bottom: controlled by --balance-panel-bottom */
-    /* left: controlled by --balance-panel-left */
-    /* width: controlled by --balance-panel-width */
-    /* height: controlled by --balance-panel-height */
-    z-index: 10;
-  }
-
-  /* Player Balance Display - Header */
-  .player-balance-display.header-balance{
-    top: 40px;
-    left: 75px;
-  }
-
-
   /* Bet Amount Display - Centro derecha */
   .bet-amount-display {
     position: absolute;
@@ -1846,24 +1753,6 @@ ion-content.home-background::part(background) {
     z-index: 10;
   }
 
-  /* Player Balance Display - Inferior izquierda (sobresale) *
-  .player-balance-display {
-    position: absolute;
-    /* bottom: controlled by --balance-panel-bottom */
-    /* left: controlled by --balance-panel-left */
-    /* width: controlled by --balance-panel-width */
-    /* height: controlled by --balance-panel-height */
-  /*  z-index: 10;
-  }
-
-  /* .balance-value font-size now controlled by --balance-font-size variable */
-
-  /* Player Balance Display - Header *
-  .player-balance-display.header-balance {
-    top: 50px;
-    left: 100px;
-  }
-
   /* Bet Amount Display - Centro derecha *
   .bet-amount-display {
     position: absolute;
@@ -1957,23 +1846,6 @@ ion-content.home-background::part(background) {
     z-index: 10;
   }
 
-  /* Player Balance Display - Inferior izquierda (sobresale) */
-  .player-balance-display {
-    position: absolute;
-    /* bottom: controlled by --balance-panel-bottom */
-    /* left: controlled by --balance-panel-left */
-    /* width: controlled by --balance-panel-width */
-    /* height: controlled by --balance-panel-height */
-    z-index: 10;
-  }
-
-  /* Player Balance Display - Header */
-  .player-balance-display.header-balance{
-    top: 40px;
-    left: 75px;
-  }
-
-
   /* Bet Amount Display - Centro derecha */
   .bet-amount-display {
     position: absolute;
@@ -2024,22 +1896,6 @@ ion-content.home-background::part(background) {
     transform: translate(-50%, -66%);
     z-index: 10;
   }
-
-  /* Player Balance Display - Inferior izquierda (sobresale) */
-  .player-balance-display {
-    position: absolute;
-    /* bottom: controlled by --balance-panel-bottom */
-    /* left: controlled by --balance-panel-left */
-    /* width: controlled by --balance-panel-width */
-    /* height: controlled by --balance-panel-height */
-    z-index: 10;
-  }
-
-  /* Player Balance DisplHeadereader */
-  .player-balance-display.header-balance{
-    top:45px;
-  }
-
 
   /* Bet Amount Display - Centro derecha */
   .bet-amount-display {
