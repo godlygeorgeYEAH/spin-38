@@ -56,6 +56,8 @@
 
   <!-- Reloj de esquina inferior izquierda -->
   <div class="clock-widget" aria-label="Hora: ">
+    <canvas #owlCanvas class="buho-gif"></canvas>
+    <img class="buho-gif" [src]="owlGifSrc" [style.opacity]="owlAnimating ? '1' : '0'" alt="" aria-hidden="true">
     <div class="clock-time-value">
       {{ clockTime }}
     </div>

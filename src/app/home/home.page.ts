@@ -40,6 +40,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(WheelContainerComponent) wheelContainer!: WheelContainerComponent;
   @ViewChild('backgroundVideo') backgroundVideo?: ElementRef<HTMLVideoElement>;
   @ViewChild('resultCard', { read: ElementRef }) resultCard?: ElementRef<HTMLElement>;
+  @ViewChild('owlCanvas') owlCanvasRef?: ElementRef<HTMLCanvasElement>;
 
   private betIdCounter = 0;
   private transactionIdCounter = 0;
@@ -66,6 +67,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   // reloj
   public clockTime: string = '';
   private clockIntervalId: any = null;
+
+  // buho gif aleatorio
+  public owlGifSrc = 'assets/images/contenedores/buho.gif';
+  public owlAnimating = false;
+  private owlTimer: any = null;
+  private readonly OWL_DURATION_MS = 700; // 7 frames × ~100ms — ajustar si es necesario
   public errorMessage: string = '';
   private capturedScreenshot: File | null = null;
   public showSettings: boolean = false;
@@ -188,6 +195,33 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     // Iniciar precarga de assets
     this.preloadAssets();
     this.startClock();
+    this.scheduleOwlAnimation();
+  }
+
+  private captureOwlFirstFrame(): void {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = this.owlCanvasRef?.nativeElement;
+      if (!canvas) return;
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      canvas.getContext('2d')?.drawImage(img, 0, 0);
+    };
+    img.src = 'assets/images/contenedores/buho.gif';
+  }
+
+  private scheduleOwlAnimation(): void {
+    const delay = 5000 + Math.random() * 10000;
+    this.owlTimer = setTimeout(() => {
+      this.owlGifSrc = `assets/images/contenedores/buho.gif?t=${Date.now()}`;
+      this.owlAnimating = true;
+      this.cdr.markForCheck();
+      setTimeout(() => {
+        this.owlAnimating = false;
+        this.cdr.markForCheck();
+        this.scheduleOwlAnimation();
+      }, this.OWL_DURATION_MS);
+    }, delay);
   }
 
   private startClock(): void {
@@ -282,6 +316,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     } else if (this.backgroundVideo?.nativeElement) {
       this.backgroundVideo.nativeElement.style.display = 'none';
     }
+    this.captureOwlFirstFrame();
 
     this.orchestrator.revealComplete$.subscribe(() => {
       if (!this.wheelContainer) return;
@@ -327,6 +362,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     if (this.clockIntervalId !== null) {
       window.clearInterval(this.clockIntervalId);
       this.clockIntervalId = null;
+    }
+
+    if (this.owlTimer !== null) {
+      clearTimeout(this.owlTimer);
+      this.owlTimer = null;
     }
 
     // Limpiar listeners del video

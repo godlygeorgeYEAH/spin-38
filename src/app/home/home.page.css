@@ -45,9 +45,18 @@ ion-content.home-background::part(background) {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
   z-index: 1000;
   pointer-events: none;
-  
 
 
+
+}
+
+.buho-gif {
+  position: absolute;
+  width: var(--buho-width, 80px);
+  height: auto;
+  top: var(--buho-top, -80px);
+  left: var(--buho-left, 30px);
+  pointer-events: none;
 }
 
 .clock-time-label {

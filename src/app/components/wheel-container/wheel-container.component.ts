@@ -42,11 +42,13 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   @Input() pointerContainerWidth: string | null = null;  // e.g. '100%', '200px'
   @Input() pointerContainerHeight: string | null = null; // e.g. '100%', '120px'
 
-  private restingOuterAngle = 0;
-  private restingInnerAngle = 0;
+  private readonly INITIAL_ANGLE = -(180 / 38); // centra el segmento 0 (Delfín) bajo el puntero
 
-  private targetOuterAngle = 0;
-  private targetInnerAngle = 0;
+  private restingOuterAngle = this.INITIAL_ANGLE;
+  private restingInnerAngle = this.INITIAL_ANGLE;
+
+  private targetOuterAngle = this.INITIAL_ANGLE;
+  private targetInnerAngle = this.INITIAL_ANGLE;
 
   private readonly rouletteSequence: string[] = [
     '0','28','9','26','30','11','7','20','32','17','5','22','34','15','3',
@@ -262,10 +264,10 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     this.displayItems = [];
     this.innerDisplayItems = [];
     this.errorMessage = '';
-    this.restingOuterAngle = 0;
-    this.restingInnerAngle = 0;
-    this.targetOuterAngle = 0;
-    this.targetInnerAngle = 0;
+    this.restingOuterAngle = this.INITIAL_ANGLE;
+    this.restingInnerAngle = this.INITIAL_ANGLE;
+    this.targetOuterAngle = this.INITIAL_ANGLE;
+    this.targetInnerAngle = this.INITIAL_ANGLE;
 
     this.prepareDisplayItems();
   }
