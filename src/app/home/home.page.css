@@ -116,7 +116,7 @@ ion-content.home-background::part(background) {
 }
 
 
-/* Panel de resultados futuros - Esquina superior derecha, solo en desktop */
+/* Panel de resultados - Esquina superior derecha, solo en desktop */
 .right-results-panel {
   position: fixed;
   top: var(--right-panel-top, 5rem);
