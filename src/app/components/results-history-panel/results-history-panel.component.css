@@ -37,6 +37,15 @@
   border-radius: 4px;
 }
 
+.entry-round {
+  font-size: var(--history-time-font-size, 0.75rem);
+  color: rgba(255, 255, 255, 0.45);
+  min-width: 2.5rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
 .entry-time {
   font-size: var(--history-time-font-size, 0.75rem);
   color: var(--gold-primary, #c9a84c);

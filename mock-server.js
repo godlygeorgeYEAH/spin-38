@@ -8,7 +8,7 @@ app.use(express.json());
 // ── Configuración ────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
 const ROUND_DURATION_SEC = parseInt(process.env.ROUND_DURATION_SEC || '300', 10);
-const SPIN_SEC = 15;    // segundos en estado "spinning"
+const SPIN_SEC = 30;    // segundos en estado "spinning"
 const REVEAL_SEC = 15;  // segundos en estado "revealing"
 const IDLE_SEC = Math.max(1, ROUND_DURATION_SEC - SPIN_SEC - REVEAL_SEC);
 const MAX_HISTORY = 50;
