@@ -75,7 +75,7 @@ setInterval(() => {
 
 // GET /api/round/current
 app.get('/api/round/current', (req, res) => {
-  res.json({ id: roundId, state, secondsRemaining });
+  res.json({ id: roundId, state, secondsRemaining, spinDurationSec: SPIN_SEC });
 });
 
 // GET /api/round/:id/result

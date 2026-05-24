@@ -67,6 +67,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   // reloj
   public clockTime: string = '';
   private clockIntervalId: any = null;
+  private resetInProgress: Promise<void> | null = null;
 
   // buho gif aleatorio
   public owlGifSrc = 'assets/images/contenedores/buho.gif';
@@ -318,16 +319,28 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     }
     this.captureOwlFirstFrame();
 
-    this.orchestrator.revealComplete$.subscribe(() => {
+    // Reset de rueda: se dispara RESET_LEAD_SEC segundos antes de que termine el revealing
+    this.orchestrator.resetCommand$.subscribe(() => {
       if (!this.wheelContainer) return;
-      this.wheelContainer.resetToPosition().then(() => {
-        this.gameState = GameState.IDLE;
-        this.cdr.markForCheck();
+      this.resetInProgress = this.wheelContainer.resetToPosition().then(() => {
+        this.resetInProgress = null;
       });
     });
 
-    this.orchestrator.spinCommand$.subscribe(cmd => {
+    // Al terminar el revealing: sincronizar estado de juego
+    this.orchestrator.revealComplete$.subscribe(() => {
+      this.gameState = GameState.IDLE;
+      this.cdr.markForCheck();
+    });
+
+    this.orchestrator.spinCommand$.subscribe(async cmd => {
       if (!this.wheelContainer || this.wheelContainer.spinning) return;
+
+      if (this.resetInProgress) {
+        await this.resetInProgress;
+        if (!this.wheelContainer || this.wheelContainer.spinning) return;
+      }
+
       this.gameState = GameState.PLAYING;
       this.cdr.markForCheck();
       this.wheelContainer.spinToResult(cmd)

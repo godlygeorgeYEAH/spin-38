@@ -66,10 +66,10 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
 
   // ── Posición de reset ──────────────────────────────────────────────────────
   // Cambia estos valores para ajustar a dónde vuelve la rueda después de cada giro
-  private readonly RESET_OUTER_POSITION: string = '00';
+  private readonly RESET_OUTER_POSITION: string = '0';
   private readonly RESET_INNER_POSITION: string = '00';
-  private readonly RESET_DURATION_MS = 1200;
-  private readonly RESET_ROTATIONS = 1;
+  private readonly RESET_DURATION_MS = 2500;
+  private readonly RESET_ROTATIONS = 3;
 
   // ==========================================
   // CONFIGURACIÓN DE POSICIONAMIENTO SVG
@@ -295,20 +295,21 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     const outerElement = this.outerWheel.nativeElement;
     const innerElement = this.innerWheel.nativeElement;
 
-    // Establecer transform inicial sin transición
+    // Usar INITIAL_ANGLE para que el estado visual coincida con restingOuterAngle
     outerElement.style.transition = 'none';
     innerElement.style.transition = 'none';
 
-    outerElement.style.transform = `rotate(0deg)`;
-    innerElement.style.transform = `rotate(0deg)`;
+    outerElement.style.transform = `rotate(${this.INITIAL_ANGLE}deg)`;
+    innerElement.style.transform = `rotate(${this.INITIAL_ANGLE}deg)`;
 
-    // Forzar reflow
+    // Forzar reflow y confirmar al compositor via RAF (mismo patrón que forceStopAnimation)
     outerElement.getBoundingClientRect();
     innerElement.getBoundingClientRect();
 
-    // Desactivar will-change hasta que sea necesario
-    outerElement.style.willChange = 'auto';
-    innerElement.style.willChange = 'auto';
+    requestAnimationFrame(() => {
+      outerElement.style.willChange = 'auto';
+      innerElement.style.willChange = 'auto';
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -329,20 +330,15 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
    * @param result - Resultado del backend (animal ganador y multiplicador)
    * @returns Promise que se resuelve cuando la animación termina
    */
-  public spinToResult(result: { outerPosition: string; innerPosition: string }): Promise<WheelSpinResult> {
+  public spinToResult(result: { outerPosition: string; innerPosition: string; outerDurationMs?: number; innerDurationMs?: number }): Promise<WheelSpinResult> {
     if (this.spinning) {
       return Promise.reject(new Error("La ruleta ya está girando."));
     }
 
-    console.log('[WheelContainer] Girando hacia resultado del backend:', result);
-
     this.spinning = true;
 
-    // Validar que la rueda interna siempre dure >= que la externa
-    const validatedInnerDuration = Math.max(this.innerWheelSpinDuration, this.spinDuration);
-    if (validatedInnerDuration !== this.innerWheelSpinDuration) {
-      console.warn(`⚠️ innerWheelSpinDuration (${this.innerWheelSpinDuration}ms) es menor que spinDuration (${this.spinDuration}ms). Se ajustó a ${validatedInnerDuration}ms`);
-    }
+    const outerDuration = result.outerDurationMs ?? this.spinDuration;
+    const validatedInnerDuration = Math.max(result.innerDurationMs ?? this.innerWheelSpinDuration, outerDuration);
 
     return new Promise((resolve, reject) => {
       const outerResultIndex = this.rouletteSequence.indexOf(result.outerPosition);
@@ -366,10 +362,10 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
       this.spinStartTime = performance.now();
       this.spinStartAngle = this.restingOuterAngle;
       this.spinTargetAngle = this.targetOuterAngle;
-      this.spinDurationMs = this.spinDuration;
+      this.spinDurationMs = outerDuration;
       this.monitorWheelRotation();
 
-      this.applySpinAnimation(this.outerWheel.nativeElement, this.targetOuterAngle, this.spinDuration);
+      this.applySpinAnimation(this.outerWheel.nativeElement, this.targetOuterAngle, outerDuration);
       this.applySpinAnimation(this.innerWheel.nativeElement, this.targetInnerAngle, validatedInnerDuration);
 
       setTimeout(() => {
@@ -432,20 +428,50 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     const innerIndex = this.rouletteSequence.indexOf(this.RESET_INNER_POSITION);
     if (outerIndex === -1 || innerIndex === -1) return Promise.resolve();
 
-    const targetOuter = this.calculateFinalAngle(outerIndex, this.restingOuterAngle, true, this.RESET_ROTATIONS);
-    const targetInner = this.calculateFinalAngle(innerIndex, this.restingInnerAngle, false, this.RESET_ROTATIONS);
+    const fromOuter = this.restingOuterAngle;
+    const fromInner = this.restingInnerAngle;
+    const targetOuter = this.calculateFinalAngle(outerIndex, fromOuter, true, this.RESET_ROTATIONS);
+    const targetInner = this.calculateFinalAngle(innerIndex, fromInner, false, this.RESET_ROTATIONS);
 
-    this.applySpinAnimation(this.outerWheel.nativeElement, targetOuter, this.RESET_DURATION_MS, 'ease-out');
-    this.applySpinAnimation(this.innerWheel.nativeElement, targetInner, this.RESET_DURATION_MS, 'ease-out');
+    console.log(`[resetToPosition] outer ${fromOuter.toFixed(1)}° → ${targetOuter.toFixed(1)}°  inner ${fromInner.toFixed(1)}° → ${targetInner.toFixed(1)}°  dur=${this.RESET_DURATION_MS}ms`);
+
+    const outerEl = this.outerWheel.nativeElement;
+    const innerEl = this.innerWheel.nativeElement;
+
+    // Cancelar cualquier animación WAAPI activa antes de iniciar
+    outerEl.getAnimations().forEach(a => a.cancel());
+    innerEl.getAnimations().forEach(a => a.cancel());
+
+    // WAAPI es más fiable que CSS transitions para SVG <g>: los keyframes son explícitos
+    // y no dependen de que el compositor haya comprometido el estado inicial.
+    outerEl.animate(
+      [{ transform: `rotate(${fromOuter}deg)` }, { transform: `rotate(${targetOuter}deg)` }],
+      { duration: this.RESET_DURATION_MS, easing: 'ease-in-out', fill: 'forwards' }
+    );
+    innerEl.animate(
+      [{ transform: `rotate(${fromInner}deg)` }, { transform: `rotate(${targetInner}deg)` }],
+      { duration: this.RESET_DURATION_MS, easing: 'ease-in-out', fill: 'forwards' }
+    );
 
     return new Promise(resolve => {
       setTimeout(() => {
+        if (this.spinning) {
+          outerEl.getAnimations().forEach(a => a.cancel());
+          innerEl.getAnimations().forEach(a => a.cancel());
+          resolve();
+          return;
+        }
+        // Comprometer posición final como inline style y cancelar WAAPI
+        outerEl.style.transition = 'none';
+        innerEl.style.transition = 'none';
+        outerEl.style.transform = `rotate(${targetOuter}deg)`;
+        innerEl.style.transform = `rotate(${targetInner}deg)`;
+        outerEl.getAnimations().forEach(a => a.cancel());
+        innerEl.getAnimations().forEach(a => a.cancel());
         this.restingOuterAngle = targetOuter;
         this.restingInnerAngle = targetInner;
-        this.forceStopAnimation(this.outerWheel.nativeElement, targetOuter);
-        this.forceStopAnimation(this.innerWheel.nativeElement, targetInner);
         resolve();
-      }, this.RESET_DURATION_MS);
+      }, this.RESET_DURATION_MS + 100);
     });
   }
 
@@ -466,25 +492,26 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private applySpinAnimation(element: SVGGElement, targetAngle: number, duration?: number, easing = 'cubic-bezier(0.23, 1, 0.32, 1)'): void {
     const animationDuration = duration ?? this.spinDuration;
 
-    // Safari fix: No leer element.style.transform (puede ser inconsistente)
-    // En su lugar, usar el ángulo actual que ya conocemos
-    const currentAngle = element === this.outerWheel.nativeElement ?
-      this.restingOuterAngle : this.restingInnerAngle;
+    const currentAngle = element === this.outerWheel.nativeElement
+      ? this.restingOuterAngle : this.restingInnerAngle;
 
-    // Paso 1: Desactivar transición y establecer posición actual
+    // Cancelar WAAPI activa (p.ej. reset en curso) antes de aplicar transición CSS
+    element.getAnimations().forEach(a => a.cancel());
+
     element.style.transition = 'none';
     element.style.transform = `rotate(${currentAngle}deg)`;
-    element.style.willChange = 'transform'; // Activar will-change antes de animar
+    element.style.willChange = 'transform';
 
-    // Paso 2: Forzar reflow (Safari necesita esto)
     element.getBoundingClientRect();
 
-    // Paso 3: Activar transición
     element.style.transition = `transform ${animationDuration}ms ${easing}`;
 
-    // Paso 4: Aplicar transform final (usar requestAnimationFrame para Safari)
+    // Double-RAF: el primer frame confirma el estado inicial al compositor GPU,
+    // el segundo aplica el target y dispara la transición de forma garantizada.
     requestAnimationFrame(() => {
-      element.style.transform = `rotate(${targetAngle}deg)`;
+      requestAnimationFrame(() => {
+        element.style.transform = `rotate(${targetAngle}deg)`;
+      });
     });
   }
 

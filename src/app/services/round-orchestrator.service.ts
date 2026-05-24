@@ -9,6 +9,7 @@ export interface RoundCurrentResponse {
   id: number;
   state: 'idle' | 'spinning' | 'revealing';
   secondsRemaining: number;
+  spinDurationSec?: number;
 }
 
 export interface RoundResultResponse {
@@ -29,6 +30,8 @@ export interface RoundHistoryEntry {
 export interface SpinCommand {
   outerPosition: string;
   innerPosition: string;
+  outerDurationMs: number;
+  innerDurationMs: number;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -41,14 +44,17 @@ export class RoundOrchestratorService implements OnDestroy {
   private spinCommandSubject = new Subject<SpinCommand>();
   private spinCompleteSubject = new Subject<void>();
   private revealCompleteSubject = new Subject<void>();
+  private resetCommandSubject = new Subject<void>();
 
   public roundState$ = this.stateSubject.asObservable();
   public secondsToNextRound$ = this.secondsSubject.asObservable();
   public recentHistory$ = this.historySubject.asObservable();
   public spinCommand$ = this.spinCommandSubject.asObservable();
   public revealComplete$ = this.revealCompleteSubject.asObservable();
+  public resetCommand$ = this.resetCommandSubject.asObservable();
 
   private readonly REVEAL_DURATION_SEC = 15;
+  private readonly RESET_LEAD_SEC = 10; // segundos antes del fin de revealing para disparar el reset
 
   private pollTimeout: any = null;
   private revealTimeout: any = null;
@@ -56,6 +62,7 @@ export class RoundOrchestratorService implements OnDestroy {
   private lastHandledRoundId: number | null = null;
   private lastSpinCommand: SpinCommand | null = null;
   private lastSpinStartTime: string | null = null;
+  private lastSpinDurationSec = 30;
   private lastKnownIdleDurationSec = 0;
   private running = false;
 
@@ -105,6 +112,11 @@ export class RoundOrchestratorService implements OnDestroy {
       }
     }, 1000);
 
+    // Disparar reset de rueda RESET_LEAD_SEC segundos antes de que termine el revealing
+    setTimeout(() => {
+      this.resetCommandSubject.next();
+    }, (this.REVEAL_DURATION_SEC - this.RESET_LEAD_SEC) * 1000);
+
     // Al terminar el período de revealing: un único poll para sincronizar con servidor
     this.revealTimeout = setTimeout(() => {
       if (this.revealTickInterval) {
@@ -131,6 +143,10 @@ export class RoundOrchestratorService implements OnDestroy {
 
   private handleRoundData(round: RoundCurrentResponse): void {
     const currentState = this.stateSubject.value;
+
+    if (round.spinDurationSec) {
+      this.lastSpinDurationSec = round.spinDurationSec;
+    }
 
     if (round.state === 'spinning' && round.id !== this.lastHandledRoundId) {
       this.lastHandledRoundId = round.id;
@@ -162,11 +178,14 @@ export class RoundOrchestratorService implements OnDestroy {
         this.sendAck(roundId);
         this.transitionTo('SPINNING');
         this.lastSpinStartTime = new Date().toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit', hour12: false });
-        this.lastSpinCommand = {
+        const cmd: SpinCommand = {
           outerPosition: String(result.outerPosition),
           innerPosition: String(result.innerPosition),
+          outerDurationMs: Math.round(this.lastSpinDurationSec * 1000 * 0.9),
+          innerDurationMs: this.lastSpinDurationSec * 1000,
         };
-        this.spinCommandSubject.next(this.lastSpinCommand);
+        this.lastSpinCommand = cmd;
+        this.spinCommandSubject.next(cmd);
       },
       error: (err) => {
         console.error('[Orchestrator] Error al obtener resultado:', err);
