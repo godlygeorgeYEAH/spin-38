@@ -2,7 +2,7 @@
 
 **Bloque:** B  
 **Dependencias:** Fase 0 (estructura de monorepo con `apps/mock-server` creada)  
-**Entregable:** Servidor Express corriendo en `mock-server.js` que simula un ciclo completo de ronda, levantado con `npm run mock-server`
+**Entregable:** Servidor Express corriendo en `mock-server.js` que simula un ciclo completo de ronda, levantado con `pnpm run mock-server`
 
 ## Estado
 
@@ -13,7 +13,7 @@ Implementado
 - Servidor en `mock-server.js` (raíz del proyecto). No se creó `apps/mock-server` ya que el proyecto no tiene estructura de monorepo.
 - Script agregado en `package.json`: `"mock-server": "node mock-server.js"`.
 - Pool de 38 posiciones: valores de la ruleta americana `[0, '00', 1–36]`.
-- Ciclo configurable con `ROUND_DURATION_SEC` (default 300s). Uso acortado: `ROUND_DURATION_SEC=30 npm run mock-server`.
+- Ciclo configurable con `ROUND_DURATION_SEC` (default 300s). Uso acortado: `ROUND_DURATION_SEC=30 pnpm run mock-server`.
 - El resultado se genera al inicio del estado `spinning` y queda disponible en `GET /api/round/:id/result` desde ese momento.
 
 ### Inicio
