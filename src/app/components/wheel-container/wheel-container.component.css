@@ -412,8 +412,8 @@ svg image {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: var(--wheel-center-size, 18%);
-  height: var(--wheel-center-size, 18%);
+  width: var(--wheel-center-size, 30%); 
+  height: var(--wheel-center-size, 30%);
   z-index: var(--wheel-center-z-index, 4);
   pointer-events: none;
   display: flex;
