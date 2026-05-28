@@ -81,7 +81,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private readonly OUTER_RING_RATIO           = 0.999;
   private readonly INNER_RING_RATIO           = 0.81;
   private readonly INNER_RING_GAP_RATIO       = 0.190;
-  private readonly ANIMAL_POSITION_RATIO      = 0.91;
+  private readonly ANIMAL_POSITION_RATIO      = 0.9;
   private readonly ANIMAL_IMAGE_SIZE_RATIO    = 0.125;
   private readonly ANIMAL_TEXT_POSITION_RATIO = 0.88;
   public readonly outerAnimalFontSize         = 24;
