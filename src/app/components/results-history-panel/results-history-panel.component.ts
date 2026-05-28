@@ -33,7 +33,7 @@ export class ResultsHistoryPanelComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub.add(
       this.orchestrator.recentHistory$.subscribe(entries => {
-        this.history = entries.slice(0, 8).map(entry => ({
+        this.history = entries.slice(0, 6).map(entry => ({
           roundId: entry.roundId,
           spinTime: entry.spinTime ?? '',
           outerImage: ANIMAL_MAP[String(entry.outerPosition)]?.image ?? '',

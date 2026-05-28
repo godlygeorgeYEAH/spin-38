@@ -116,6 +116,17 @@ ion-content.home-background::part(background) {
 }
 
 
+@keyframes panel-slingshot-exit {
+  0%   { transform: translateX(0); }
+  18%  { transform: translateX(-22px); }
+  100% { transform: translateX(130%); }
+}
+
+@keyframes panel-slide-enter {
+  0%   { transform: translateX(130%); }
+  100% { transform: translateX(0); }
+}
+
 /* Panel de resultados - Esquina superior derecha, solo en desktop */
 .right-results-panel {
   position: fixed;
@@ -129,6 +140,14 @@ ion-content.home-background::part(background) {
   overflow: visible;
   border-radius: var(--right-panel-border-radius, 1rem);
   transform: var(--right-panel-transform, none);
+}
+
+.right-results-panel.panel-exit {
+  animation: panel-slingshot-exit 520ms cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+
+.right-results-panel.panel-enter {
+  animation: panel-slide-enter 380ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 .right-results-panel-background {

@@ -82,6 +82,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   public isBettingControlsVisible: boolean = true;
   public isWheelDisplaced: boolean = true; // Controla el desplazamiento de la rueda (separado de la visibilidad del panel)
   public bettingPanelAnimationState: 'hidden' | 'appearing' | 'visible' | 'disappearing' = 'visible';
+  public resultsPanelClass: '' | 'panel-exit' | 'panel-enter' = '';
+  private resultsPanelHasAnimated = false;
 
   // Volumen de sonidos de interfaz (0-100)
   public uiVolume: number = 50;
@@ -355,6 +357,16 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           this.gameState = GameState.IDLE;
           this.cdr.markForCheck();
         });
+    });
+
+    this.orchestrator.roundState$.subscribe(state => {
+      if (state === 'SPINNING') {
+        this.resultsPanelHasAnimated = true;
+        this.resultsPanelClass = 'panel-exit';
+      } else if (this.resultsPanelHasAnimated) {
+        this.resultsPanelClass = 'panel-enter';
+      }
+      this.cdr.markForCheck();
     });
 
     this.orchestrator.start();

@@ -169,6 +169,7 @@
     --history-panel-width: 60px;
     --history-label-font-size: 0.5rem;
     --history-entry-gap: 2px;
+    --history-entry-inner-gap: 4px;
     --history-entry-padding: 2px 4px;
     --history-entry-image-size: 24px;
     --history-time-font-size: 0.6rem;
@@ -287,6 +288,7 @@
     --history-panel-width: 60px;
     --history-label-font-size: 0.5rem;
     --history-entry-gap: 2px;
+    --history-entry-inner-gap: 4px;
     --history-entry-padding: 2px 4px;
     --history-entry-image-size: 24px;
     --history-time-font-size: 0.6rem;
@@ -403,6 +405,7 @@
     --history-panel-width: 60px;
     --history-label-font-size: 0.5rem;
     --history-entry-gap: 2px;
+    --history-entry-inner-gap: 4px;
     --history-entry-padding: 2px 4px;
     --history-entry-image-size: 24px;
     --history-time-font-size: 0.6rem;
@@ -522,6 +525,7 @@
     --history-panel-width: 60px;
     --history-label-font-size: 0.5rem;
     --history-entry-gap: 2px;
+    --history-entry-inner-gap: 4px;
     --history-entry-padding: 2px 4px;
     --history-entry-image-size: 24px;
     --history-time-font-size: 0.6rem;
@@ -639,6 +643,7 @@
     --history-panel-width: 60px;
     --history-label-font-size: 0.5rem;
     --history-entry-gap: 2px;
+    --history-entry-inner-gap: 4px;
     --history-entry-padding: 2px 4px;
     --history-entry-image-size: 24px;
     --history-time-font-size: 0.6rem;
@@ -771,6 +776,7 @@
     --history-panel-width: 80px;
     --history-label-font-size: 0.6rem;
     --history-entry-gap: 3px;
+    --history-entry-inner-gap: 6px;
     --history-entry-padding: 3px 6px;
     --history-entry-image-size: 32px;
     --history-time-font-size: 0.7rem;
@@ -889,6 +895,7 @@
     --history-panel-width: 100%;
     --history-label-font-size: 0.65rem;
     --history-entry-gap: 4px;
+    --history-entry-inner-gap: 8px;
     --history-entry-padding: 4px 8px;
     --history-entry-image-size: 36px;
     --history-time-font-size: 0.75rem;
@@ -1001,10 +1008,12 @@
     --history-panel-width: 100%;
     --history-label-font-size: 1.75rem;
     --history-entry-gap: 6px;
+    --history-entry-inner-gap: 15px;
     --history-entry-padding: 6px 10px;
-    --history-entry-image-size: 48px;
-    --history-time-font-size: 1.5rem;
+    --history-entry-image-size: 75px;
+    --history-time-font-size: 1.9rem;
     --history-entry-font-size: 1rem;
+    
 
     /* === RIGHT RESULTS PANEL === */
     --right-panel-top: 8rem;
@@ -1107,6 +1116,7 @@
     --history-panel-width: 100%;
     --history-label-font-size: 1.2rem;
     --history-entry-gap: 10px;
+    --history-entry-inner-gap: 14px;
     --history-entry-padding: 10px 16px;
     --history-entry-image-size: 80px;
     --history-time-font-size: 1rem;

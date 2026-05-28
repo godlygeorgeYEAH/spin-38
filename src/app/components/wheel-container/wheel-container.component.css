@@ -404,6 +404,30 @@ svg image {
 }
 
 /* ============================================
+   CENTRO DE RUEDA — ASSET VISUAL DEL DISEÑADOR
+   ============================================ */
+
+.wheel-center-asset {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--wheel-center-size, 18%);
+  height: var(--wheel-center-size, 18%);
+  z-index: var(--wheel-center-z-index, 4);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wheel-center-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ============================================
    CONFETTI ANIMATION - EXPLOSIÓN CIRCULAR
    ============================================ */
 
