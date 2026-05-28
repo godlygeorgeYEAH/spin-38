@@ -99,10 +99,10 @@
  * - Google Pixel XL: 411Ã—731px (pixel ratio 3.5)
  *
  * ESTE ES EL RANGO MÃS IMPORTANTE - OPTIMIZA AQUÃ PRIMERO
- * ============================================ */
+ * ============================================ 
 @media (min-width: 360px) and (max-width: 415px) and (min-height: 617px) and (max-height: 780px) {
   :root {
-    /* === WHEEL & GAME AREA === */
+    /* === WHEEL & GAME AREA === 
     --wheel-margin-top: -10%;
     --wheel-border-size: 50.3vh;
     --wheel-diameter: 49vh;
@@ -111,7 +111,7 @@
     --pointer-size: 59px;
     --pointer-top: 0px;
 
-    /* === ANIMAL DISPLAY === */
+    /* === ANIMAL DISPLAY === 
     --animal-image-size: 140px;
     --animal-image-translate-x: 0%;
     --animal-image-translate-y: 9%;
@@ -124,7 +124,7 @@
     --animal-name-font-size: 0.9rem;
 
 
-    /* === CLOCK === */
+    /* === CLOCK === 
     --clock-widget-width: 145px;
     --clock-widget-min-height: 70px;
     --clock-widget-bottom: 1rem;
@@ -135,25 +135,24 @@
     --countdown-font-size: 1.0rem;
     --countdown-top: 0px;
     --countdown-left: 0px;
-    /* === BUHO GIF === */
+    /* === BUHO GIF === 
     --buho-width: 80px;
     --buho-top: -80px;
     --buho-left: 30px;
 
-    /* === LOGO === */
+    /* === LOGO === 
     --logo-size: 80px;
     --logo-top: 10px;
     --logo-left: 10px;
     --logo-translate-x: 0px;
     --logo-translate-y: 0px;
 
-
-    /* === MODALS === */
+    /* === MODALS === 
     --modal-width: 85%;
     --modal-max-width: 550px;
     --history-title-font-size: 2rem;
     --settings-title-font-size: 2rem;
-    /* === RESULT CARD === */
+    /* === RESULT CARD === 
     --result-card-width: 90%;
     --result-card-max-width: 95vh;
     --result-card-height: auto;
@@ -162,7 +161,7 @@
     --result-title-font-size: 2rem;
     --win-amount-font-size: 2.8rem;
 
-    /* === RESULTS HISTORY PANEL === */
+    /* === RESULTS HISTORY PANEL === 
     --history-panel-right: 0px;
     --history-panel-top: 50%;
     --history-panel-transform: translateY(-50%);
@@ -175,7 +174,7 @@
     --history-time-font-size: 0.6rem;
     --history-entry-font-size: 0.7rem;
 
-    /* === RIGHT RESULTS PANEL === */
+    /* === RIGHT RESULTS PANEL === 
     --right-panel-top: 5rem;
     --right-panel-right: 0.3rem;
     --right-panel-width: min(700px, 90vw);
@@ -184,7 +183,7 @@
     --right-panel-border-radius: 1rem;
     --right-panel-transform: none;
 
-    /* === RIGHT RESULTS PANEL CONTENT === */
+    /* === RIGHT RESULTS PANEL CONTENT === 
     --right-panel-content-top: 0;
     --right-panel-content-right: 0;
     --right-panel-content-bottom: 0;
@@ -195,10 +194,10 @@
     --right-panel-content-p-font-size: 0.55rem;
     --right-panel-content-p-line-height: 1.3;
 
-    /* Globales */
+    /* Globales 
 
   }
-}
+} */
 
 /* ============================================
  * BREAKPOINT 2B: IPHONE 12/13/14 STANDARD (390px)
@@ -218,12 +217,12 @@
  *
  * Este breakpoint captura iPhones modernos que son mÃ¡s altos
  * que el rango Mobile Standard pero tienen ancho similar
- * ============================================ */
+ * ============================================ 
 @media (min-width: 388px) and (max-width: 393px) and (min-height: 840px) {
   :root {
     /* Heredar del Mobile Standard base y ajustar solo lo necesario */
 
-    /* === WHEEL & GAME AREA === */
+    /* === WHEEL & GAME AREA === 
     --wheel-margin-top: -10%;
     --wheel-border-size: 44vh;
     --wheel-diameter: 43vh;
@@ -232,7 +231,7 @@
     --pointer-size: 60px;
     --pointer-top: 0px;
 
-    /* === ANIMAL DISPLAY === */
+    /* === ANIMAL DISPLAY === 
     --animal-image-size: 140px;
     --animal-image-translate-x: 0%;
     --animal-image-translate-y: 9%;
@@ -244,7 +243,7 @@
     --animal-name-tag-translate-y: 0%;
     --animal-name-font-size: 0.9rem;
 
-    /* === CLOCK === */
+    /* === CLOCK === 
     --clock-widget-width: 145px;
     --clock-widget-min-height: 70px;
     --clock-widget-bottom: 1rem;
@@ -255,24 +254,24 @@
     --countdown-font-size: 1.0rem;
     --countdown-top: 0px;
     --countdown-left: 0px;
-    /* === BUHO GIF === */
+    /* === BUHO GIF === 
     --buho-width: 80px;
     --buho-top: -80px;
     --buho-left: 30px;
 
-    /* === LOGO === */
+    /* === LOGO === 
     --logo-size: 80px;
     --logo-top: 10px;
     --logo-left: 10px;
     --logo-translate-x: 0px;
     --logo-translate-y: 0px;
 
-    /* === MODALS === */
+    /* === MODALS === 
     --modal-width: 85%;
     --modal-max-width: 550px;
     --history-title-font-size: 2rem;
     --settings-title-font-size: 2rem;
-    /* === RESULT CARD === */
+    /* === RESULT CARD === 
     --result-card-width: 90%;
     --result-card-max-width: 95vh;
     --result-card-height: auto;
@@ -281,7 +280,7 @@
     --result-title-font-size: 2rem;
     --win-amount-font-size: 2.8rem;
 
-    /* === RESULTS HISTORY PANEL === */
+    /* === RESULTS HISTORY PANEL === 
     --history-panel-right: 0px;
     --history-panel-top: 50%;
     --history-panel-transform: translateY(-50%);
@@ -294,7 +293,7 @@
     --history-time-font-size: 0.6rem;
     --history-entry-font-size: 0.7rem;
 
-    /* === RIGHT RESULTS PANEL === */
+    /* === RIGHT RESULTS PANEL === 
     --right-panel-top: 5rem;
     --right-panel-right: 0.3rem;
     --right-panel-width: min(700px, 90vw);
@@ -303,7 +302,7 @@
     --right-panel-border-radius: 1rem;
     --right-panel-transform: none;
 
-    /* === RIGHT RESULTS PANEL CONTENT === */
+    /* === RIGHT RESULTS PANEL CONTENT === 
     --right-panel-content-top: 0;
     --right-panel-content-right: 0;
     --right-panel-content-bottom: 0;
@@ -314,10 +313,10 @@
     --right-panel-content-p-font-size: 0.55rem;
     --right-panel-content-p-line-height: 1.3;
 
-    /* Globales */
+    /* Globales 
 
   }
-}
+}  */
 
 /* ============================================
  * BREAKPOINT 2C: SAMSUNG S21 (360Ã—800px)
@@ -335,12 +334,12 @@
  *
  * Este breakpoint captura Samsung S21 series que excede
  * la altura mÃ¡xima del Mobile Standard por 20px
- * ============================================ */
+ * ============================================ 
 @media (min-width: 360px) and (max-width: 363px) and (min-height: 798px) and (max-height: 803px) {
   :root {
-    /* Similar a Mobile Standard pero optimizado para altura 800px */
+    /* Similar a Mobile Standard pero optimizado para altura 800px 
 
-    /* === WHEEL & GAME AREA === */
+    /* === WHEEL & GAME AREA === 
     --wheel-margin-top: -10%;
     --wheel-border-size: 50.5vh;
     --wheel-diameter: 49vh;
@@ -349,7 +348,7 @@
     --pointer-size: 59px;
     --pointer-top: 0px;
 
-    /* === ANIMAL DISPLAY === */
+    /* === ANIMAL DISPLAY === 
     --animal-image-size: 140px;
     --animal-image-translate-x: 0%;
     --animal-image-translate-y: 9%;
@@ -361,7 +360,7 @@
     --animal-name-tag-translate-y: 0%;
     --animal-name-font-size: 0.9rem;
 
-    /* === CLOCK === */
+    /* === CLOCK === 
     --clock-widget-width: 145px;
     --clock-widget-min-height: 70px;
     --clock-widget-bottom: 1rem;
@@ -372,24 +371,24 @@
     --countdown-font-size: 1.0rem;
     --countdown-top: 0px;
     --countdown-left: 0px;
-    /* === BUHO GIF === */
+    /* === BUHO GIF === 
     --buho-width: 80px;
     --buho-top: -80px;
     --buho-left: 30px;
 
-    /* === LOGO === */
+    /* === LOGO === 
     --logo-size: 80px;
     --logo-top: 10px;
     --logo-left: 10px;
     --logo-translate-x: 0px;
     --logo-translate-y: 0px;
 
-    /* === MODALS === */
+    /* === MODALS === 
     --modal-width: 85%;
     --modal-max-width: 550px;
     --history-title-font-size: 2rem;
     --settings-title-font-size: 2rem;
-    /* === RESULT CARD === */
+    /* === RESULT CARD === 
     --result-card-width: 90%;
     --result-card-max-width: 95vh;
     --result-card-height: auto;
@@ -398,7 +397,7 @@
     --result-title-font-size: 2rem;
     --win-amount-font-size: 2.8rem;
 
-    /* === RESULTS HISTORY PANEL === */
+    /* === RESULTS HISTORY PANEL === 
     --history-panel-right: 0px;
     --history-panel-top: 50%;
     --history-panel-transform: translateY(-50%);
@@ -411,7 +410,7 @@
     --history-time-font-size: 0.6rem;
     --history-entry-font-size: 0.7rem;
 
-    /* === RIGHT RESULTS PANEL === */
+    /* === RIGHT RESULTS PANEL === 
     --right-panel-top: 5rem;
     --right-panel-right: 0.3rem;
     --right-panel-width: min(700px, 90vw);
@@ -420,7 +419,7 @@
     --right-panel-border-radius: 1rem;
     --right-panel-transform: none;
 
-    /* === RIGHT RESULTS PANEL CONTENT === */
+    /* === RIGHT RESULTS PANEL CONTENT === 
     --right-panel-content-top: 0;
     --right-panel-content-right: 0;
     --right-panel-content-bottom: 0;
@@ -431,10 +430,10 @@
     --right-panel-content-p-font-size: 0.55rem;
     --right-panel-content-p-line-height: 1.3;
 
-    /* Globales */
+    /* Globales 
 
   }
-}
+} */
 
 /* ============================================
  * BREAKPOINT 3: MOBILE LARGE (414-599px)
@@ -456,10 +455,10 @@
  * - Blackberry Leap: 390Ã—695px (pixel ratio 2)
  *
  * Phablets y dispositivos grandes
- * ============================================ */
+ * ============================================ 
 @media (min-width: 414px) and (max-width: 599px) {
   :root {
-    /* === WHEEL & GAME AREA === */
+    /* === WHEEL & GAME AREA === 
     --wheel-margin-top: -12%;
     --wheel-border-size: 53vh;
     --wheel-diameter: 52vh;
@@ -468,7 +467,7 @@
     --pointer-size: 55px;
     --pointer-top: 0px;
 
-    /* === ANIMAL DISPLAY === */
+    /* === ANIMAL DISPLAY === 
     --animal-image-size: 140px;
     --animal-image-translate-x: 0%;
     --animal-image-translate-y: 9%;
@@ -480,7 +479,7 @@
     --animal-name-tag-translate-y: 0%;
     --animal-name-font-size: 0.9rem;
 
-    /* === CLOCK === */
+    /* === CLOCK === 
     --clock-widget-width: 145px;
     --clock-widget-min-height: 70px;
     --clock-widget-bottom: 1rem;
@@ -491,12 +490,12 @@
     --countdown-font-size: 1.0rem;
     --countdown-top: 0px;
     --countdown-left: 0px;
-    /* === BUHO GIF === */
+    /* === BUHO GIF === 
     --buho-width: 90px;
     --buho-top: -90px;
     --buho-left: 30px;
 
-    /* === LOGO === */
+    /* === LOGO === 
     --logo-size: 80px;
     --logo-top: 10px;
     --logo-left: 10px;
@@ -504,12 +503,12 @@
     --logo-translate-y: 0px;
 
 
-    /* === MODALS === */
+    /* === MODALS === 
     --modal-width: 90%;
     --modal-max-width: 600px;
     --history-title-font-size: 1.1rem;
     --settings-title-font-size: 2.2rem;
-    /* === RESULT CARD === */
+    /* === RESULT CARD === 
     --result-card-width: 90%;
     --result-card-max-width: 95vh;
     --result-card-height: auto;
@@ -518,7 +517,7 @@
     --result-title-font-size: 2rem;
     --win-amount-font-size: 2.8rem;
 
-    /* === RESULTS HISTORY PANEL === */
+    /* === RESULTS HISTORY PANEL === 
     --history-panel-right: 0px;
     --history-panel-top: 50%;
     --history-panel-transform: translateY(-50%);
@@ -531,7 +530,7 @@
     --history-time-font-size: 0.6rem;
     --history-entry-font-size: 0.7rem;
 
-    /* === RIGHT RESULTS PANEL === */
+    /* === RIGHT RESULTS PANEL === 
     --right-panel-top: 5rem;
     --right-panel-right: 0.3rem;
     --right-panel-width: min(700px, 90vw);
@@ -540,7 +539,7 @@
     --right-panel-border-radius: 1rem;
     --right-panel-transform: none;
 
-    /* === RIGHT RESULTS PANEL CONTENT === */
+    /* === RIGHT RESULTS PANEL CONTENT === 
     --right-panel-content-top: 0;
     --right-panel-content-right: 0;
     --right-panel-content-bottom: 0;
@@ -551,10 +550,10 @@
     --right-panel-content-p-font-size: 0.6rem;
     --right-panel-content-p-line-height: 1.3;
 
-    /* Globales */
+    /* Globales 
 
   }
-}
+}  */
 
 /* ============================================
  * BREAKPOINT 3B: IPHONE 13/14 PRO MAX (428-430px)
@@ -573,12 +572,12 @@
  *
  * Este breakpoint captura iPhones Pro Max que tienen
  * pantallas mÃ¡s grandes que los modelos estÃ¡ndar
- * ============================================ */
+ * ============================================ 
 @media (min-width: 426px) and (max-width: 432px) and (min-height: 920px) {
   :root {
-    /* Optimizado para pantallas grandes tipo phablet */
+    /* Optimizado para pantallas grandes tipo phablet 
 
-    /* === WHEEL & GAME AREA === */
+    /* === WHEEL & GAME AREA === 
     --wheel-margin-top: -12%;
     --wheel-border-size: 54vh;
     --wheel-diameter: 53vh;
@@ -587,7 +586,7 @@
     --pointer-size: 58px;
     --pointer-top: 0px;
 
-    /* === ANIMAL DISPLAY === */
+    /* === ANIMAL DISPLAY === 
     --animal-image-size: 145px;
     --animal-image-translate-x: 0%;
     --animal-image-translate-y: 9%;
@@ -599,7 +598,7 @@
     --animal-name-tag-translate-y: 0%;
     --animal-name-font-size: 0.95rem;
 
-    /* === CLOCK === */
+    /* === CLOCK === 
     --clock-widget-width: 145px;
     --clock-widget-min-height: 70px;
     --clock-widget-bottom: 1rem;
@@ -610,24 +609,24 @@
     --countdown-font-size: 1.0rem;
     --countdown-top: 0px;
     --countdown-left: 0px;
-    /* === BUHO GIF === */
+    /* === BUHO GIF === 
     --buho-width: 90px;
     --buho-top: -90px;
     --buho-left: 30px;
 
-    /* === LOGO === */
+    /* === LOGO === 
     --logo-size: 85px;
     --logo-top: 10px;
     --logo-left: 10px;
     --logo-translate-x: 0px;
     --logo-translate-y: 0px;
 
-    /* === MODALS === */
+    /* === MODALS === 
     --modal-width: 88%;
     --modal-max-width: 580px;
     --history-title-font-size: 2.1rem;
     --settings-title-font-size: 2.1rem;
-    /* === RESULT CARD === */
+    /* === RESULT CARD === 
     --result-card-width: 90%;
     --result-card-max-width: 95vh;
     --result-card-height: auto;
@@ -636,7 +635,7 @@
     --result-title-font-size: 2.1rem;
     --win-amount-font-size: 2.9rem;
 
-    /* === RESULTS HISTORY PANEL === */
+    /* === RESULTS HISTORY PANEL === 
     --history-panel-right: 0px;
     --history-panel-top: 50%;
     --history-panel-transform: translateY(-50%);
@@ -649,7 +648,7 @@
     --history-time-font-size: 0.6rem;
     --history-entry-font-size: 0.7rem;
 
-    /* === RIGHT RESULTS PANEL === */
+    /* === RIGHT RESULTS PANEL === 
     --right-panel-top: 5rem;
     --right-panel-right: 0.3rem;
     --right-panel-width: min(700px, 90vw);
@@ -658,7 +657,7 @@
     --right-panel-border-radius: 1rem;
     --right-panel-transform: none;
 
-    /* === RIGHT RESULTS PANEL CONTENT === */
+    /* === RIGHT RESULTS PANEL CONTENT === 
     --right-panel-content-top: 0;
     --right-panel-content-right: 0;
     --right-panel-content-bottom: 0;
@@ -669,10 +668,10 @@
     --right-panel-content-p-font-size: 0.6rem;
     --right-panel-content-p-line-height: 1.3;
 
-    /* Globales */
+    /* Globales 
 
   }
-}
+}  */
 
 /* ============================================
  * BREAKPOINT 4: TABLET (600-1023px)
@@ -707,10 +706,10 @@
  * - Blackberry Playbook: 600Ã—1024px (pixel ratio 1)
  *
  * La mayorÃ­a de tablets estÃ¡n en este rango
- * ============================================ */
+ * ============================================ 
 @media (min-width: 600px) and (max-width: 1023px) {
   :root {
-    /* === WHEEL & GAME AREA === */
+    /* === WHEEL & GAME AREA === 
     --wheel-margin-top: -15%;
     --wheel-border-size: 58.5vh;
     --wheel-diameter: 57vh;
@@ -719,7 +718,7 @@
     --pointer-size: 130px;
     --pointer-top: -50px;
 
-    /* === ANIMAL DISPLAY === */
+    /* === ANIMAL DISPLAY === 
     --animal-image-size: 250px;
     --animal-image-translate-x: 0%;
     --animal-image-translate-y: 9%;
@@ -731,7 +730,7 @@
     --animal-name-tag-translate-y: 0%;
     --animal-name-font-size: 1.3rem;
 
-    /* === CLOCK === */
+    /* === CLOCK === 
     --clock-widget-width: 160px;
     --clock-widget-min-height: 78px;
     --clock-widget-bottom: 1.5rem;
@@ -742,12 +741,12 @@
     --countdown-font-size: 1.4rem;
     --countdown-top: 0px;
     --countdown-left: 0px;
-    /* === BUHO GIF === */
+    /* === BUHO GIF === 
     --buho-width: 100px;
     --buho-top: -100px;
     --buho-left: 30px;
 
-    /* === LOGO === */
+    /* === LOGO === 
     --logo-size: 80px;
     --logo-top: 10px;
     --logo-left: 10px;
@@ -755,12 +754,12 @@
     --logo-translate-y: 0px;
 
       
-    /* === MODALS === */
+    /* === MODALS === 
     --modal-width: 90%;
     --modal-max-width: 600px;
     --history-title-font-size: 2.1rem;
     --settings-title-font-size: 2.2rem;
-    /* === RESULT CARD === */
+    /* === RESULT CARD === 
     --result-card-width: 90%;
     --result-card-max-width: 95vh;
     --result-card-height: auto;
@@ -769,7 +768,7 @@
     --result-title-font-size: 2rem;
     --win-amount-font-size: 2.8rem;
 
-    /* === RESULTS HISTORY PANEL === */
+    /* === RESULTS HISTORY PANEL === 
     --history-panel-right: 0px;
     --history-panel-top: 50%;
     --history-panel-transform: translateY(-50%);
@@ -782,7 +781,7 @@
     --history-time-font-size: 0.7rem;
     --history-entry-font-size: 0.8rem;
 
-    /* === RIGHT RESULTS PANEL === */
+    /* === RIGHT RESULTS PANEL === 
     --right-panel-top: 5rem;
     --right-panel-right: 0.3rem;
     --right-panel-width: min(700px, 90vw);
@@ -791,7 +790,7 @@
     --right-panel-border-radius: 1rem;
     --right-panel-transform: none;
 
-    /* === RIGHT RESULTS PANEL CONTENT === */
+    /* === RIGHT RESULTS PANEL CONTENT === 
     --right-panel-content-top: 0;
     --right-panel-content-right: 0;
     --right-panel-content-bottom: 0;
@@ -802,10 +801,10 @@
     --right-panel-content-p-font-size: 0.75rem;
     --right-panel-content-p-line-height: 1.35;
 
-    /* Globales */
+    /* Globales 
 
   }
-}
+}  */
 
 /* ============================================
  * BREAKPOINT 5: DESKTOP (1024-1799px)
@@ -827,7 +826,7 @@
  *
  * Desktop y laptops estÃ¡ndar
  * ============================================ */
-@media (min-width: 1024px) and (max-width: 1799px) {
+@media (min-width: 1910px) {
   :root {
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: -5%;
@@ -922,9 +921,8 @@
     --right-panel-content-p-line-height: 1.4;
 
     /* Globales */
-
   }
-}
+}  
 
 /* ============================================
  * BREAKPOINT 6: LARGE DESKTOP (1800px+)
@@ -932,22 +930,136 @@
  *
  * DISPOSITIVOS REALES:
  * Monitores grandes:
- * - 2K: 2560Ã—1440px
+ * - 2K: 2560Ã—1440px  
  * - 4K: 3840Ã—2160px
  * - Ultra-wide: 3440Ã—1440px
  *
  * No listados en el dataset mÃ³vil, pero comunes en desktop
  * ============================================ */
-@media (min-width: 1800px) {
+@media (min-width: 2510px)   {
   :root {
     /* === WHEEL & GAME AREA === */
-    --wheel-margin-top: 15rem; 
+    --wheel-margin-top: 10rem; 
     --wheel-border-size: 105vh; // control de aro externo 
-    --wheel-margin-left:15%;
-    --wheel-diameter: 800px;
+    --wheel-margin-left:10%;
+    --wheel-diameter: 900px;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
     --pointer-size: 300px; // tamaño del puntero
+    --pointer-top: -50px;
+
+    /* === ANIMAL DISPLAY === */
+    --animal-image-size: 225px;
+    --animal-image-translate-x: 0%;
+    --animal-image-translate-y: -10%;
+    --animal-name-tag-width: 24%;
+    --animal-name-tag-height: 17%;
+    --animal-name-tag-top: 10%;
+    --animal-name-tag-left: 9%;
+    --animal-name-tag-translate-x: 0%;
+    --animal-name-tag-translate-y: 0%;
+    --animal-name-font-size: 0.9rem;
+
+    /* === CLOCK === */
+    --clock-widget-width: 480px;
+    --clock-widget-min-height: 432px;
+    --clock-widget-bottom: 0.05em;
+    --clock-widget-left: 0rem;
+    --clock-value-font-size: 1.8rem;
+    --clock-value-top: 3vh;
+    --clock-value-left: 3vh;
+    --countdown-font-size: 1.8rem;
+    --countdown-color-font: #fff;
+    --countdown-top: 9vh;
+    --countdown-left: -9vh;
+    /* === BUHO GIF === */
+    --buho-width: 140px;
+    --buho-top: 215px;
+    --buho-left: 275px;
+
+    /* === LOGO === */
+    --logo-size: 256px;
+    --logo-top: 25px;
+    --logo-left: 40px;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
+
+      
+    /* === MODALS === */
+    --modal-width: 80%;
+    --modal-max-width: 850px;
+    --history-title-font-size: 1.2rem;
+    --settings-title-font-size: 3.2rem;
+    /* === RESULT CARD === */
+    --result-card-width: 70%;
+    --result-card-max-width: 1200px;
+    --result-card-height: auto;
+    --result-card-max-height: 93.5vh;
+    --result-card-padding:20px;
+    --result-title-font-size: 3.5rem;
+    --win-amount-font-size: 3.0rem;
+
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: -25%;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 100%;
+    --history-label-font-size: 1.75rem;
+    --history-entry-gap: 6px;
+    --history-entry-inner-gap: 15px;
+    --history-entry-padding: 6px 10px;
+    --history-entry-image-size: 75px;
+    --history-time-font-size: 1.9rem;
+    --history-entry-font-size: 1rem;
+    
+
+    /* === RIGHT RESULTS PANEL === */
+    --right-panel-top: 8rem;
+    --right-panel-right: 1rem;
+    --right-panel-width: min(600px, 45vw);
+    --right-panel-max-width: 900px;
+    --right-panel-z-index: 950;
+    --right-panel-border-radius: 1rem;
+    --right-panel-transform: none;
+
+    /* === RIGHT RESULTS PANEL CONTENT === */
+    --right-panel-content-top: 0vh;
+    --right-panel-content-right: 0;
+    --right-panel-content-bottom: 0;
+    --right-panel-content-left: 0;
+    --right-panel-content-transform: none;
+    --right-panel-content-padding: 3.75rem;
+    --right-panel-content-h3-font-size: 1rem;
+    --right-panel-content-p-font-size: 1.15rem;
+    --right-panel-content-p-line-height: 1.45;
+
+    /* Globales */
+
+  }
+}
+
+/* ============================================
+ * BREAKPOINT 6: LARGE DESKTOP (1800px+) en modo portrait 
+ * ~1% de usuarios
+ *
+ * DISPOSITIVOS REALES:
+ * Monitores grandes:
+ * - 2K: 2560Ã—1440px  
+ * - 4K: 3840Ã—2160px
+ * - Ultra-wide: 3440Ã—1440px
+ *
+ * No listados en el dataset mÃ³vil, pero comunes en desktop
+ * ============================================ */
+@media (min-width: 2510px) and (orientation: portrait)   {
+  :root {
+    /* === WHEEL & GAME AREA === */
+    --wheel-margin-top: 6rem; 
+    --wheel-border-size: 20vh; // control de aro externo 
+    --wheel-margin-left:20%;
+    --wheel-diameter: 200px;
+    --wheel-border-transform-x: 0px;
+    --wheel-border-transform-y: 0px;
+    --pointer-size: 90px; // tamaño del puntero
     --pointer-top: -50px;
 
     /* === ANIMAL DISPLAY === */
@@ -1052,10 +1164,10 @@
  * - Escala ~3.5x desde mobile base (320px)
  *
  * TODOS los elementos deben verse perfectos aquÃ­
- * ============================================ */
+ * ============================================ 
 @media (min-width: 1216px) and (max-width: 1224px) and (min-height: 2708px) and (max-height: 2716px) {
   :root {
-    /* === WHEEL & GAME AREA === */
+    /* === WHEEL & GAME AREA === 
     --wheel-margin-top: -500px;
     --wheel-border-size: 1155px;
     --wheel-diameter: 1080px;
@@ -1064,7 +1176,7 @@
     --pointer-size: 120px;
     --pointer-top: 0px;
 
-    /* === ANIMAL DISPLAY === */
+    /* === ANIMAL DISPLAY === 
     --animal-image-size: 560px;
     --animal-name-tag-width: 270px;
     --animal-name-tag-height: 90px;
@@ -1072,7 +1184,7 @@
     --animal-name-tag-left: 65px;
     --animal-name-font-size: 1.85rem;
 
-    /* === CLOCK === */
+    /* === CLOCK === 
     --clock-widget-width: 300px;
     --clock-widget-min-height: 150px;
     --clock-widget-bottom: 2rem;
@@ -1083,24 +1195,24 @@
     --countdown-font-size: 3.0rem;
     --countdown-top: 0px;
     --countdown-left: 0px;
-    /* === BUHO GIF === */
+    /* === BUHO GIF === 
     --buho-width: 150px;
     --buho-top: -150px;
     --buho-left: 75px;
 
-    /* === LOGO === */
+    /* === LOGO === 
     --logo-size: 300px;
     --logo-top: 40px;
     --logo-left: 40px;
     --logo-translate-x: 0px;
     --logo-translate-y: 0px;
 
-    /* === MODALS === */
+    /* === MODALS === 
     --modal-width: 85%;
     --modal-max-width: 95vw;
     --history-title-font-size: 4rem;
     --settings-title-font-size: 4rem;
-    /* === RESULT CARD === */
+    /* === RESULT CARD === 
     --result-card-width: 95%;
     --result-card-max-width: 1200px;
     --result-card-height: auto;
@@ -1109,7 +1221,7 @@
     --result-title-font-size: 5rem;
     --win-amount-font-size: 6rem;
 
-    /* === RESULTS HISTORY PANEL === */
+    /* === RESULTS HISTORY PANEL === 
     --history-panel-right: 0px;
     --history-panel-top: 50%;
     --history-panel-transform: translateY(-50%);
@@ -1122,7 +1234,7 @@
     --history-time-font-size: 1rem;
     --history-entry-font-size: 1.4rem;
 
-    /* === RIGHT RESULTS PANEL === */
+    /* === RIGHT RESULTS PANEL === 
     --right-panel-top: 5rem;
     --right-panel-right: 0.3rem;
     --right-panel-width: min(700px, 90vw);
@@ -1131,7 +1243,7 @@
     --right-panel-border-radius: 1rem;
     --right-panel-transform: none;
 
-    /* === RIGHT RESULTS PANEL CONTENT === */
+    /* === RIGHT RESULTS PANEL CONTENT === 
     --right-panel-content-top: 0;
     --right-panel-content-right: 0;
     --right-panel-content-bottom: 0;
@@ -1142,20 +1254,20 @@
     --right-panel-content-p-font-size: 2rem;
     --right-panel-content-p-line-height: 1.4;
 
-    /* Globales */
+    /* Globales 
 
   }
-}
+}  */
 
 /* ============================================
  * BREAKPOINT HD+: HD+ LAPTOPS / 1600Ã—900 (1580-1680px, altura 880-920px)
  * Monitores HD+ y laptops 1600Ã—900
- * ============================================ */
+ * ============================================ 
 @media (min-width: 1580px) and (max-width: 1680px) and (min-height: 880px) and (max-height: 920px) {
   :root {
     --wheel-diameter: 520px;
 
-    /* === RIGHT RESULTS PANEL === */
+    /* === RIGHT RESULTS PANEL === 
     --right-panel-top: 5rem;
     --right-panel-right: 0.3rem;
     --right-panel-width: min(750px, 90vw);
@@ -1164,7 +1276,7 @@
     --right-panel-border-radius: 1rem;
     --right-panel-transform: none;
 
-    /* === RIGHT RESULTS PANEL CONTENT === */
+    /* === RIGHT RESULTS PANEL CONTENT === 
     --right-panel-content-top: 0;
     --right-panel-content-right: 0;
     --right-panel-content-bottom: 0;
@@ -1175,17 +1287,17 @@
     --right-panel-content-p-font-size: 0.95rem;
     --right-panel-content-p-line-height: 1.4;
   }
-}
+}  */
 
 /* ============================================
  * BREAKPOINT 2K: QHD (2540-2600px, altura 1400-1480px)
  * Monitores 2K/QHD 2560Ã—1440
- * ============================================ */
+ * ============================================ 
 @media (min-width: 2540px) and (max-width: 2600px) and (min-height: 1400px) and (max-height: 1480px) {
   :root {
     --wheel-diameter: 600px;
 
-    /* === RIGHT RESULTS PANEL === */
+    /* === RIGHT RESULTS PANEL === 
     --right-panel-top: 5rem;
     --right-panel-right: 0.3rem;
     --right-panel-width: min(900px, 90vw);
@@ -1194,7 +1306,7 @@
     --right-panel-border-radius: 1rem;
     --right-panel-transform: none;
 
-    /* === RIGHT RESULTS PANEL CONTENT === */
+    /* === RIGHT RESULTS PANEL CONTENT === 
     --right-panel-content-top: 0;
     --right-panel-content-right: 0;
     --right-panel-content-bottom: 0;
@@ -1205,17 +1317,17 @@
     --right-panel-content-p-font-size: 1.3rem;
     --right-panel-content-p-line-height: 1.45;
   }
-}
+}  */
 
 /* ============================================
  * BREAKPOINT 4K: UHD (â‰¥3800px, altura â‰¥2100px)
  * Monitores 4K/UHD 3840Ã—2160
- * ============================================ */
+ * ============================================ 
 @media (min-width: 3800px) and (min-height: 2100px) {
   :root {
     --wheel-diameter: 700px;
 
-    /* === RIGHT RESULTS PANEL === */
+    /* === RIGHT RESULTS PANEL === 
     --right-panel-top: 5rem;
     --right-panel-right: 0.3rem;
     --right-panel-width: min(1100px, 90vw);
@@ -1224,7 +1336,7 @@
     --right-panel-border-radius: 1rem;
     --right-panel-transform: none;
 
-    /* === RIGHT RESULTS PANEL CONTENT === */
+    /* === RIGHT RESULTS PANEL CONTENT === 
     --right-panel-content-top: 0;
     --right-panel-content-right: 0;
     --right-panel-content-bottom: 0;
@@ -1235,7 +1347,7 @@
     --right-panel-content-p-font-size: 1.8rem;
     --right-panel-content-p-line-height: 1.5;
   }
-}
+} */
 
 /* ============================================
  * RESUMEN DE COBERTURA
