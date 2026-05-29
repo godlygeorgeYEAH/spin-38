@@ -70,6 +70,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private resetInProgress: Promise<void> | null = null;
 
   // buho gif aleatorio
+  // true = GIF siempre visible y animado (para posicionamiento/dev)
+  // false = comportamiento normal (frame estático + disparo aleatorio)
+  private readonly OWL_DEV_MODE = true;
   public owlGifSrc = 'assets/images/contenedores/buho.gif';
   public owlAnimating = false;
   private owlTimer: any = null;
@@ -198,7 +201,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     // Iniciar precarga de assets
     this.preloadAssets();
     this.startClock();
-    this.scheduleOwlAnimation();
+    if (this.OWL_DEV_MODE) {
+      this.owlAnimating = true;
+    } else {
+      this.scheduleOwlAnimation();
+    }
   }
 
   private captureOwlFirstFrame(): void {
@@ -319,7 +326,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     } else if (this.backgroundVideo?.nativeElement) {
       this.backgroundVideo.nativeElement.style.display = 'none';
     }
-    this.captureOwlFirstFrame();
+    if (!this.OWL_DEV_MODE) {
+      this.captureOwlFirstFrame();
+    }
 
     // Reset de rueda: se dispara RESET_LEAD_SEC segundos antes de que termine el revealing
     this.orchestrator.resetCommand$.subscribe(() => {

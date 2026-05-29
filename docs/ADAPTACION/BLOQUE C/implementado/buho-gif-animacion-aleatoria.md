@@ -40,6 +40,28 @@ Dos elementos apilados dentro de `.clock-widget`:
 
 ---
 
+## 🛠️ Modo desarrollo (posicionamiento del asset)
+
+En `src/app/home/home.page.ts` existe una flag para facilitar el ajuste visual del búho:
+
+```ts
+private readonly OWL_DEV_MODE = false;
+```
+
+| Valor | Comportamiento |
+|---|---|
+| `false` | Modo normal: frame estático en canvas + disparo aleatorio cada 5–15s |
+| `true` | Modo dev: GIF siempre visible y animando en loop, sin canvas ni timer |
+
+Con `OWL_DEV_MODE = true`:
+- `owlAnimating` se fija a `true` desde `ngOnInit`, por lo que el `<img>` tiene `opacity: 1` permanentemente.
+- `captureOwlFirstFrame()` no se ejecuta (canvas queda vacío y oculto bajo el img).
+- `scheduleOwlAnimation()` no se llama, no hay timers.
+
+Útil para ajustar `--buho-width`, `--buho-top` y `--buho-left` sin esperar a que se dispare la animación.
+
+---
+
 ## 🎛️ Ajuste de duración
 
 En `src/app/home/home.page.ts`:

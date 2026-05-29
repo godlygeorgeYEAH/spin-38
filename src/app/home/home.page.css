@@ -933,7 +933,8 @@ ion-content.home-background::part(background) {
   align-items: center;
   gap: 1.5rem;
   margin-top: var(--wheel-margin-top);
-  margin-left: var(--wheel-margin-left, 0px);  /* Ajuste horizontal responsive */
+  margin-left: var(--wheel-margin-left, 0px);
+  margin-right: var(--wheel-right, 0px);
 }
 
 .wheel-container-wrapper {
