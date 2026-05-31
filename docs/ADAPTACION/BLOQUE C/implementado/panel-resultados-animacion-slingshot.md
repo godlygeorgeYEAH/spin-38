@@ -1,6 +1,6 @@
 # 🎯 Panel de Resultados — Animación Slingshot
 
-Cuando la rueda entra en estado `SPINNING`, el panel de últimos resultados (`.right-results-panel`) se desplaza fuera de pantalla hacia la derecha con un efecto de honda/liga: primero retrocede 22 px hacia la izquierda y luego sale disparado. Al finalizar el giro, el panel regresa deslizándose suavemente desde la derecha.
+El panel de últimos resultados (`.right-results-panel`) solo es visible durante `COUNTING_DOWN`. Cuando el conteo termina y la rueda entra en `SPINNING`, el panel sale disparado hacia la derecha con un efecto de honda/liga: primero retrocede 22 px y luego sale disparado. Durante `REVEALING` el panel permanece oculto — ese estado queda reservado para la animación de resultado del sorteo.
 
 ---
 
@@ -8,7 +8,7 @@ Cuando la rueda entra en estado `SPINNING`, el panel de últimos resultados (`.r
 
 | Archivo | Qué se modificó |
 |---|---|
-| `src/app/home/home.page.ts` | Propiedades `resultsPanelClass` y `resultsPanelHasAnimated` + suscripción a `roundState$` |
+| `src/app/home/home.page.ts` | Propiedad `resultsPanelClass` + suscripción a `roundState$` |
 | `src/app/home/home.page.html` | `[ngClass]="resultsPanelClass"` en `.right-results-panel` |
 | `src/app/home/home.page.css` | `@keyframes panel-slingshot-exit`, `@keyframes panel-slide-enter` y reglas `.panel-exit` / `.panel-enter` |
 
@@ -22,27 +22,33 @@ El componente mantiene una propiedad `resultsPanelClass` que toma tres valores:
 
 | Valor | Cuándo se aplica | Efecto |
 |---|---|---|
-| `''` (vacío) | Estado inicial, antes del primer giro | Sin animación — panel visible en posición normal |
+| `''` (vacío) | `IDLE`, `SPINNING`, `REVEALING` | Panel fuera de pantalla (sin animación activa) |
+| `'panel-enter'` | Al entrar en `COUNTING_DOWN` | Deslizamiento de entrada desde la derecha |
 | `'panel-exit'` | Al entrar en `SPINNING` | Animación slingshot: retrocede y sale por la derecha |
-| `'panel-enter'` | Al salir de `SPINNING` | Deslizamiento de entrada desde la derecha |
-
-El flag `resultsPanelHasAnimated` evita que la animación de entrada se dispare en el primer render (cuando el estado va de `undefined` → `IDLE` al iniciar la app).
 
 ### Flujo de estados
 
 ```
 App inicia
   └─ roundState$ emite 'IDLE'
-       └─ hasAnimated = false → resultsPanelClass = '' (sin animación)
+       └─ resultsPanelClass = '' (panel oculto, sin animación)
 
-Rueda empieza a girar
+Servidor abre período de apuestas
+  └─ roundState$ emite 'COUNTING_DOWN'
+       └─ resultsPanelClass = 'panel-enter'  →  panel desliza desde la derecha
+
+Countdown llega a 0 — rueda empieza a girar
   └─ roundState$ emite 'SPINNING'
-       └─ hasAnimated = true
-          resultsPanelClass = 'panel-exit'  →  slingshot sale a la derecha
+       └─ resultsPanelClass = 'panel-exit'  →  slingshot sale a la derecha
 
-Rueda termina (REVEALING / IDLE)
-  └─ roundState$ emite otro estado
-       └─ hasAnimated = true → resultsPanelClass = 'panel-enter'  →  desliza de vuelta
+Rueda se detiene
+  └─ roundState$ emite 'REVEALING'
+       └─ sin cambio — panel permanece oculto
+          estado reservado para animación de resultado del sorteo
+
+Período de revealing termina
+  └─ roundState$ emite 'IDLE'
+       └─ sin cambio — panel permanece oculto hasta el próximo COUNTING_DOWN
 ```
 
 ---
@@ -89,19 +95,18 @@ Rueda termina (REVEALING / IDLE)
 
 ```ts
 public resultsPanelClass: '' | 'panel-exit' | 'panel-enter' = '';
-private resultsPanelHasAnimated = false;
 ```
 
 Suscripción en `ngAfterViewInit`:
 
 ```ts
 this.orchestrator.roundState$.subscribe(state => {
-  if (state === 'SPINNING') {
-    this.resultsPanelHasAnimated = true;
-    this.resultsPanelClass = 'panel-exit';
-  } else if (this.resultsPanelHasAnimated) {
+  if (state === 'COUNTING_DOWN') {
     this.resultsPanelClass = 'panel-enter';
+  } else if (state === 'SPINNING') {
+    this.resultsPanelClass = 'panel-exit';
   }
+  // REVEALING e IDLE: panel permanece oculto — REVEALING reservado para animación de resultado
   this.cdr.markForCheck();
 });
 ```
@@ -122,7 +127,7 @@ El panel es `position: fixed` con `right: 0.3rem`. Traducirlo con `translateX(10
 → Subir el valor `130%` en `.panel-exit` y el keyframe `0%` de `panel-slide-enter` a `150%` o usar `calc(100% + 100vw)`.
 
 **La animación de entrada se dispara al cargar la app**
-→ Verificar que `resultsPanelHasAnimated` siga siendo `false` en el primer emit de `roundState$`. Si el orquestador emite `SPINNING` inmediatamente al iniciar, el comportamiento es el esperado (se trata como un giro real).
+→ Ya no es posible: el `panel-enter` solo se aplica explícitamente cuando `roundState$` emite `COUNTING_DOWN`. En `IDLE` inicial el panel no tiene clase activa.
 
 **El panel no se anima (queda estático)**
 → Confirmar que `roundState$` esté emitiendo. El orquestador debe llamar a `.start()` para iniciar el polling — esto ocurre al final de `ngAfterViewInit` en `HomePage`.

@@ -58,10 +58,10 @@
   <div class="clock-widget" aria-label="Hora: ">
     <canvas #owlCanvas class="buho-gif"></canvas>
     <img class="buho-gif" [src]="owlGifSrc" [style.opacity]="owlAnimating ? '1' : '0'" alt="" aria-hidden="true">
-    <div class="clock-time-value">
+    <div class="clock-time-value" *ngIf="(orchestrator.roundState$ | async) !== 'COUNTING_DOWN'">
       {{ clockTime }}
     </div>
-    <app-countdown-timer (anticipation)="onAnticipation()"></app-countdown-timer>
+    <app-countdown-timer *ngIf="(orchestrator.roundState$ | async) === 'COUNTING_DOWN'" (anticipation)="onAnticipation()"></app-countdown-timer>
   </div>
 
   <!-- Betting Panel - Contenedor independiente y responsive -->

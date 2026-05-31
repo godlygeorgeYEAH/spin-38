@@ -2,7 +2,7 @@
      [class.performance-low]="performanceProfile.tier === 'low'"
      [class.performance-medium]="performanceProfile.tier === 'medium'"
      [class.performance-high]="performanceProfile.tier === 'high'">
-  <div class="water-ring-anchor">
+  <div class="water-ring-anchor" *ngIf="showWaterRing">
     <app-water-ring
       [size]="waterRingSize"
       [style.position]="'relative'"

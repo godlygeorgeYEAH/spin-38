@@ -8,6 +8,7 @@ app.use(express.json());
 // ── Configuración ────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
 const ROUND_DURATION_SEC = parseInt(process.env.ROUND_DURATION_SEC || '300', 10);
+const FORCE_MOROCHA = process.env.FORCE_MOROCHA === '1';
 const SPIN_SEC = 30;    // segundos en estado "spinning"
 const REVEAL_SEC = 15;  // segundos en estado "revealing"
 const IDLE_SEC = Math.max(1, ROUND_DURATION_SEC - SPIN_SEC - REVEAL_SEC);
@@ -47,7 +48,8 @@ setInterval(() => {
     if (state === 'idle') {
       state = 'spinning';
       secondsRemaining = SPIN_SEC;
-      currentResult = { outerPosition: randomPosition(), innerPosition: randomPosition() };
+      const outer = randomPosition();
+      currentResult = { outerPosition: outer, innerPosition: FORCE_MOROCHA ? outer : randomPosition() };
       log(`[ROUND-${roundId}] idle → spinning  outer=${currentResult.outerPosition} inner=${currentResult.innerPosition}`);
 
     } else if (state === 'spinning') {
@@ -118,4 +120,6 @@ app.listen(PORT, () => {
   console.log(`Mock server escuchando en http://localhost:${PORT}`);
   console.log(`Ciclo: ${ROUND_DURATION_SEC}s total  (idle ${IDLE_SEC}s → spinning ${SPIN_SEC}s → revealing ${REVEAL_SEC}s)`);
   console.log(`Para ciclo acortado: ROUND_DURATION_SEC=30 npm run mock-server`);
+  console.log(`Para forzar morocha:  FORCE_MOROCHA=1 npm run mock-server`);
+  if (FORCE_MOROCHA) console.log(`⚠️  FORCE_MOROCHA activo — outer e inner siempre iguales`);
 });

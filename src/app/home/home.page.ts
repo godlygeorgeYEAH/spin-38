@@ -10,6 +10,8 @@ import { CountdownTimerComponent } from '../components/countdown-timer/countdown
 import { ResultsHistoryPanelComponent } from '../components/results-history-panel/results-history-panel.component';
 import { JackpotDisplayComponent } from '../components/jackpot-display/jackpot-display.component';
 import { Animal, AnimalBet, WheelItem, WheelSpinResult } from '../interfaces/wheel-general.interface';
+import { ANIMAL_MAP } from '../data/animal-map';
+import { RevealService } from '../components/results-animation/reveal.service';
 import { GameSettings } from '../interfaces/game-settings.interface';
 import { GameState } from '../interfaces/game.enums';
 import { Transaction, TransactionType } from '../interfaces/transaction.interface';
@@ -86,7 +88,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   public isWheelDisplaced: boolean = true; // Controla el desplazamiento de la rueda (separado de la visibilidad del panel)
   public bettingPanelAnimationState: 'hidden' | 'appearing' | 'visible' | 'disappearing' = 'visible';
   public resultsPanelClass: '' | 'panel-exit' | 'panel-enter' = '';
-  private resultsPanelHasAnimated = false;
 
   // Volumen de sonidos de interfaz (0-100)
   public uiVolume: number = 50;
@@ -135,7 +136,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private audioService: AudioService,
     private performanceDetector: PerformanceDetectorService,
     private apiService: ApiService,
-    public orchestrator: RoundOrchestratorService
+    public orchestrator: RoundOrchestratorService,
+    private reveal: RevealService
   ) {
     addIcons({ settingsOutline, closeOutline });
 
@@ -355,7 +357,14 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.gameState = GameState.PLAYING;
       this.cdr.markForCheck();
       this.wheelContainer.spinToResult(cmd)
-        .then(() => {
+        .then(async () => {
+          const isDupla = String(cmd.outerPosition) === String(cmd.innerPosition);
+          await this.reveal.play({
+            leftImage:  ANIMAL_MAP[String(cmd.outerPosition)]?.image       ?? '',
+            rightImage: ANIMAL_MAP[String(cmd.innerPosition)]?.innerImage  ?? '',
+            text: isDupla ? 'MOROCHA' : 'TEXTO',
+            hype: isDupla,
+          });
           this.orchestrator.notifySpinComplete();
           this.gameState = GameState.RESULT;
           this.cdr.markForCheck();
@@ -369,12 +378,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.orchestrator.roundState$.subscribe(state => {
-      if (state === 'SPINNING') {
-        this.resultsPanelHasAnimated = true;
-        this.resultsPanelClass = 'panel-exit';
-      } else if (this.resultsPanelHasAnimated) {
+      if (state === 'COUNTING_DOWN') {
         this.resultsPanelClass = 'panel-enter';
+      } else if (state === 'SPINNING') {
+        this.resultsPanelClass = 'panel-exit';
       }
+      // REVEALING e IDLE: panel permanece oculto — REVEALING reservado para animación de resultado
       this.cdr.markForCheck();
     });
 
@@ -871,6 +880,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       });
 
       console.log('[HomePage] Ruleta completada. Resultado visual:', result);
+
+      // Animación de resultado antes de mostrar overlay estático
+      const isDupla = String(result.outerPosition) === String(result.innerPosition);
+      await this.reveal.play({
+        leftImage:  ANIMAL_MAP[String(result.outerPosition)]?.image       ?? '',
+        rightImage: ANIMAL_MAP[String(result.innerPosition)]?.innerImage  ?? '',
+        text: isDupla ? 'MOROCHA' : 'TEXTO',
+            hype: isDupla,
+      });
 
       // Usar datos del backend para actualizar el juego
       this.gameResult = result;

@@ -1,0 +1,234 @@
+/* reveal-overlay.component.scss
+ * Estilos del overlay. Las duraciones se inyectan como custom properties
+ * desde el componente (--reveal-enter / --reveal-shrink / --reveal-clear).
+ *
+ * Offsets de reposo: cada círculo descansa a ±118px del centro.
+ */
+
+$rest: 180px;
+$ease-in: cubic-bezier(0.16, 1.02, 0.3, 1); // entrada con leve overshoot
+$ease-out: cubic-bezier(0.55, 0, 0.45, 1); // colapso suave
+
+:host {
+  // valores por defecto (el componente los sobrescribe en runtime)
+  --reveal-enter: 700ms;
+  --reveal-shrink: 800ms;
+  --reveal-clear: 640ms;
+  --reveal-text-delay: 100ms;
+  --reveal-img-shrink: 0.34;
+  --reveal-text-shrink: 0.136;
+  --reveal-text-y: 25vh;
+}
+
+.reveal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none; // deja pasar toques al juego de abajo si hace falta
+}
+
+/* ---------- Oscurecer + blur ---------- */
+.reveal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: oklch(0.08 0.03 265 / 0.55);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  opacity: 1;
+  transition:
+    opacity calc(var(--reveal-enter) * 0.7) ease,
+    backdrop-filter calc(var(--reveal-enter) * 0.7) ease,
+    -webkit-backdrop-filter calc(var(--reveal-enter) * 0.7) ease;
+
+  &.is-clear {
+    opacity: 0;
+    backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
+    transition:
+      opacity var(--reveal-clear) $ease-out,
+      backdrop-filter var(--reveal-clear) $ease-out,
+      -webkit-backdrop-filter var(--reveal-clear) $ease-out;
+  }
+}
+
+.reveal-stage {
+  position: absolute;
+  inset: 0;
+}
+
+/* ---------- Texto delineado ---------- */
+.reveal-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  white-space: nowrap;
+  user-select: none;
+  font-family: 'Archivo Black', system-ui, sans-serif;
+  font-size: clamp(64px, 17vw, 230px);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: transparent;
+  -webkit-text-stroke: clamp(5px, 1vw, 10px) oklch(0.98 0.01 250 / 0.9);
+  text-stroke: clamp(5px, 1vw, 10px) oklch(0.98 0.01 250 / 0.9);
+  filter: drop-shadow(0 0 18px oklch(0.85 0.1 220 / 0.35));
+
+  // estado inicial: fuera por la izquierda
+  transform: translate(-50%, -50%) translateX(-82vw) translateY(var(--reveal-text-y)) scale(1);
+  opacity: 0;
+  transition:
+    transform var(--reveal-enter) $ease-in var(--reveal-text-delay),
+    opacity calc(var(--reveal-enter) * 0.7) ease var(--reveal-text-delay);
+
+  &.enter {
+    transform: translate(-50%, -50%) translateX(0) translateY(var(--reveal-text-y)) scale(1);
+    opacity: 1;
+    animation: neon-flicker 0.5s steps(1, end) infinite;
+    animation-delay: var(--reveal-enter);
+  }
+  &.collapse {
+    transform: translate(-50%, -50%) translateX(0) translateY(0) scale(var(--reveal-text-shrink));
+    opacity: 0.9;
+    transition:
+      transform var(--reveal-shrink) $ease-out,
+      opacity var(--reveal-shrink) $ease-out;
+  }
+  &.gone {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateX(0) translateY(0) scale(var(--reveal-text-shrink));
+    transition:
+      transform var(--reveal-shrink) $ease-out,
+      opacity var(--reveal-clear) $ease-out;
+  }
+}
+
+/* ---------- Secuencia "hype" (DUPLA) ---------- */
+.hype-word {
+  position: absolute;
+  left: 50%;
+  white-space: nowrap;
+  user-select: none;
+  font-family: 'Archivo Black', system-ui, sans-serif;
+  font-size: clamp(54px, 13vw, 175px);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  color: transparent;
+  -webkit-text-stroke: clamp(4px, 0.9vw, 9px) oklch(0.98 0.01 250 / 0.9);
+  text-stroke: clamp(4px, 0.9vw, 9px) oklch(0.98 0.01 250 / 0.9);
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform, opacity;
+
+  &.flash {
+    filter: drop-shadow(0 0 24px oklch(0.85 0.13 220 / 0.55));
+    -webkit-text-stroke-color: oklch(0.99 0.02 220 / 0.95);
+  }
+}
+.hype-final {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  white-space: nowrap;
+  user-select: none;
+  font-family: 'Archivo Black', system-ui, sans-serif;
+  font-size: clamp(46px, 11vw, 150px);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  color: transparent;
+  -webkit-text-stroke: clamp(4px, 0.9vw, 8px) oklch(0.98 0.01 250 / 0.92);
+  text-stroke: clamp(4px, 0.9vw, 8px) oklch(0.98 0.01 250 / 0.92);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 600ms ease;
+  animation: neon-flicker 2.5s ease-in-out infinite;
+  animation-delay: 600ms;
+}
+
+/* ---------- Contenedores de imagen ---------- */
+.reveal-img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  opacity: 0;
+  transition:
+    transform var(--reveal-enter) $ease-in,
+    opacity calc(var(--reveal-enter) * 0.6) ease;
+
+  // posición inicial: muy fuera de la pantalla
+  &.left {
+    transform: translate(-50%, -50%) translateX(-62vw) scale(0.85);
+  }
+  &.right {
+    transform: translate(-50%, -50%) translateX(62vw) scale(0.85);
+  }
+
+  // reposo: a ±118px del centro
+  &.left.enter {
+    transform: translate(-50%, -50%) translateX(-#{$rest}) scale(1);
+    opacity: 1;
+  }
+  &.right.enter {
+    transform: translate(-50%, -50%) translateX(#{$rest}) scale(1);
+    opacity: 1;
+  }
+
+  // colapso: ambas convergen al centro exacto y se encogen
+  &.left.collapse,
+  &.right.collapse {
+    transform: translate(-50%, -50%) translateX(0) scale(var(--reveal-img-shrink));
+    opacity: 1;
+    transition:
+      transform var(--reveal-shrink) $ease-out,
+      opacity var(--reveal-shrink) $ease-out;
+  }
+  &.left.gone,
+  &.right.gone {
+    transform: translate(-50%, -50%) translateX(0) scale(var(--reveal-img-shrink));
+    opacity: 0;
+    transition:
+      transform var(--reveal-shrink) $ease-out,
+      opacity var(--reveal-clear) $ease-out;
+  }
+}
+
+/* ---------- Círculo de personaje ---------- */
+.char-ring {
+  width: clamp(150px, 26vmin, 230px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow:
+    0 0 0 3px oklch(0.98 0.01 250 / 0.55),
+    0 10px 30px oklch(0 0 0 / 0.45);
+
+  &.ring-left {
+    background: #128DFC;
+    box-shadow:
+      0 0 0 3px oklch(0.98 0.01 250 / 0.55),
+      0 0 28px 4px #1A0B79,
+      0 10px 30px oklch(0 0 0 / 0.45);
+  }
+  &.ring-right {
+    background: #FFE28F;
+    box-shadow:
+      0 0 0 3px oklch(0.98 0.01 250 / 0.55),
+      0 0 28px 4px #FFE28F,
+      0 10px 30px oklch(0 0 0 / 0.45);
+  }
+}
+.char-fill {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: oklch(0.2 0.02 265);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}

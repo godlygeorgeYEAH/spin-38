@@ -41,6 +41,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   public pointerBounce = false;
   @Input() pointerContainerWidth: string | null = null;  // e.g. '100%', '200px'
   @Input() pointerContainerHeight: string | null = null; // e.g. '100%', '120px'
+  @Input() showWaterRing: boolean = false;
 
   private readonly INITIAL_ANGLE = -(180 / 38); // centra el segmento 0 (Delfín) bajo el puntero
 
