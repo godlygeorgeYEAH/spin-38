@@ -27,8 +27,8 @@ export const REVEAL_DEFAULTS = {
   exitMs: 2500, // fase de salida (encoger + aclarar)
   shrinkScale: 0.1, // escala final de los círculos (10%)
   textY: 30, // posición vertical del texto (+30vh)
-  bursts: 3, // textos por ola en la secuencia hype (MOROCHA)
-  waves: 5, // ráfagas: veces que se reproduce cada lado (MOROCHA)
+  bursts: 3, // textos por ola en la secuencia hype
+  waves: 5, // ráfagas: veces que se reproduce cada lado
 };
 
 export interface RevealConfig {
@@ -48,14 +48,11 @@ export interface RevealConfig {
   shrinkScale?: number;
   /** posición vertical del texto en vh respecto al centro (por defecto 0) */
   textY?: number;
-  /** cantidad de textos por ola en la secuencia hype / MOROCHA (por defecto 7) */
+  /** cantidad de textos por ola en la secuencia hype (por defecto 7) */
   bursts?: number;
   /** cantidad de ráfagas (veces que se reproduce cada lado) (por defecto 2) */
   waves?: number;
-  /**
-   * fuerza la secuencia "hype" (ráfaga + parpadeos + aterrizaje final).
-   * Si se omite, se activa automáticamente cuando text === 'MOROCHA'.
-   */
+  /** fuerza la secuencia "hype" (ráfaga + parpadeos + aterrizaje final). */
   hype?: boolean;
 }
 

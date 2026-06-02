@@ -358,13 +358,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.cdr.markForCheck();
       this.wheelContainer.spinToResult(cmd)
         .then(async () => {
-          const isDupla = String(cmd.outerPosition) === String(cmd.innerPosition);
-          await this.reveal.play({
-            leftImage:  ANIMAL_MAP[String(cmd.outerPosition)]?.image       ?? '',
-            rightImage: ANIMAL_MAP[String(cmd.innerPosition)]?.innerImage  ?? '',
-            text: isDupla ? 'MOROCHA' : 'TEXTO',
-            hype: isDupla,
-          });
+          const label = cmd.resultLabel?.trim();
+          if (label) {
+            await this.reveal.play({
+              leftImage:  ANIMAL_MAP[String(cmd.outerPosition)]?.image       ?? '',
+              rightImage: ANIMAL_MAP[String(cmd.innerPosition)]?.innerImage  ?? '',
+              text: label,
+              hype: true,
+            });
+          }
           this.orchestrator.notifySpinComplete();
           this.gameState = GameState.RESULT;
           this.cdr.markForCheck();
@@ -882,13 +884,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       console.log('[HomePage] Ruleta completada. Resultado visual:', result);
 
       // Animación de resultado antes de mostrar overlay estático
-      const isDupla = String(result.outerPosition) === String(result.innerPosition);
-      await this.reveal.play({
-        leftImage:  ANIMAL_MAP[String(result.outerPosition)]?.image       ?? '',
-        rightImage: ANIMAL_MAP[String(result.innerPosition)]?.innerImage  ?? '',
-        text: isDupla ? 'MOROCHA' : 'TEXTO',
-            hype: isDupla,
-      });
+      const revealLabel = backendResult.resultLabel?.trim();
+      if (revealLabel) {
+        await this.reveal.play({
+          leftImage:  ANIMAL_MAP[String(result.outerPosition)]?.image       ?? '',
+          rightImage: ANIMAL_MAP[String(result.innerPosition)]?.innerImage  ?? '',
+          text: revealLabel,
+          hype: true,
+        });
+      }
 
       // Usar datos del backend para actualizar el juego
       this.gameResult = result;

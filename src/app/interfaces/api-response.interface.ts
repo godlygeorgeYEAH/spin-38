@@ -91,6 +91,9 @@ export interface SpinResponse {
 
   /** Indica si hubo ganancia */
   isWin: boolean;
+
+  /** Texto a mostrar en la animación de resultado. Si está ausente o vacío, no se dispara la animación. */
+  resultLabel?: string | null;
 }
 
 /**

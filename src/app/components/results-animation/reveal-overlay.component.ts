@@ -204,10 +204,7 @@ export class RevealOverlayComponent implements OnDestroy {
 
   /** Detecta el modo hype y, si aplica, construye las ráfagas de texto. */
   private buildHype(cfg: RevealConfig) {
-    this.isHype =
-      cfg.hype != null
-        ? cfg.hype
-        : (cfg.text || '').trim().toUpperCase() === 'MOROCHA';
+    this.isHype = cfg.hype ?? false;
 
     this.hypeHoriz = [];
     this.hypeVert = [];

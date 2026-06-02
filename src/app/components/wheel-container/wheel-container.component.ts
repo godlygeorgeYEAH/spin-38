@@ -6,6 +6,8 @@ import { AudioService } from '../../services/audio.service';
 import { PerformanceDetectorService, PerformanceProfile } from '../../services/performance-detector.service';
 import { ANIMAL_MAP } from '../../data/animal-map';
 import { WaterRingComponent } from './wheel-water-ring.component';
+import { PortholeWaterComponent } from '../porthole-water/porthole-water.component';
+import { WHEEL_PALETTES, ACTIVE_PALETTE } from './wheel-palettes';
 
 const animalMap = ANIMAL_MAP;
 
@@ -14,7 +16,7 @@ const animalMap = ANIMAL_MAP;
   templateUrl: './wheel-container.component.html',
   styleUrls: ['./wheel-container.component.css'],
   standalone: true,
-  imports: [CommonModule, WaterRingComponent],
+  imports: [CommonModule, WaterRingComponent, PortholeWaterComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges {
@@ -87,14 +89,8 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private readonly ANIMAL_TEXT_POSITION_RATIO = 0.88;
   public readonly outerAnimalFontSize         = 24;
   public readonly innerAnimalFontSize         = 16;
-  public readonly outerWheelColors = [
-    { stops: [{ offset: '60%', color: '#2097FC' }, { offset: '100%', color: '#1167c0' }] },
-    { stops: [{ offset: '60%', color: '#2711A3' }, { offset: '100%', color: '#180b6b' }] },
-  ];
-  public readonly innerWheelColors = [
-    { stops: [{ offset: '60%', color: '#ffd890' }, { offset: '100%', color: '#c48a10' }] },
-    { stops: [{ offset: '60%', color: '#86ebf5' }, { offset: '100%', color: '#1da8bc' }] },
-  ];
+  public readonly outerWheelColors = WHEEL_PALETTES[ACTIVE_PALETTE].outerWheelColors;
+  public readonly innerWheelColors = WHEEL_PALETTES[ACTIVE_PALETTE].innerWheelColors;
   public readonly selectedSegmentColor = {
     stops: [{ offset: '60%', color: '#00ff88' }, { offset: '100%', color: '#00cc66' }],
   };

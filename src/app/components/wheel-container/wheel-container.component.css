@@ -412,19 +412,29 @@ svg image {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: var(--wheel-center-size, 30%); 
+  width: var(--wheel-center-size, 30%);
   height: var(--wheel-center-size, 30%);
   z-index: var(--wheel-center-z-index, 4);
   pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.wheel-center-image {
+.porthole-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.porthole-fondo {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.porthole-stack app-porthole-water {
+  width: 100%;
+  height: 100%;
 }
 
 /* ============================================

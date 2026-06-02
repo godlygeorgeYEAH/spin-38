@@ -9,6 +9,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 const ROUND_DURATION_SEC = parseInt(process.env.ROUND_DURATION_SEC || '300', 10);
 const FORCE_MOROCHA = process.env.FORCE_MOROCHA === '1';
+const FORCE_LABEL = process.env.FORCE_LABEL || null;  // ej: FORCE_LABEL="DUPLA ESPECIAL"
 const SPIN_SEC = 30;    // segundos en estado "spinning"
 const REVEAL_SEC = 15;  // segundos en estado "revealing"
 const IDLE_SEC = Math.max(1, ROUND_DURATION_SEC - SPIN_SEC - REVEAL_SEC);
@@ -23,12 +24,17 @@ const ROULETTE_POOL = [0, '00', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
 let roundId = 1;
 let state = 'idle';
 let secondsRemaining = IDLE_SEC;
-let currentResult = null;  // { outerPosition, innerPosition }
+let currentResult = null;  // { outerPosition, innerPosition, resultLabel }
 const history = [];        // orden cronológico descendente, máx MAX_HISTORY
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 function randomPosition() {
   return ROULETTE_POOL[Math.floor(Math.random() * ROULETTE_POOL.length)];
+}
+
+function computeResultLabel(outer, inner) {
+  if (FORCE_LABEL) return FORCE_LABEL;
+  return String(outer) === String(inner) ? 'MOROCHA' : null;
 }
 
 function pushHistory(entry) {
@@ -49,8 +55,13 @@ setInterval(() => {
       state = 'spinning';
       secondsRemaining = SPIN_SEC;
       const outer = randomPosition();
-      currentResult = { outerPosition: outer, innerPosition: FORCE_MOROCHA ? outer : randomPosition() };
-      log(`[ROUND-${roundId}] idle → spinning  outer=${currentResult.outerPosition} inner=${currentResult.innerPosition}`);
+      const inner = FORCE_MOROCHA ? outer : randomPosition();
+      currentResult = {
+        outerPosition: outer,
+        innerPosition: inner,
+        resultLabel: computeResultLabel(outer, inner),
+      };
+      log(`[ROUND-${roundId}] idle → spinning  outer=${currentResult.outerPosition} inner=${currentResult.innerPosition} label=${currentResult.resultLabel ?? 'null'}`);
 
     } else if (state === 'spinning') {
       state = 'revealing';
@@ -62,6 +73,7 @@ setInterval(() => {
         roundId,
         outerPosition: currentResult.outerPosition,
         innerPosition: currentResult.innerPosition,
+        resultLabel: currentResult.resultLabel,
         timestamp: new Date().toISOString(),
       });
       roundId++;
@@ -86,16 +98,17 @@ app.get('/api/round/:id/result', (req, res) => {
 
   const histEntry = history.find(h => h.roundId === id);
   if (histEntry) {
-    log(`[ROUND-${histEntry.roundId}] resultado entregado → outer=${histEntry.outerPosition} inner=${histEntry.innerPosition}`);
+    log(`[ROUND-${histEntry.roundId}] resultado entregado → outer=${histEntry.outerPosition} inner=${histEntry.innerPosition} label=${histEntry.resultLabel ?? 'null'}`);
     return res.json({
       roundId: histEntry.roundId,
       outerPosition: histEntry.outerPosition,
       innerPosition: histEntry.innerPosition,
+      resultLabel: histEntry.resultLabel ?? null,
     });
   }
 
   if (id === roundId && currentResult) {
-    log(`[ROUND-${roundId}] resultado entregado → outer=${currentResult.outerPosition} inner=${currentResult.innerPosition}`);
+    log(`[ROUND-${roundId}] resultado entregado → outer=${currentResult.outerPosition} inner=${currentResult.innerPosition} label=${currentResult.resultLabel ?? 'null'}`);
     return res.json({ roundId, ...currentResult });
   }
 
@@ -121,5 +134,7 @@ app.listen(PORT, () => {
   console.log(`Ciclo: ${ROUND_DURATION_SEC}s total  (idle ${IDLE_SEC}s → spinning ${SPIN_SEC}s → revealing ${REVEAL_SEC}s)`);
   console.log(`Para ciclo acortado: ROUND_DURATION_SEC=30 npm run mock-server`);
   console.log(`Para forzar morocha:  FORCE_MOROCHA=1 npm run mock-server`);
+  console.log(`Para forzar un label: FORCE_LABEL="DUPLA ESPECIAL" npm run mock-server`);
   if (FORCE_MOROCHA) console.log(`⚠️  FORCE_MOROCHA activo — outer e inner siempre iguales`);
+  if (FORCE_LABEL)   console.log(`⚠️  FORCE_LABEL activo — resultLabel siempre = "${FORCE_LABEL}"`);
 });

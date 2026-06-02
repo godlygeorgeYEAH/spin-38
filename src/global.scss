@@ -41,15 +41,15 @@
 @import './theme/responsive-variables.scss';
 
 @keyframes neon-flicker {
-  0%, 50% {
-    filter:
-      drop-shadow(0 0 6px #fff)
-      drop-shadow(0 0 22px oklch(0.85 0.2 220))
-      drop-shadow(0 0 50px oklch(0.65 0.3 220 / 0.8));
-  }
-  50.001%, 100% {
-    filter: drop-shadow(0 0 2px oklch(0.85 0.1 220 / 0.15));
-  }
+  0%   { filter: drop-shadow(0 0 8px #FFB300)  drop-shadow(0 0 26px #FF8800BB) drop-shadow(0 0 55px #FF440055); }
+  12%  { filter: drop-shadow(0 0 4px #FF9900)  drop-shadow(0 0 16px #FF660077) drop-shadow(0 0 38px #FF330033); }
+  23%  { filter: drop-shadow(0 0 18px #FFD700) drop-shadow(0 0 48px #FFAA00CC) drop-shadow(0 0 90px #FF660077); }
+  41%  { filter: drop-shadow(0 0 9px #FFB300)  drop-shadow(0 0 28px #FF880099) drop-shadow(0 0 58px #FF440055); }
+  58%  { filter: drop-shadow(0 0 3px #FF9900)  drop-shadow(0 0 14px #FF660066) drop-shadow(0 0 32px #FF330022); }
+  67%  { filter: drop-shadow(0 0 22px #FFE000) drop-shadow(0 0 60px #FFBB00DD) drop-shadow(0 0 110px #FF770088); }
+  83%  { filter: drop-shadow(0 0 11px #FFB300) drop-shadow(0 0 32px #FF8800AA) drop-shadow(0 0 65px #FF440066); }
+  92%  { filter: drop-shadow(0 0 6px #FFB300)  drop-shadow(0 0 20px #FF880088) drop-shadow(0 0 45px #FF440044); }
+  100% { filter: drop-shadow(0 0 8px #FFB300)  drop-shadow(0 0 26px #FF8800BB) drop-shadow(0 0 55px #FF440055); }
 }
 @keyframes hype-slide {
   0%   { transform: translate(-50%, -50%) translateX(-95vw) scale(0.92); opacity: 0; }

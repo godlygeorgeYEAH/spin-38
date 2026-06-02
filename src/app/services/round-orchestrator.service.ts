@@ -16,6 +16,7 @@ export interface RoundResultResponse {
   roundId: number;
   outerPosition: number | string;
   innerPosition: number | string;
+  resultLabel?: string | null;
 }
 
 export interface RoundHistoryEntry {
@@ -32,6 +33,7 @@ export interface SpinCommand {
   innerPosition: string;
   outerDurationMs: number;
   innerDurationMs: number;
+  resultLabel?: string | null;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -183,6 +185,7 @@ export class RoundOrchestratorService implements OnDestroy {
           innerPosition: String(result.innerPosition),
           outerDurationMs: Math.round(this.lastSpinDurationSec * 1000 * 0.9),
           innerDurationMs: this.lastSpinDurationSec * 1000,
+          resultLabel: result.resultLabel ?? null,
         };
         this.lastSpinCommand = cmd;
         this.spinCommandSubject.next(cmd);

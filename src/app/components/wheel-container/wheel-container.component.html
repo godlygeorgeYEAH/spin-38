@@ -69,9 +69,12 @@
     <img src="assets/images/rueda/bordedeagua.png" alt="Borde" class="wheel-border-image">
   </div>
 
-  <!-- Centro de rueda — placeholder para asset visual del diseñador -->
+  <!-- Centro de rueda — ojo de buey con agua animada -->
   <div class="wheel-center-asset">
-    <img class="wheel-center-image" src="assets/images/rueda/logoCentral.png" alt="logocentral" aria-hidden="true">
+    <div class="porthole-stack">
+      <img class="porthole-fondo" src="assets/images/rueda/centroruedafondo.png" aria-hidden="true">
+      <app-porthole-water [airColor]="'transparent'"></app-porthole-water>
+    </div>
   </div>
 
   <!-- Confetti Animation - Explosión circular desde el centro (adaptativo) -->

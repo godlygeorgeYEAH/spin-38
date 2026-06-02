@@ -837,6 +837,7 @@
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: 5%;
     --wheel-right: -45vh;
+    --wheel-center-size: 40%;
     --wheel-border-size: 118vh;
     --wheel-diameter: 80vh;
     --wheel-border-transform-x: 0px;
@@ -948,6 +949,7 @@
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: 10rem;
     --wheel-right: auto;
+    --wheel-center-size: 30%;
     --wheel-border-size: 110vh; // control de aro externo
     --wheel-margin-left:10%;
     --wheel-diameter: 900px;
@@ -1063,6 +1065,7 @@
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: 6rem;
     --wheel-right: auto;
+    --wheel-center-size: 30%;
     --wheel-border-size: 20vh; // control de aro externo
     --wheel-margin-left:20%;
     --wheel-diameter: 200px;
