@@ -56,7 +56,7 @@ $ease-out: cubic-bezier(0.55, 0, 0.45, 1); // colapso suave
   inset: 0;
 }
 
-/* ---------- Texto delineado ---------- */
+/* ---------- Texto delineado (modo normal / no-hype) ---------- */
 .reveal-text {
   position: absolute;
   left: 50%;
@@ -68,27 +68,27 @@ $ease-out: cubic-bezier(0.55, 0, 0.45, 1); // colapso suave
   font-size: clamp(64px, 17vw, 230px);
   line-height: 0.9;
   letter-spacing: 0.02em;
-  color: #FFD700;
+  color: #ffffff;
   paint-order: stroke fill;
-  -webkit-text-stroke: clamp(6px, 1.2vw, 12px) #1A0500;
-  text-stroke: clamp(6px, 1.2vw, 12px) #1A0500;
-  filter: drop-shadow(0 0 12px #FF990044);
+  -webkit-text-stroke: clamp(4px, 0.8vw, 8px) #001a3a;
+  text-stroke: clamp(4px, 0.8vw, 8px) #001a3a;
+  filter: drop-shadow(0 0 12px #2299FF88);
 
   // estado inicial: fuera por la izquierda
   transform: translate(-50%, -50%) translateX(-82vw) translateY(var(--reveal-text-y)) scale(1);
   opacity: 0;
   transition:
-    transform var(--reveal-enter) $ease-in var(--reveal-text-delay),
+    transform var(--reveal-enter) cubic-bezier(0.25, 1, 0.5, 1) var(--reveal-text-delay),
     opacity calc(var(--reveal-enter) * 0.7) ease var(--reveal-text-delay);
 
   &.enter {
     transform: translate(-50%, -50%) translateX(0) translateY(var(--reveal-text-y)) scale(1);
     opacity: 1;
-    animation: neon-flicker 4s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    animation: neon-flicker-blue 4s cubic-bezier(0.37, 0, 0.63, 1) infinite;
     animation-delay: var(--reveal-enter);
   }
   &.collapse {
-    transform: translate(-50%, -50%) translateX(0) translateY(0) scale(var(--reveal-text-shrink));
+    transform: translate(-50%, -50%) translateX(var(--reveal-collapse-x, 0px)) translateY(var(--reveal-collapse-y, 0px)) scale(var(--reveal-text-shrink));
     opacity: 0.9;
     transition:
       transform var(--reveal-shrink) $ease-out,
@@ -96,7 +96,7 @@ $ease-out: cubic-bezier(0.55, 0, 0.45, 1); // colapso suave
   }
   &.gone {
     opacity: 0;
-    transform: translate(-50%, -50%) translateX(0) translateY(0) scale(var(--reveal-text-shrink));
+    transform: translate(-50%, -50%) translateX(var(--reveal-collapse-x, 0px)) translateY(var(--reveal-collapse-y, 0px)) scale(var(--reveal-text-shrink));
     transition:
       transform var(--reveal-shrink) $ease-out,
       opacity var(--reveal-clear) $ease-out;
@@ -177,10 +177,10 @@ $ease-out: cubic-bezier(0.55, 0, 0.45, 1); // colapso suave
     opacity: 1;
   }
 
-  // colapso: ambas convergen al centro exacto y se encogen
+  // colapso: ambas convergen al centro de la rueda y se encogen
   &.left.collapse,
   &.right.collapse {
-    transform: translate(-50%, -50%) translateX(0) scale(var(--reveal-img-shrink));
+    transform: translate(-50%, -50%) translateX(var(--reveal-collapse-x, 0px)) translateY(var(--reveal-collapse-y, 0px)) scale(var(--reveal-img-shrink));
     opacity: 1;
     transition:
       transform var(--reveal-shrink) $ease-out,
@@ -188,7 +188,7 @@ $ease-out: cubic-bezier(0.55, 0, 0.45, 1); // colapso suave
   }
   &.left.gone,
   &.right.gone {
-    transform: translate(-50%, -50%) translateX(0) scale(var(--reveal-img-shrink));
+    transform: translate(-50%, -50%) translateX(var(--reveal-collapse-x, 0px)) translateY(var(--reveal-collapse-y, 0px)) scale(var(--reveal-img-shrink));
     opacity: 0;
     transition:
       transform var(--reveal-shrink) $ease-out,

@@ -360,11 +360,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         .then(async () => {
           const label = cmd.resultLabel?.trim();
           if (label) {
+            const isDupla = String(cmd.outerPosition) === String(cmd.innerPosition);
             await this.reveal.play({
               leftImage:  ANIMAL_MAP[String(cmd.outerPosition)]?.image       ?? '',
               rightImage: ANIMAL_MAP[String(cmd.innerPosition)]?.innerImage  ?? '',
               text: label,
-              hype: true,
+              hype: isDupla,
+              collapseTarget: this.wheelContainer.getWheelCenterViewport() ?? undefined,
             });
           }
           this.orchestrator.notifySpinComplete();
@@ -886,11 +888,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       // Animación de resultado antes de mostrar overlay estático
       const revealLabel = backendResult.resultLabel?.trim();
       if (revealLabel) {
+        const isDupla = String(result.outerPosition) === String(result.innerPosition);
         await this.reveal.play({
           leftImage:  ANIMAL_MAP[String(result.outerPosition)]?.image       ?? '',
           rightImage: ANIMAL_MAP[String(result.innerPosition)]?.innerImage  ?? '',
           text: revealLabel,
-          hype: true,
+          hype: isDupla,
+          collapseTarget: this.wheelContainer.getWheelCenterViewport() ?? undefined,
         });
       }
 

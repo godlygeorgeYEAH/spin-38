@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnChanges, SimpleChanges, OnInit, AfterViewInit, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, OnChanges, SimpleChanges, OnInit, AfterViewInit, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Animal, WheelSpinResult, WheelItem } from '../../interfaces/wheel-general.interface';
 import { GameState } from '../../interfaces/game.enums';
@@ -470,6 +470,13 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
         resolve();
       }, this.RESET_DURATION_MS + 100);
     });
+  }
+
+  public getWheelCenterViewport(): { x: number; y: number } | null {
+    const svgEl = this.outerWheel?.nativeElement?.ownerSVGElement;
+    if (!svgEl) return null;
+    const rect = svgEl.getBoundingClientRect();
+    return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
   }
 
   public getRouletteNumber(index: number): string {

@@ -200,6 +200,11 @@ export class RevealOverlayComponent implements OnDestroy {
     host.style.setProperty('--reveal-img-shrink', `${imgShrink}`);
     host.style.setProperty('--reveal-text-shrink', `${textShrink}`);
     host.style.setProperty('--reveal-text-y', `${textY}vh`);
+    const target = cfg.collapseTarget;
+    const offsetX = target ? target.x - window.innerWidth  / 2 : 0;
+    const offsetY = target ? target.y - window.innerHeight / 2 : 0;
+    host.style.setProperty('--reveal-collapse-x', `${offsetX}px`);
+    host.style.setProperty('--reveal-collapse-y', `${offsetY}px`);
   }
 
   /** Detecta el modo hype y, si aplica, construye las ráfagas de texto. */

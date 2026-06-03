@@ -54,6 +54,8 @@ export interface RevealConfig {
   waves?: number;
   /** fuerza la secuencia "hype" (ráfaga + parpadeos + aterrizaje final). */
   hype?: boolean;
+  /** Coordenadas viewport del punto de destino del colapso final (por defecto: centro de pantalla). */
+  collapseTarget?: { x: number; y: number };
 }
 
 @Injectable({ providedIn: 'root' })
