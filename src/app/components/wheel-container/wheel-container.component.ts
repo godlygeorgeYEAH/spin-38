@@ -86,7 +86,8 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private readonly INNER_RING_RATIO           = 0.81;
   private readonly INNER_RING_GAP_RATIO       = 0.190;
   private readonly ANIMAL_POSITION_RATIO      = 0.9;
-  private readonly ANIMAL_IMAGE_SIZE_RATIO    = 0.125;
+  private readonly EXTERNAL_ANIMAL_SIZE_RATIO  = 0.19;
+  private readonly INNER_ANIMAL_SIZE_RATIO     = 0.182;
   private readonly ANIMAL_TEXT_POSITION_RATIO = 0.88;
   public readonly outerAnimalFontSize         = 24;
   public readonly innerAnimalFontSize         = 16;
@@ -106,25 +107,20 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
 
   private readonly ANGLE_OFFSET_FOR_TOP = Math.PI / 2;
 
-  /**
-   * Tamaño calculado de las imágenes de animales (en unidades SVG).
-   * Se calcula como un porcentaje del radio del viewBox para mantener proporciones
-   * consistentes cuando cambie el tamaño de la rueda.
-   */
-  public get animalImageSize(): number {
-    return this.SVG_VIEWBOX_RADIUS * this.ANIMAL_IMAGE_SIZE_RATIO;
+  public get outerAnimalImageSize(): number {
+    return this.SVG_VIEWBOX_RADIUS * this.EXTERNAL_ANIMAL_SIZE_RATIO;
   }
 
-  /**
-   * Offset calculado para centrar las imágenes de animales.
-   * El offset es negativo y equivale a la mitad del tamaño de la imagen,
-   * lo que centra la imagen en las coordenadas calculadas.
-   *
-   * Ejemplo: Si animalImageSize = 50, offset = -25
-   * Esto posiciona la imagen desde -25 hasta +25 en ambos ejes, centrada en (0,0).
-   */
-  public get animalImageOffset(): number {
-    return -this.animalImageSize / 2;
+  public get outerAnimalImageOffset(): number {
+    return -this.outerAnimalImageSize / 2;
+  }
+
+  public get innerAnimalImageSize(): number {
+    return this.innerRingRadius * this.INNER_ANIMAL_SIZE_RATIO;
+  }
+
+  public get innerAnimalImageOffset(): number {
+    return -this.innerAnimalImageSize / 2;
   }
 
   /**
@@ -409,16 +405,11 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   }
 
   private prepareDisplayItems(): void {
-    this.displayItems = this.rouletteSequence.map(pos =>
-      animalMap[pos] || { position: pos, name: pos, emoji: '' }
-    );
-    const toInnerItem = (pos: string) => {
-      const animal = animalMap[pos] || { position: pos, name: pos, emoji: '' };
-      return animal.innerImage ? { ...animal, image: animal.innerImage } : animal;
-    };
+    const lookup = (pos: string) => animalMap[pos] || { position: pos, name: pos, emoji: '' };
+    this.displayItems = this.rouletteSequence.map(lookup);
     this.innerDisplayItems = this.innerAnimals.length > 0
-      ? this.innerAnimals.map(item => toInnerItem(item.position))
-      : this.rouletteSequence.map(pos => toInnerItem(pos));
+      ? this.innerAnimals.map(item => lookup(item.position))
+      : this.rouletteSequence.map(lookup);
   }
 
   public resetToPosition(): Promise<void> {

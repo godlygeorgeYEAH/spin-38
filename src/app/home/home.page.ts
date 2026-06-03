@@ -363,7 +363,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
             const isDupla = String(cmd.outerPosition) === String(cmd.innerPosition);
             await this.reveal.play({
               leftImage:  ANIMAL_MAP[String(cmd.outerPosition)]?.image       ?? '',
-              rightImage: ANIMAL_MAP[String(cmd.innerPosition)]?.innerImage  ?? '',
+              rightImage: ANIMAL_MAP[String(cmd.innerPosition)]?.image       ?? '',
               text: label,
               hype: isDupla,
               collapseTarget: this.wheelContainer.getWheelCenterViewport() ?? undefined,
@@ -895,7 +895,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         const isDupla = String(result.outerPosition) === String(result.innerPosition);
         await this.reveal.play({
           leftImage:  ANIMAL_MAP[String(result.outerPosition)]?.image       ?? '',
-          rightImage: ANIMAL_MAP[String(result.innerPosition)]?.innerImage  ?? '',
+          rightImage: ANIMAL_MAP[String(result.innerPosition)]?.image       ?? '',
           text: revealLabel,
           hype: isDupla,
           collapseTarget: this.wheelContainer.getWheelCenterViewport() ?? undefined,

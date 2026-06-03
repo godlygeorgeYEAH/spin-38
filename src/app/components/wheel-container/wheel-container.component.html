@@ -41,8 +41,8 @@
       <g *ngFor="let item of displayItems; let i = index" [attr.transform]="getAnimalTransform(i)">
         <image *ngIf="item.image"
                [attr.href]="item.image"
-               [attr.x]="animalImageOffset" [attr.y]="animalImageOffset"
-               [attr.width]="animalImageSize" [attr.height]="animalImageSize"
+               [attr.x]="outerAnimalImageOffset" [attr.y]="outerAnimalImageOffset"
+               [attr.width]="outerAnimalImageSize" [attr.height]="outerAnimalImageSize"
                (error)="onImageError($event, item)" />
         <text *ngIf="!item.image" x="0" y="0" class="roulette-animal-outer" [attr.font-size]="outerAnimalFontSize">{{ item.emoji || item.position }}</text>
       </g>
@@ -56,8 +56,8 @@
       <g *ngFor="let item of innerDisplayItems; let i = index" [attr.transform]="getInnerAnimalTransform(i)">
         <image *ngIf="item.image"
                [attr.href]="item.image"
-               [attr.x]="animalImageOffset" [attr.y]="animalImageOffset"
-               [attr.width]="animalImageSize" [attr.height]="animalImageSize"
+               [attr.x]="innerAnimalImageOffset" [attr.y]="innerAnimalImageOffset"
+               [attr.width]="innerAnimalImageSize" [attr.height]="innerAnimalImageSize"
                (error)="onImageError($event, item)" />
         <text *ngIf="!item.image" x="0" y="0" class="roulette-animal-inner" [attr.font-size]="innerAnimalFontSize">{{ item.emoji || item.position }}</text>
       </g>
