@@ -381,9 +381,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         });
     });
 
+    let _portholeSeconds = 0;
+    this.orchestrator.secondsToNextRound$.subscribe(s => { _portholeSeconds = s; });
+
     this.orchestrator.roundState$.subscribe(state => {
       if (state === 'COUNTING_DOWN') {
         this.resultsPanelClass = 'panel-enter';
+        this.wheelContainer?.startPortholeSequence(_portholeSeconds);
       } else if (state === 'SPINNING') {
         this.resultsPanelClass = 'panel-exit';
       }

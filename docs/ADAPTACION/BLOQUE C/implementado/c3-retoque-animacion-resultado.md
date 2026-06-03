@@ -52,6 +52,17 @@ Características comunes:
 - `paint-order: stroke fill` — el outline queda detrás del relleno.
 - Pulso orgánico con easing no lineal y variación de intensidad entre keyframes.
 
+### Estabilidad del slide-in (modo normal)
+
+El `transform` transition y la animación `filter` corriendo simultáneamente sobre el mismo elemento causan un race condition no determinista en la composición de capas GPU: el browser puede recomponer la capa en un frame intermedio, haciendo que el texto aparezca ligeramente desplazado a la derecha antes de asentarse. Solución aplicada en `.reveal-text`:
+
+| Técnica | Propósito |
+|---|---|
+| `will-change: transform` | Promueve el elemento a capa GPU propia desde el inicio; el filter no puede desplazar el transform |
+| `filter` base = keyframe `0%` de `neon-flicker-blue` | Sin cambio de valor al arrancar la animación → sin salto visual |
+| `animation-delay: var(--reveal-enter)` | El flicker no corre durante el slide-in; transform y filter no compiten en GPU simultáneamente |
+| `animation-fill-mode: backwards` | Aplica keyframe `0%` durante el delay, consistente con el filter base |
+
 ## Colapso al centro de la rueda
 
 Al terminar la animación, todos los elementos (imágenes y texto) se desplazan al **centro exacto de la rueda**, independientemente del breakpoint.
@@ -85,7 +96,7 @@ Al terminar la animación, todos los elementos (imágenes y texto) se desplazan 
 |---|---|
 | `src/index.html` | `<link>` preconnect + stylesheet de Titan One |
 | `src/global.scss` | `@keyframes neon-flicker` (ámbar) + `@keyframes neon-flicker-blue` (azul) |
-| `reveal-overlay.component.scss` | Fuente `Titan One`; modo hype: dorado `#FFD700`; modo normal: blanco `#ffffff` con brillo azul y easing sin overshoot `cubic-bezier(0.25, 1, 0.5, 1)`; colapso con `--reveal-collapse-x/y` |
+| `reveal-overlay.component.scss` | Fuente `Titan One`; modo hype: dorado `#FFD700`; modo normal: blanco `#ffffff` con brillo azul, easing sin overshoot `cubic-bezier(0.25, 1, 0.5, 1)`, `will-change: transform`, filter base = keyframe `0%`, `animation-delay` + `fill-mode: backwards`; colapso con `--reveal-collapse-x/y` |
 | `reveal-overlay.component.ts` | `applyVars` inyecta `--reveal-collapse-x/y` calculados desde `collapseTarget` |
 | `reveal.service.ts` | `RevealConfig` añade `collapseTarget?: { x, y }` |
 | `wheel-container.component.ts` | Método público `getWheelCenterViewport()` |

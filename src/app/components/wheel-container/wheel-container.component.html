@@ -73,7 +73,11 @@
   <div class="wheel-center-asset">
     <div class="porthole-stack">
       <img class="porthole-fondo" src="assets/images/rueda/centroruedafondo.png" aria-hidden="true">
-      <app-porthole-water [airColor]="'transparent'"></app-porthole-water>
+      <app-porthole-water
+        #porthole
+        [frameSrc]="'assets/images/rueda/centrorueda.png'"
+        [airColor]="'transparent'"
+      ></app-porthole-water>
     </div>
   </div>
 

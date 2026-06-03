@@ -32,6 +32,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
 
   @ViewChild('outerWheel', { static: true }) outerWheel!: ElementRef<SVGGElement>;
   @ViewChild('innerWheel', { static: true }) innerWheel!: ElementRef<SVGGElement>;
+  @ViewChild('porthole') private porthole!: PortholeWaterComponent;
 
   public spinning = false;
   public waterRingSize = 850;
@@ -470,6 +471,10 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
         resolve();
       }, this.RESET_DURATION_MS + 100);
     });
+  }
+
+  public startPortholeSequence(seconds: number): void {
+    this.porthole?.startSequence(seconds);
   }
 
   public getWheelCenterViewport(): { x: number; y: number } | null {
