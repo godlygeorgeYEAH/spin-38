@@ -25,6 +25,7 @@ let roundId = 1;
 let state = 'idle';
 let secondsRemaining = IDLE_SEC;
 let currentResult = null;  // { outerPosition, innerPosition, resultLabel }
+let spinStartedAt = null;  // ISO timestamp de cuándo comenzó el spinning actual
 const history = [];        // orden cronológico descendente, máx MAX_HISTORY
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -54,6 +55,7 @@ setInterval(() => {
     if (state === 'idle') {
       state = 'spinning';
       secondsRemaining = SPIN_SEC;
+      spinStartedAt = new Date().toISOString();
       const outer = randomPosition();
       const inner = FORCE_MOROCHA ? outer : randomPosition();
       currentResult = {
@@ -66,6 +68,7 @@ setInterval(() => {
     } else if (state === 'spinning') {
       state = 'revealing';
       secondsRemaining = REVEAL_SEC;
+      spinStartedAt = null;
       log(`[ROUND-${roundId}] spinning → revealing`);
 
     } else if (state === 'revealing') {
@@ -89,7 +92,22 @@ setInterval(() => {
 
 // GET /api/round/current
 app.get('/api/round/current', (req, res) => {
-  res.json({ id: roundId, state, secondsRemaining, spinDurationSec: SPIN_SEC });
+  const payload = {
+    id: roundId,
+    state,
+    secondsRemaining,
+    spinDurationSec: SPIN_SEC,
+    revealDurationSec: REVEAL_SEC,
+    idleDurationSec: IDLE_SEC,
+  };
+  if (state === 'spinning' && spinStartedAt) {
+    payload.spinStartedAt = spinStartedAt;
+  }
+  if (state === 'revealing' && currentResult) {
+    payload.outerPosition = currentResult.outerPosition;
+    payload.innerPosition = currentResult.innerPosition;
+  }
+  res.json(payload);
 });
 
 // GET /api/round/:id/result

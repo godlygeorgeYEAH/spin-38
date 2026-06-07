@@ -205,6 +205,8 @@ export class RevealOverlayComponent implements OnDestroy {
     const offsetY = target ? target.y - window.innerHeight / 2 : 0;
     host.style.setProperty('--reveal-collapse-x', `${offsetX}px`);
     host.style.setProperty('--reveal-collapse-y', `${offsetY}px`);
+    host.style.setProperty('--ring-left-color',  cfg.leftThemeColor  ?? '#128DFC');
+    host.style.setProperty('--ring-right-color', cfg.rightThemeColor ?? '#FFE28F');
   }
 
   /** Detecta el modo hype y, si aplica, construye las ráfagas de texto. */

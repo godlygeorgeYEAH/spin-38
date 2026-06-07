@@ -116,6 +116,7 @@ const BACK_H: Harmonic[] = [
         height: 100%;
         pointer-events: none;
         user-select: none;
+        transform: rotate(var(--pw-frame-rotation, 0deg));
       }
     `,
   ],
@@ -205,7 +206,7 @@ const BACK_H: Harmonic[] = [
       </g>
     </svg>
 
-    <img class="pw-frame" [src]="frameSrc" alt="Ojo de buey" draggable="false" />
+    <img class="pw-frame" [src]="frameSrc" alt="Ojo de buey" draggable="false" [style.--pw-frame-rotation]="frameRotation + 'deg'" />
   `,
 })
 export class PortholeWaterComponent implements OnChanges, OnInit {
@@ -229,6 +230,8 @@ export class PortholeWaterComponent implements OnChanges, OnInit {
   @Input() sway = 1.2;
   /** displacement map used for the fisheye lens on the counter */
   @Input() lensMapSrc = 'assets/lens-map.png';
+  /** rotation applied to the frame image only (water and counter are unaffected) */
+  @Input() frameRotation = 0;
 
   // --- Sequence (app-triggered fill + countdown) ---
   /** ms for the water to rise to full / drain back to default */
@@ -306,8 +309,12 @@ export class PortholeWaterComponent implements OnChanges, OnInit {
     if (this.running) return Promise.resolve();
     this.running = true;
     const secs = Math.max(0, Math.round(countdownSeconds));
+    const fillStartMs = Date.now();
     return this.animateLevel(1, this.fillDurationMs)
-      .then(() => this.runCountdown(secs))
+      .then(() => {
+        const elapsed = Math.round((Date.now() - fillStartMs) / 1000);
+        return this.runCountdown(Math.max(0, secs - elapsed));
+      })
       .then(() => this.animateLevel(this.waterLevel, this.drainDurationMs))
       .then(() => {
         this.running = false;

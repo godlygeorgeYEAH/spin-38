@@ -12,6 +12,7 @@ import { JackpotDisplayComponent } from '../components/jackpot-display/jackpot-d
 import { Animal, AnimalBet, WheelItem, WheelSpinResult } from '../interfaces/wheel-general.interface';
 import { ANIMAL_MAP } from '../data/animal-map';
 import { RevealService } from '../components/results-animation/reveal.service';
+import { WHEEL_PALETTES, ACTIVE_PALETTE } from '../components/wheel-container/wheel-palettes';
 import { GameSettings } from '../interfaces/game-settings.interface';
 import { GameState } from '../interfaces/game.enums';
 import { Transaction, TransactionType } from '../interfaces/transaction.interface';
@@ -358,20 +359,26 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.cdr.markForCheck();
       this.wheelContainer.spinToResult(cmd)
         .then(async () => {
+          // Notificar al orquestador en cuanto para la rueda, antes del overlay,
+          // para que el safety guard no se adelante y no haya doble llamada.
+          this.orchestrator.notifySpinComplete();
+          this.gameState = GameState.RESULT;
+          this.cdr.markForCheck();
+
           const label = cmd.resultLabel?.trim();
           if (label) {
             const isDupla = String(cmd.outerPosition) === String(cmd.innerPosition);
+            const _palette = WHEEL_PALETTES[ACTIVE_PALETTE];
             await this.reveal.play({
               leftImage:  ANIMAL_MAP[String(cmd.outerPosition)]?.image       ?? '',
               rightImage: ANIMAL_MAP[String(cmd.innerPosition)]?.image       ?? '',
               text: label,
               hype: isDupla,
               collapseTarget: this.wheelContainer.getWheelCenterViewport() ?? undefined,
+              leftThemeColor:  _palette.outerWheelColors[0].stops[0].color,
+              rightThemeColor: _palette.innerWheelColors[0].stops[0].color,
             });
           }
-          this.orchestrator.notifySpinComplete();
-          this.gameState = GameState.RESULT;
-          this.cdr.markForCheck();
         })
         .catch(err => {
           console.error('[HomePage] spinToResult falló:', err);
@@ -893,12 +900,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       const revealLabel = backendResult.resultLabel?.trim();
       if (revealLabel) {
         const isDupla = String(result.outerPosition) === String(result.innerPosition);
+        const _palette = WHEEL_PALETTES[ACTIVE_PALETTE];
         await this.reveal.play({
           leftImage:  ANIMAL_MAP[String(result.outerPosition)]?.image       ?? '',
           rightImage: ANIMAL_MAP[String(result.innerPosition)]?.image       ?? '',
           text: revealLabel,
           hype: isDupla,
           collapseTarget: this.wheelContainer.getWheelCenterViewport() ?? undefined,
+          leftThemeColor:  _palette.outerWheelColors[0].stops[0].color,
+          rightThemeColor: _palette.innerWheelColors[0].stops[0].color,
         });
       }
 

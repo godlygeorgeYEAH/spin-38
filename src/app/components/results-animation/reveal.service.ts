@@ -56,6 +56,10 @@ export interface RevealConfig {
   hype?: boolean;
   /** Coordenadas viewport del punto de destino del colapso final (por defecto: centro de pantalla). */
   collapseTarget?: { x: number; y: number };
+  /** Color primario de la rueda externa (anillo izquierdo). */
+  leftThemeColor?: string;
+  /** Color primario de la rueda interna (anillo derecho). */
+  rightThemeColor?: string;
 }
 
 @Injectable({ providedIn: 'root' })

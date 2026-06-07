@@ -46,4 +46,4 @@ export const WHEEL_PALETTES = {
 export type PaletteName = keyof typeof WHEEL_PALETTES;
 
 /** Paleta activa. Cambiar este valor para alternar entre paletas. */
-export const ACTIVE_PALETTE: PaletteName = 'Caribe';
+export const ACTIVE_PALETTE: PaletteName = 'Selva';

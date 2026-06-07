@@ -210,17 +210,17 @@ $ease-out: cubic-bezier(0.55, 0, 0.45, 1); // colapso suave
     0 10px 30px oklch(0 0 0 / 0.45);
 
   &.ring-left {
-    background: #128DFC;
+    background: var(--ring-left-color);
     box-shadow:
       0 0 0 3px oklch(0.98 0.01 250 / 0.55),
-      0 0 28px 4px #1A0B79,
+      0 0 28px 4px var(--ring-left-color),
       0 10px 30px oklch(0 0 0 / 0.45);
   }
   &.ring-right {
-    background: #FFE28F;
+    background: var(--ring-right-color);
     box-shadow:
       0 0 0 3px oklch(0.98 0.01 250 / 0.55),
-      0 0 28px 4px #FFE28F,
+      0 0 28px 4px var(--ring-right-color),
       0 10px 30px oklch(0 0 0 / 0.45);
   }
 }
