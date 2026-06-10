@@ -10,11 +10,11 @@ export interface RoundCurrentResponse {
   state: 'idle' | 'spinning' | 'revealing';
   secondsRemaining: number;
   spinDurationSec?: number;
-  spinStartedAt?: string;       // R1: timestamp ISO de inicio del spin actual
-  revealDurationSec?: number;   // R4: duración del período revealing
-  idleDurationSec?: number;     // R6: duración del período idle
-  outerPosition?: number | string; // R5: posición durante revealing
-  innerPosition?: number | string; // R5: posición durante revealing
+  spinStartedAt?: string;       // timestamp ISO de inicio del spin actual
+  revealDurationSec?: number;   // duración del período revealing
+  idleDurationSec?: number;     // duración del período idle
+  outerPosition?: number | string; // posición durante revealing
+  innerPosition?: number | string; // posición durante revealing
 }
 
 export interface RoundResultResponse {
@@ -61,34 +61,45 @@ export class RoundOrchestratorService implements OnDestroy {
   public resetCommand$ = this.resetCommandSubject.asObservable();
 
   private readonly REVEAL_DURATION_SEC = 15;
-  private readonly RESET_LEAD_SEC = 10; // segundos antes del fin de revealing para disparar el reset
+  private readonly RESET_LEAD_SEC = 10;
   private lastKnownRevealDurationSec = this.REVEAL_DURATION_SEC;
 
   private pollTimeout: any = null;
   private revealTimeout: any = null;
   private revealTickInterval: any = null;
+  private spinGuardTimeout: any = null;
   private lastHandledRoundId: number | null = null;
   private lastSpinCommand: SpinCommand | null = null;
   private lastSpinStartTime: string | null = null;
   private lastSpinDurationSec = 30;
   private lastKnownIdleDurationSec = 0;
   private running = false;
+  private onVisibilityChange = () => this.handleVisibilityChange();
 
   constructor(private http: HttpClient) {}
 
   public start(): void {
     if (this.running) return;
     this.running = true;
+    document.addEventListener('visibilitychange', this.onVisibilityChange);
     this.fetchHistory();
     this.poll();
   }
 
   public stop(): void {
     this.running = false;
+    document.removeEventListener('visibilitychange', this.onVisibilityChange);
     if (this.pollTimeout) clearTimeout(this.pollTimeout);
     if (this.revealTimeout) clearTimeout(this.revealTimeout);
     if (this.revealTickInterval) clearInterval(this.revealTickInterval);
     if (this.spinGuardTimeout) clearTimeout(this.spinGuardTimeout);
+  }
+
+  private handleVisibilityChange(): void {
+    if (document.hidden || !this.running) return;
+    console.log('[Orchestrator] Pestaña visible — resincronizando con servidor');
+    if (this.pollTimeout) clearTimeout(this.pollTimeout);
+    this.poll();
   }
 
   public notifySpinComplete(): void {
@@ -156,13 +167,12 @@ export class RoundOrchestratorService implements OnDestroy {
     const currentState = this.stateSubject.value;
 
     if (round.spinDurationSec) this.lastSpinDurationSec = round.spinDurationSec;
-    if (round.revealDurationSec) this.lastKnownRevealDurationSec = round.revealDurationSec;  // R4
-    if (round.idleDurationSec) this.lastKnownIdleDurationSec = round.idleDurationSec;        // R6
+    if (round.revealDurationSec) this.lastKnownRevealDurationSec = round.revealDurationSec;
+    if (round.idleDurationSec) this.lastKnownIdleDurationSec = round.idleDurationSec;
 
     if (round.state === 'spinning' && round.id !== this.lastHandledRoundId) {
       this.lastHandledRoundId = round.id;
 
-      // R1: calcular tiempo de spin restante si el servidor informa cuándo empezó
       let remainingDurationSec: number | undefined;
       if (round.spinStartedAt) {
         const elapsedSec = (Date.now() - new Date(round.spinStartedAt).getTime()) / 1000;
@@ -173,13 +183,23 @@ export class RoundOrchestratorService implements OnDestroy {
       return;
     }
 
-    // Durante SPINNING o REVEALING no interferir — la cuenta regresiva local se encarga
+    // Si el servidor ya salió de spinning/revealing pero el cliente sigue atrasado,
+    // forzar resync: limpiar timers locales y dejar que la lógica de idle/revealing tome el control
     if (currentState === 'SPINNING' || currentState === 'REVEALING') {
-      return;
+      if (round.state === 'idle' || round.state === 'revealing') {
+        console.log(`[Orchestrator] Servidor en '${round.state}' pero cliente en '${currentState}' — forzando resync`);
+        if (this.revealTimeout) { clearTimeout(this.revealTimeout); this.revealTimeout = null; }
+        if (this.revealTickInterval) { clearInterval(this.revealTickInterval); this.revealTickInterval = null; }
+        if (this.spinGuardTimeout) { clearTimeout(this.spinGuardTimeout); this.spinGuardTimeout = null; }
+        // fall through para que el bloque idle/revealing actualice el estado
+      } else {
+        // Servidor también en spinning (misma ronda ya registrada) — la cuenta regresiva local se encarga
+        return;
+      }
     }
 
     if (round.state === 'idle' || round.state === 'revealing') {
-      // R6 fallback: inferir idleDurationSec si el servidor no lo envía
+      // Inferir idleDurationSec si el servidor no lo envía
       if (!round.idleDurationSec && round.state === 'idle' && round.secondsRemaining > this.lastKnownIdleDurationSec * 0.9) {
         this.lastKnownIdleDurationSec = round.secondsRemaining;
       }
@@ -190,8 +210,6 @@ export class RoundOrchestratorService implements OnDestroy {
       this.scheduleNextPoll(interval);
     }
   }
-
-  private spinGuardTimeout: any = null;
 
   private triggerSpin(roundId: number, remainingDurationSec?: number): void {
     this.http.get<RoundResultResponse>(`${this.baseUrl}/round/${roundId}/result`).subscribe({
@@ -209,7 +227,7 @@ export class RoundOrchestratorService implements OnDestroy {
         };
         this.lastSpinCommand = cmd;
 
-        // R1: si el servidor ya terminó de girar, saltar directo a REVEALING sin animar
+        // Si el servidor ya terminó de girar, saltar directo a REVEALING sin animar
         if (effectiveDurationSec <= 0) {
           this.transitionTo('SPINNING');
           this.notifySpinComplete();
