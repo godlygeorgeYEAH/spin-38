@@ -1,6 +1,6 @@
 # Fase 7 — Concepto visual y assets finales
 
-**Dependencias:** Concepto visual aprobado por Luis (cliente). Assets de los 38 animales venezolanos entregados por el diseñador. Fase 6 completada o en paralelo avanzado.
+**Dependencias:** Concepto visual aprobado por Andres (cliente). Assets de los 38 animales venezolanos entregados por el diseñador. Fase 6 completada o en paralelo avanzado.
 **Entregable:** Aplicación visualmente terminada con los 38 animales del animalito venezolano en los segmentos y el estilo "acero aniquilado" aplicado en toda la interfaz.
 
 ## Objetivo
@@ -31,7 +31,7 @@ Vestir el producto funcionalmente completo con la identidad visual definitiva. E
 - La paleta "acero aniquilado" está aplicada en toda la interfaz: ningún gradiente rojo ni dorado de Spin Zodiac sobrevive en producción.
 - `theme/variables.scss` contiene las variables del concepto nuevo, no las del proyecto original.
 - El borde decorativo y los elementos gráficos de la rueda corresponden a los assets entregados por el diseñador.
-- El concepto visual aplicado coincide con la propuesta aprobada por Luis.
+- El concepto visual aplicado coincide con la propuesta aprobada por Andres.
 - La sustitución de assets no introduce regresiones funcionales: el motor de giro, el countdown, el historial y el jackpot placeholder funcionan igual que antes.
 - La aplicación compila sin errores y no muestra warnings de assets faltantes en consola.
 

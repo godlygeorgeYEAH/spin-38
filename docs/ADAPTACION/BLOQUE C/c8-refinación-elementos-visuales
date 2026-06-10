@@ -1,0 +1,11 @@
+TODO:
+
+* Confirmar animales dentro de la rueda que necesitan un rework
+    - La culebra y la iguana se parecen mucho
+    - El delfín y la ballena se parecen mucho.
+
+* Modificar el circulo de fondo oscuro del animal resultante para que muestre
+el color del tema escogido.
+
+* Nombre del animal resultante debajo de la imagen del animal resultante
+en la animación de resultado.

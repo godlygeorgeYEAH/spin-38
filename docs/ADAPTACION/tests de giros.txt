@@ -1,0 +1,69 @@
+Config: 70s, sin forzar la morocha.
+
+Inicio de conversación server app:
+
+1. Se muestra el temporizador de inicio, animación de agua subiendo.
+2. La rueda gira al finalizar el temporizador, animación de agua bajando.
+3. Termina el giro, se muestra la animación de resultado.
+4. Antes de que la animación de resultado acabe, la rueda se resetea a la posición 0, 00.
+5. Comienza el contador inmediatamente después se cierra la animación de resultado, con el animación del agua subiendo y bajando.
+
+
+Segundo giro:
+
+1. La rueda gira
+2. Al finalizar, se muestra el resultado. Se reinicia la rueda.
+3. Al terminar la animación de resultado, se reproduce el contador inmediatamente.
+
+No hubo problemas en estas pruebas.
+
+Tercer giro:
+
+Se hizo CTRL - R justamente al reproducirse la animación de resultado.
+
+Esto causo que el contador mostrase 5 segundos restantes cuando faltaban aproximadamente 25. Al terminarse los 5 segundos, el contador se reinició a 20.
+
+Giró la rueda al terminar el conteo.
+
+Se mostraron los resultados, se reinicio la rueda.
+
+Al terminar la animación de resultado, se reprodujo el contador, esta vez con el tiempo correcto.
+
+Susbsecuentemente la rueda funcionó de manera correcta.
+
+Cuarto giro:
+
+Se hizo CTRL + R justamente cuando comenzó el giro.
+
+Al terminar de cargar la página, el giro continuó. No está claro si se reinició o continuó desde el punto que se hizo CTRL + R.
+
+Se reprodujo la animación de resultados.
+
+Se reinició la posición de la rueda.
+
+Al terminar, se reprodujo el contador de manera correcta.
+
+Quinto giro:
+
+Se hizo CTRL + R faltando poco para terminar el giro.
+
+Se reprodujo la animación de mostrar resultado.
+
+Se reinició la posición de la rueda.
+
+Se reprodujo el contador con el tiempo correcto.
+
+No hubo problemas con sincronía a pesar de que la duración del giro se reinició. Continuó funcionando normalmente la rueda.
+
+Sexto giro:
+
+Se hizo  CTRL + R tres veces, una vez faltando poco para que terminase el giro y las otras dos veces inmediatamente después.
+
+Se reprodujo la animación d mostrar resultado.
+
+Se mostró el contador en el medio de la rueda, con la misma cantidad de tiempo.
+
+Séptimo giro:
+
+Se hizo CTRL + R una sola vez faltando 2 o 3 segundos para que terminase el giro. Se hizo esto para hacer aparente si la duración del giro estaba siendo reiniciada despúes de un CTRL + R. Comprobamos que este no es el caso. 
+
