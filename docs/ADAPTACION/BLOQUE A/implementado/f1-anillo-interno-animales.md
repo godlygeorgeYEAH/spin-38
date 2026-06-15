@@ -1,4 +1,4 @@
-# F1 — Anillo interno con array de animales
+# F1 — Anillo interno con array de animales.
 
 ## Requisito
 El anillo interno debe dejar de mostrar multiplicadores numéricos y pasar a aceptar un segundo array de animales igual al exterior, para representar los 38 animales del animalito venezolano en ambos anillos.
