@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { ApiService } from './api.service';
 
 export type RoundState = 'IDLE' | 'COUNTING_DOWN' | 'SPINNING' | 'REVEALING';
 
@@ -52,6 +53,7 @@ export class RoundOrchestratorService implements OnDestroy {
   private spinCompleteSubject = new Subject<void>();
   private revealCompleteSubject = new Subject<void>();
   private resetCommandSubject = new Subject<void>();
+  private connectionStatusSubject = new BehaviorSubject<'online' | 'offline'>('offline');
 
   public roundState$ = this.stateSubject.asObservable();
   public secondsToNextRound$ = this.secondsSubject.asObservable();
@@ -59,6 +61,7 @@ export class RoundOrchestratorService implements OnDestroy {
   public spinCommand$ = this.spinCommandSubject.asObservable();
   public revealComplete$ = this.revealCompleteSubject.asObservable();
   public resetCommand$ = this.resetCommandSubject.asObservable();
+  public connectionStatus$ = this.connectionStatusSubject.asObservable();
 
   private readonly REVEAL_DURATION_SEC = 15;
   private readonly RESET_LEAD_SEC = 10;
@@ -76,7 +79,7 @@ export class RoundOrchestratorService implements OnDestroy {
   private running = false;
   private onVisibilityChange = () => this.handleVisibilityChange();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private apiService: ApiService) {}
 
   public start(): void {
     if (this.running) return;
@@ -155,12 +158,22 @@ export class RoundOrchestratorService implements OnDestroy {
     if (!this.running) return;
 
     this.http.get<RoundCurrentResponse>(`${this.baseUrl}/round/current`).subscribe({
-      next: (round) => this.handleRoundData(round),
+      next: (round) => {
+        this.setConnectionStatus('online');
+        this.handleRoundData(round);
+      },
       error: (err) => {
         console.error('[Orchestrator] Error al consultar /round/current:', err);
+        this.setConnectionStatus('offline');
         this.scheduleNextPoll(10000);
       }
     });
+  }
+
+  private setConnectionStatus(status: 'online' | 'offline'): void {
+    if (this.connectionStatusSubject.value === status) return;
+    this.connectionStatusSubject.next(status);
+    this.apiService.setConnectionStatus(status);
   }
 
   private handleRoundData(round: RoundCurrentResponse): void {

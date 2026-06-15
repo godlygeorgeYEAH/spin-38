@@ -45,7 +45,21 @@ export class ApiService {
   /** Observable para suscribirse a cambios en el estado de autenticación */
   public authStatusObservable = this.authStatus$.asObservable();
 
+  private connectionStatusSubject = new BehaviorSubject<'online' | 'offline'>('offline');
+  public connectionStatus$ = this.connectionStatusSubject.asObservable();
+
   constructor(private http: HttpClient) {}
+
+  /** Alimentado por RoundOrchestratorService según resultados de polling */
+  public setConnectionStatus(status: 'online' | 'offline'): void {
+    this.connectionStatusSubject.next(status);
+  }
+
+  /** No-op — ApiService no mantiene ciclo de polling propio */
+  public start(): void {}
+
+  /** No-op — ApiService no mantiene ciclo de polling propio */
+  public stop(): void {}
 
   /**
    * Inicializa el servicio con los parámetros GET capturados al inicio
