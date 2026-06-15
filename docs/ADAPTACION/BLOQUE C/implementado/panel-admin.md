@@ -1,0 +1,192 @@
+# Panel Admin — Comandos de Consola
+
+## Descripción
+
+Sistema de administración accesible desde la consola del navegador (`F12 → Console`).
+No tiene interfaz visual: el operador escribe comandos directamente en la consola.
+
+Protegido por autenticación SHA256 + salt con sesión de 8 horas en `sessionStorage`.
+
+---
+
+## Acceso
+
+1. Abrir la aplicación en el navegador
+2. Abrir DevTools (`F12`) → pestaña **Console**
+3. Ejecutar `adminLogin("admin", "ruleta2025")`
+4. Al hacer login exitoso, se imprime el listado completo de comandos disponibles
+
+---
+
+## Referencia de comandos
+
+### Autenticación
+
+| Comando | Descripción |
+|---|---|
+| `adminLogin("usuario", "contraseña")` | Iniciar sesión |
+| `adminLogout()` | Cerrar sesión |
+| `adminStatus()` | Ver estado y tiempo restante de sesión |
+| `adminChangePassword("actual", "nueva")` | Cambiar contraseña (mínimo 8 caracteres) |
+| `adminResetPassword()` | Resetear contraseña a `ruleta2025` (requiere sesión activa) |
+
+**Credenciales por defecto:** `admin` / `ruleta2025`
+
+---
+
+### Fichas
+
+| Comando | Descripción |
+|---|---|
+| `adminGetCoinValues()` | Ver valores actuales de las 6 fichas |
+| `adminSetCoinValues([v1, v2, v3, v4, v5, v6])` | Establecer los 6 valores (positivos, sin duplicados) |
+| `adminResetCoinValues()` | Resetear a `[1, 5, 10, 30, 50, 1000]` |
+
+```javascript
+adminSetCoinValues([1, 10, 50, 100, 500, 2000])
+```
+
+---
+
+### Balance
+
+| Comando | Descripción |
+|---|---|
+| `adminGetBalance()` | Ver balance actual del jugador |
+| `adminSetBalance(monto)` | Establecer un balance exacto |
+| `adminAddBalance(monto)` | Sumar o restar balance (negativo para restar) |
+| `adminResetBalance()` | Resetear balance a `$10000` |
+
+```javascript
+adminSetBalance(50000)
+adminAddBalance(-500)   // resta $500
+```
+
+---
+
+### Historial de transacciones
+
+| Comando | Descripción |
+|---|---|
+| `adminGetTransactions()` | Ver todas las transacciones en tabla |
+| `adminGetTransactions(20)` | Ver las últimas N transacciones |
+| `adminClearTransactions()` | Limpiar historial |
+
+---
+
+### Configuración de ruedas
+
+| Comando | Descripción |
+|---|---|
+| `adminGetWheelDurations()` | Ver duración actual de ambas ruedas |
+| `adminSetOuterWheelDuration(ms)` | Duración rueda externa (1000–30000 ms) |
+| `adminSetInnerWheelDuration(ms)` | Duración rueda interna (1000–30000 ms) |
+| `adminResetWheelDurations()` | Resetear (externa: 10000 ms, interna: 12000 ms) |
+
+La rueda interna debe ser `>=` a la externa; si es menor, el sistema advierte pero acepta el valor.
+
+```javascript
+adminSetOuterWheelDuration(5000)
+adminSetInnerWheelDuration(6000)
+```
+
+---
+
+### Rendimiento gráfico
+
+| Comando | Descripción |
+|---|---|
+| `adminGetPerformanceProfile()` | Ver tier y parámetros de rendimiento actuales |
+| `adminSetPerformanceTier("high" \| "medium" \| "low")` | Cambiar tier (requiere recarga de página) |
+
+---
+
+### Control de ronda
+
+| Comando | Descripción |
+|---|---|
+| `adminSpinManual()` | Giro local con posiciones aleatorias |
+| `adminSpinManual("17", "3")` | Giro local con posiciones específicas |
+| `adminPingServer()` | Probar conexión: latencia y estado HTTP del servidor |
+
+#### `adminSpinManual(outerPosition?, innerPosition?)`
+
+Dispara la animación de giro sin pasar por el servidor ni registrar apuesta.
+
+- `outerPosition`: posición de la rueda externa (string). Si se omite, se elige al azar del mapa de segmentos (`animalsForWheel`).
+- `innerPosition`: posición de la rueda interna (string). Si se omite, se elige al azar de los valores de multiplicadores.
+- Usa las duraciones de giro configuradas en ese momento (`spinDuration` / `innerWheelSpinDuration`).
+- El polling al servidor se suspende durante el giro y se reactiva automáticamente al terminar el reveal.
+- No puede ejecutarse si el sistema está en estado `SPINNING` o `REVEALING`.
+
+```javascript
+adminSpinManual()           // posiciones aleatorias
+adminSpinManual("7", "5")   // outer=7, inner=5
+```
+
+#### `adminPingServer()`
+
+Realiza una llamada a `GET /api/health` y reporta:
+- Endpoint consultado
+- Latencia en milisegundos
+- Código HTTP de respuesta
+- Estado de disponibilidad (`✅` / `❌`)
+
+```
+📡 PING SERVIDOR
+🔗 Endpoint: http://localhost:3000/api/health
+⏱️  Latencia: 12ms
+📊 Estado HTTP: 200
+✅ Servidor disponible
+```
+
+---
+
+## Flujo típico de una sesión
+
+```javascript
+// 1. Login
+adminLogin("admin", "ruleta2025")
+
+// 2. Verificar estado
+adminStatus()
+
+// 3. Probar servidor
+adminPingServer()
+
+// 4. Ajustar balance para pruebas
+adminSetBalance(100000)
+
+// 5. Hacer un giro de prueba
+adminSpinManual()
+
+// 6. Ver transacciones generadas
+adminGetTransactions()
+
+// 7. Cerrar sesión
+adminLogout()
+```
+
+---
+
+## Seguridad
+
+- Contraseña almacenada como `SHA256(password + salt)` — nunca en texto plano.
+- Sesión en `sessionStorage`: se destruye al cerrar la pestaña o el navegador.
+- Duración máxima de sesión: 8 horas; cada operación verifica la expiración.
+- Los logs de debug del juego solo son visibles cuando hay sesión activa.
+
+---
+
+## Archivos relevantes
+
+| Archivo | Rol |
+|---|---|
+| `src/app/services/admin-auth.service.ts` | Autenticación, sesión, cambio de contraseña |
+| `src/app/services/api.service.ts` | Método `ping()` usado por `adminPingServer` |
+| `src/app/services/round-orchestrator.service.ts` | Método `triggerManualSpin()` usado por `adminSpinManual` |
+| `src/app/home/home.page.ts` | Exposición de todos los comandos en `window` (`setupAdminCommands`) |
+
+## Estado
+
+Implementado
