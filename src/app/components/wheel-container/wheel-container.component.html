@@ -13,7 +13,7 @@
   <div class="pointers-container"
        [style.--pointer-container-width]="pointerContainerWidth"
        [style.--pointer-container-height]="pointerContainerHeight">
-    <img src="assets/images/rueda/puntero1.png" alt="Puntero" class="pointer-image" [class.bounce]="pointerBounce">
+    <img #pointerImage src="assets/images/rueda/puntero1.png" alt="Puntero" class="pointer-image">
   </div>
   <svg class="wheel" [attr.viewBox]="viewBoxSize">
     <defs>

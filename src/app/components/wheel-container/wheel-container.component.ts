@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, ViewChild, OnChanges, SimpleChanges, OnInit, AfterViewInit, NgZone, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, OnChanges, SimpleChanges, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Animal, WheelSpinResult, WheelItem } from '../../interfaces/wheel-general.interface';
 import { GameState } from '../../interfaces/game.enums';
@@ -33,6 +33,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   @ViewChild('outerWheel', { static: true }) outerWheel!: ElementRef<SVGGElement>;
   @ViewChild('innerWheel', { static: true }) innerWheel!: ElementRef<SVGGElement>;
   @ViewChild('porthole') private porthole!: PortholeWaterComponent;
+  @ViewChild('pointerImage') private pointerImageEl?: ElementRef<HTMLImageElement>;
 
   public spinning = false;
   public waterRingSize = 850;
@@ -164,6 +165,8 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   // Variables para detección de cruce de segmentos y audio
   private lastSegmentIndex: number = -1;
   private animationFrameId: number | null = null;
+  private lastBounceTime: number = 0;
+  private readonly BOUNCE_THROTTLE_MS = 80;
 
   // Sistema optimizado de monitoreo basado en tiempo (sin getComputedStyle)
   private spinStartTime: number = 0;
@@ -175,7 +178,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   public isSafari: boolean = false; // Detectar Safari para desactivar animación problemática
 
   constructor(
-    private zone: NgZone,
     private audioService: AudioService,
     private cdr: ChangeDetectorRef,
     private performanceDetector: PerformanceDetectorService
@@ -660,23 +662,35 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private checkSegmentCrossing(currentAngle: number): void {
     const currentSegment = this.getCurrentSegmentIndex(currentAngle);
 
-    // Si cambiamos de segmento, reproducir sonido y animar puntero
     if (this.lastSegmentIndex !== -1 && currentSegment !== this.lastSegmentIndex) {
       this.audioService.playClick();
-
-      // Activar animación del puntero
-      this.zone.run(() => {
-        this.pointerBounce = true;
-        this.cdr.markForCheck();
-        // Desactivar después de la duración de la animación (150ms)
-        setTimeout(() => {
-          this.pointerBounce = false;
-          this.cdr.markForCheck();
-        }, 150);
-      });
+      this.triggerPointerBounce();
     }
 
     this.lastSegmentIndex = currentSegment;
+  }
+
+  /**
+   * Anima el puntero usando WAAPI para que el rebote sea visible durante todo
+   * el giro, incluyendo la fase rápida (ease-out). El throttle evita que
+   * animaciones solapadas en ráfagas rápidas sean imperceptibles.
+   */
+  private triggerPointerBounce(): void {
+    const now = performance.now();
+    if (now - this.lastBounceTime < this.BOUNCE_THROTTLE_MS) return;
+    this.lastBounceTime = now;
+
+    const el = this.pointerImageEl?.nativeElement;
+    if (!el) return;
+
+    el.animate(
+      [
+        { transform: 'translateX(-50%) rotate(0deg)', offset: 0 },
+        { transform: 'translateX(-50%) rotate(-15deg)', offset: 0.4 },
+        { transform: 'translateX(-50%) rotate(0deg)', offset: 1 },
+      ],
+      { duration: 150, easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)', fill: 'none' }
+    );
   }
 
   /**
