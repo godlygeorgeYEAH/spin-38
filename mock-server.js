@@ -146,6 +146,11 @@ app.get('/api/history', (req, res) => {
   res.json(history.slice(0, limit));
 });
 
+// GET /api/health
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', uptime: process.uptime() });
+});
+
 // ── Arranque ─────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`Mock server escuchando en http://localhost:${PORT}`);
