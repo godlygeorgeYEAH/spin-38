@@ -108,6 +108,7 @@ adminSetInnerWheelDuration(6000)
 | `adminSpinManual()` | Giro local con posiciones aleatorias |
 | `adminSpinManual("17", "3")` | Giro local con posiciones específicas |
 | `adminPingServer()` | Probar conexión: latencia y estado HTTP del servidor |
+| `adminConnectionStatus()` | Observar `connectionStatus$` en tiempo real |
 
 #### `adminSpinManual(outerPosition?, innerPosition?)`
 
@@ -141,6 +142,23 @@ Realiza una llamada a `GET /api/health` y reporta:
 ```
 
 > El mock server expone `GET /api/health` que devuelve `{ status: "ok", uptime: <segundos> }`.
+
+#### `adminConnectionStatus()`
+
+Se suscribe a `connectionStatus$` del orquestador y loguea cada transición en tiempo real:
+
+```
+✅ connectionStatus$: online
+❌ connectionStatus$: offline
+```
+
+Retorna la suscripción RxJS, por lo que se puede detener:
+
+```javascript
+const s = adminConnectionStatus();
+// ... observar cambios ...
+s.unsubscribe();  // dejar de observar
+```
 
 ---
 

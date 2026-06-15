@@ -1669,6 +1669,24 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       });
     };
 
+    // Estado de conexión con el servidor
+    (window as any).adminConnectionStatus = () => {
+      if (!this.adminAuth.isAuthenticated()) {
+        console.log('❌ Debes estar autenticado\n💡 Usa: adminLogin("admin", "contraseña")');
+        return;
+      }
+      console.log('%c📡 Observando connectionStatus$ — los cambios se imprimirán aquí', 'color: #6b7280; font-size: 11px;');
+      const sub = this.orchestrator.connectionStatus$.subscribe(status => {
+        if (status === 'online') {
+          console.log('%c✅ connectionStatus$: online', 'color: #10b981; font-weight: bold;');
+        } else {
+          console.log('%c❌ connectionStatus$: offline', 'color: #ef4444; font-weight: bold;');
+        }
+      });
+      console.log('💡 Guarda el retorno para detener: const s = adminConnectionStatus(); s.unsubscribe()');
+      return sub;
+    };
+
     (window as any).adminSetPerformanceTier = (tier: 'high' | 'medium' | 'low') => {
       if (!this.adminAuth.isAuthenticated()) {
         console.log('❌ Debes estar autenticado para cambiar el tier de rendimiento\n💡 Usa: adminLogin("admin", "contraseña")');
@@ -1724,6 +1742,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     console.log('%c\n🎮 CONTROL DE RONDA', 'color: #10b981; font-weight: bold;');
     console.log('%c• adminSpinManual(outerPos?, innerPos?)', 'color: #3b82f6;', '- Giro manual local (posiciones opcionales como strings, ej. "17", "3")');
     console.log('%c• adminPingServer()', 'color: #3b82f6;', '- Probar conexión: latencia y estado HTTP del servidor');
+    console.log('%c• adminConnectionStatus()', 'color: #3b82f6;', '- Observar connectionStatus$ en tiempo real (retorna suscripción)');
     console.groupEnd();
   }
 
