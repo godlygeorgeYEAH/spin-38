@@ -174,10 +174,12 @@ $ease-out: cubic-bezier(0.55, 0, 0.45, 1); // colapso suave
   &.left.enter {
     transform: translate(-50%, -50%) translateX(-#{$rest}) scale(1);
     opacity: 1;
+    .char-ring { animation: ring-glow-pulse 4.2s cubic-bezier(0.37, 0, 0.63, 1) infinite; }
   }
   &.right.enter {
     transform: translate(-50%, -50%) translateX(#{$rest}) scale(1);
     opacity: 1;
+    .char-ring { animation: ring-glow-pulse 4.2s cubic-bezier(0.37, 0, 0.63, 1) infinite 600ms; }
   }
 
   // colapso: ambas convergen al centro de la rueda y se encogen
@@ -210,18 +212,22 @@ $ease-out: cubic-bezier(0.55, 0, 0.45, 1); // colapso suave
     0 10px 30px oklch(0 0 0 / 0.45);
 
   &.ring-left {
+    --ring-glow: var(--ring-left-color);
     background: var(--ring-left-color);
     box-shadow:
       0 0 0 3px oklch(0.98 0.01 250 / 0.55),
       0 0 28px 4px var(--ring-left-color),
       0 10px 30px oklch(0 0 0 / 0.45);
+    .char-fill { background: var(--ring-left-color); }
   }
   &.ring-right {
+    --ring-glow: var(--ring-right-color);
     background: var(--ring-right-color);
     box-shadow:
       0 0 0 3px oklch(0.98 0.01 250 / 0.55),
       0 0 28px 4px var(--ring-right-color),
       0 10px 30px oklch(0 0 0 / 0.45);
+    .char-fill { background: var(--ring-right-color); }
   }
 }
 .char-fill {
@@ -237,4 +243,18 @@ $ease-out: cubic-bezier(0.55, 0, 0.45, 1); // colapso suave
     object-fit: cover;
     display: block;
   }
+}
+
+.char-name {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  font-size: clamp(1rem, 3vmin, 1.4rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow:
+    0 0 8px oklch(0 0 0 / 0.8),
+    0 2px 4px oklch(0 0 0 / 0.6);
 }

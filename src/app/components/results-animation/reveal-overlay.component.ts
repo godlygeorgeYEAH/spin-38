@@ -132,6 +132,7 @@ interface HypeWord {
               <img [src]="config.leftImage" [alt]="''" />
             </div>
           </div>
+          <span class="char-name" *ngIf="config.leftName">{{ config.leftName }}</span>
         </div>
 
         <!-- ===== Imagen derecha ===== -->
@@ -146,6 +147,7 @@ interface HypeWord {
               <img [src]="config.rightImage" [alt]="''" />
             </div>
           </div>
+          <span class="char-name" *ngIf="config.rightName">{{ config.rightName }}</span>
         </div>
       </div>
     </div>

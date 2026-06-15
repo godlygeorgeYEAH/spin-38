@@ -60,6 +60,10 @@ export interface RevealConfig {
   leftThemeColor?: string;
   /** Color primario de la rueda interna (anillo derecho). */
   rightThemeColor?: string;
+  /** Nombre del animal de la rueda exterior (izquierda). */
+  leftName?: string;
+  /** Nombre del animal de la rueda interior (derecha). */
+  rightName?: string;
 }
 
 @Injectable({ providedIn: 'root' })

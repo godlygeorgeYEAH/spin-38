@@ -372,6 +372,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
             await this.reveal.play({
               leftImage:  ANIMAL_MAP[String(cmd.outerPosition)]?.image       ?? '',
               rightImage: ANIMAL_MAP[String(cmd.innerPosition)]?.image       ?? '',
+              leftName:   ANIMAL_MAP[String(cmd.outerPosition)]?.name        ?? '',
+              rightName:  ANIMAL_MAP[String(cmd.innerPosition)]?.name        ?? '',
               text: label,
               hype: isDupla,
               collapseTarget: this.wheelContainer.getWheelCenterViewport() ?? undefined,

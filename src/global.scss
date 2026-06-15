@@ -40,6 +40,15 @@
 @import './theme/variables.scss';
 @import './theme/responsive-variables.scss';
 
+@keyframes ring-glow-pulse {
+  0%   { box-shadow: 0 0 0 3px oklch(0.98 0.01 250 / 0.55), 0 0 16px  3px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+  12%  { box-shadow: 0 0 0 3px oklch(0.98 0.01 250 / 0.55), 0 0  8px  1px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+  28%  { box-shadow: 0 0 0 3px oklch(0.98 0.01 250 / 0.55), 0 0 44px 13px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+  45%  { box-shadow: 0 0 0 3px oklch(0.98 0.01 250 / 0.55), 0 0 11px  2px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+  63%  { box-shadow: 0 0 0 3px oklch(0.98 0.01 250 / 0.55), 0 0 30px  8px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+  80%  { box-shadow: 0 0 0 3px oklch(0.98 0.01 250 / 0.55), 0 0  6px  1px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+  100% { box-shadow: 0 0 0 3px oklch(0.98 0.01 250 / 0.55), 0 0 16px  3px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+}
 @keyframes neon-flicker {
   0%   { filter: drop-shadow(0 0 8px #FFB300)  drop-shadow(0 0 26px #FF8800BB) drop-shadow(0 0 55px #FF440055); }
   12%  { filter: drop-shadow(0 0 4px #FF9900)  drop-shadow(0 0 16px #FF660077) drop-shadow(0 0 38px #FF330033); }
