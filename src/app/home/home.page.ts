@@ -1453,6 +1453,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   // Flags estáticos: persisten entre recreaciones del componente
   private static adminStartupShown = false;
   private static adminCommandsShown = false;
+  private static adminCommandsSetup = false;
 
   private setupAdminCommands(): void {
     // Mensaje discreto al inicio — solo una vez por ciclo de vida de la página
@@ -1461,12 +1462,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       HomePage.adminStartupShown = true;
     }
 
+    // Registrar los comandos en window una sola vez, incluso si el componente se recrea
+    if (HomePage.adminCommandsSetup) return;
+    HomePage.adminCommandsSetup = true;
+
     // Exponer comandos globales
     (window as any).adminLogin = (username: string, password: string) => {
-      if (this.adminAuth.isAuthenticated()) {
-        console.log('ℹ️ Sesión ya activa — usa adminStatus() para detalles o adminLogout() para cerrar sesión');
-        return;
-      }
+      if (this.adminAuth.isAuthenticated()) return;
       const result = this.adminAuth.login(username, password);
       console.log(result);
 
