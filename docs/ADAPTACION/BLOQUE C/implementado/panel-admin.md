@@ -14,7 +14,7 @@ Protegido por autenticación SHA256 + salt con sesión de 8 horas en `sessionSto
 1. Abrir la aplicación en el navegador
 2. Abrir DevTools (`F12`) → pestaña **Console**
 3. Ejecutar `adminLogin("admin", "ruleta2025")`
-4. Al hacer login exitoso, se imprime el listado completo de comandos disponibles
+4. Al hacer login exitoso, se imprime el listado completo de comandos disponibles (una sola vez, colapsado)
 
 ---
 
@@ -140,6 +140,8 @@ Realiza una llamada a `GET /api/health` y reporta:
 ✅ Servidor disponible
 ```
 
+> El mock server expone `GET /api/health` que devuelve `{ status: "ok", uptime: <segundos> }`.
+
 ---
 
 ## Flujo típico de una sesión
@@ -178,6 +180,17 @@ adminLogout()
 
 ---
 
+## Comportamiento de consola
+
+Los comandos de admin están diseñados para no contaminar la consola:
+
+- **Mensaje de disponibilidad** (`🔐 Sistema admin disponible`) — aparece una sola vez al cargar la app, independientemente de cuántas veces se recree el componente.
+- **Listado de comandos** — se muestra una única vez tras el primer login exitoso, dentro de un grupo colapsado (`console.groupCollapsed`). Se resetea al hacer `adminLogout()`.
+- **`adminLogin` con sesión activa** — si se llama mientras ya hay sesión, retorna silenciosamente sin imprimir nada. Para conocer el estado de la sesión usar `adminStatus()`.
+- **Registro de window functions** — los comandos se registran en `window` una sola vez por ciclo de vida de la aplicación (flag estático `adminCommandsSetup`), incluso si Angular recrea el componente internamente.
+
+---
+
 ## Archivos relevantes
 
 | Archivo | Rol |
@@ -186,6 +199,7 @@ adminLogout()
 | `src/app/services/api.service.ts` | Método `ping()` usado por `adminPingServer` |
 | `src/app/services/round-orchestrator.service.ts` | Método `triggerManualSpin()` usado por `adminSpinManual` |
 | `src/app/home/home.page.ts` | Exposición de todos los comandos en `window` (`setupAdminCommands`) |
+| `mock-server.js` | Endpoint `GET /api/health` para `adminPingServer` |
 
 ## Estado
 
