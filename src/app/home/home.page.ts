@@ -1450,17 +1450,25 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Configura los comandos globales de administración en la consola del navegador
    */
+  // Flags estáticos: persisten entre recreaciones del componente
+  private static adminStartupShown = false;
+  private static adminCommandsShown = false;
+
   private setupAdminCommands(): void {
-    // Mensaje discreto al inicio
-    console.log('%c🔐 Sistema admin disponible', 'color: #6b7280; font-size: 11px;');
+    // Mensaje discreto al inicio — solo una vez por ciclo de vida de la página
+    if (!HomePage.adminStartupShown) {
+      console.log('%c🔐 Sistema admin disponible', 'color: #6b7280; font-size: 11px;');
+      HomePage.adminStartupShown = true;
+    }
 
     // Exponer comandos globales
     (window as any).adminLogin = (username: string, password: string) => {
       const result = this.adminAuth.login(username, password);
       console.log(result);
 
-      // Si login exitoso, mostrar comandos disponibles
-      if (result.includes('✅')) {
+      // Si login exitoso, mostrar comandos solo la primera vez (se resetea en logout)
+      if (result.includes('✅') && !HomePage.adminCommandsShown) {
+        HomePage.adminCommandsShown = true;
         this.showAdminCommands();
       }
     };
@@ -1478,6 +1486,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     };
 
     (window as any).adminLogout = () => {
+      HomePage.adminCommandsShown = false;
       console.log(this.adminAuth.logout());
     };
 
@@ -1681,7 +1690,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
    * Muestra los comandos disponibles después de login exitoso
    */
   private showAdminCommands(): void {
-    console.log('%c\n🎰 COMANDOS ADMIN DISPONIBLES 🎰', 'color: #f59e0b; font-weight: bold; font-size: 14px;');
+    console.groupCollapsed('%c🎰 COMANDOS ADMIN — expandir para ver lista completa', 'color: #f59e0b; font-weight: bold; font-size: 13px;');
+    console.log('%c🔐 AUTENTICACIÓN', 'color: #10b981; font-weight: bold;');
     console.log('%c• adminStatus()', 'color: #3b82f6;', '- Ver estado de sesión actual');
     console.log('%c• adminChangePassword(currentPass, newPass)', 'color: #3b82f6;', '- Cambiar contraseña');
     console.log('%c• adminResetPassword()', 'color: #3b82f6;', '- Resetear contraseña a default');
@@ -1708,6 +1718,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     console.log('%c\n🎮 CONTROL DE RONDA', 'color: #10b981; font-weight: bold;');
     console.log('%c• adminSpinManual(outerPos?, innerPos?)', 'color: #3b82f6;', '- Giro manual local (posiciones opcionales como strings, ej. "17", "3")');
     console.log('%c• adminPingServer()', 'color: #3b82f6;', '- Probar conexión: latencia y estado HTTP del servidor');
+    console.groupEnd();
   }
 
   /**
