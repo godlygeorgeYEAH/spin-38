@@ -173,30 +173,4 @@ export class ApiService {
       }
     );
   }
-
-  /**
-   * Método genérico para hacer peticiones GET personalizadas
-   * @param endpoint - Endpoint relativo (ej: '/custom-endpoint')
-   * @param params - Parámetros de query (opcional)
-   * @returns Observable con la respuesta
-   */
-  public get<T = any>(endpoint: string, params?: any): Observable<ApiResponse<T>> {
-    return this.http.get<ApiResponse<T>>(
-      `${this.apiUrl}${endpoint}`,
-      { params }
-    );
-  }
-
-  /**
-   * Método genérico para hacer peticiones POST personalizadas
-   * @param endpoint - Endpoint relativo (ej: '/custom-endpoint')
-   * @param body - Cuerpo de la petición
-   * @returns Observable con la respuesta
-   */
-  public post<T = any>(endpoint: string, body: any): Observable<ApiResponse<T>> {
-    return this.http.post<ApiResponse<T>>(
-      `${this.apiUrl}${endpoint}`,
-      body
-    );
-  }
 }

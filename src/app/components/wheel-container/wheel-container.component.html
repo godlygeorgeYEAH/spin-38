@@ -81,14 +81,4 @@
       ></app-porthole-water>
     </div>
   </div>
-
-  <!-- Confetti Animation - Explosión circular desde el centro (adaptativo) -->
-  <div class="confetti-container" *ngIf="showConfetti">
-    <div class="confetti" *ngFor="let particle of confettiArray"
-         [style.--angle]="particle.angle + 'deg'"
-         [style.--distance]="particle.distance + 'px'"
-         [style.animation-delay]="particle.delay + 's'"
-         [style.animation-duration]="particle.duration + 's'"
-         [style.background]="getConfettiColor(particle.index)"></div>
-  </div>
 </div>

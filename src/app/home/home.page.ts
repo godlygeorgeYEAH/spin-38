@@ -1,4 +1,3 @@
-import * as CryptoJS from 'crypto-js';
 import { Component, ViewChild, ChangeDetectorRef, NgZone, OnInit, ElementRef, AfterViewInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { CommonModule, AsyncPipe } from '@angular/common';
@@ -65,8 +64,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   
   public showResult = false;
-  public resultOverlayTimer: number = 0;
-  private resultOverlayInterval: any = null;
   // reloj
   public clockTime: string = '';
   private clockIntervalId: any = null;
@@ -127,8 +124,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   private readonly DEFAULT_COIN_VALUES = [1, 5, 10, 30, 50, 1000];
   private readonly DEFAULT_MULTIPLIER_VALUES = [1, 1.5, 2, 3, 5, 10];
-  private readonly HASH_B64 = 'NWRkZDE2ZGY3ZGJhOThlOTUyZDNhZjA3MGM3NDA1ODdjYTAxMjM5OGFlZDFjYWVhZGYzOGRhMjNmOGYzMDcyYQ==';
-  private readonly SALT_B64 = 'dW5hLWNhZGVuYS1hbGVhdG9yaWEteS1sYXJnYS1wYXJhLWRpZmljdWx0YXI=';
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -158,25 +153,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.loadSettings();
     this.loadBetHistory();
     this.setupAdminCommands();
-
-    // Sistema legacy - DEPRECADO - usar comandos admin nuevos
-    (window as any).setDevPassword = (password: string) => {
-      const secrets = this.getDevSecrets();
-      const inputHash = CryptoJS.SHA256(password + secrets.salt).toString(CryptoJS.enc.Hex);
-      if (inputHash === secrets.hash) {
-        localStorage.setItem('devHash', inputHash);
-        console.log("Ya estas dentro: ahora veras los resultados luego de jugar al girar la rueda!!")
-        return {
-          gameState: this.gameState,
-          selectedAnimals: this.selectedAnimals,
-          totalBet: this.totalBetAmountSubject.value,
-          lastWin: this.lastWin,
-          totalAccumulatedWin: this.totalAccumulatedWin,
-          gameResult: this.gameResult
-        };
-      }
-      return false;
-    };
   }
 
   async ngOnInit(): Promise<void> {
@@ -1000,30 +976,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Inicia el temporizador de cierre automático del overlay de resultados (30 segundos)
-   */
-  private startResultOverlayTimer(): void {
-    // Limpiar cualquier temporizador previo
-    if (this.resultOverlayInterval) {
-      clearInterval(this.resultOverlayInterval);
-    }
-
-    this.resultOverlayTimer = 30;
-
-    this.resultOverlayInterval = setInterval(() => {
-      this.zone.run(() => {
-        this.resultOverlayTimer--;
-
-        if (this.resultOverlayTimer <= 0) {
-          this.closeResultOverlay();
-        }
-
-        this.cdr.markForCheck();
-      });
-    }, 1000);
-  }
-
-  /**
    * Cierra el overlay de resultados manualmente o automáticamente
    */
   public closeResultOverlay(event?: Event): void {
@@ -1031,15 +983,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       event.stopPropagation();
     }
 
-    // Limpiar temporizador
-    if (this.resultOverlayInterval) {
-      clearInterval(this.resultOverlayInterval);
-      this.resultOverlayInterval = null;
-    }
-
     this.zone.run(() => {
       this.showResult = false;
-      this.resultOverlayTimer = 0;
       this.gameResult = null;
       this.currentEditingAnimal = null;
       this.gameState = GameState.IDLE;
@@ -1365,13 +1310,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     }, duration);
   }
 
-  /**
-   * Función helper para crear delays
-   */
-  private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
   public async resetGame(): Promise<void> {
     this.selectedAnimals = [];
     this.lastWin = 0;
@@ -1469,23 +1407,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       balanceAfter: this.playerBalance,
       timestamp: new Date(),
       description: `Ganancia obtenida: ${amount}`
-    };
-    this.transactions.push(transaction);
-  }
-
-  /**
-   * Registra una pérdida (apuesta sin ganancia)
-   */
-  private recordLoss(betAmount: number): void {
-    // Registrar transacción de pérdida
-    const transaction: Transaction = {
-      id: this.transactionIdCounter++,
-      type: TransactionType.LOSS,
-      amount: 0, // La pérdida ya se dedujo con la apuesta
-      balanceBefore: this.playerBalance,
-      balanceAfter: this.playerBalance,
-      timestamp: new Date(),
-      description: `Apuesta perdida: ${betAmount}`
     };
     this.transactions.push(transaction);
   }
@@ -1813,12 +1734,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.cdr.markForCheck();
 
     return `✅ Valores actualizados: [${this.coinValues.join(', ')}]`;
-  }
-
-  private getDevSecrets(): { hash: string, salt: string } {
-    const hash = atob(this.HASH_B64);
-    const salt = atob(this.SALT_B64);
-    return { hash, salt };
   }
 
   /**

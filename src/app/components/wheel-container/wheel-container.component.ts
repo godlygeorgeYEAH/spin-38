@@ -39,8 +39,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   public displayItems: Animal[] = [];
   public innerDisplayItems: Animal[] = [];
   public errorMessage: string = '';
-  public winningInnerAnimalIndex: number | null = null;
-  public showConfetti = false;
   public pointerBounce = false;
   @Input() pointerContainerWidth: string | null = null;  // e.g. '100%', '200px'
   @Input() pointerContainerHeight: string | null = null; // e.g. '100%', '120px'
@@ -174,7 +172,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
   private spinDurationMs: number = 0;
 
   public performanceProfile: PerformanceProfile;
-  public confettiArray: { index: number; angle: number; distance: number; delay: number; duration: number }[] = [];
   public isSafari: boolean = false; // Detectar Safari para desactivar animación problemática
 
   constructor(
@@ -191,11 +188,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     if (this.isSafari) {
       console.log('🦁 Safari detectado - Animación de tutorial desactivada');
     }
-
-    // Generar confetti con distribución uniforme en 360°
-    this.generateConfettiDistribution();
-
-    console.log(`🎊 Confetti: ${this.performanceProfile.confettiParticles} partículas`);
   }
 
   /**
@@ -212,45 +204,6 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     const isIOS = /iphone|ipad|ipod/.test(ua);
 
     return isSafari || isIOS;
-  }
-
-  /**
-   * Genera distribución uniforme de confetti en 360° independiente de la cantidad
-   */
-  private generateConfettiDistribution(): void {
-    const count = this.performanceProfile.confettiParticles;
-    const angleStep = 360 / count;
-
-    this.confettiArray = Array.from({ length: count }, (_, i) => {
-      // Distribución uniforme en círculo completo
-      const angle = i * angleStep;
-
-      // Variar distancias para efecto más natural (250-295px)
-      const distance = 250 + (i % 3) * 15 + Math.random() * 15;
-
-      // Delays escalonados para efecto de explosión (0-0.08s)
-      const delay = (i % 8) * 0.01;
-
-      // Duraciones variables (2.0-2.4s)
-      const duration = 2.0 + (i % 5) * 0.1;
-
-      return {
-        index: i + 1,
-        angle: angle,
-        distance: distance,
-        delay: delay,
-        duration: duration
-      };
-    });
-  }
-
-  /**
-   * Obtiene el color de una partícula de confetti
-   * Alterna entre 4 colores para variedad visual
-   */
-  public getConfettiColor(index: number): string {
-    const colors = ['#ffd700', '#ff6b6b', '#4ecdc4', '#95e1d3'];
-    return colors[index % colors.length];
   }
 
   ngOnInit(): void {
@@ -371,27 +324,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
         this.forceStopAnimation(this.innerWheel.nativeElement, this.targetInnerAngle);
 
         // Detección de victoria desactivada: la responsabilidad pasa al servidor (f1-elim-click-segmentos).
-        // La animación de confetti y sonido de victoria nunca se activan desde este componente.
-        const playerWon = false;
-
-        if (playerWon) {
-          this.zone.run(() => {
-            this.winningInnerAnimalIndex = innerResultIndex;
-            this.showConfetti = true;
-            this.audioService.playVictory();
-            this.cdr.markForCheck();
-          });
-        }
-
-        const resultDelay = playerWon ? 1500 : 300;
-
         setTimeout(() => {
-          this.zone.run(() => {
-            this.winningInnerAnimalIndex = null;
-            this.showConfetti = false;
-            this.cdr.markForCheck();
-          });
-
           resolve({
             outerPosition: result.outerPosition,
             innerPosition: result.innerPosition,
@@ -399,7 +332,7 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
             outerWheelIndex: outerResultIndex,
             innerWheelIndex: innerResultIndex,
           });
-        }, resultDelay);
+        }, 300);
       }, validatedInnerDuration);
     });
   }

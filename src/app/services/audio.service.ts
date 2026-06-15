@@ -9,12 +9,10 @@ import { Injectable } from '@angular/core';
 })
 export class AudioService {
   private clickSound: HTMLAudioElement | null = null;
-  private victorySound: HTMLAudioElement | null = null;
   private buttonSound: HTMLAudioElement | null = null;
   private isEnabled: boolean = true;
   private volume: number = 0.3; // Volumen por defecto (30%)
   private isLoaded: boolean = false;
-  private isVictoryLoaded: boolean = false;
   private isButtonLoaded: boolean = false;
 
   // Throttling para evitar reproducción excesiva en giros rápidos
@@ -44,20 +42,6 @@ export class AudioService {
         this.isLoaded = false;
       });
 
-      // Inicializar sonido de victoria
-      this.victorySound = new Audio('/assets/audio/victoria.mp3');
-      this.victorySound.volume = this.volume;
-      this.victorySound.load();
-
-      this.victorySound.addEventListener('canplaythrough', () => {
-        this.isVictoryLoaded = true;
-      }, { once: true });
-
-      this.victorySound.addEventListener('error', (e) => {
-        console.warn('Error cargando audio de victoria:', e);
-        this.isVictoryLoaded = false;
-      });
-
       // Inicializar sonido de botón
       this.buttonSound = new Audio('/assets/audio/button.mp3');
       this.buttonSound.volume = this.volume;
@@ -74,7 +58,6 @@ export class AudioService {
     } catch (error) {
       console.warn('No se pudo inicializar el audio:', error);
       this.clickSound = null;
-      this.victorySound = null;
       this.buttonSound = null;
     }
   }
@@ -120,33 +103,6 @@ export class AudioService {
   }
 
   /**
-   * Reproduce el sonido de victoria cuando el usuario gana una apuesta.
-   * Este sonido se reproduce cuando el selector elige el animal ganador.
-   */
-  public playVictory(): void {
-    if (!this.isEnabled || !this.victorySound || !this.isVictoryLoaded) {
-      return;
-    }
-
-    try {
-      // Reiniciar el audio al inicio
-      this.victorySound.currentTime = 0;
-
-      // Reproducir el sonido
-      const playPromise = this.victorySound.play();
-
-      // Manejar la promesa de reproducción
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.debug('Audio play prevented:', error);
-        });
-      }
-    } catch (error) {
-      console.debug('Error playing victory sound:', error);
-    }
-  }
-
-  /**
    * Reproduce el sonido del botón cuando se presiona el yin-yang central.
    * Este sonido se reproduce al activarse la animación de presión del botón.
    */
@@ -181,22 +137,12 @@ export class AudioService {
   }
 
   /**
-   * Obtiene el estado actual de habilitación de audio
-   */
-  public getEnabled(): boolean {
-    return this.isEnabled;
-  }
-
-  /**
    * Establece el volumen del audio (0.0 a 1.0)
    */
   public setVolume(volume: number): void {
     this.volume = Math.max(0, Math.min(1, volume));
     if (this.clickSound) {
       this.clickSound.volume = this.volume;
-    }
-    if (this.victorySound) {
-      this.victorySound.volume = this.volume;
     }
     if (this.buttonSound) {
       this.buttonSound.volume = this.volume;
@@ -208,44 +154,5 @@ export class AudioService {
    */
   public getVolume(): number {
     return this.volume;
-  }
-
-  /**
-   * Alterna entre habilitado/deshabilitado
-   */
-  public toggleEnabled(): boolean {
-    this.isEnabled = !this.isEnabled;
-    return this.isEnabled;
-  }
-
-  /**
-   * Verifica si el audio está listo para reproducirse
-   */
-  public isReady(): boolean {
-    return this.isLoaded && this.clickSound !== null;
-  }
-
-  /**
-   * Establece el tiempo mínimo entre clicks en milisegundos.
-   * Valores más altos = menos clicks por segundo (más espaciado)
-   * Valores más bajos = más clicks por segundo (más frecuente)
-   *
-   * @param milliseconds - Tiempo mínimo en milisegundos (recomendado: 30-100ms)
-   *
-   * Ejemplos:
-   * - 30ms = máximo 33 clicks/seg (muy rápido)
-   * - 50ms = máximo 20 clicks/seg (rápido, valor por defecto)
-   * - 75ms = máximo 13 clicks/seg (moderado)
-   * - 100ms = máximo 10 clicks/seg (espaciado)
-   */
-  public setMinTimeBetweenClicks(milliseconds: number): void {
-    this.minTimeBetweenClicks = Math.max(0, milliseconds);
-  }
-
-  /**
-   * Obtiene el tiempo mínimo configurado entre clicks
-   */
-  public getMinTimeBetweenClicks(): number {
-    return this.minTimeBetweenClicks;
   }
 }

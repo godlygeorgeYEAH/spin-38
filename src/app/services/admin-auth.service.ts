@@ -26,9 +26,6 @@ export class AdminAuthService {
   private readonly DEFAULT_PASSWORD_HASH = '5ddd16df7dba98e952d3af070c740587ca012398aed1caeadf38da23f8f3072a';
   private readonly DEFAULT_SALT = 'una-cadena-aleatoria-y-larga-para-dificultar';
 
-  // Clave maestra para reset (encriptada)
-  private readonly MASTER_KEY_ENCRYPTED = 'U2FsdGVkX1+vupppZksvRfIX8LqPKz0tKqXqZqJqTm8='; // "ruleta2025" encriptado
-
   constructor() {
     this.cleanExpiredSession();
   }

@@ -167,12 +167,4 @@ export class PerformanceDetectorService {
     console.log(`📊 Tier cambiado manualmente a: ${tier.toUpperCase()}`);
     console.log('📊 Nuevo perfil:', this.profile);
   }
-
-  /**
-   * Verifica si una característica específica está habilitada
-   */
-  public isFeatureEnabled(feature: keyof PerformanceProfile): boolean {
-    const value = this.profile[feature];
-    return typeof value === 'boolean' ? value : (typeof value === 'number' ? value > 0 : true);
-  }
 }
