@@ -1463,6 +1463,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     // Exponer comandos globales
     (window as any).adminLogin = (username: string, password: string) => {
+      if (this.adminAuth.isAuthenticated()) {
+        console.log('ℹ️ Sesión ya activa — usa adminStatus() para detalles o adminLogout() para cerrar sesión');
+        return;
+      }
       const result = this.adminAuth.login(username, password);
       console.log(result);
 
