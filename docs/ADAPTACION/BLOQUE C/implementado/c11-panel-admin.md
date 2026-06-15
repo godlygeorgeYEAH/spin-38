@@ -104,7 +104,7 @@ adminSetInnerWheelDuration(6000)
 ### Control de ronda
 
 | Comando | Descripción |
-|---|---|
+|---|---|.
 | `adminSpinManual()` | Giro local con posiciones aleatorias |
 | `adminSpinManual("17", "3")` | Giro local con posiciones específicas |
 | `adminPingServer()` | Probar conexión: latencia y estado HTTP del servido.r. |
