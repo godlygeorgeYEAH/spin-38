@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, defer, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { QueryParams } from '../interfaces/query-params.interface';
 import {
@@ -172,5 +173,30 @@ export class ApiService {
         }
       }
     );
+  }
+
+  /**
+   * Verifica la conectividad con el servidor midiendo la latencia
+   * @returns Observable con latencia en ms, código HTTP y estado
+   */
+  public ping(): Observable<{ latencyMs: number; status: number; ok: boolean; endpoint: string }> {
+    const endpoint = `${this.apiUrl}/health`;
+    return defer(() => {
+      const startTime = performance.now();
+      return this.http.get<any>(endpoint, { observe: 'response' }).pipe(
+        map(response => ({
+          latencyMs: Math.round(performance.now() - startTime),
+          status: response.status,
+          ok: response.ok,
+          endpoint,
+        })),
+        catchError(err => of({
+          latencyMs: Math.round(performance.now() - startTime),
+          status: err.status ?? 0,
+          ok: false,
+          endpoint,
+        }))
+      );
+    });
   }
 }

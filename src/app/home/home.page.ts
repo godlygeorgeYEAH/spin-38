@@ -1627,6 +1627,33 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       console.log('🎨 Animation Quality:', profile.animationQuality);
     };
 
+    // Giro manual
+    (window as any).adminSpinManual = (outerPosition?: string, innerPosition?: string) => {
+      if (!this.adminAuth.isAuthenticated()) {
+        console.log('❌ Debes estar autenticado para iniciar un giro manual\n💡 Usa: adminLogin("admin", "contraseña")');
+        return;
+      }
+      const outer = outerPosition ?? this.animalsForWheel[Math.floor(Math.random() * this.animalsForWheel.length)].position;
+      const inner = innerPosition ?? String(this.multiplierValues[Math.floor(Math.random() * this.multiplierValues.length)]);
+      console.log(this.orchestrator.triggerManualSpin(outer, inner));
+    };
+
+    // Ping al servidor
+    (window as any).adminPingServer = () => {
+      if (!this.adminAuth.isAuthenticated()) {
+        console.log('❌ Debes estar autenticado para realizar el ping\n💡 Usa: adminLogin("admin", "contraseña")');
+        return;
+      }
+      console.log('🏓 Realizando ping al servidor...');
+      this.apiService.ping().subscribe(result => {
+        console.log('%c📡 PING SERVIDOR', 'color: #10b981; font-weight: bold;');
+        console.log(`🔗 Endpoint: ${result.endpoint}`);
+        console.log(`⏱️  Latencia: ${result.latencyMs}ms`);
+        console.log(`📊 Estado HTTP: ${result.status}`);
+        console.log(result.ok ? '✅ Servidor disponible' : '❌ Servidor no disponible o con errores');
+      });
+    };
+
     (window as any).adminSetPerformanceTier = (tier: 'high' | 'medium' | 'low') => {
       if (!this.adminAuth.isAuthenticated()) {
         console.log('❌ Debes estar autenticado para cambiar el tier de rendimiento\n💡 Usa: adminLogin("admin", "contraseña")');
@@ -1678,6 +1705,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     console.log('%c\n⚡ RENDIMIENTO GRÁFICO', 'color: #10b981; font-weight: bold;');
     console.log('%c• adminGetPerformanceProfile()', 'color: #3b82f6;', '- Ver perfil de rendimiento actual');
     console.log('%c• adminSetPerformanceTier("tier")', 'color: #3b82f6;', '- Cambiar tier: "high", "medium" o "low"');
+    console.log('%c\n🎮 CONTROL DE RONDA', 'color: #10b981; font-weight: bold;');
+    console.log('%c• adminSpinManual(outerPos?, innerPos?)', 'color: #3b82f6;', '- Giro manual local (posiciones opcionales como strings, ej. "17", "3")');
+    console.log('%c• adminPingServer()', 'color: #3b82f6;', '- Probar conexión: latencia y estado HTTP del servidor');
   }
 
   /**

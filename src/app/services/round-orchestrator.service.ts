@@ -282,6 +282,51 @@ export class RoundOrchestratorService implements OnDestroy {
     this.pollTimeout = setTimeout(() => this.poll(), delayMs);
   }
 
+  /**
+   * Dispara un giro local sin pasar por el servidor.
+   * Cancela el poll pendiente; el sistema se resincroniza con el servidor al terminar el reveal.
+   * @param outerPosition - Posición de la rueda externa (string). Si se omite, se usa la última conocida o "17".
+   * @param innerPosition - Posición de la rueda interna (string). Si se omite, se usa la última conocida o "3".
+   */
+  public triggerManualSpin(outerPosition?: string, innerPosition?: string): string {
+    const state = this.stateSubject.value;
+    if (state === 'SPINNING' || state === 'REVEALING') {
+      return `❌ No se puede iniciar giro manual: estado actual es ${state}`;
+    }
+
+    if (this.pollTimeout) {
+      clearTimeout(this.pollTimeout);
+      this.pollTimeout = null;
+    }
+
+    const outerPos = outerPosition ?? '17';
+    const innerPos = innerPosition ?? '3';
+
+    const cmd: SpinCommand = {
+      outerPosition: outerPos,
+      innerPosition: innerPos,
+      outerDurationMs: Math.round(this.lastSpinDurationSec * 1000 * 0.9),
+      innerDurationMs: Math.round(this.lastSpinDurationSec * 1000),
+      resultLabel: null,
+    };
+    this.lastSpinCommand = cmd;
+    this.lastHandledRoundId = -1;
+    this.lastSpinStartTime = new Date().toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit', hour12: false });
+
+    this.transitionTo('SPINNING');
+
+    if (this.spinGuardTimeout) clearTimeout(this.spinGuardTimeout);
+    this.spinGuardTimeout = setTimeout(() => {
+      if (this.stateSubject.value === 'SPINNING') {
+        console.warn('[Orchestrator] Manual spin guard — forzando notifySpinComplete()');
+        this.notifySpinComplete();
+      }
+    }, cmd.innerDurationMs + 5000);
+
+    this.spinCommandSubject.next(cmd);
+    return `✅ Giro manual iniciado — Externa: ${outerPos}, Interna: ${innerPos}`;
+  }
+
   ngOnDestroy(): void {
     this.stop();
   }
