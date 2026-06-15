@@ -9,7 +9,7 @@ aumentaban la superficie a leer y mantener, y confundían sobre qué está vivo.
 Un examen inicial señaló 7 puntos. Un análisis posterior los **verificó uno a
 uno sobre la rama de trabajo** (no sobre la rama del examen original, que ya
 había divergido), descartó 1 falso positivo y descubrió **8 símbolos muertos
-adicionales** más sus cascadas.
+adicionales** más sus cascadas
 
 ## Alcance
 
