@@ -206,6 +206,15 @@ export class WheelContainerComponent implements OnInit, AfterViewInit, OnChanges
     return isSafari || isIOS;
   }
 
+  /**
+   * trackBy para los *ngFor posicionales (segmentos, animales y gradientes):
+   * la identidad de cada elemento es su índice, evitando recrear el DOM SVG
+   * en cada ciclo de detección.
+   */
+  public trackByIndex(index: number): number {
+    return index;
+  }
+
   ngOnInit(): void {
     this.spinning = false;
     this.displayItems = [];

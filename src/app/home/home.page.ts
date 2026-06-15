@@ -1,7 +1,7 @@
 import { Component, ViewChild, ChangeDetectorRef, NgZone, OnInit, ElementRef, AfterViewInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { CommonModule, AsyncPipe } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { WheelContainerComponent } from '../components/wheel-container/wheel-container.component';
 import { GameSettingsComponent } from '../components/game-settings/game-settings.component';
 import { BetHistoryComponent } from '../components/bet-history/bet-history.component';
@@ -99,6 +99,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   public loadingProgress: number = 0;
   private historyIdCounter = 0;
   private readonly BET_HISTORY_KEY = 'betHistory';
+
+  // Suscripciones al orquestador, liberadas en ngOnDestroy
+  private subs = new Subscription();
 
   public readonly animalsForWheel: WheelItem[] = [
     { position: '0' }, { position: '28' }, { position: '9' },  { position: '26' },
@@ -310,20 +313,20 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // Reset de rueda: se dispara RESET_LEAD_SEC segundos antes de que termine el revealing
-    this.orchestrator.resetCommand$.subscribe(() => {
+    this.subs.add(this.orchestrator.resetCommand$.subscribe(() => {
       if (!this.wheelContainer) return;
       this.resetInProgress = this.wheelContainer.resetToPosition().then(() => {
         this.resetInProgress = null;
       });
-    });
+    }));
 
     // Al terminar el revealing: sincronizar estado de juego
-    this.orchestrator.revealComplete$.subscribe(() => {
+    this.subs.add(this.orchestrator.revealComplete$.subscribe(() => {
       this.gameState = GameState.IDLE;
       this.cdr.markForCheck();
-    });
+    }));
 
-    this.orchestrator.spinCommand$.subscribe(async cmd => {
+    this.subs.add(this.orchestrator.spinCommand$.subscribe(async cmd => {
       if (!this.wheelContainer || this.wheelContainer.spinning) return;
 
       if (this.resetInProgress) {
@@ -364,12 +367,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           this.gameState = GameState.IDLE;
           this.cdr.markForCheck();
         });
-    });
+    }));
 
     let _portholeSeconds = 0;
-    this.orchestrator.secondsToNextRound$.subscribe(s => { _portholeSeconds = s; });
+    this.subs.add(this.orchestrator.secondsToNextRound$.subscribe(s => { _portholeSeconds = s; }));
 
-    this.orchestrator.roundState$.subscribe(state => {
+    this.subs.add(this.orchestrator.roundState$.subscribe(state => {
       if (state === 'COUNTING_DOWN') {
         this.resultsPanelClass = 'panel-enter';
         this.wheelContainer?.startPortholeSequence(_portholeSeconds);
@@ -378,7 +381,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       }
       // REVEALING e IDLE: panel permanece oculto — REVEALING reservado para animación de resultado
       this.cdr.markForCheck();
-    });
+    }));
 
     this.orchestrator.start();
   }
@@ -394,6 +397,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.orchestrator.stop();
+    this.subs.unsubscribe();
 
     if (this.clockIntervalId !== null) {
       window.clearInterval(this.clockIntervalId);
@@ -752,13 +756,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     // Si no hay apuestas válidas después del filtro, retornar
     if (this.selectedAnimals.length === 0) {
-      this.errorMessage = 'Debe realizar al menos una apuesta válida antes de girar.';
-      setTimeout(() => {
-        this.zone.run(() => {
-          this.errorMessage = '';
-          this.cdr.markForCheck();
-        });
-      }, 3000);
+      this.showInfoMessage('Debe realizar al menos una apuesta válida antes de girar.');
       return;
     }
 
@@ -769,17 +767,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     // Validación de fondos suficientes
     const totalBet = this.totalBetAmountSubject.value;
     if (this.playerBalance < totalBet) {
-      this.errorMessage = `Fondos insuficientes. Balance: ${this.playerBalance}, Apuesta: ${totalBet}`;
-      console.error(this.errorMessage);
-
-      // Desvanecer mensaje de error después de 3 segundos
-      setTimeout(() => {
-        this.zone.run(() => {
-          this.errorMessage = '';
-          this.cdr.markForCheck();
-        });
-      }, 3000);
-
+      const message = `Fondos insuficientes. Balance: ${this.playerBalance}, Apuesta: ${totalBet}`;
+      console.error(message);
+      this.showInfoMessage(message);
       return;
     }
 
@@ -820,19 +810,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
       if (!betResponse?.success) {
         // Si el backend rechaza la apuesta, mostrar error y revertir
-        this.errorMessage = betResponse?.message || 'Error al procesar la apuesta';
-
         // Revertir deducción del balance
         this.playerBalance += totalBet;
         this.balanceSubject.next(this.playerBalance);
 
-        setTimeout(() => {
-          this.zone.run(() => {
-            this.errorMessage = '';
-            this.cdr.markForCheck();
-          });
-        }, 3000);
-
+        this.showInfoMessage(betResponse?.message || 'Error al procesar la apuesta');
         return;
       }
 
@@ -933,20 +915,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     } catch (error: any) {
       console.error('[HomePage] Error en el flujo de juego:', error);
 
-      // Mostrar error al usuario
-      this.errorMessage = error.message || 'Error de conexión con el servidor';
-
       // Revertir deducción del balance
       this.playerBalance += totalBet;
       this.balanceSubject.next(this.playerBalance);
 
-      setTimeout(() => {
-        this.zone.run(() => {
-          this.errorMessage = '';
-          this.cdr.markForCheck();
-        });
-      }, 5000);
-
+      // Mostrar error al usuario
+      this.showInfoMessage(error.message || 'Error de conexión con el servidor', 5000);
       return;
     }
     // ==================== FIN COMUNICACIÓN CON BACKEND ====================
@@ -1305,8 +1279,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
    */
   private showInfoMessage(message: string, duration: number = 3000): void {
     this.errorMessage = message;
+    this.cdr.markForCheck();
     setTimeout(() => {
-      this.errorMessage = '';
+      this.zone.run(() => {
+        this.errorMessage = '';
+        this.cdr.markForCheck();
+      });
     }, duration);
   }
 
@@ -1465,8 +1443,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     return `✅ Balance actualizado: $${oldBalance} ${amount >= 0 ? '+' : ''}${amount} = $${this.playerBalance}`;
   }
 
-  public trackByBet(index: number, bet: AnimalBet): number {
-    return bet.id;
+  public trackByCoin(_index: number, coinValue: number): number {
+    return coinValue;
   }
 
   /**

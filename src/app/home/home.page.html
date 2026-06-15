@@ -83,7 +83,7 @@
     </div>
 
     <div class="chips-section">
-      <div *ngFor="let coinValue of coinValues" class="coin-chip-container"
+      <div *ngFor="let coinValue of coinValues; trackBy: trackByCoin" class="coin-chip-container"
         (click)="addCoinToCurrentAnimal(coinValue)"
         [class.disabled]="gameState === 'playing' || !currentEditingAnimal">
         <img [src]="getCoinImage(coinValue)" [alt]="'Ficha ' + coinValue" class="coin-chip-image">

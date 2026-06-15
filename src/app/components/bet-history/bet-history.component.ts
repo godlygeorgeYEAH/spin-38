@@ -1,37 +1,41 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonButton, IonIcon } from '@ionic/angular/standalone';
-import { BetHistory } from '../../interfaces/bet-history.interface';
+import { BetEntry, BetHistory } from '../../interfaces/bet-history.interface';
 
 @Component({
   selector: 'app-bet-history',
   templateUrl: './bet-history.component.html',
   styleUrls: ['./bet-history.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     IonButton,
     IonIcon
   ]
 })
-export class BetHistoryComponent {
+export class BetHistoryComponent implements OnChanges {
   @Input() isOpen: boolean = false;
   @Input() historyData: BetHistory[] = [];
   @Output() closeModal = new EventEmitter<void>();
 
-  constructor() {}
+  /**
+   * Historial ordenado por fecha descendente (más reciente primero).
+   * Se recalcula solo cuando cambia `historyData` (no en cada ciclo de
+   * detección), evitando copia + sort innecesarios y manteniendo la
+   * referencia estable para el *ngFor.
+   */
+  sortedHistory: BetHistory[] = [];
+
+  ngOnChanges(): void {
+    this.sortedHistory = [...this.historyData].sort((a, b) =>
+      new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    );
+  }
 
   onClose(): void {
     this.closeModal.emit();
-  }
-
-  /**
-   * Obtiene el historial ordenado por fecha descendente (más reciente primero)
-   */
-  get sortedHistory(): BetHistory[] {
-    return [...this.historyData].sort((a, b) =>
-      new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-    );
   }
 
   /**
@@ -48,33 +52,11 @@ export class BetHistoryComponent {
     });
   }
 
-  /**
-   * Obtiene las estadísticas generales del historial
-   */
-  get statistics() {
-    if (this.historyData.length === 0) {
-      return {
-        totalRounds: 0,
-        totalBet: 0,
-        totalWon: 0,
-        winRate: 0,
-        netProfit: 0
-      };
-    }
+  trackByEntry(_index: number, entry: BetHistory): number {
+    return entry.id;
+  }
 
-    const totalRounds = this.historyData.length;
-    const wins = this.historyData.filter(h => h.isWin).length;
-    const totalBet = this.historyData.reduce((sum, h) => sum + h.totalBet, 0);
-    const totalWon = this.historyData.reduce((sum, h) => sum + h.winAmount, 0);
-    const winRate = (wins / totalRounds) * 100;
-    const netProfit = totalWon - totalBet;
-
-    return {
-      totalRounds,
-      totalBet,
-      totalWon,
-      winRate: Math.round(winRate),
-      netProfit
-    };
+  trackByBet(index: number, _bet: BetEntry): number {
+    return index;
   }
 }

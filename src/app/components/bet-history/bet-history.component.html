@@ -24,7 +24,7 @@
         <div class="history-list" *ngIf="historyData.length > 0">
           <h3 class="section-title">🕐 Historial Reciente</h3>
 
-          <div *ngFor="let entry of sortedHistory; let i = index" class="history-entry" [class.win-entry]="entry.isWin" [class.loss-entry]="!entry.isWin">
+          <div *ngFor="let entry of sortedHistory; let i = index; trackBy: trackByEntry" class="history-entry" [class.win-entry]="entry.isWin" [class.loss-entry]="!entry.isWin">
             <div class="entry-header">
               <div class="entry-date">{{ formatDate(entry.timestamp) }}</div>
               <div class="entry-result" [class.win-badge]="entry.isWin" [class.loss-badge]="!entry.isWin">
@@ -36,7 +36,7 @@
               <div class="entry-section">
                 <div class="section-label">Apuestas Realizadas:</div>
                 <div class="bets-list">
-                  <div *ngFor="let bet of entry.bets" class="bet-item" [class.winning-bet]="entry.isWin && bet.animal.name === entry.winningAnimal.name">
+                  <div *ngFor="let bet of entry.bets; trackBy: trackByBet" class="bet-item" [class.winning-bet]="entry.isWin && bet.animal.name === entry.winningAnimal.name">
                     <span class="bet-animal">{{ bet.animal.emoji }} {{ bet.animal.name }}</span>
                     <span class="bet-amount">${{ bet.amount }}</span>
                   </div>
