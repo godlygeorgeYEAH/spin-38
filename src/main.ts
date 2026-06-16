@@ -50,9 +50,6 @@ function initializeApp(apiService: ApiService) {
     apiService.initialize(params);
 
     console.log('[APP_INITIALIZER] ✅ Inicialización completada');
-
-    // Opcional: Retornar una promesa para validar el token con el backend
-    // return apiService.validateToken().toPromise();
   };
 }
 

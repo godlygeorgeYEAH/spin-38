@@ -1,22 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, defer, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { QueryParams } from '../interfaces/query-params.interface';
-import {
-  PlaceBetRequest,
-  SpinRequest
-} from '../interfaces/api-request.interface';
-import {
-  ApiResponse,
-  ValidateTokenResponse,
-  InitialConfigResponse,
-  BalanceResponse,
-  PlaceBetResponse,
-  SpinResponse,
-  HistoryResponse
-} from '../interfaces/api-response.interface';
 
 /**
  * Servicio centralizado para comunicación con el backend
@@ -114,80 +101,6 @@ export class ApiService {
   }
 
   // ==================== MÉTODOS DE API ====================
-
-  /**
-   * Valida el token con el backend
-   * @returns Observable con la respuesta de validación
-   */
-  public validateToken(): Observable<ApiResponse<ValidateTokenResponse>> {
-    return this.http.post<ApiResponse<ValidateTokenResponse>>(
-      `${this.apiUrl}/validate-token`,
-      {}
-    );
-  }
-
-  /**
-   * Obtiene la configuración inicial del juego (fichas y multiplicadores)
-   * Debe llamarse una sola vez al iniciar la aplicación
-   * @returns Observable con la configuración inicial
-   */
-  public getInitialConfig(): Observable<ApiResponse<InitialConfigResponse>> {
-    return this.http.get<ApiResponse<InitialConfigResponse>>(
-      `${this.apiUrl}/initialConfig`
-    );
-  }
-
-  /**
-   * Obtiene el balance actual del usuario
-   * @returns Observable con el balance
-   */
-  public getBalance(): Observable<ApiResponse<BalanceResponse>> {
-    return this.http.get<ApiResponse<BalanceResponse>>(
-      `${this.apiUrl}/balance`
-    );
-  }
-
-  /**
-   * Registra una apuesta en el backend
-   * @param betData - Datos de la apuesta
-   * @returns Observable con la respuesta de la apuesta
-   */
-  public placeBet(betData: PlaceBetRequest): Observable<ApiResponse<PlaceBetResponse>> {
-    return this.http.post<ApiResponse<PlaceBetResponse>>(
-      `${this.apiUrl}/bet/place`,
-      betData
-    );
-  }
-
-  /**
-   * Ejecuta un giro de la ruleta
-   * @param spinData - Datos del giro
-   * @returns Observable con el resultado del giro
-   */
-  public spin(spinData: SpinRequest): Observable<ApiResponse<SpinResponse>> {
-    return this.http.post<ApiResponse<SpinResponse>>(
-      `${this.apiUrl}/spin`,
-      spinData
-    );
-  }
-
-  /**
-   * Obtiene el historial de apuestas
-   * @param page - Número de página (opcional)
-   * @param limit - Límite de registros (opcional)
-   * @returns Observable con el historial
-   */
-  public getHistory(page: number = 1, limit: number = 50): Observable<ApiResponse<HistoryResponse>> {
-    return this.http.get<ApiResponse<HistoryResponse>>(
-      `${this.apiUrl}/history`,
-      {
-        params: {
-          page: page.toString(),
-          limit: limit.toString()
-        }
-      }
-    );
-  }
 
   /**
    * Verifica la conectividad con el servidor midiendo la latencia

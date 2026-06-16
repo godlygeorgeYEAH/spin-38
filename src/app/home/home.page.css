@@ -46,8 +46,6 @@ ion-content.home-background::part(background) {
   z-index: 1000;
   pointer-events: none;
 
-
-
 }
 
 .buho-gif {
@@ -75,7 +73,6 @@ ion-content.home-background::part(background) {
   top: var(--clock-value-top, 0px);
   left: var(--clock-value-left, 0px);
 }
-
 
 /* Ajustar contenido para el sidebar en large desktop */
 @media (min-width: 1800px) {
@@ -114,7 +111,6 @@ ion-content.home-background::part(background) {
   display: block;
   object-fit: contain;
 }
-
 
 @keyframes panel-slingshot-exit {
   0%   { transform: translateX(0); }
@@ -199,7 +195,6 @@ ion-content.home-background::part(background) {
 }
 /* fin panel de resultados */
 
-
 /* Header - Contiene solo balance cuando betting-panel NO está visible */
 .header {
   text-align: center;
@@ -277,8 +272,6 @@ ion-content.home-background::part(background) {
   }
 }
 
-
-
 .floating-animals-panel {
   background: rgba(0, 0, 0, 0.4);
   border: 3px solid var(--gold-primary);
@@ -318,7 +311,6 @@ ion-content.home-background::part(background) {
   
 }
 
-
 .floating-animals-list::-webkit-scrollbar {
   width: 6px;
 }
@@ -355,19 +347,6 @@ ion-content.home-background::part(background) {
   border-color: rgba(212, 175, 55, 0.8);
 }
 
-.floating-animal-image-container {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-}
-
 .floating-animal-image {
   width: 100%;
   height: 100%;
@@ -378,12 +357,6 @@ ion-content.home-background::part(background) {
   color: var(--text-light);
   font-weight: 600;
   font-size: 0.85rem;
-}
-
-.floating-bet-amount {
-  color: var(--gold-secondary);
-  font-weight: 700;
-  font-size: 0.9rem;
 }
 
 .floating-remove-btn {
@@ -412,7 +385,6 @@ ion-content.home-background::part(background) {
 
 /* === ESTILOS DEL DISPLAY DE BALANCE DEL JUGADOR === */
 /* Por defecto: Posicionado en parte inferior del betting-panel, sobresaliendo del borde */
-
 
 /* CSS DEPRECADO - Lanterns eliminadas */
 /* .lanterns {
@@ -444,43 +416,6 @@ ion-content.home-background::part(background) {
 
 /* === ESTILOS DEL PANEL DE ESTADO === */
 /* === TOTAL BET DISPLAY === */
-.floating-total-bet {
-  position: absolute;
-  bottom: var(--total-bet-bottom);
-  right: var(--total-bet-right);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  width: var(--pill-total-bet-width);
-  height: var(--pill-total-bet-height);
-  pointer-events: auto;
-}
-
-.total-bet-container-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.total-bet-value {
-  position: relative;
-  z-index: 1;
-  font-size: var(--total-bet-font-size, 1.1rem);
-  font-weight: 900;
-  color: white;
-  text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000,
-    0 0 3px rgba(0, 0, 0, 0.8);
-  letter-spacing: 0.05em;
-  transform: translateY(20%);
-}
 
 @keyframes slideInRight {
   from { transform: translateX(100%); opacity: 0; }
@@ -488,34 +423,10 @@ ion-content.home-background::part(background) {
 }
 
 /* === BETTING PANEL - CONTENEDOR INDEPENDIENTE Y RESPONSIVE === */
-.betting-panel {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translate(
-    calc(-50% + var(--betting-panel-translate-x)),
-    var(--betting-panel-translate-y)
-  ) scale(1);
-  z-index: 1000;
-  background: transparent;
-  padding: 15px;
-  pointer-events: auto;
-  width: var(--betting-panel-width);
-  min-height: var(--betting-panel-height);
-  overflow: visible;
-  transform-origin: center center;
-  opacity: 1;
-}
 
 /* Animación de aparición - solo cuando tiene la clase .appearing */
-.betting-panel.appearing {
-  animation: bettingPanelAppear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-}
 
 /* Animación de desaparición - solo cuando tiene la clase .disappearing */
-.betting-panel.disappearing {
-  animation: bettingPanelDisappear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-}
 
 /* Keyframes para la animación de aparición */
 @keyframes bettingPanelAppear {
@@ -553,32 +464,8 @@ ion-content.home-background::part(background) {
   }
 }
 
-.betting-panel-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  z-index: 1;
-  pointer-events: none;
-}
-
 /* Fichas - Lado izquierdo */
 /* Cambiar --chips-scale para ajustar el tamaño (valores sugeridos: 0.8 a 1.5) */
-.chips-section {
-  position: absolute;
-  left: var(--chips-left);
-  top: var(--chips-top);
-  transform: translateY(-50%) scale(var(--chips-scale));
-  transform-origin: left center;
-  display: grid;
-  grid-template-columns: repeat(var(--chips-columns), 1fr);
-  column-gap: var(--chips-gap-horizontal);
-  row-gap: var(--chips-gap-vertical);
-  width: var(--chips-section-width);
-  z-index: 15;
-}
 
 /* CSS DEPRECADO - .central-display ya no se usa, elementos movidos directamente a .betting-panel */
 /* .central-display {
@@ -588,7 +475,6 @@ ion-content.home-background::part(background) {
   position: relative;
   margin: 0 10px;
 } */
-
 
 /* CSS ANTIGUO - Contenedor generado por CSS */
 /* .animal-name-tag {
@@ -604,37 +490,6 @@ ion-content.home-background::part(background) {
 } */
 
 /* NUEVO CSS - Contenedor con asset nombre-animal.png - Sobre las fichas en la izquierda */
-.animal-name-tag {
-  position: absolute;
-  top: var(--animal-name-tag-top);
-  left: var(--animal-name-tag-left);
-  transform: translate(var(--animal-name-tag-translate-x), var(--animal-name-tag-translate-y));
-  min-width: var(--animal-name-tag-width);
-  height: var(--animal-name-tag-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 11;
-}
-
-.animal-name-container-image {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  z-index: 1;
-}
-
-.animal-name-text {
-  position: relative;
-  z-index: 2;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: rgb(255, 255, 255);
-  font-size: var(--animal-name-font-size);
-  padding: 0 15px;
-  transform: translateY(-32%);
-}
 
 .animal-image {
   pointer-events: all;
@@ -646,7 +501,6 @@ ion-content.home-background::part(background) {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 
 /* CSS ANTIGUO - Contenedor generado por CSS */
 /* .animal-image-container {
@@ -662,58 +516,10 @@ ion-content.home-background::part(background) {
 } */
 
 /* NUEVO CSS - Contenedor con asset aro-dorado.png */
-.animal-image-container {
-  width: var(--animal-image-size);
-  height: var(--animal-image-size);
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(
-    calc(-50% + var(--animal-image-translate-x)),
-    calc(-50% + var(--animal-image-translate-y))
-  );
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-}
-
-.animal-container-frame {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.selected-animal-image {
-  width: 60%;
-  height: 60%;
-  object-fit: cover;
-  position: relative;
-  z-index: 2;
-  border-radius: 50%;
-}
 
 /* Contenedor del animal en el overlay de resultados (3x más grande) */
-.result-animal-container {
-  width: 240px;
-  height: 240px;
-  margin: 20px auto;
-}
 
 /* Badge de multiplicador en overlay de resultados */
-.result-multiplier-badge {
-  position: absolute;
-  top: var(--result-multiplier-badge-top);
-  right: var(--result-multiplier-badge-right);
-  width: var(--result-multiplier-badge-width);
-  height: var(--result-multiplier-badge-height);
-  object-fit: contain;
-  z-index: 3;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
-}
 
 /* ----------------------------------------------
 * Generated by Gradienty on 2025-11-30 12:37
@@ -725,45 +531,7 @@ ion-content.home-background::part(background) {
   100% { transform: rotateX(-360deg); }
 }
 
-.rotate-hor-center-normal {
-  transform-origin: center;
-  animation: rotate-hor-center-normal 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) 0s 1 normal both;
-}
-
 /* Cantidad de Apuesta - Centro derecha */
-.bet-amount-display {
-  position: absolute;
-  top: var(--bet-display-top);
-  right: var(--bet-display-right);
-  transform: translateY(-50%);
-  width: var(--bet-display-width);
-  height: var(--bet-display-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  z-index: 2;
-}
-
-.bet-container-image {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  z-index: 1;
-}
-
-.bet-value {
-  position: relative;
-  z-index: 2;
-  font-size: var(--bet-font-size);
-  font-weight: bold;
-  color: var(--gold-primary);
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5),
-               0 2px 4px rgba(0, 0, 0, 0.8);
-  padding-top: 5px;
-  transform: translateY(15%);
-}
 
 /* Botón de Limpiar - Sobre bet-amount-display, centro derecha */
 
@@ -791,122 +559,7 @@ ion-content.home-background::part(background) {
 
 /* NUEVO CSS - Botón con asset limpiar.png */
 
-
-.clear-button-image {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  z-index: 1;
-}
-
-.clear-button-text {
-  position: relative;
-  z-index: 2;
-  font-weight: bold;
-  color: #333;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  padding: 0 20px;
-}
-
-.clear-button:hover:not(:disabled) {
-  transform: scale(1.05);
-}
-
-.clear-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.coin-chip {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.9rem;
-  font-weight: 900;
-  color: white;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  border: 2px solid white;
-  box-shadow: inset 0 0 0 3px var(--chip-color, #3498db), 0 2px 5px rgba(0, 0, 0, 0.4);
-  transition: all 0.2s ease-out;
-  position: relative;
-}
-
-.coin-chip:hover:not(.disabled) {
-  transform: translateY(-3px) scale(1.5); 
-  -webkit-box-shadow:0px 0px 15px 7px rgba(212,175,55,0.75);
-  -moz-box-shadow: 0px 0px 15px 7px rgba(212,175,55,0.75);
-  box-shadow: 0px 0px 15px 7px rgba(212,175,55,0.75);
-}
-
-.coin-chip.disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  pointer-events: none;
-  filter: grayscale(0.5);
-}
-
-.coin-chip.chip-1 { --chip-color: #27ae60; background: #2ecc71; }
-.coin-chip.chip-5 { --chip-color: #c0392b; background: #e74c3c; }
-.coin-chip.chip-10 { --chip-color: #d35400; background: #e67e22; }
-.coin-chip.chip-30 { --chip-color: #2980b9; background: #3498db; }
-.coin-chip.chip-50 { --chip-color: #8e44ad; background: #9b59b6; }
-.coin-chip.chip-1000 { --chip-color: #16a085; background: #1abc9c; }
-
 /* ==================== Image-Based Coin Chip System ==================== */
-
-.coin-chip-container {
-  width: 60px;
-  height: 60px;
-  position: relative;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.coin-chip-container:hover:not(.disabled) {
-  transform: translateY(-3px) scale(1.15);
-  filter: drop-shadow(0px 0px 12px rgba(212, 175, 55, 0.8));
-}
-
-.coin-chip-container.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
-  filter: grayscale(0.7);
-}
-
-.coin-chip-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.coin-chip-value {
-  position: relative;
-  z-index: 1;
-  font-size: var(--coin-chip-font-size);
-  font-weight: 900;
-  color: white;
-  text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000,
-    0 0 3px rgba(0, 0, 0, 0.8);
-  pointer-events: none;
-  transform: translateY(-30%);
-}
 
 .game-area {
   display: flex;
@@ -972,79 +625,12 @@ ion-content.home-background::part(background) {
   background: transparent;
 }
 
-.result-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(65, 65, 65, 0.5);
-  -webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.5s ease-in;
-}
-
-
 @keyframes fadeIn {
   from { opacity: 0.8; }
   to { opacity: 1; }
 }
 
-.result-container {
-  position: relative;
-  width: var(--result-card-width);
-  max-width: var(--result-card-max-width);
-  height: var(--result-card-height);
-  max-height: var(--result-card-max-height);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  text-align: center;
-  color: var(--text-light);
-  animation: slideInUp 0.5s ease-out;
-  padding: var(--result-card-padding);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
 /* Logo de fondo traslúcido */
-.result-background-logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  height: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.result-background-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  opacity: 0.08;
-  filter: grayscale(100%) brightness(1.5);
-}
-
-.result-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 4rem;
-  overflow: hidden;
-  min-height: 0;
-}
 
 @keyframes slideInUp {
   from {
@@ -1058,106 +644,10 @@ ion-content.home-background::part(background) {
 }
 
 /* Botón de cierre (X) en esquina superior derecha */
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: background 0.2s;
-}
-
-.close-button:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.close-button ion-icon {
-  font-size: 24px;
-  color: var(--text-light);
-}
-
-.win-result .result-container {
-  background-image: url('/assets/images/contenedores/resultado-victoria.png');
-  filter: drop-shadow(0 0 30px rgba(45, 220, 122, 0.6));
-}
-.lose-result .result-container {
-  background-image: url('/assets/images/contenedores/resultado-derrota.png');
-  filter: drop-shadow(0 0 30px rgba(204, 0, 0, 0.6));
-}
-.result-title {
-  font-size: var(--result-title-font-size);
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  margin: 0.5rem;
-  flex-shrink: 0;
-  width: 100%;
-}
-
-.win-result .result-title {
-  color: #2ddc7a;
-  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.5);
-  text-stroke: 2px rgba(0, 0, 0, 0.5);
-  text-shadow:
-    0 0 10px rgba(45, 220, 122, 0.6),
-    0 0 20px rgba(45, 220, 122, 0.4),
-    0 0 30px rgba(45, 220, 122, 0.2);
-  animation: titlePulse 2s ease-in-out infinite;
-}
-
-.lose-result .result-title {
-  color: var(--red-primary);
-  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.5);
-  text-stroke: 2px rgba(0, 0, 0, 0.5);
-  text-shadow:
-    0 0 10px rgba(0, 0, 0, 0.8),
-    0 0 20px rgba(0, 0, 0, 0.6),
-    0 0 30px rgba(0, 0, 0, 0.4);
-}
 
 /* Contenedor de imagen completa del animal */
-.result-animal-wrapper {
-  position: relative;
-  width: var(--result-animal-wrapper-width);
-  max-width: var(--result-animal-wrapper-max-width);
-  height: var(--result-animal-wrapper-height);
-  max-height: var(--result-animal-wrapper-max-height);
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 0;
-  overflow: visible;
-}
-
-.result-animal-full-image {
-  max-width: var(--result-animal-image-size);
-  max-height: var(--result-animal-image-size);
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6));
-}
 
 /* Multiplicador sobre la imagen del animal */
-.result-multiplier-badge {
-  position: absolute;
-  top: var(--result-multiplier-badge-top);
-  right: var(--result-multiplier-badge-right);
-  width: var(--result-multiplier-badge-width);
-  height: var(--result-multiplier-badge-height);
-  object-fit: contain;
-  z-index: 5;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
-  animation: pulse 1.5s ease-in-out infinite;
-}
 
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
@@ -1195,26 +685,6 @@ ion-content.home-background::part(background) {
 }
 
 /* Descripción del animal */
-.result-animal-description {
-  margin: 0;
-  padding: 5px 5px;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  backdrop-filter: blur(2.5px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6));
-  flex-shrink: 0;
-  width: 100%;
-}
-
-.animal-name {
-  font-size: var(--animal-name-modal-font-size);
-  font-weight: 800;
-  color: var(--gold-primary);
-  margin: 0 0 5px 0;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
 
 .animal-trait {
   font-size: var(--animal-trait-font-size);
@@ -1236,105 +706,15 @@ ion-content.home-background::part(background) {
   color: rgba(255, 255, 255, 0.8);
 }
 
-.win-amount {
-  font-size: var(--win-amount-font-size);
-  font-weight: 900;
-  color: #2ddc7a;
-  margin: 0;
-  flex-shrink: 0;
-  text-shadow: 0 0 15px #2ddc7a;
-  animation: winAmountPulse 1.5s ease-in-out infinite;
-}
-
 /* Contenedor de botones de acción - Horizontal */
-.result-actions {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 25px;
-  width: 100%;
-}
 
 /* Base para todos los botones circulares */
-.result-action-button {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.5));
-  flex-shrink: 0;
-  position: relative;
-}
-
-.result-action-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 55%;
-  height: 55%;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: brightness(0) invert(1);
-}
-
-.result-action-button:hover {
-  transform: translateY(-5px) scale(1.05);
-  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.6));
-}
-
-.result-action-button:active {
-  transform: translateY(-2px) scale(1.02);
-}
 
 /* Botón de compartir - Azul con icono */
-.share-button {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-}
-
-.share-button::before {
-  background-image: url('/assets/svg/share.svg');
-}
-
-.share-button:hover {
-  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
-  box-shadow: 0 0 25px rgba(59, 130, 246, 0.7);
-}
 
 /* Botón de girar de nuevo - Verde con icono */
-.spin-again-button {
-  background: linear-gradient(135deg, #2ddc7a 0%, #1db560 100%);
-}
-
-.spin-again-button::before {
-  background-image: url('/assets/svg/arrow.svg');
-}
-
-.spin-again-button:hover {
-  background: linear-gradient(135deg, #25c46a 0%, #179950 100%);
-  box-shadow: 0 0 25px rgba(45, 220, 122, 0.7);
-}
 
 /* Botón de limpiar rueda - Rojo con icono */
-.clear-wheel-button {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-}
-
-.clear-wheel-button::before {
-  background-image: url('/assets/svg/brush.svg');
-}
-
-.clear-wheel-button:hover {
-  background: linear-gradient(135deg, #ff5252 0%, #e63946 100%);
-  box-shadow: 0 0 25px rgba(255, 107, 107, 0.7);
-}
-
 
 .footer-actions {
   text-align: center; padding: 1rem 0 2rem 0; display: flex; justify-content: center; gap: 1rem;
@@ -1345,145 +725,23 @@ ion-content.home-background::part(background) {
   --border-color: var(--gold-primary); 
 }
 
-.help-button-container {
-  position: fixed;
-  gap: var(--help-buttons-gap);
-  top: var(--help-button-top);
-  right: 1rem;
-  transform: translateX(var(--help-button-transform-x)) translateY(-50%);
-  z-index: 1000;
-  display: flex;
-  flex-direction: var(--help-buttons-direction);
-  align-items: center;
-}
-
-.help-button {
-  background: rgba(0, 0, 0, 0.95);
-  color: var(--gold-primary);
-  border: 4px solid var(--gold-primary);
-  width: var(--help-button-size);
-  height: var(--help-button-size);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(212, 175, 55, 0.3);
-
-}
-
-.help-button:hover {
-  background: var(--gold-primary);
-  color: black;
-  transform: scale(1.15) rotate(5deg);
-}
-
 /* Ocultar botón de historial en large desktop (ya que el sidebar está siempre visible) */
 @media (min-width: 1800px) {
   .history-btn {
     display: none;
   }
 
-  .result-container {
-    width: 60% !important;
-    max-width: 900px !important;
-  }
+  
 }
 
 /* Sobrescribir estilos inline de los íconos */
-.help-button span,
-.help-button ion-icon {
-  font-size: var(--help-button-icon-size) !important;
-}
 
 /* Clear All Button - Esquina superior izquierda */
-.clear-all-button-container {
-  position: fixed;
-  top: var(--clear-all-button-top);
-  left: var(--clear-all-button-left);
-  z-index: 1000;
-}
-
-.clear-all-button {
-  width: var(--clear-all-button-size);
-  height: var(--clear-all-button-size);
-  border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.5));
-  flex-shrink: 0;
-  position: relative;
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-}
-
-.clear-all-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 55%;
-  height: 55%;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-image: url('/assets/svg/brush.svg');
-  filter: brightness(0) invert(1);
-}
-
-.clear-all-button:hover {
-  transform: translateY(-5px) scale(1.05);
-  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.6));
-  background: linear-gradient(135deg, #ff5252 0%, #e63946 100%);
-  box-shadow: 0 0 25px rgba(255, 107, 107, 0.7);
-}
-
-.clear-all-button:active {
-  transform: translateY(-2px) scale(1.02);
-}
 
 .reset-button { 
   --color: var(--gold-primary); 
   --border-color: var(--gold-primary); 
 }
-
-
-.error-overlay { 
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  width: 100%; 
-  height: 100%; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  z-index: 2000; 
-  pointer-events: none; 
-}
-
-.error-message {
-  background: rgba(0, 0, 0, 0.9);
-  border: 2px solid var(--gold-primary);
-  border-radius: 10px;
-  padding: 15px 20px;
-  color: #ff6b6b;
-  font-size: 0.95rem;
-  font-weight: 600;
-  text-align: left;
-  max-width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-  -webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
-  animation: errorFadeIn 0.3s ease-out;
-  white-space: pre-wrap;
-  word-break: break-word;
-  font-family: monospace;
-}
-
 
 @keyframes errorFadeIn {
   from { opacity: 0; transform: scale(0.9); }
@@ -1499,22 +757,6 @@ ion-content.home-background::part(background) {
    ───────────────────────────────────────────────────────────── */
 
 /* Clear Button - Base definition with responsive variables */
-.clear-button {
-  position: absolute;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  top: var(--clear-button-top);
-  left: var(--clear-button-left);
-  min-width: var(--clear-button-width);
-  height: var(--clear-button-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s, transform 0.2s;
-  z-index: 2;
-}
 
 /* ─────────────────────────────────────────────────────────────
    MEDIA QUERIES GENERALES
@@ -1522,33 +764,15 @@ ion-content.home-background::part(background) {
 
 /* Overlay de Victoria - iPhone SE, 5, 5S (375x667) */
 
-
 /* Overlay de Victoria - Móviles pequeños (hasta 480px) */
 @media (max-width: 480px) {
-  .result-container {
-    width: 95%;
-    max-width: none;
-    padding: 15px;
-  }
+  
 
-  .result-title {
-    font-size: 1.4rem;
-    margin-bottom: 0.8rem;
-  }
+  
 
-  .result-animal-wrapper {
-    max-width: 200px;
-    margin: 15px auto;
-  }
+  
 
-  .result-multiplier-badge {
-    /* width: controlled by --result-multiplier-badge-size */
-    /* height: controlled by --result-multiplier-badge-size */
-    top: var(--result-multiplier-badge-top);
-    right: var(--result-multiplier-badge-right);
-    width: var(--result-multiplier-badge-width);
-    height: var(--result-multiplier-badge-height);
-  }
+  
 
   /* .animal-name font-size now controlled by --animal-name-modal-font-size variable */
 
@@ -1558,49 +782,24 @@ ion-content.home-background::part(background) {
 
   /* .win-amount font-size now controlled by --win-amount-font-size variable */
 
-  .close-button {
-    width: 35px;
-    height: 35px;
-  }
+  
 
-  .close-button ion-icon {
-    font-size: 20px;
-  }
+  
 
-  .betting-panel { flex-direction: column; padding: 15px; height: auto; }
-  .chips-section { order: 2; /* grid-template-columns now controlled by --chips-columns variable */ margin-top: 15px; }
+  
+  
   .central-display { order: 1; margin-bottom: 10px; }
-  .clear-button { padding: 6px 12px; font-size: 0.8rem; /* width controlled by --clear-button-width */ }
-  .coin-chip { width: 38px; height: 38px; font-size: 0.7rem; }
-  .coin-chip-container {
-    width: 48px;
-    height: 48px;
-  }
-  .coin-chip-value { font-size: 0.7rem; }
+  
+  
+  
+  
 }
-
 
 /* Overlay de Victoria - Desktop (1025px+) */
-@media (min-width: 1025px) {
-  .result-container {
-    max-width: 600px;
-  }
-
-  .result-animal-wrapper {
-    max-width: 350px;
-  }
-
-  .result-multiplier-badge {
-    /* width: controlled by --result-multiplier-badge-size */
-    /* height: controlled by --result-multiplier-badge-size */
-  }
-}
-
 
 /* ─────────────────────────────────────────────────────────────
    MÓVILES - PORTRAIT
    ───────────────────────────────────────────────────────────── */
-
 
 /* 390x844 - iPhone 12/13/14 */
 @media (min-width: 388px) and (max-width: 395px) and (min-height: 840px) and (max-height: 855px) {
@@ -1622,85 +821,28 @@ ion-content.home-background::part(background) {
   .betting-controls-container { bottom: auto; left: 20px; top: 83%; transform: translateY(-50%); width: auto; max-width: 220px; }
 
   /* Help Button Container - Fila superior */
-  .help-button-container {
-    position: fixed;
-    top: 1rem;
-    left: 50%;
-    transform: translateX(15%);
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-    z-index: 1000;
-  }
+  
 
-  .help-button {
-    width: 48px;
-    height: 48px;
-  }
+  
 
   /* Betting Panel */
-  .betting-panel {
-    position: relative;
-    background: transparent;
-    padding: 15px;
-    pointer-events: auto;
-    min-height: 200px;
-    /* min-width: controlled by --betting-panel-width */
-  }
-
-
+  
 
   /* Fichas - Lado izquierdo */
-  .chips-section {
-    position: absolute;
-    /* left: controlled by --chips-left */
-    top: 43%;
-    transform: translateY(-50%) scale(var(--chips-scale));
-    transform-origin: left center;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    z-index: 15;
-  }
+  
 
   /* Animal Name Tag - Superior izquierda */
-  .animal-name-tag {
-    position: absolute;
-    /* top: controlled by --animal-name-tag-top */
-    /* left: controlled by --animal-name-tag-left */
-    transform: translateX(-50%);
-    /* min-width: controlled by --animal-name-tag-width */
-    /* height: controlled by --animal-name-tag-height */
-    z-index: 11;
-  }
+  
 
   /* Animal Image Container - Centro superior (sobresale) */
-  .animal-image-container {
-    /* width, height now controlled by --animal-image-size variable */
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -66%);
-    z-index: 10;
-  }
+  
 
   /* Bet Amount Display - Centro derecha */
-  .bet-amount-display {
-    position: absolute;
-    /* top: controlled by --bet-display-top */
-    /* right: controlled by --bet-display-right */
-    transform: translateY(-50%);
-    /* width: controlled by --bet-display-width */
-    /* height: controlled by --bet-display-height */
-    z-index: 2;
-  }
+  
 
   /* Actions Section (Clear Button) - Sobre bet-amount */
-  .clear-button {
-    width: var(--clear-button-width);
-    height: var(--clear-button-height);
-  }
+  
 }
-
 
 /* 720x1612 - Samsung Galaxy S20+, S21+, Note 20 *
 @media (min-width: 720px) and (max-width: 720px) and (min-height: 1612px) and (max-height: 1612px) {
@@ -1800,9 +942,7 @@ ion-content.home-background::part(background) {
   }
 
   /* Total Bet Display - Inferior derecha (sobresale) */
-  .total-bet-value {
-    font-size: 1.4rem;
-  }
+  
 
 /* 393x873 - Xiaomi y Android recientes */
 @media (min-width: 393px) and (max-width: 400px) and (min-height: 870px) and (max-height: 880px) {
@@ -1811,90 +951,32 @@ ion-content.home-background::part(background) {
   .betting-controls-container { bottom: auto; left: 20px; top: 83%; transform: translateY(-50%); width: auto; max-width: 220px; }
 
   /* Help Button Container - Fila superior */
-  .help-button-container {
-    position: fixed;
-    top: 1rem;
-    left: 50%;
-    transform: translateX(15%);
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-    z-index: 1000;
-  }
+  
 
-  .help-button {
-    width: 48px;
-    height: 48px;
-  }
+  
 
   /* Betting Panel */
-  .betting-panel {
-    position: relative;
-    background: transparent;
-    padding: 15px;
-    pointer-events: auto;
-    min-height: 200px;
-    /* min-width: controlled by --betting-panel-width */
-  }
-
-
+  
 
   /* Fichas - Lado izquierdo */
-  .chips-section {
-    position: absolute;
-    /* left: controlled by --chips-left */
-    top: 43%;
-    transform: translateY(-50%) scale(var(--chips-scale));
-    transform-origin: left center;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    z-index: 15;
-  }
+  
 
   /* Animal Name Tag - Superior izquierda */
-  .animal-name-tag {
-    position: absolute;
-    /* top: controlled by --animal-name-tag-top */
-    /* left: controlled by --animal-name-tag-left */
-    transform: translateX(-50%);
-    /* min-width: controlled by --animal-name-tag-width */
-    /* height: controlled by --animal-name-tag-height */
-    z-index: 11;
-  }
+  
 
   /* Animal Image Container - Centro superior (sobresale) */
-  .animal-image-container {
-    /* width, height now controlled by --animal-image-size variable */
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -66%);
-    z-index: 10;
-  }
+  
 
   /* Bet Amount Display - Centro derecha */
-  .bet-amount-display {
-    position: absolute;
-    /* top: controlled by --bet-display-top */
-    /* right: controlled by --bet-display-right */
-    transform: translateY(-50%);
-    /* width: controlled by --bet-display-width */
-    /* height: controlled by --bet-display-height */
-    z-index: 2;
-  }
+  
 
   /* Actions Section (Clear Button) - Sobre bet-amount */
-  .clear-button {
-    width: var(--clear-button-width);
-    height: var(--clear-button-height);
-  }
+  
 }
 
 /* ─────────────────────────────────────────────────────────────
    TABLETS Y LAPTOPS
    ───────────────────────────────────────────────────────────── */
-
-
 
 /* 1366x768 - HD (Laptops comunes) */
 @media (min-width: 1366px) and (max-width: 1400px) and (min-height: 700px) and (max-height: 800px) {
@@ -1903,43 +985,15 @@ ion-content.home-background::part(background) {
   }
 
   /* Animal Name Tag - Superior izquierda */
-  .animal-name-tag {
-    position: absolute;
-    /* top: controlled by --animal-name-tag-top */
-    /* left: controlled by --animal-name-tag-left */
-    transform: translateX(-50%);
-    /* min-width: controlled by --animal-name-tag-width */
-    /* height: controlled by --animal-name-tag-height */
-    z-index: 11;
-  }
+  
 
   /* Animal Image Container - Centro superior (sobresale) */
-  .animal-image-container {
-    /* width, height now controlled by --animal-image-size variable */
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -66%);
-    z-index: 10;
-  }
+  
 
   /* Bet Amount Display - Centro derecha */
-  .bet-amount-display {
-    position: absolute;
-    /* top: controlled by --bet-display-top */
-    /* right: controlled by --bet-display-right */
-    transform: translateY(-50%);
-    /* width: controlled by --bet-display-width */
-    /* height: controlled by --bet-display-height */
-    z-index: 2;
-  }
+  
 
-
-
-  .clear-button {
-    width: var(--clear-button-width);
-    height: var(--clear-button-height);
-  }
+  
 }
 /* ─────────────────────────────────────────────────────────────
    DESKTOP - FULL HD Y MAYORES
@@ -1951,13 +1005,9 @@ ion-content.home-background::part(background) {
     margin-top: var(--wheel-margin-top);
   }
 
-  .betting-panel {
-    /* min-width: controlled by --betting-panel-width */
-    min-height: 240px;
-  }
+  
 
-  .chips-section {
-  }
+  
 }
 
 /* 2560x1440 - 2K/QHD */
@@ -1966,13 +1016,9 @@ ion-content.home-background::part(background) {
     margin-top: var(--wheel-margin-top);
   }
 
-  .betting-panel {
-    /* min-width: controlled by --betting-panel-width */
-    min-height: 260px;
-  }
+  
 
-  .chips-section {
-  }
+  
 
   /* .animal-image-container width, height now controlled by --animal-image-size variable */
 }
@@ -1983,20 +1029,13 @@ ion-content.home-background::part(background) {
     margin-top: var(--wheel-margin-top);
   }
 
-  .betting-panel {
-    /* min-width: controlled by --betting-panel-width */
-    min-height: 280px;
-  }
+  
 
-  .chips-section {
-  }
+  
 
   /* .animal-image-container width, height now controlled by --animal-image-size variable */
 
-  .help-button {
-    width: 80px;
-    height: 80px;
-  }
+  
 }
 
 /* ================================================================
@@ -2216,12 +1255,6 @@ ion-content.home-background::part(background) {
    ============================================================ */
 
 /* Result overlay - reemplazar backdrop-filter con background semi-transparente */
-ion-content.performance-low .result-overlay,
-ion-content.performance-medium .result-overlay {
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
-  background: rgba(0, 0, 0, 0.85) !important; /* Más opaco para compensar falta de blur */
-}
 
 /* Betting overlay */
 ion-content.performance-low .betting-overlay,
@@ -2277,7 +1310,6 @@ ion-content.performance-low .lose-indicator {
   filter: none !important;
 }
 
-
 /* ============================================================
    DROP SHADOWS - MEDIUM TIER (Reducir a 1 drop-shadow)
    ============================================================ */
@@ -2319,6 +1351,4 @@ ion-content.performance-medium .win-indicator {
 ion-content.performance-medium .lose-indicator {
   filter: drop-shadow(0 0 20px rgba(204, 0, 0, 0.6)) !important;
 }
-
-
 
