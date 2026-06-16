@@ -203,4 +203,4 @@ Health check del servidor.
 | `PORT` | `3000` | Puerto del servidor |
 | `ROUND_DURATION_SEC` | `300` | Duración total del ciclo de ronda en segundos |
 | `FORCE_MOROCHA` | `0` | `1` para forzar `outerPosition === innerPosition` en todos los resultados |
-| `FORCE_LABEL` | — | Fuerza un `resultLabel` específico en todos los resultados |
+| `FORCE_LABEL` | — | fuerza un `resultLabel` específico en todos los resultados |
