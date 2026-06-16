@@ -1743,6 +1743,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     console.log('%c• adminSpinManual(outerPos?, innerPos?)', 'color: #3b82f6;', '- Giro manual local (posiciones opcionales como strings, ej. "17", "3")');
     console.log('%c• adminPingServer()', 'color: #3b82f6;', '- Probar conexión: latencia y estado HTTP del servidor');
     console.log('%c• adminConnectionStatus()', 'color: #3b82f6;', '- Observar connectionStatus$ en tiempo real (retorna suscripción)');
+    console.log('%c\n🎬 DEBUG ANIMACIÓN RESULTADO', 'color: #10b981; font-weight: bold;');
+    console.log('%c• adminRevealFreeze()', 'color: #3b82f6;', '- Congelar animación de resultado (mantenerla visible indefinidamente)');
+    console.log('%c• adminRevealUnfreeze()', 'color: #3b82f6;', '- Descongelar y cerrar la animación normalmente');
     console.groupEnd();
   }
 

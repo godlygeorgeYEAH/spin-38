@@ -127,6 +127,8 @@ interface HypeWord {
           [class.collapse]="isCollapsed"
           [class.gone]="phase === 'clear'"
         >
+          <div class="char-glow ring-left"></div>
+          <img class="resultado-izq-bg" src="assets/images/contenedores/rueda-resultado-izquierda.png" aria-hidden="true" />
           <div class="char-ring ring-left">
             <div class="char-fill">
               <img [src]="config.leftImage" [alt]="''" />
@@ -142,6 +144,8 @@ interface HypeWord {
           [class.collapse]="isCollapsed"
           [class.gone]="phase === 'clear'"
         >
+          <div class="char-glow ring-right"></div>
+          <img class="resultado-der-bg" src="assets/images/contenedores/rueda-resultado-derecha.png" aria-hidden="true" />
           <div class="char-ring ring-right">
             <div class="char-fill">
               <img [src]="config.rightImage" [alt]="''" />
@@ -174,7 +178,6 @@ export class RevealOverlayComponent implements OnDestroy {
     private cdr: ChangeDetectorRef,
     private el: ElementRef<HTMLElement>,
   ) {
-    // El servicio emite una config cada vez que se llama play().
     this.sub = this.reveal.play$.subscribe((cfg) => this.run(cfg));
   }
 

@@ -3,6 +3,16 @@
 // http://ionicframework.com/docs/theming/
 
 :root {
+  // Resultado izquierda — imagen decorativa detrás del círculo animal
+  --resultado-izq-size: clamp(220px, 52vmin, 360px);
+  --resultado-izq-offset-x: 0px;
+  --resultado-izq-offset-y: 0px;
+
+  // Resultado derecha — imagen decorativa detrás del círculo animal
+  --resultado-der-size: clamp(220px, 52vmin, 360px);
+  --resultado-der-offset-x: 0px;
+  --resultado-der-offset-y: 0px;
+
   // Wheel variables
   --wheel-diameter: 800px;
   --wheel-right: 0px;
