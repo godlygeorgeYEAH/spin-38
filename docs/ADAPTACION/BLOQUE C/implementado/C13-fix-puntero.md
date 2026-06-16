@@ -2,8 +2,7 @@
 
 ## Descripción
 
-El puntero (imagen de ancla) no mostraba animación de rebote durante la fase rápida del giro. El efecto visual solo era perceptible en los últimos segundos, cuando la rueda ya iba lenta. Sonido y detección de cruces funcionaban correctamente en todo momento.
-
+El puntero (imagen de ancla) no mostraba animación de rebote durante la fase rápida del giro. El efecto visual solo era perceptible en los últimos segundos, cuando la rueda ya iba lenta. Sonido y detección de cruces funcionaban correctamente en todo momento..
 ---
 
 ## Causa raíz
