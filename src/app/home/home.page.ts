@@ -609,75 +609,65 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
    * y actualiza el progreso de carga
    */
   private async preloadAssets(): Promise<void> {
-    // Lista de todos los assets a precargar
+    // Lista de assets a precargar. Solo se incluyen rutas que existen en disco
+    // y son usadas por la app, para no generar peticiones 404 en consola.
     const imagePaths: string[] = [
       // Logo
-      'assets/images/logo/logo.png',
+      'assets/images/logo/logo1.png',
       'assets/images/logo/rexludus.png',
 
-      // Animales principales
-      'assets/images/animales/RATA.png',
-      'assets/images/animales/BUEY.png',
-      'assets/images/animales/TIGRE.png',
-      'assets/images/animales/CONEJO.png',
-      'assets/images/animales/DRAGON.png',
-      'assets/images/animales/SERPIENTE.png',
-      'assets/images/animales/CABALLO.png',
-      'assets/images/animales/CABRA.png',
-      'assets/images/animales/MONO.png',
-      'assets/images/animales/GALLO.png',
-      'assets/images/animales/PERRO.png',
-      'assets/images/animales/CERDO.png',
+      // Animales (set "sin fondo" usado por la ruleta)
+      'assets/images/animales-sin-fondo/AGUILA.png',
+      'assets/images/animales-sin-fondo/ALACRAN.png',
+      'assets/images/animales-sin-fondo/ARDILLA.png',
+      'assets/images/animales-sin-fondo/BALLENA.png',
+      'assets/images/animales-sin-fondo/BURRO.png',
+      'assets/images/animales-sin-fondo/CABALLO.png',
+      'assets/images/animales-sin-fondo/CAIMAN.png',
+      'assets/images/animales-sin-fondo/CAMELLO.png',
+      'assets/images/animales-sin-fondo/CARNERO.png',
+      'assets/images/animales-sin-fondo/CEBRA.png',
+      'assets/images/animales-sin-fondo/CERDO.png',
+      'assets/images/animales-sin-fondo/CHIVO.png',
+      'assets/images/animales-sin-fondo/CIEMPIES.png',
+      'assets/images/animales-sin-fondo/CULEBRA.png',
+      'assets/images/animales-sin-fondo/DELFIN.png',
+      'assets/images/animales-sin-fondo/ELEFANTE.png',
+      'assets/images/animales-sin-fondo/GALLINA.png',
+      'assets/images/animales-sin-fondo/GALLO.png',
+      'assets/images/animales-sin-fondo/GATO.png',
+      'assets/images/animales-sin-fondo/IGUANA.png',
+      'assets/images/animales-sin-fondo/JIRAFA.png',
+      'assets/images/animales-sin-fondo/LAPA.png',
+      'assets/images/animales-sin-fondo/LEON.png',
+      'assets/images/animales-sin-fondo/MONO.png',
+      'assets/images/animales-sin-fondo/OSO.png',
+      'assets/images/animales-sin-fondo/PALOMA.png',
+      'assets/images/animales-sin-fondo/PAVO.png',
+      'assets/images/animales-sin-fondo/PERICO.png',
+      'assets/images/animales-sin-fondo/PERRO.png',
+      'assets/images/animales-sin-fondo/PESCADO.png',
+      'assets/images/animales-sin-fondo/RANA.png',
+      'assets/images/animales-sin-fondo/RATON.png',
+      'assets/images/animales-sin-fondo/TIGRE.png',
+      'assets/images/animales-sin-fondo/TORO.png',
+      'assets/images/animales-sin-fondo/VACA.png',
+      'assets/images/animales-sin-fondo/VENADO.png',
+      'assets/images/animales-sin-fondo/ZAMURO.png',
+      'assets/images/animales-sin-fondo/ZORRO.png',
 
-      // Animales MINGORE
-      'assets/images/animales/RATA-MINGORE.png',
-      'assets/images/animales/BUEY-MINGORE.png',
-      'assets/images/animales/TIGRE-MINGORE.png',
-      'assets/images/animales/CONEJO-MINGORE.png',
-      'assets/images/animales/DRAGON-MINGORE.png',
-      'assets/images/animales/SERPIENTE-MINGORE.png',
-      'assets/images/animales/CABALLO-MINGORE.png',
-      'assets/images/animales/CABRA-MINGORE.png',
-      'assets/images/animales/MONO-MINGORE.png',
-      'assets/images/animales/GALLO-MINGORE.png',
-      'assets/images/animales/PERRO-MINGORE.png',
-      'assets/images/animales/CERDO-MINGORE.png',
-
-      // Multiplicadores
-      'assets/images/multiplicadores/X1.png',
-      'assets/images/multiplicadores/X1.5.png',
-      'assets/images/multiplicadores/X2.png',
-      'assets/images/multiplicadores/X3.png',
-      'assets/images/multiplicadores/X5.png',
-      'assets/images/multiplicadores/X10.png',
-
-      // Contenedores
-      'assets/images/contenedores/aro-dorado.png',
+      // Contenedores / paneles
+      'assets/images/contenedores/buho.gif',
       'assets/images/contenedores/nombre-animal.png',
-      'assets/images/contenedores/saldo.png',
-      'assets/images/contenedores/apuesta.png',
-      'assets/images/contenedores/apuesta-total.png',
-      'assets/images/contenedores/panel-apuestas.png',
-      'assets/images/contenedores/nube-1.png',
-      'assets/images/contenedores/nube-2.png',
-      'assets/images/contenedores/resultado-victoria.png',
-      'assets/images/contenedores/resultado-derrota.png',
-
-      // Fichas
-      'assets/images/fichas/coin-bg-1.png',
-      'assets/images/fichas/coin-bg-2.png',
-      'assets/images/fichas/coin-bg-3.png',
-      'assets/images/fichas/coin-bg-4.png',
-      'assets/images/fichas/coin-bg-5.png',
-      'assets/images/fichas/coin-bg-6.png',
+      'assets/images/contenedores/rueda-resultado-derecha.png',
+      'assets/images/contenedores/rueda-resultado-izquierda.png',
+      'assets/images/contenedores/scorepanel2.png',
 
       // Rueda
-      'assets/images/rueda/puntero.png',
-      'assets/images/rueda/borde.png',
-      'assets/images/rueda/ying-yang.png',
-
-      // Botones
-      'assets/images/botones/limpiar.png',
+      'assets/images/rueda/bordedeagua.png',
+      'assets/images/rueda/centrorueda.png',
+      'assets/images/rueda/centroruedafondo.png',
+      'assets/images/rueda/puntero1.png',
 
       // SVGs
       'assets/svg/arrow.svg',

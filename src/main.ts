@@ -2,6 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { IMAGE_CONFIG } from '@angular/common';
 import { APP_INITIALIZER } from '@angular/core';
 
 import { routes } from './app/app.routes';
@@ -58,6 +59,13 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
+
+    // Las imágenes de fondo (paneles, score) se renderizan intencionalmente
+    // más pequeñas que su tamaño intrínseco; silenciamos el aviso NG0913.
+    {
+      provide: IMAGE_CONFIG,
+      useValue: { disableImageSizeWarning: true, disableImageLazyLoadWarning: true }
+    },
 
     // Configurar HttpClient con el interceptor de autenticación
     provideHttpClient(
