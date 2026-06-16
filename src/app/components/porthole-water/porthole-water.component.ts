@@ -3,11 +3,11 @@
  *
  *   <app-porthole-water
  *     [size]="320"
- *     [frameSrc]="'assets/porthole.png'"
+ *     [frameSrc]="'assets/images/rueda/centrorueda.png'"
  *     [waterLevel]="0.5"
  *   ></app-porthole-water>
  *
- * Copy the brass frame PNG into src/assets/ and point `frameSrc` at it.
+ * Provide the brass frame PNG via `frameSrc` (required input).
  * The glass geometry inputs (glassCx/glassCy/glassR) are measured for THAT
  * artwork — re-measure if you swap it.
  *
@@ -211,7 +211,7 @@ const BACK_H: Harmonic[] = [
 })
 export class PortholeWaterComponent implements OnChanges, OnInit {
   @Input() size = 520;
-  @Input() frameSrc = 'assets/porthole.png';
+  @Input() frameSrc = '';
   @Input() glassCx = 0.501;
   @Input() glassCy = 0.495;
   @Input() glassR = 0.283;

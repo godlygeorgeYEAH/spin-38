@@ -22,8 +22,8 @@
  *
  *   mostrarResultado() {
  *     this.reveal.play({
- *       leftImage:  'animal_03.png',     // filename (resuelto con basePath)
- *       rightImage: 'animal_07.png',     // o una URL absoluta / CDN
+ *       leftImage:  'DELFIN.png',        // filename (resuelto con basePath)
+ *       rightImage: 'ZORRO.png',         // o una URL absoluta / CDN
  *       text: 'DUPLA',
  *       enterMs: 2500, holdMs: 10000, exitMs: 2500,  // opcionales (ms)
  *       shrinkScale: 0.1,                // escala final (opcional)

@@ -5,7 +5,7 @@
  * de las imágenes de forma DINÁMICA.
  *
  * Las imágenes pueden venir de cualquier origen:
- *   - assets locales            -> 'assets/animals/animal_03.png'
+ *   - assets locales            -> 'assets/images/animales-sin-fondo/DELFIN.png'
  *   - una URL absoluta / CDN     -> 'https://cdn.misitio.com/animals/zorro.png'
  *   - el filesystem de Capacitor -> Capacitor.convertFileSrc(uri)
  *   - tu backend (data-url, etc.)
@@ -72,10 +72,10 @@ export class RevealService {
    * Base dinámica para resolver filenames relativos. Cámbiala en runtime
    * (p.ej. según idioma, tema o entorno):
    *
-   *   this.reveal.basePath = 'assets/animals/';
+   *   this.reveal.basePath = 'assets/images/animales-sin-fondo/';
    *   this.reveal.basePath = 'https://cdn.misitio.com/animals/';
    */
-  basePath = 'assets/animals/';
+  basePath = 'assets/images/animales-sin-fondo/';
 
   /**
    * Pool de X imágenes que el juego puede reproducir. Pueden ser filenames

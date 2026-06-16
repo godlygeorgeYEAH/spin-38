@@ -82,7 +82,7 @@ El servicio resuelve cada `leftImage` / `rightImage` con el método `resolve()`:
 
 ```ts
 // Cambiar la base en cualquier momento:
-this.reveal.basePath = 'assets/animals/';                 // assets locales
+this.reveal.basePath = 'assets/images/animales-sin-fondo/'; // assets locales
 this.reveal.basePath = 'https://cdn.misitio.com/animals/'; // CDN
 ```
 
@@ -147,7 +147,7 @@ export class GamePage {
 
   async onSpinResult(a: string, b: string, etiqueta: string) {
     await this.reveal.play({
-      leftImage: a,          // p.ej. 'animal_03.png' o una URL
+      leftImage: a,          // p.ej. 'DELFIN.png' o una URL
       rightImage: b,
       text: etiqueta,        // p.ej. 'MOROCHA'
     });
