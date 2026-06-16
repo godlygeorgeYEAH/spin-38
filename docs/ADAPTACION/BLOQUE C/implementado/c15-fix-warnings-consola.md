@@ -26,7 +26,7 @@ Con el agua llena, `surfaceY - (cy - R)` daba ~`-2.8e-14` (negativo por
 punto flotante), que SVG rechaza.
 
 **Fix:** se clampa la altura del rect de aire a `>= 0` en
-`porthole-water.component.ts` (`airRectH = Math.max(0, ...)`).
+`porthole-water.component.ts` (`airRectH = Math.max(0, ...)`)
 
 ### 4. Código muerto con referencias a imágenes inexistentes
 - Borrado `porthole-water.component.old.ts` (backup sin uso).
