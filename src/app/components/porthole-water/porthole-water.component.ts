@@ -159,7 +159,7 @@ const BACK_H: Harmonic[] = [
 
       <g [attr.clip-path]="'url(#' + uid + '-glass)'">
         <circle [attr.cx]="cx" [attr.cy]="cy" [attr.r]="R" [attr.fill]="airColor" />
-        <rect [attr.x]="cx - R" [attr.y]="cy - R" [attr.width]="R * 2" [attr.height]="surfaceY - (cy - R)" [attr.fill]="'url(#' + uid + '-air)'" />
+        <rect [attr.x]="cx - R" [attr.y]="cy - R" [attr.width]="R * 2" [attr.height]="airRectH" [attr.fill]="'url(#' + uid + '-air)'" />
 
         <g class="pw-sway-g" [style.transform-origin]="cx + 'px ' + cy + 'px'" [style.--pw-sway]="sway + 'deg'" [style.--pw-sway-dur]="swayDur + 's'" [style.animation]="sway > 0 ? null : 'none'">
           <path [attr.d]="backPath" [attr.fill]="color" opacity="0.5">
@@ -260,7 +260,7 @@ export class PortholeWaterComponent implements OnChanges, OnInit {
   constructor(private cdr: ChangeDetectorRef, private zone: NgZone) {}
 
   cx = 0; cy = 0; R = 0;
-  wavelength = 0; surfaceY = 0; bottomY = 0;
+  wavelength = 0; surfaceY = 0; bottomY = 0; airRectH = 0;
   dir = 1; strokeW = 2; swayDur = 8;
   frontPath = ''; backPath = ''; surfaceLine = '';
   bubbles: PWBubble[] = [];
@@ -391,6 +391,9 @@ export class PortholeWaterComponent implements OnChanges, OnInit {
     const x1 = cx + R + wavelength;
     const bottomY = (this.bottomY = cy + R * 1.25);
     const surfaceY = (this.surfaceY = cy + R - this.level * (2 * R));
+    // Clamp to avoid tiny negative values from floating-point error when the
+    // water is full (surfaceY ≈ cy - R), which SVG rejects for <rect> height.
+    this.airRectH = Math.max(0, surfaceY - (cy - R));
     this.dir = this.flowRight ? 1 : -1;
     this.strokeW = Math.max(1.5, this.size * 0.006);
     this.swayDur = Math.max(this.waveSpeed * 1.6, 5);
