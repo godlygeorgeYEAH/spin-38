@@ -813,6 +813,234 @@
 }  */
 
 /* ============================================
+ * BREAKPOINT TV-HD: TV 32" HD 720p (1366x768)
+ * PC conectada a TV HD por HDMI, Windows 100% scaling
+ * DevTools: 1366 x 768
+ * ============================================ */
+@media (min-width: 1356px) and (max-width: 1366px) and (min-height: 758px) and (max-height: 768px) {
+  :root {
+    /* === RESULTADO IZQUIERDA === */
+    --resultado-izq-size: 185px;
+    --resultado-izq-offset-x: 0px;
+    --resultado-izq-offset-y: -2.8vh;
+
+    /* === RESULTADO DERECHA === */
+    --resultado-der-size: 185px;
+    --resultado-der-offset-x: 0px;
+    --resultado-der-offset-y: -2.8vh;
+
+    /* === WHEEL & GAME AREA === */
+    --wheel-margin-top: 5%;
+    --wheel-right: -50vh;
+    --wheel-center-size: 40%;
+    --wheel-border-size: 118vh;
+    --wheel-diameter: 80vh;
+    --wheel-border-transform-x: 0px;
+    --wheel-border-transform-y: 0px;
+    --pointer-size: 150px;
+    --pointer-top: -15px;
+
+    /* === ANIMAL DISPLAY === */
+    --animal-image-size: 70px;
+    --animal-image-translate-x: 0%;
+    --animal-image-translate-y: -10%;
+    --animal-name-tag-width: 24%;
+    --animal-name-tag-height: 17%;
+    --animal-name-tag-top: 10%;
+    --animal-name-tag-left: 9%;
+    --animal-name-tag-translate-x: 0%;
+    --animal-name-tag-translate-y: 0%;
+    --animal-name-font-size: 0.75rem;
+
+    /* === CLOCK === */
+    --clock-widget-width: 355px;
+    --clock-widget-min-height: 285px;
+    --clock-widget-bottom: 0rem;
+    --clock-widget-left: 0rem;
+    --clock-value-font-size: 1.7rem;
+    --clock-value-top: 103px;
+    --clock-value-left: 46px;
+    --countdown-font-size: 1.85rem;
+    --countdown-top: 103px;
+    --countdown-left: -85px;
+    /* === BUHO GIF === */
+    --buho-width: 103px;
+    --buho-top: 139px;
+    --buho-left: 203px;
+
+    /* === LOGO === */
+    --logo-size: 153px;
+    --logo-top: 15px;
+    --logo-left: 15px;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
+
+    /* === MODALS === */
+    --modal-width: 80%;
+    --modal-max-width: 700px;
+    --history-title-font-size: 1rem;
+    --settings-title-font-size: 2.3rem;
+    /* === RESULT CARD === */
+    --result-card-width: 90%;
+    --result-card-max-width: 700px;
+    --result-card-height: auto;
+    --result-card-max-height: 93.5vh;
+    --result-card-padding: 15px;
+    --result-title-font-size: 2.5rem;
+    --win-amount-font-size: 2.1rem;
+
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 100%;
+    --history-label-font-size: 0.9rem;
+    --history-entry-gap: 5px;
+    --history-entry-inner-gap: 21px;
+    --history-entry-padding: 3px 6px;
+    --history-entry-image-size: 40px;
+    --history-time-font-size: 0.96rem;
+    --history-entry-font-size: 1.35rem;
+
+    /* === RIGHT RESULTS PANEL === */
+    --right-panel-top: 2rem;
+    --right-panel-right: 1rem;
+    --right-panel-width: min(355px, 90vw);
+    --right-panel-max-width: 600px;
+    --right-panel-z-index: 950;
+    --right-panel-border-radius: 1rem;
+    --right-panel-transform: none;
+
+    /* === RIGHT RESULTS PANEL CONTENT === */
+    --right-panel-content-top: 0;
+    --right-panel-content-right: 0;
+    --right-panel-content-bottom: 0;
+    --right-panel-content-left: 0;
+    --right-panel-content-transform: none;
+    --right-panel-content-padding: 0.9rem;
+    --right-panel-content-h3-font-size: 1.4rem;
+    --right-panel-content-p-font-size: 0.6rem;
+    --right-panel-content-p-line-height: 1.4;
+
+    /* Globales */
+  }
+}
+
+/* ============================================
+ * BREAKPOINT TV-FHD-125: TV 1080p / Windows 125% scaling (1536x864)
+ * PC conectada a TV Full HD por HDMI, Windows 125% scaling
+ * DevTools: 1536 x 864
+ * ============================================ */
+@media (min-width: 1526px) and (max-width: 1536px) and (min-height: 854px) and (max-height: 864px) {
+  :root {
+    /* === RESULTADO IZQUIERDA === */
+    --resultado-izq-size: 210px;
+    --resultado-izq-offset-x: 0px;
+    --resultado-izq-offset-y: -2.8vh;
+
+    /* === RESULTADO DERECHA === */
+    --resultado-der-size: 210px;
+    --resultado-der-offset-x: 0px;
+    --resultado-der-offset-y: -2.8vh;
+
+    /* === WHEEL & GAME AREA === */
+    --wheel-margin-top: 5%;
+    --wheel-right: -50vh;
+    --wheel-center-size: 40%;
+    --wheel-border-size: 118vh;
+    --wheel-diameter: 80vh;
+    --wheel-border-transform-x: 0px;
+    --wheel-border-transform-y: 0px;
+    --pointer-size: 168px;
+    --pointer-top: -15px;
+
+    /* === ANIMAL DISPLAY === */
+    --animal-image-size: 80px;
+    --animal-image-translate-x: 0%;
+    --animal-image-translate-y: -10%;
+    --animal-name-tag-width: 24%;
+    --animal-name-tag-height: 17%;
+    --animal-name-tag-top: 10%;
+    --animal-name-tag-left: 9%;
+    --animal-name-tag-translate-x: 0%;
+    --animal-name-tag-translate-y: 0%;
+    --animal-name-font-size: 0.8rem;
+
+    /* === CLOCK === */
+    --clock-widget-width: 400px;
+    --clock-widget-min-height: 320px;
+    --clock-widget-bottom: 0rem;
+    --clock-widget-left: 0rem;
+    --clock-value-font-size: 1.92rem;
+    --clock-value-top: 116px;
+    --clock-value-left: 52px;
+    --countdown-font-size: 2.08rem;
+    --countdown-top: 116px;
+    --countdown-left: -96px;
+    /* === BUHO GIF === */
+    --buho-width: 116px;
+    --buho-top: 156px;
+    --buho-left: 228px;
+
+    /* === LOGO === */
+    --logo-size: 172px;
+    --logo-top: 16px;
+    --logo-left: 16px;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
+
+    /* === MODALS === */
+    --modal-width: 80%;
+    --modal-max-width: 780px;
+    --history-title-font-size: 1.1rem;
+    --settings-title-font-size: 2.6rem;
+    /* === RESULT CARD === */
+    --result-card-width: 90%;
+    --result-card-max-width: 780px;
+    --result-card-height: auto;
+    --result-card-max-height: 93.5vh;
+    --result-card-padding: 16px;
+    --result-title-font-size: 2.8rem;
+    --win-amount-font-size: 2.4rem;
+
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 100%;
+    --history-label-font-size: 1rem;
+    --history-entry-gap: 6px;
+    --history-entry-inner-gap: 24px;
+    --history-entry-padding: 3px 6px;
+    --history-entry-image-size: 45px;
+    --history-time-font-size: 1.08rem;
+    --history-entry-font-size: 1.52rem;
+
+    /* === RIGHT RESULTS PANEL === */
+    --right-panel-top: 2rem;
+    --right-panel-right: 1.05rem;
+    --right-panel-width: min(400px, 90vw);
+    --right-panel-max-width: 640px;
+    --right-panel-z-index: 950;
+    --right-panel-border-radius: 1rem;
+    --right-panel-transform: none;
+
+    /* === RIGHT RESULTS PANEL CONTENT === */
+    --right-panel-content-top: 0;
+    --right-panel-content-right: 0;
+    --right-panel-content-bottom: 0;
+    --right-panel-content-left: 0;
+    --right-panel-content-transform: none;
+    --right-panel-content-padding: 1rem;
+    --right-panel-content-h3-font-size: 1.6rem;
+    --right-panel-content-p-font-size: 0.68rem;
+    --right-panel-content-p-line-height: 1.4;
+
+    /* Globales */
+  }
+}
+
+/* ============================================
  * BREAKPOINT 5: DESKTOP (1024-1799px)
  * ~4% de usuarios mÃ³viles + mayorÃ­a desktop
  *
@@ -1430,3 +1658,119 @@
  *
  * TOTAL COBERTURA: ~100% de dispositivos modernos + iOS/Samsung 2020-2026
  * ============================================ */
+
+/* ============================================
+ * BREAKPOINT TV-4K: TV 4K UHD / Windows 100% scaling (3840x2160)
+ * PC conectada a TV 4K por HDMI, Windows 100% scaling
+ * DevTools: 3840 x 2160
+ * ============================================ */
+@media (min-width: 3830px) and (max-width: 3840px) and (min-height: 2150px) and (max-height: 2160px) {
+  :root {
+    /* === RESULTADO IZQUIERDA === */
+    --resultado-izq-size: 840px;
+    --resultado-izq-offset-x: 0px;
+    --resultado-izq-offset-y: 0px;
+
+    /* === RESULTADO DERECHA === */
+    --resultado-der-size: 840px;
+    --resultado-der-offset-x: 0px;
+    --resultado-der-offset-y: 0px;
+
+    /* === WHEEL & GAME AREA === */
+    --wheel-margin-top: 15rem;
+    --wheel-right: auto;
+    --wheel-center-size: 30%;
+    --wheel-border-size: 110vh;
+    --wheel-margin-left: 10%;
+    --wheel-diameter: 1350px;
+    --wheel-border-transform-x: 0px;
+    --wheel-border-transform-y: 0px;
+    --pointer-size: 450px;
+    --pointer-top: -75px;
+
+    /* === ANIMAL DISPLAY === */
+    --animal-image-size: 338px;
+    --animal-image-translate-x: 0%;
+    --animal-image-translate-y: -10%;
+    --animal-name-tag-width: 24%;
+    --animal-name-tag-height: 17%;
+    --animal-name-tag-top: 10%;
+    --animal-name-tag-left: 9%;
+    --animal-name-tag-translate-x: 0%;
+    --animal-name-tag-translate-y: 0%;
+    --animal-name-font-size: 1.35rem;
+
+    /* === CLOCK === */
+    --clock-widget-width: 720px;
+    --clock-widget-min-height: 648px;
+    --clock-widget-bottom: 0.05em;
+    --clock-widget-left: 0rem;
+    --clock-value-font-size: 2.7rem;
+    --clock-value-top: 4.5vh;
+    --clock-value-left: 4.5vh;
+    --countdown-font-size: 2.7rem;
+    --countdown-color-font: #fff;
+    --countdown-top: 13.5vh;
+    --countdown-left: -13.5vh;
+    /* === BUHO GIF === */
+    --buho-width: 210px;
+    --buho-top: 323px;
+    --buho-left: 413px;
+
+    /* === LOGO === */
+    --logo-size: 384px;
+    --logo-top: 38px;
+    --logo-left: 60px;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
+
+    /* === MODALS === */
+    --modal-width: 80%;
+    --modal-max-width: 1200px;
+    --history-title-font-size: 1.8rem;
+    --settings-title-font-size: 4.8rem;
+    /* === RESULT CARD === */
+    --result-card-width: 70%;
+    --result-card-max-width: 1800px;
+    --result-card-height: auto;
+    --result-card-max-height: 93.5vh;
+    --result-card-padding: 30px;
+    --result-title-font-size: 5.25rem;
+    --win-amount-font-size: 4.5rem;
+
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: -25%;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 100%;
+    --history-label-font-size: 2.625rem;
+    --history-entry-gap: 9px;
+    --history-entry-inner-gap: 23px;
+    --history-entry-padding: 9px 15px;
+    --history-entry-image-size: 113px;
+    --history-time-font-size: 2.85rem;
+    --history-entry-font-size: 1.5rem;
+
+    /* === RIGHT RESULTS PANEL === */
+    --right-panel-top: 12rem;
+    --right-panel-right: 1.5rem;
+    --right-panel-width: min(900px, 45vw);
+    --right-panel-max-width: 1350px;
+    --right-panel-z-index: 950;
+    --right-panel-border-radius: 1rem;
+    --right-panel-transform: none;
+
+    /* === RIGHT RESULTS PANEL CONTENT === */
+    --right-panel-content-top: 0vh;
+    --right-panel-content-right: 0;
+    --right-panel-content-bottom: 0;
+    --right-panel-content-left: 0;
+    --right-panel-content-transform: none;
+    --right-panel-content-padding: 5.625rem;
+    --right-panel-content-h3-font-size: 1.5rem;
+    --right-panel-content-p-font-size: 1.725rem;
+    --right-panel-content-p-line-height: 1.45;
+
+    /* Globales */
+  }
+}
