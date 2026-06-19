@@ -13,4 +13,4 @@ Este es un experimento visual, no una feature. El entregable es una captura/demo
 
 ## Estado
 
-Pendiente.
+Implementado.

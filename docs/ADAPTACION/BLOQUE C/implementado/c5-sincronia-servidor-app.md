@@ -106,15 +106,11 @@ private sendAck(roundId: number, attempt = 1): void {
 
 ---
 
-### R5 — No hay animación de reveal al reconectar en `revealing` ⏳ Pendiente
+### R5 — Animación de reveal al reconectar en `revealing` ✅ Implementado
 
 **Escenario:** El cliente arranca o reconecta mientras el servidor está en `revealing`.
 
-**Estado actual:** El servidor ya incluye `outerPosition` e `innerPosition` en la respuesta cuando `state === 'revealing'`. El cliente los recibe pero los ignora — trata `revealing` igual que `idle` (actualiza countdown y reprograma poll).
-
-**Consecuencia:** Las reconexiones durante `revealing` resultan en pantalla sin animación de resultado. Para una pantalla de agencia que no se recarga intencionalmente el impacto es bajo.
-
-**Pendiente:** Leer `outerPosition`/`innerPosition` en `handleRoundData()` cuando `state === 'revealing'` y disparar el overlay de resultado si el cliente estaba en `IDLE` (reconexión, no transición normal).
+**Implementación:** Se leen `outerPosition`/`innerPosition` en `handleRoundData()` cuando `state === 'revealing'` y se dispara el overlay de resultado si el cliente estaba en `IDLE` (reconexión, no transición normal).
 
 ---
 
@@ -180,4 +176,4 @@ pestaña visible
 | R1 | Arranque en mitad de `spinning` | Alto — animación desfasada | ✅ Implementado |
 | R4 | `REVEAL_DURATION_SEC` hardcodeado | Bajo — countdown incorrecto | ✅ Implementado |
 | R6 | `lastKnownIdleDurationSec` inferido | Bajo — countdown incorrecto | ✅ Implementado |
-| R5 | No hay reveal al reconectar en `revealing` | Bajo — solo reconexiones | ⏳ Pendiente |
+| R5 | No hay reveal al reconectar en `revealing` | Bajo — solo reconexiones | ✅ Implementado |

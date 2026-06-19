@@ -94,4 +94,4 @@ Reemplazar los colores hardcoded en `.ring-left` y `.ring-right`:
 
 ## Estado
 
-Pendiente de implementación.
+Implementado.

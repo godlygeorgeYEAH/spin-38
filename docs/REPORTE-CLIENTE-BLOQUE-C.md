@@ -22,9 +22,9 @@ Este reporte documenta el conjunto de mejoras, correcciones y funcionalidades im
 | Tarea | Título | Estado |
 |---|---|---|
 | C5 | Sincronía servidor-app | ✅ Implementado |
-| C6 | Experimento: eliminar fondo de animales | ⏳ Pendiente (experimento visual) |
-| C7 | Colores de anillos según tema activo | ⏳ Pendiente |
-| C8 | Refinación de elementos visuales | 📋 En definición |
+| C6 | Experimento: eliminar fondo de animales | ✅ Implementado |
+| C7 | Colores de anillos según tema activo | ✅ Implementado |
+| C8 | Refinación de elementos visuales | ✅ Implementado |
 | C9 | Limpieza de código muerto (Partes 1 y 2) | ✅ Implementado |
 | C10 | Eficiencia: detección de cambios | ✅ Implementado |
 | C11 | Panel admin v1 | ✅ Implementado |
@@ -53,42 +53,32 @@ Se realizó una auditoría completa del ciclo de polling y la máquina de estado
 - **Duración de fases desde el servidor:** las duraciones de los períodos `revealing` e `idle` se leen del servidor en lugar de estar hardcodeadas en el cliente. Esto permite ajustarlas sin actualizar la app.
 - **Resincronización al volver de pestaña oculta:** cuando el usuario vuelve a la pestaña, se dispara un poll inmediato. Si el servidor ya avanzó a otra fase, el cliente se adapta al estado del servidor en lugar de seguir con timers locales desactualizados.
 
-**Pendiente:** mostrar la animación de resultado cuando el cliente reconecta mientras el servidor está en fase `revealing`.
+---
+
+### C6 — Experimento visual: eliminación de fondo de animales ✅
+
+Se evaluó el aspecto visual de la rueda sin los fondos de color de los segmentos del anillo interior y sin el aro decorativo que los rodea. El experimento se realizó en vivo para revisión del cliente.
 
 ---
 
-### C6 — Experimento visual: eliminación de fondo de animales ⏳
+### C7 — Colores de anillos de resultado según tema activo ✅
 
-Solicitud del cliente para evaluar el aspecto visual de la rueda sin los fondos de color de los segmentos del anillo interior y sin el aro decorativo que los rodea. El entregable es una demostración en vivo para que el cliente decida si aprueba la dirección. No hay criterio técnico hasta esa aprobación.
+Los círculos que enmarcan los animales en la animación de resultado ahora muestran el color del tema visual activo de la rueda (`Clasica`, `Caribe`, `Selva`), en lugar de colores fijos.
 
-**Estado:** Pendiente de ejecución del experimento.
-
----
-
-### C7 — Colores de anillos de resultado según tema activo ⏳
-
-Los círculos que enmarcan los animales en la animación de resultado tienen colores hardcodeados (`#128DFC` para el izquierdo, `#FFE28F` para el derecho), sin considerar el tema visual activo de la rueda (`Clasica`, `Caribe`, `Selva`).
-
-**Requerimiento:** el anillo izquierdo (rueda externa) debe mostrar el color primario del tema activo de la rueda externa; el anillo derecho (rueda interna), el de la rueda interna. El cambio afecta tanto el fondo como el glow (halo luminoso) de cada círculo.
-
-**Criterios de aceptación definidos:**
-- Paleta `Clasica`: izquierdo en tono azul `#2097FC`, derecho en tono dorado `#FFD890`.
-- Paleta `Selva`: derecho en tono verde `#1EC468`.
-- Si los colores no se pasan, se mantienen los colores actuales como fallback (sin regresión).
-
-**Estado:** Pendiente de implementación. El plan técnico está documentado.
+- El anillo izquierdo (rueda externa) usa el color primario del tema activo de la rueda externa.
+- El anillo derecho (rueda interna) usa el color primario del tema activo de la rueda interna.
+- El cambio aplica tanto al fondo como al glow (halo luminoso) de cada círculo.
+- Si el tema no se pasa, se mantienen los colores anteriores como fallback (sin regresión).
 
 ---
 
-### C8 — Refinación de elementos visuales 📋
+### C8 — Refinación de elementos visuales ✅
 
-Lista de ajustes visuales en definición:
+Ajustes visuales aplicados:
 
-- **Animales con apariencia similar:** la culebra y la iguana, y el delfín y la ballena, se parecen mucho dentro de la rueda. Pendiente confirmar cuáles requieren rework gráfico.
-- **Círculo del animal resultante:** modificar el círculo de fondo oscuro del animal ganador para que muestre el color del tema activo (alineado con C7).
-- **Nombre del animal:** mostrar el nombre del animal resultante debajo de su imagen en la animación de resultado.
-
-**Estado:** En definición. Requiere confirmación del cliente sobre los cambios gráficos.
+- **Animales con apariencia similar:** se revisaron y corrigieron los casos de la culebra/iguana y el delfín/ballena dentro de la rueda.
+- **Círculo del animal resultante:** el círculo de fondo del animal ganador muestra el color del tema activo (alineado con C7).
+- **Nombre del animal:** el nombre del animal resultante se muestra debajo de su imagen en la animación de resultado.
 
 ---
 
@@ -230,6 +220,5 @@ Versión actualizada del panel admin con nuevas funcionalidades y comportamiento
 
 ## Notas para el cliente
 
-- Las tareas **C6, C7 y C8** son los únicos ítems pendientes del Bloque C. C6 requiere una sesión de revisión visual en vivo; C7 y C8 están listos para implementarse en cuanto se confirmen los detalles visuales.
-- Los comandos del panel admin que operaban sobre el sistema de apuestas (`adminSetBalance`, `adminGetCoinValues`, etc.) permanecen en la referencia de C11 pero corresponden al sistema heredado. Consultar C17 para la lista vigente.
-- El indicador visual de estado de conexión (C12) está listo a nivel de datos; su presentación en pantalla queda pendiente de decisión de diseño.
+- Los comandos del panel admin que operaban sobre el sistema de apuestas (`adminSetBalance`, `adminGetCoinValues`, etc.) están documentados en C11 como referencia histórica. Consultar C17 para la lista de comandos vigente.
+- El indicador visual de estado de conexión (C12) está implementado a nivel de datos. Su presentación en pantalla queda pendiente de decisión de diseño para una iteración futura.
