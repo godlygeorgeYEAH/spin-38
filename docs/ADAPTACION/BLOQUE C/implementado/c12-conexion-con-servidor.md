@@ -82,4 +82,4 @@ this.orchestrator.connectionStatus$.subscribe(status => {
 
 ## Estado
 
-Implementado
+Implementado - Decisión de UI PENDIENTE
