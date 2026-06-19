@@ -519,6 +519,20 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       console.log(this.orchestrator.triggerManualSpin(outer, inner, text));
     };
 
+    (window as any).adminSpinResult = (text: string) => {
+      if (!this.adminAuth.isAuthenticated()) {
+        console.log('❌ Debes estar autenticado para iniciar un giro manual\n💡 Usa: adminLogin("admin", "contraseña")');
+        return;
+      }
+      if (!text?.trim()) {
+        console.log('❌ adminSpinResult requiere un texto. Ej: adminSpinResult("DUPLA ESPECIAL")');
+        return;
+      }
+      const outer = this.animalsForWheel[Math.floor(Math.random() * this.animalsForWheel.length)].position;
+      const inner = this.animalsForWheel[Math.floor(Math.random() * this.animalsForWheel.length)].position;
+      console.log(this.orchestrator.triggerManualSpin(outer, inner, text));
+    };
+
     // Ping al servidor
     (window as any).adminPingServer = () => {
       if (!this.adminAuth.isAuthenticated()) {
@@ -596,6 +610,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     console.log('%c• adminSetPerformanceTier("tier")', 'color: #3b82f6;', '- Cambiar tier: "high", "medium" o "low"');
     console.log('%c\n🎮 CONTROL DE RONDA', 'color: #10b981; font-weight: bold;');
     console.log('%c• adminSpinManual(outerPos?, innerPos?, text?)', 'color: #3b82f6;', '- Giro manual local (posiciones opcionales como strings, ej. "17", "3"; text activa animación de resultado)');
+    console.log('%c• adminSpinResult(text)', 'color: #3b82f6;', '- Giro con posiciones aleatorias y animación de resultado con el texto dado');;
     console.log('%c• adminPingServer()', 'color: #3b82f6;', '- Probar conexión: latencia y estado HTTP del servidor');
     console.log('%c• adminConnectionStatus()', 'color: #3b82f6;', '- Observar connectionStatus$ en tiempo real (retorna suscripción)');
     console.log('%c\n🎬 DEBUG ANIMACIÓN RESULTADO', 'color: #10b981; font-weight: bold;');

@@ -105,24 +105,41 @@ adminSetInnerWheelDuration(6000)
 
 | Comando | Descripción |
 |---|---|
-| `adminSpinManual()` | Giro local con posiciones aleatorias |
-| `adminSpinManual("17", "3")` | Giro local con posiciones específicas |
+| `adminSpinManual()` | Giro local con posiciones aleatorias, sin animación de resultado |
+| `adminSpinManual("17", "3")` | Giro local con posiciones específicas, sin animación de resultado |
+| `adminSpinManual("17", "3", "DUPLA")` | Giro con posiciones específicas y animación de resultado |
+| `adminSpinResult("DUPLA ESPECIAL")` | Giro con posiciones aleatorias y animación de resultado |
 | `adminPingServer()` | Probar conexión: latencia y estado HTTP del servidor |
 | `adminConnectionStatus()` | Observar `connectionStatus$` en tiempo real |
 
-#### `adminSpinManual(outerPosition?, innerPosition?)`
+#### `adminSpinManual(outerPosition?, innerPosition?, text?)`
 
 Dispara la animación de giro sin pasar por el servidor ni registrar apuesta.
 
-- `outerPosition`: posición de la rueda externa (string). Si se omite, se elige al azar del mapa de segmentos (`animalsForWheel`).
-- `innerPosition`: posición de la rueda interna (string). Si se omite, se elige al azar de los valores de multiplicadores.
+- `outerPosition`: posición de la rueda externa (string). Si se omite, se elige al azar de `animalsForWheel`.
+- `innerPosition`: posición de la rueda interna (string). Si se omite, se elige al azar de `animalsForWheel`.
+- `text`: texto que se muestra en la animación de resultado (ej. `"DUPLA ESPECIAL"`). Si se omite, el giro termina sin animación de resultado, igual que en producción cuando el servidor no devuelve `resultLabel`.
 - Usa las duraciones de giro configuradas en ese momento (`spinDuration` / `innerWheelSpinDuration`).
-- El polling al servidor se suspende durante el giro y se reactiva automáticamente al terminar el reveal.
+- El polling al servidor se suspende durante el giro y se reactiva automáticamente al terminar.
 - No puede ejecutarse si el sistema está en estado `SPINNING` o `REVEALING`.
 
 ```javascript
-adminSpinManual()           // posiciones aleatorias
-adminSpinManual("7", "5")   // outer=7, inner=5
+adminSpinManual()                          // posiciones aleatorias, sin resultado
+adminSpinManual("7", "5")                  // outer=7, inner=5, sin resultado
+adminSpinManual("7", "5", "DUPLA")         // outer=7, inner=5, con animación de resultado
+```
+
+#### `adminSpinResult(text)`
+
+Atajo para disparar un giro con posiciones aleatorias y animación de resultado. Equivale a `adminSpinManual(undefined, undefined, text)`.
+
+- `text`: obligatorio. Texto que se muestra en la animación de resultado.
+- Las posiciones se eligen al azar de `animalsForWheel`.
+- Replica exactamente el flujo de producción: giro → ruedas se detienen → overlay de resultado con el texto dado.
+
+```javascript
+adminSpinResult("DUPLA ESPECIAL")
+adminSpinResult("MOROCHA")
 ```
 
 #### `adminPingServer()`
@@ -177,8 +194,8 @@ adminPingServer()
 // 4. Ajustar balance para pruebas
 adminSetBalance(100000)
 
-// 5. Hacer un giro de prueba
-adminSpinManual()
+// 5. Hacer un giro de prueba (con animación de resultado)
+adminSpinResult("DUPLA ESPECIAL")
 
 // 6. Ver transacciones generadas
 adminGetTransactions()
@@ -215,7 +232,7 @@ Los comandos de admin están diseñados para no contaminar la consola:
 |---|---|
 | `src/app/services/admin-auth.service.ts` | Autenticación, sesión, cambio de contraseña |
 | `src/app/services/api.service.ts` | Método `ping()` usado por `adminPingServer` |
-| `src/app/services/round-orchestrator.service.ts` | Método `triggerManualSpin()` usado por `adminSpinManual` |
+| `src/app/services/round-orchestrator.service.ts` | Método `triggerManualSpin()` usado por `adminSpinManual` y `adminSpinResult` |
 | `src/app/home/home.page.ts` | Exposición de todos los comandos en `window` (`setupAdminCommands`) |
 | `mock-server.js` | Endpoint `GET /api/health` para `adminPingServer` |
 
