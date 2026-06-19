@@ -993,24 +993,9 @@
 }
 
 /* ============================================
- * BREAKPOINT 5: DESKTOP (1024-1799px)
- * ~4% de usuarios mÃ³viles + mayorÃ­a desktop
- *
- * DISPOSITIVOS REALES:
- * APPLE:
- * - iPad Pro 12.9: 1024Ã—1366px (pixel ratio 2)
- *
- * MICROSOFT SURFACE:
- * - Surface Pro 3: 1024Ã—1440px (pixel ratio 1.5/1.4)
- * - Surface Pro 2: 720Ã—1280px (pixel ratio 1.5)
- * - Surface Pro: 720Ã—1280px (pixel ratio 1.5)
- * - Surface: 768Ã—1366px (pixel ratio 1)
- *
- * LAPTOPS COMUNES (no listados en dataset pero comunes):
- * - 1366Ã—768px (HD)
- * - 1440Ã—900px (MacBook Air)
- *
- * Desktop y laptops estÃ¡ndar
+ * BREAKPOINT TV-FHD: TV Full HD / Windows 100% scaling (1920x1080)
+ * PC conectada a TV Full HD por HDMI, Windows 100% scaling
+ * DevTools: 1920 x 1080
  * ============================================ */
 @media (min-width: 1910px) and (max-width: 1920px) and (min-height: 945px) and (max-height: 1080px) {
   :root {
@@ -1117,16 +1102,9 @@
 }   
 
 /* ============================================
- * BREAKPOINT 6: LARGE DESKTOP (1800px+)
- * ~1% de usuarios
- *
- * DISPOSITIVOS REALES:
- * Monitores grandes:
- * - 2K: 2560Ã—1440px  
- * - 4K: 3840Ã—2160px
- * - Ultra-wide: 3440Ã—1440px
- *
- * No listados en el dataset mÃ³vil, pero comunes en desktop
+ * BREAKPOINT TV-QHD: TV 4K / Windows 150% scaling (2560x1440)
+ * PC conectada a TV 4K por HDMI, Windows 150% scaling (default en 4K)
+ * DevTools: 2560 x 1440
  * ============================================ */
 @media (min-width: 2510px) and (max-width: 2560px) and (min-height: 1307px) and (max-height: 1440px)   {
   :root {
@@ -1237,16 +1215,9 @@
 }
 
 /* ============================================
- * BREAKPOINT 6: LARGE DESKTOP (1800px+) en modo portrait 
- * ~1% de usuarios
- *
- * DISPOSITIVOS REALES:
- * Monitores grandes:
- * - 2K: 2560Ã—1440px  
- * - 4K: 3840Ã—2160px
- * - Ultra-wide: 3440Ã—1440px
- *
- * No listados en el dataset mÃ³vil, pero comunes en desktop
+ * BREAKPOINT TV-QHD-PORTRAIT: TV 4K / Windows 150% scaling en portrait (2560x+)
+ * PC conectada a TV 4K por HDMI, Windows 150% scaling, monitor en vertical
+ * DevTools: 2560+ ancho con orientation: portrait
  * ============================================ */
 @media (min-width: 2510px) and (orientation: portrait)   {
   :root {
