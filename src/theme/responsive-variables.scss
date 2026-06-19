@@ -153,12 +153,6 @@
     --modal-max-width: 550px;
     --history-title-font-size: 2rem;
     --settings-title-font-size: 2rem;
-    /* === RESULT CARD === 
-    --result-card-width: 90%;
-    --result-card-max-width: 95vh;
-    --result-card-height: auto;
-    --result-card-max-height: 82.5vh;
-    --result-card-padding: 20px;
     --result-title-font-size: 2rem;
     --win-amount-font-size: 2.8rem;
 
@@ -273,12 +267,6 @@
     --modal-max-width: 550px;
     --history-title-font-size: 2rem;
     --settings-title-font-size: 2rem;
-    /* === RESULT CARD === 
-    --result-card-width: 90%;
-    --result-card-max-width: 95vh;
-    --result-card-height: auto;
-    --result-card-max-height: 85vh;
-    --result-card-padding: 20px;
     --result-title-font-size: 2rem;
     --win-amount-font-size: 2.8rem;
 
@@ -391,12 +379,6 @@
     --modal-max-width: 550px;
     --history-title-font-size: 2rem;
     --settings-title-font-size: 2rem;
-    /* === RESULT CARD === 
-    --result-card-width: 90%;
-    --result-card-max-width: 95vh;
-    --result-card-height: auto;
-    --result-card-max-height: 84vh;
-    --result-card-padding: 20px;
     --result-title-font-size: 2rem;
     --win-amount-font-size: 2.8rem;
 
@@ -512,12 +494,6 @@
     --modal-max-width: 600px;
     --history-title-font-size: 1.1rem;
     --settings-title-font-size: 2.2rem;
-    /* === RESULT CARD === 
-    --result-card-width: 90%;
-    --result-card-max-width: 95vh;
-    --result-card-height: auto;
-    --result-card-max-height: 93.5vh;
-    --result-card-padding: 20px;
     --result-title-font-size: 2rem;
     --win-amount-font-size: 2.8rem;
 
@@ -631,12 +607,6 @@
     --modal-max-width: 580px;
     --history-title-font-size: 2.1rem;
     --settings-title-font-size: 2.1rem;
-    /* === RESULT CARD === 
-    --result-card-width: 90%;
-    --result-card-max-width: 95vh;
-    --result-card-height: auto;
-    --result-card-max-height: 86vh;
-    --result-card-padding: 22px;
     --result-title-font-size: 2.1rem;
     --win-amount-font-size: 2.9rem;
 
@@ -765,12 +735,6 @@
     --modal-max-width: 600px;
     --history-title-font-size: 2.1rem;
     --settings-title-font-size: 2.2rem;
-    /* === RESULT CARD === 
-    --result-card-width: 90%;
-    --result-card-max-width: 95vh;
-    --result-card-height: auto;
-    --result-card-max-height: 93.5vh;
-    --result-card-padding: 20px;
     --result-title-font-size: 2rem;
     --win-amount-font-size: 2.8rem;
 
@@ -820,25 +784,25 @@
 @media (min-width: 1356px) and (max-width: 1366px) and (min-height: 758px) and (max-height: 768px) {
   :root {
     /* === RESULTADO IZQUIERDA === */
-    --resultado-izq-size: 185px;
+    --resultado-izq-size: 235px;
     --resultado-izq-offset-x: 0px;
-    --resultado-izq-offset-y: -2.8vh;
+    --resultado-izq-offset-y: -3.3vh;
 
     /* === RESULTADO DERECHA === */
-    --resultado-der-size: 185px;
+    --resultado-der-size: 235px;
     --resultado-der-offset-x: 0px;
-    --resultado-der-offset-y: -2.8vh;
+    --resultado-der-offset-y: -3.3vh;
 
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: 5%;
-    --wheel-right: -50vh;
+    --wheel-right: 0vh;
     --wheel-center-size: 40%;
     --wheel-border-size: 118vh;
     --wheel-diameter: 80vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
-    --pointer-size: 150px;
-    --pointer-top: -15px;
+    --pointer-size: 180px;
+    --pointer-top: -5px;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 70px;
@@ -880,12 +844,6 @@
     --modal-max-width: 700px;
     --history-title-font-size: 1rem;
     --settings-title-font-size: 2.3rem;
-    /* === RESULT CARD === */
-    --result-card-width: 90%;
-    --result-card-max-width: 700px;
-    --result-card-height: auto;
-    --result-card-max-height: 93.5vh;
-    --result-card-padding: 15px;
     --result-title-font-size: 2.5rem;
     --win-amount-font-size: 2.1rem;
 
@@ -904,7 +862,7 @@
 
     /* === RIGHT RESULTS PANEL === */
     --right-panel-top: 2rem;
-    --right-panel-right: 1rem;
+    --right-panel-right: -0.4rem;
     --right-panel-width: min(355px, 90vw);
     --right-panel-max-width: 600px;
     --right-panel-z-index: 950;
@@ -934,24 +892,24 @@
 @media (min-width: 1526px) and (max-width: 1536px) and (min-height: 854px) and (max-height: 864px) {
   :root {
     /* === RESULTADO IZQUIERDA === */
-    --resultado-izq-size: 210px;
+    --resultado-izq-size: 260px;
     --resultado-izq-offset-x: 0px;
-    --resultado-izq-offset-y: -2.8vh;
+    --resultado-izq-offset-y: -3vh;
 
     /* === RESULTADO DERECHA === */
-    --resultado-der-size: 210px;
+    --resultado-der-size: 260px;
     --resultado-der-offset-x: 0px;
-    --resultado-der-offset-y: -2.8vh;
+    --resultado-der-offset-y: -3vh;
 
     /* === WHEEL & GAME AREA === */
     --wheel-margin-top: 5%;
-    --wheel-right: -50vh;
+    --wheel-right: -5vh;
     --wheel-center-size: 40%;
     --wheel-border-size: 118vh;
     --wheel-diameter: 80vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
-    --pointer-size: 168px;
+    --pointer-size: 238px;
     --pointer-top: -15px;
 
     /* === ANIMAL DISPLAY === */
@@ -994,12 +952,6 @@
     --modal-max-width: 780px;
     --history-title-font-size: 1.1rem;
     --settings-title-font-size: 2.6rem;
-    /* === RESULT CARD === */
-    --result-card-width: 90%;
-    --result-card-max-width: 780px;
-    --result-card-height: auto;
-    --result-card-max-height: 93.5vh;
-    --result-card-padding: 16px;
     --result-title-font-size: 2.8rem;
     --win-amount-font-size: 2.4rem;
 
@@ -1018,7 +970,7 @@
 
     /* === RIGHT RESULTS PANEL === */
     --right-panel-top: 2rem;
-    --right-panel-right: 1.05rem;
+    --right-panel-right: -1rem;
     --right-panel-width: min(400px, 90vw);
     --right-panel-max-width: 640px;
     --right-panel-z-index: 950;
@@ -1124,12 +1076,6 @@
     --modal-max-width: 850px;
     --history-title-font-size: 1.2rem;
     --settings-title-font-size: 3.2rem;
-    /* === RESULT CARD === */
-    --result-card-width: 90%;
-    --result-card-max-width: 850px;
-    --result-card-height: auto;
-    --result-card-max-height: 93.5vh;
-    --result-card-padding:20px;
     --result-title-font-size: 3.5rem;
     --win-amount-font-size: 3.0rem;
 
@@ -1248,12 +1194,6 @@
     --modal-max-width: 850px;
     --history-title-font-size: 1.2rem;
     --settings-title-font-size: 3.2rem;
-    /* === RESULT CARD === */
-    --result-card-width: 70%;
-    --result-card-max-width: 1200px;
-    --result-card-height: auto;
-    --result-card-max-height: 93.5vh;
-    --result-card-padding:20px;
     --result-title-font-size: 3.5rem;
     --win-amount-font-size: 3.0rem;
 
@@ -1374,12 +1314,6 @@
     --modal-max-width: 850px;
     --history-title-font-size: 1.2rem;
     --settings-title-font-size: 3.2rem;
-    /* === RESULT CARD === */
-    --result-card-width: 70%;
-    --result-card-max-width: 1200px;
-    --result-card-height: auto;
-    --result-card-max-height: 93.5vh;
-    --result-card-padding:20px;
     --result-title-font-size: 3.5rem;
     --win-amount-font-size: 3.0rem;
 
@@ -1483,12 +1417,6 @@
     --modal-max-width: 95vw;
     --history-title-font-size: 4rem;
     --settings-title-font-size: 4rem;
-    /* === RESULT CARD === 
-    --result-card-width: 95%;
-    --result-card-max-width: 1200px;
-    --result-card-height: auto;
-    --result-card-max-height: 93.5vh;
-    --result-card-padding: 60px;
     --result-title-font-size: 5rem;
     --win-amount-font-size: 6rem;
 
@@ -1729,12 +1657,6 @@
     --modal-max-width: 1200px;
     --history-title-font-size: 1.8rem;
     --settings-title-font-size: 4.8rem;
-    /* === RESULT CARD === */
-    --result-card-width: 70%;
-    --result-card-max-width: 1800px;
-    --result-card-height: auto;
-    --result-card-max-height: 93.5vh;
-    --result-card-padding: 30px;
     --result-title-font-size: 5.25rem;
     --win-amount-font-size: 4.5rem;
 
