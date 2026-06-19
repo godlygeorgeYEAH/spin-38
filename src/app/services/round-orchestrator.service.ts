@@ -301,7 +301,7 @@ export class RoundOrchestratorService implements OnDestroy {
    * @param outerPosition - Posición de la rueda externa (string). Si se omite, se usa la última conocida o "17".
    * @param innerPosition - Posición de la rueda interna (string). Si se omite, se usa la última conocida o "3".
    */
-  public triggerManualSpin(outerPosition?: string, innerPosition?: string): string {
+  public triggerManualSpin(outerPosition?: string, innerPosition?: string, resultLabel?: string): string {
     const state = this.stateSubject.value;
     if (state === 'SPINNING' || state === 'REVEALING') {
       return `❌ No se puede iniciar giro manual: estado actual es ${state}`;
@@ -320,7 +320,7 @@ export class RoundOrchestratorService implements OnDestroy {
       innerPosition: innerPos,
       outerDurationMs: Math.round(this.lastSpinDurationSec * 1000 * 0.9),
       innerDurationMs: Math.round(this.lastSpinDurationSec * 1000),
-      resultLabel: null,
+      resultLabel: resultLabel ?? null,
     };
     this.lastSpinCommand = cmd;
     this.lastHandledRoundId = -1;
