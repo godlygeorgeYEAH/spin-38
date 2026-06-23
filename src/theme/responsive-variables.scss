@@ -785,25 +785,25 @@
 @media (min-width: 617px) and (max-width: 720px) and (max-height: 430px) and (orientation: landscape) {
   :root {
     /* === RESULTADO IZQUIERDA === */
-    --resultado-izq-size: 65px;
+    --resultado-izq-size: 125px;
     --resultado-izq-offset-x: 0px;
     --resultado-izq-offset-y: 0px;
 
     /* === RESULTADO DERECHA === */
-    --resultado-der-size: 65px;
+    --resultado-der-size: 125px;
     --resultado-der-offset-x: 0px;
     --resultado-der-offset-y: 0px;
 
     /* === WHEEL & GAME AREA === */
-    --wheel-margin-top: 2%;
+    --wheel-margin-top: 7%;
     --wheel-right: 0vh;
     --wheel-center-size: 40%;
-    --wheel-border-size: 65vh;
-    --wheel-diameter: 60vh;
+    --wheel-border-size: 115vh;
+    --wheel-diameter: 78vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
-    --pointer-size: 50px;
-    --pointer-top: -2px;
+    --pointer-size: 120px;
+    --pointer-top: 2.8vh;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 38px;
@@ -818,23 +818,23 @@
     --animal-name-font-size: 0.5rem;
 
     /* === CLOCK === */
-    --clock-widget-width: 130px;
-    --clock-widget-min-height: 100px;
+    --clock-widget-width: 40vh;
+    --clock-widget-min-height: 40vh;
     --clock-widget-bottom: 0rem;
     --clock-widget-left: 0rem;
-    --clock-value-font-size: 0.65rem;
-    --clock-value-top: 38px;
-    --clock-value-left: 17px;
+    --clock-value-font-size: 1.25rem;
+    --clock-value-top: 12.5vh;
+    --clock-value-left: 0vh;
     --countdown-font-size: 0.7rem;
     --countdown-top: 38px;
     --countdown-left: -31px;
     /* === BUHO GIF === */
-    --buho-width: 38px;
-    --buho-top: 51px;
-    --buho-left: 74px;
+    --buho-width: 13vh;
+    --buho-top: 20vh;
+    --buho-left: 23vh;
 
     /* === LOGO === */
-    --logo-size: 45px;
+    --logo-size: 25vh;
     --logo-top: 5px;
     --logo-left: 5px;
     --logo-translate-x: 0px;
@@ -847,7 +847,7 @@
     --settings-title-font-size: 1.5rem;
     --result-title-font-size: 1.6rem;
     --win-amount-font-size: 1.4rem;
-    --char-ring-size: 80px;
+    --char-ring-size: 110px;
     --char-rest: 80px;
     --char-name-font-size: 0.65rem;
     --char-name-margin-top: 10px;
@@ -866,8 +866,8 @@
     --history-entry-font-size: 0.6rem;
 
     /* === RIGHT RESULTS PANEL === */
-    --right-panel-top: 1rem;
-    --right-panel-right: -0.3rem;
+    --right-panel-top: 0;
+    --right-panel-right: 0vh;
     --right-panel-width: min(200px, 90vw);
     --right-panel-max-width: 300px;
     --right-panel-z-index: 950;

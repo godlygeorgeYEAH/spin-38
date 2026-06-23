@@ -2,7 +2,6 @@
 ## Spin Zodiac · Ruleta Espectadora
 
 **Fecha:** 19 de junio de 2026
-**Alcance:** Tareas C5 a C17
 
 ---
 
@@ -220,5 +219,5 @@ Versión actualizada del panel admin con nuevas funcionalidades y comportamiento
 
 ## Notas para el cliente
 
-- Los comandos del panel admin que operaban sobre el sistema de apuestas (`adminSetBalance`, `adminGetCoinValues`, etc.) están documentados en C11 como referencia histórica. Consultar C17 para la lista de comandos vigente.
+- Los comandos del panel admin que operaban sobre el sistema de apuestas (`adminSetBalance`, `adminGetCoinValues`, etc.) están documentados en C11 como referencia histórica. Consultar C17 para la lista de comandos vigente o logearse utilizando la consola para ver la lista dentro de la app.
 - El indicador visual de estado de conexión (C12) está implementado a nivel de datos. Su presentación en pantalla queda pendiente de decisión de diseño para una iteración futura.
