@@ -377,11 +377,11 @@
   }
 }
 
-/* Fallback cuando la imagen del animal no carga */
+/* Fallback cuando la imagen del animal no carga — oculto por defecto */
 .char-fallback {
   position: absolute;
   inset: 0;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   text-align: center;
