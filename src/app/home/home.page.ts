@@ -235,15 +235,23 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.subs.add(this.orchestrator.roundState$.subscribe(state => {
       if (state === 'COUNTING_DOWN') {
         this.resultsPanelClass = 'panel-enter';
+        this.isWheelDisplaced = this.isPhoneLandscape();
         this.wheelContainer?.startPortholeSequence(_portholeSeconds);
       } else if (state === 'SPINNING') {
         this.resultsPanelClass = 'panel-exit';
+        this.isWheelDisplaced = false;
       }
       // REVEALING e IDLE: panel permanece oculto — REVEALING reservado para animación de resultado
       this.cdr.markForCheck();
     }));
 
     this.orchestrator.start();
+  }
+
+  private isPhoneLandscape(): boolean {
+    return window.matchMedia(
+      '(max-width: 990px) and (max-height: 460px) and (orientation: landscape)'
+    ).matches;
   }
 
   private isXiaomiBrowser(): boolean {

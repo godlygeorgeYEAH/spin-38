@@ -885,6 +885,10 @@
     --right-panel-content-p-font-size: 0.5rem;
     --right-panel-content-p-line-height: 1.3;
 
+    /* === WHEEL DISPLACEMENT (panel visible) === */
+    --wheel-displacement-x: -80px;
+    --wheel-displacement-y: 0px;
+
     /* Globales */
   }
 }
@@ -998,6 +1002,10 @@
     --right-panel-content-p-font-size: 0.55rem;
     --right-panel-content-p-line-height: 1.3;
 
+    /* === WHEEL DISPLACEMENT (panel visible) === */
+    --wheel-displacement-x: -90px;
+    --wheel-displacement-y: 0px;
+
     /* Globales */
   }
 }
@@ -1110,6 +1118,10 @@
     --right-panel-content-h3-font-size: 0.75rem;
     --right-panel-content-p-font-size: 0.58rem;
     --right-panel-content-p-line-height: 1.3;
+
+    /* === WHEEL DISPLACEMENT (panel visible) === */
+    --wheel-displacement-x: -100px;
+    --wheel-displacement-y: 0px;
 
     /* Globales */
   }
