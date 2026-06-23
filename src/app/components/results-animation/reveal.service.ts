@@ -1,118 +1,123 @@
 /**
  * reveal.service.ts
  * ---------------------------------------------------------------------------
- * Servicio que dispara la animación de resultado "Dupla" y resuelve las rutas
+ * Servicio que dispara la animación de "Resultado Spin" y resuelve las rutas
  * de las imágenes de forma DINÁMICA.
  *
- * Las imágenes pueden venir de cualquier origen:
- *   - assets locales            -> 'assets/images/animales-sin-fondo/DELFIN.png'
- *   - una URL absoluta / CDN     -> 'https://cdn.misitio.com/animals/zorro.png'
- *   - el filesystem de Capacitor -> Capacitor.convertFileSrc(uri)
- *   - tu backend (data-url, etc.)
+ * Equivalente 1:1 al prototipo HTML (Reveal Prototipo.html):
+ *   - texto normal (azul neón) o secuencia "hype" (dorado, ráfagas + parpadeos)
+ *   - dos imágenes en círculo con anillo de color por jugada
+ *   - franjas diagonales detrás de cada anillo
+ *   - oscurecer + blur, convergencia final al centro
  *
- * Cómo se resuelve cada ruta (método `resolve`):
- *   1. Si el valor ya es una URL absoluta (http/https/data/blob/file/// ) o
- *      empieza por '/', se usa TAL CUAL.
- *   2. Si no, se concatena con `basePath` (configurable) -> ruta dinámica.
+ * Uso típico:
+ *
+ *   constructor(private reveal: RevealService) {}
+ *
+ *   async resultado() {
+ *     await this.reveal.play({
+ *       leftImage:  'DELFIN.png',
+ *       rightImage: 'ZORRO.png',
+ *       leftThemeColor:  '#128DFC',
+ *       rightThemeColor: '#FFE28F',
+ *       text: 'DUPLA',
+ *       hype: true,            // o playNormal() => hype:false
+ *     });
+ *   }
  * ---------------------------------------------------------------------------
  */
 
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
-/** Duraciones/parámetros por defecto. Sobrescribibles por llamada. */
+/** Parámetros por defecto. Sobrescribibles por llamada. */
 export const REVEAL_DEFAULTS = {
   enterMs: 2500, // fase de entrada
-  holdMs: 10000, // fase "showing" / reposo
-  exitMs: 2500, // fase de salida (encoger + aclarar)
+  holdMs: 5000, // fase "espera" / reposo
+  exitMs: 2500, // fase de salida (franjas + encoger + aclarar)
   shrinkScale: 0.1, // escala final de los círculos (10%)
   textY: 30, // posición vertical del texto (+30vh)
   bursts: 3, // textos por ola en la secuencia hype
   waves: 5, // ráfagas: veces que se reproduce cada lado
+  leftThemeColor: '#128DFC',
+  rightThemeColor: '#FFE28F',
 };
 
 export interface RevealConfig {
-  /** filename o URL de la imagen izquierda. Se resuelve con `resolve()`. */
+  /** filename o URL de la imagen izquierda (p.ej. 'DELFIN.png'). */
   leftImage: string;
   /** filename o URL de la imagen derecha. */
   rightImage: string;
-  /** texto grande delineado a dibujar (p.ej. 'DUPLA') */
+  /** texto grande a dibujar (p.ej. 'DUPLA') */
   text: string;
-  /** duración de la fase de entrada en ms (por defecto 2500) */
-  enterMs?: number;
-  /** duración de la fase "showing" / reposo en ms (por defecto 10000) */
-  holdMs?: number;
-  /** duración de la fase de salida en ms (por defecto 2500) */
-  exitMs?: number;
-  /** escala final de los círculos al encogerse, 0–1 (por defecto 0.1) */
-  shrinkScale?: number;
-  /** posición vertical del texto en vh respecto al centro (por defecto 0) */
-  textY?: number;
-  /** cantidad de textos por ola en la secuencia hype (por defecto 7) */
-  bursts?: number;
-  /** cantidad de ráfagas (veces que se reproduce cada lado) (por defecto 2) */
-  waves?: number;
-  /** fuerza la secuencia "hype" (ráfaga + parpadeos + aterrizaje final). */
-  hype?: boolean;
-  /** Coordenadas viewport del punto de destino del colapso final (por defecto: centro de pantalla). */
-  collapseTarget?: { x: number; y: number };
-  /** Color primario de la rueda externa (anillo izquierdo). */
+  /** color del anillo / franja izquierda (def. '#128DFC') */
   leftThemeColor?: string;
-  /** Color primario de la rueda interna (anillo derecho). */
+  /** color del anillo / franja derecha (def. '#FFE28F') */
   rightThemeColor?: string;
-  /** Nombre del animal de la rueda exterior (izquierda). */
+  /** etiqueta opcional bajo el círculo izquierdo */
   leftName?: string;
-  /** Nombre del animal de la rueda interior (derecha). */
+  /** etiqueta opcional bajo el círculo derecho */
   rightName?: string;
+  /** duración de la fase de entrada en ms (def. 2500) */
+  enterMs?: number;
+  /** duración de la fase "espera" / reposo en ms (def. 5000) */
+  holdMs?: number;
+  /** duración de la fase de salida en ms (def. 2500) */
+  exitMs?: number;
+  /** escala final de los círculos al encogerse, 0–1 (def. 0.1) */
+  shrinkScale?: number;
+  /** posición vertical del texto en vh respecto al centro (def. 30) */
+  textY?: number;
+  /** textos por ola en la secuencia hype (def. 3) */
+  bursts?: number;
+  /** ráfagas: veces que se reproduce cada lado (def. 5) */
+  waves?: number;
+  /**
+   * true => secuencia "hype" (dorada, ráfagas). false => texto normal (azul).
+   * Si se omite, se activa cuando text === 'DUPLA'.
+   */
+  hype?: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
 export class RevealService {
   /**
-   * Base dinámica para resolver filenames relativos. Cámbiala en runtime
-   * (p.ej. según idioma, tema o entorno):
-   *
-   *   this.reveal.basePath = 'assets/images/animales-sin-fondo/';
-   *   this.reveal.basePath = 'https://cdn.misitio.com/animals/';
+   * Base dinámica para resolver filenames de animales relativos.
+   *   this.reveal.animalsBasePath = 'assets/images/animales-sin-fondo/';
+   *   this.reveal.animalsBasePath = 'https://cdn.misitio.com/animales/';
    */
-  basePath = 'assets/images/animales-sin-fondo/';
+  animalsBasePath = 'assets/images/animales-sin-fondo/';
 
-  /**
-   * Pool de X imágenes que el juego puede reproducir. Pueden ser filenames
-   * (se resuelven con basePath) o URLs absolutas. Solo se reproducen 2 por
-   * animación. Cárgalo dinámicamente desde tu backend si lo necesitas:
-   *
-   *   this.http.get<string[]>('/api/animals').subscribe(p => this.reveal.pool = p);
-   */
+  /** Imágenes decorativas de "rueda resultado" (detrás de cada círculo). */
+  resultadoIzqSrc = 'assets/images/contenedores/rueda-resultado-izquierda.png';
+  resultadoDerSrc = 'assets/images/contenedores/rueda-resultado-derecha.png';
+
   private playSubject = new Subject<RevealConfig>();
   private doneSubject = new Subject<RevealConfig>();
 
   /** El overlay se suscribe a esto. */
   play$: Observable<RevealConfig> = this.playSubject.asObservable();
-  /** Emite cuando una animación termina (útil para encadenar lógica). */
+  /** Emite cuando una animación termina. */
   done$: Observable<RevealConfig> = this.doneSubject.asObservable();
 
-  /**
-   * Resuelve un filename/URL a una ruta usable por <img src>.
-   * URLs absolutas o rutas que empiezan por '/' se devuelven sin tocar;
-   * el resto se concatenan con `basePath`.
-   */
-  resolve(src: string): string {
+  /** Resuelve un filename/URL de animal a ruta usable por <img src>. */
+  resolveAnimal(src: string): string {
     if (!src) return src;
-    if (/^(https?:|data:|blob:|file:|\/\/|\/|assets\/)/i.test(src)) return src;
-    const base = this.basePath.endsWith('/') ? this.basePath : this.basePath + '/';
+    if (/^(https?:|data:|blob:|file:|\/\/|\/)/i.test(src)) return src;
+    const base = this.animalsBasePath.endsWith('/')
+      ? this.animalsBasePath
+      : this.animalsBasePath + '/';
     return base + src;
   }
 
-  /** Reproduce la animación con dos imágenes y un texto concretos. */
+  /** Reproduce la animación. La promesa resuelve al terminar. */
   play(config: RevealConfig): Promise<void> {
-    this.playSubject.next({
+    const merged: RevealConfig = {
       ...REVEAL_DEFAULTS,
+      hype: (config.text || '').trim().toUpperCase() === 'DUPLA',
       ...config,
-      // resolución dinámica de rutas
-      leftImage: this.resolve(config.leftImage),
-      rightImage: this.resolve(config.rightImage),
-    });
+    };
+    this.playSubject.next(merged);
     return new Promise((resolve) => {
       const sub = this.done$.subscribe(() => {
         sub.unsubscribe();
@@ -121,6 +126,17 @@ export class RevealService {
     });
   }
 
+  /** Atajo: texto normal (azul). */
+  playNormal(config: Omit<RevealConfig, 'hype'>): Promise<void> {
+    return this.play({ ...config, hype: false });
+  }
+
+  /** Atajo: secuencia hype (dorada). */
+  playHype(config: Omit<RevealConfig, 'hype'>): Promise<void> {
+    return this.play({ ...config, hype: true });
+  }
+
+  /** Llamado por el overlay al terminar. */
   emitDone(config: RevealConfig) {
     this.doneSubject.next(config);
   }

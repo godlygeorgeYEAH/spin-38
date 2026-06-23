@@ -215,8 +215,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
               rightName:  ANIMAL_MAP[String(cmd.innerPosition)]?.name        ?? '',
               text: label,
               hype: isDupla,
-              collapseTarget: this.wheelContainer.getWheelCenterViewport() ?? undefined,
-              leftThemeColor:  _palette.outerWheelColors[0].stops[0].color,
+leftThemeColor:  _palette.outerWheelColors[0].stops[0].color,
               rightThemeColor: _palette.innerWheelColors[0].stops[0].color,
             });
           }

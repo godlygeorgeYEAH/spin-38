@@ -1,39 +1,14 @@
 /**
  * reveal-overlay.component.ts
  * ---------------------------------------------------------------------------
- * Animación de "Resultado Dupla" para Ionic / Angular (standalone component).
+ * Overlay de "Resultado Spin" para Ionic / Angular (standalone component).
+ * Calco 1:1 del prototipo HTML (Reveal Prototipo.html).
  *
- * Hace exactamente lo del prototipo HTML:
- *   1. Oscurece la pantalla y aplica blur (backdrop).
- *   2. Desplaza dos imágenes desde el centro-izquierda / centro-derecha al
- *      centro. Recibe los filenames de las dos imágenes a reproducir.
- *   3. Dibuja el texto grande delineado:
- *        · Modo normal: entra desde la izquierda hasta su posición.
- *        · Modo "hype" (cuando text === 'DUPLA' o config.hype === true):
- *            a) varios textos en ráfaga cruzando de izquierda a derecha,
- *            b) textos parpadeando uno a uno de arriba hacia abajo (rápido),
- *            c) un texto final con fade-in debajo de las dos imágenes.
- *   4. Al terminar, las imágenes (y el texto, en modo normal) convergen al
- *      centro, se hacen pequeñas, la pantalla se aclara y el blur se disipa.
+ * Secuencia de fases (todas escaladas a la config):
+ *   idle → in → hold → [franjas se repliegan] → shrink → clear → done
  *
- * Uso típico (desde cualquier página):
- *
- *   constructor(private reveal: RevealService) {}
- *
- *   mostrarResultado() {
- *     this.reveal.play({
- *       leftImage:  'DELFIN.png',        // filename (resuelto con basePath)
- *       rightImage: 'ZORRO.png',         // o una URL absoluta / CDN
- *       text: 'DUPLA',
- *       enterMs: 2500, holdMs: 10000, exitMs: 2500,  // opcionales (ms)
- *       shrinkScale: 0.1,                // escala final (opcional)
- *       textY: 25,                       // posición vertical del texto (opcional)
- *       // hype: true,                   // forzar secuencia hype para cualquier texto
- *     });
- *   }
- *
- * El pool de X imágenes lo administra TU código; este componente solo recibe
- * las 2 que se van a reproducir (ver RevealService.playRandomFromPool()).
+ * Monta el componente UNA sola vez en la raíz (ver README) y dispáralo con
+ * RevealService.play(...). El servicio resuelve las rutas de imágenes.
  * ---------------------------------------------------------------------------
  */
 
@@ -41,7 +16,6 @@ import {
   Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  ElementRef,
   NgZone,
   OnDestroy,
 } from '@angular/core';
@@ -51,10 +25,10 @@ import { Subscription } from 'rxjs';
 
 type Phase = 'idle' | 'in' | 'hold' | 'shrink' | 'clear' | 'done';
 
-/** Un texto de la secuencia hype con su posición vertical y animación CSS. */
 interface HypeWord {
-  top: string; // p.ej. '42%'
-  anim: string; // valor de la propiedad CSS `animation`
+  top: string;
+  anim: string;
+  flash: boolean;
 }
 
 @Component({
@@ -64,48 +38,35 @@ interface HypeWord {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./reveal-overlay.component.scss'],
   template: `
-    <div
-      class="reveal-root"
-      *ngIf="config && phase !== 'done'"
-      aria-hidden="true"
-    >
+    <div class="reveal-root" *ngIf="active" [style]="rootVars" aria-hidden="true">
       <!-- Oscurecer + blur -->
       <div class="reveal-backdrop" [class.is-clear]="phase === 'clear' || phase === 'idle'"></div>
 
       <div class="reveal-stage">
-        <!-- ===== Texto ===== -->
-        <ng-container *ngIf="isHype; else normalText">
-          <!-- a) ráfaga horizontal izquierda -> derecha -->
+        <!-- Franjas diagonales detrás de los anillos -->
+        <div class="reveal-band left" [class.show]="bandsShown"></div>
+        <div class="reveal-band right" [class.show]="bandsShown"></div>
+
+        <!-- Texto: hype o normal -->
+        <ng-container *ngIf="cfg?.hype; else normalText">
           <div
-            *ngFor="let w of hypeHoriz"
+            *ngFor="let w of hypeWords"
             class="hype-word"
+            [class.flash]="w.flash"
             [style.top]="w.top"
             [style.animation]="w.anim"
           >
-            {{ config.text }}
+            {{ cfg!.text }}
           </div>
-          <!-- b) parpadeos verticales arriba -> abajo -->
-          <div
-            *ngFor="let w of hypeVert"
-            class="hype-word flash"
-            [style.top]="w.top"
-            [style.animation]="w.anim"
-          >
-            {{ config.text }}
-          </div>
-          <!-- c) texto final que aterriza centrado y se mantiene -->
           <div
             class="hype-final"
             [style.transform]="
-              hypeFinalTransform +
-              (showHypeFinal && phase !== 'clear' ? ' scale(1)' : ' scale(1.28)')
+              hypeFinalBase + (showHypeFinal && phase !== 'clear' ? ' scale(1)' : ' scale(1.28)')
             "
             [style.opacity]="showHypeFinal && phase !== 'clear' ? 1 : 0"
-            [style.transition]="
-              'transform ' + hypeFinalDur + ' cubic-bezier(.2,.9,.25,1), opacity ' + hypeFinalDur + ' ease'
-            "
+            [style.transition]="hypeFinalTransition"
           >
-            {{ config.text }}
+            {{ cfg!.text }}
           </div>
         </ng-container>
 
@@ -116,11 +77,11 @@ interface HypeWord {
             [class.collapse]="isCollapsed"
             [class.gone]="phase === 'clear'"
           >
-            {{ config.text }}
+            {{ cfg?.text }}
           </div>
         </ng-template>
 
-        <!-- ===== Imagen izquierda ===== -->
+        <!-- Imagen izquierda -->
         <div
           class="reveal-img left"
           [class.enter]="isVisible"
@@ -128,16 +89,17 @@ interface HypeWord {
           [class.gone]="phase === 'clear'"
         >
           <div class="char-glow ring-left"></div>
-          <img class="resultado-izq-bg" src="assets/images/contenedores/rueda-resultado-izquierda.png" aria-hidden="true" />
+          <img class="resultado-izq-bg" [src]="resultadoIzqSrc" aria-hidden="true" (error)="hide($event)" />
           <div class="char-ring ring-left">
             <div class="char-fill">
-              <img [src]="config.leftImage" [alt]="''" />
+              <span class="char-fallback">{{ leftFallback }}</span>
+              <img [src]="leftSrc" alt="" (error)="fadeOut($event)" (load)="fadeIn($event)" />
             </div>
           </div>
-          <span class="char-name" *ngIf="config.leftName">{{ config.leftName }}</span>
+          <span class="char-name">{{ cfg?.leftName }}</span>
         </div>
 
-        <!-- ===== Imagen derecha ===== -->
+        <!-- Imagen derecha -->
         <div
           class="reveal-img right"
           [class.enter]="isVisible"
@@ -145,29 +107,43 @@ interface HypeWord {
           [class.gone]="phase === 'clear'"
         >
           <div class="char-glow ring-right"></div>
-          <img class="resultado-der-bg" src="assets/images/contenedores/rueda-resultado-derecha.png" aria-hidden="true" />
+          <img class="resultado-der-bg" [src]="resultadoDerSrc" aria-hidden="true" (error)="hide($event)" />
           <div class="char-ring ring-right">
             <div class="char-fill">
-              <img [src]="config.rightImage" [alt]="''" />
+              <span class="char-fallback">{{ rightFallback }}</span>
+              <img [src]="rightSrc" alt="" (error)="fadeOut($event)" (load)="fadeIn($event)" />
             </div>
           </div>
-          <span class="char-name" *ngIf="config.rightName">{{ config.rightName }}</span>
+          <span class="char-name">{{ cfg?.rightName }}</span>
         </div>
       </div>
     </div>
   `,
 })
 export class RevealOverlayComponent implements OnDestroy {
-  config: RevealConfig | null = null;
+  active = false;
   phase: Phase = 'idle';
+  cfg: RevealConfig | null = null;
 
-  // --- estado de la secuencia hype ---
-  isHype = false;
-  hypeHoriz: HypeWord[] = [];
-  hypeVert: HypeWord[] = [];
+  // CSS custom properties inyectadas en el host raíz
+  rootVars: { [k: string]: string } = {};
+
+  // bandas
+  bandsShown = false;
+
+  // texto hype
+  hypeWords: HypeWord[] = [];
   showHypeFinal = false;
-  hypeFinalTransform = 'translate(-50%, -50%)';
-  hypeFinalDur = '600ms';
+  hypeFinalBase = 'translate(-50%, -50%)';
+  hypeFinalTransition = '';
+
+  // imágenes
+  leftSrc = '';
+  rightSrc = '';
+  leftFallback = '';
+  rightFallback = '';
+  resultadoIzqSrc = '';
+  resultadoDerSrc = '';
 
   private timers: any[] = [];
   private sub: Subscription;
@@ -176,9 +152,10 @@ export class RevealOverlayComponent implements OnDestroy {
     private reveal: RevealService,
     private zone: NgZone,
     private cdr: ChangeDetectorRef,
-    private el: ElementRef<HTMLElement>,
   ) {
-    this.sub = this.reveal.play$.subscribe((cfg) => this.run(cfg));
+    this.resultadoIzqSrc = reveal.resultadoIzqSrc;
+    this.resultadoDerSrc = reveal.resultadoDerSrc;
+    this.sub = this.reveal.play$.subscribe((c) => this.run(c));
   }
 
   get isVisible(): boolean {
@@ -188,48 +165,45 @@ export class RevealOverlayComponent implements OnDestroy {
     return this.phase === 'shrink' || this.phase === 'clear';
   }
 
-  /** Expone las duraciones y la escala de reducción como CSS custom properties. */
-  private applyVars(cfg: RevealConfig) {
-    const enter = cfg.enterMs ?? REVEAL_DEFAULTS.enterMs;
-    const exit = cfg.exitMs ?? REVEAL_DEFAULTS.exitMs;
+  // --- handlers de <img> (degradación elegante) ---
+  fadeOut(e: Event) { (e.target as HTMLElement).style.opacity = '0'; }
+  fadeIn(e: Event) { (e.target as HTMLElement).style.opacity = '1'; }
+  hide(e: Event) { (e.target as HTMLElement).style.opacity = '0'; }
+
+  private buildVars(cfg: RevealConfig) {
+    const enter = cfg.enterMs!;
+    const exit = cfg.exitMs!;
     const shrink = Math.round(exit * 0.58);
     const clear = Math.max(120, exit - shrink);
-    const imgShrink = cfg.shrinkScale ?? REVEAL_DEFAULTS.shrinkScale;
-    const textShrink = Math.max(0.04, imgShrink * 0.4);
-    const textY = cfg.textY ?? REVEAL_DEFAULTS.textY;
-    const host = this.el.nativeElement;
-    host.style.setProperty('--reveal-enter', `${enter}ms`);
-    host.style.setProperty('--reveal-shrink', `${shrink}ms`);
-    host.style.setProperty('--reveal-clear', `${clear}ms`);
-    host.style.setProperty('--reveal-text-delay', `${Math.round(enter * 0.14)}ms`);
-    host.style.setProperty('--reveal-img-shrink', `${imgShrink}`);
-    host.style.setProperty('--reveal-text-shrink', `${textShrink}`);
-    host.style.setProperty('--reveal-text-y', `${textY}vh`);
-    const target = cfg.collapseTarget;
-    const offsetX = target ? target.x - window.innerWidth  / 2 : 0;
-    const offsetY = target ? target.y - window.innerHeight / 2 : 0;
-    host.style.setProperty('--reveal-collapse-x', `${offsetX}px`);
-    host.style.setProperty('--reveal-collapse-y', `${offsetY}px`);
-    host.style.setProperty('--ring-left-color',  cfg.leftThemeColor  ?? '#128DFC');
-    host.style.setProperty('--ring-right-color', cfg.rightThemeColor ?? '#FFE28F');
+    const imgShrk = cfg.shrinkScale!;
+    const textShrk = Math.max(0.04, imgShrk * 0.4);
+    this.rootVars = {
+      '--reveal-enter': `${enter}ms`,
+      '--reveal-shrink': `${shrink}ms`,
+      '--reveal-clear': `${clear}ms`,
+      '--reveal-text-delay': `${Math.round(enter * 0.14)}ms`,
+      '--reveal-img-shrink': `${imgShrk}`,
+      '--reveal-text-shrink': `${textShrk}`,
+      '--reveal-text-y': `${cfg.textY}vh`,
+      '--reveal-collapse-x': '0px',
+      '--reveal-collapse-y': '0px',
+      '--reveal-band-out': `${Math.max(260, Math.round(exit * 0.5))}ms`,
+      '--ring-left-color': cfg.leftThemeColor!,
+      '--ring-right-color': cfg.rightThemeColor!,
+    };
   }
 
-  /** Detecta el modo hype y, si aplica, construye las ráfagas de texto. */
   private buildHype(cfg: RevealConfig) {
-    this.isHype = cfg.hype ?? false;
-
-    this.hypeHoriz = [];
-    this.hypeVert = [];
+    this.hypeWords = [];
     this.showHypeFinal = false;
-    if (!this.isHype) return;
+    if (!cfg.hype) return;
 
-    const E = cfg.enterMs ?? REVEAL_DEFAULTS.enterMs;
-    const textY = cfg.textY ?? REVEAL_DEFAULTS.textY;
-    const N = Math.max(1, Math.round(cfg.bursts ?? REVEAL_DEFAULTS.bursts)); // textos por ola
-    const W = Math.max(1, Math.round(cfg.waves ?? REVEAL_DEFAULTS.waves)); // olas (repeticiones) por lado
+    const E = cfg.enterMs!;
+    const N = Math.max(1, Math.round(cfg.bursts ?? REVEAL_DEFAULTS.bursts));
+    const W = Math.max(1, Math.round(cfg.waves ?? REVEAL_DEFAULTS.waves));
     const frac = (x: number) => x - Math.floor(x);
 
-    // a) ráfaga horizontal: W olas, cada una con N textos izquierda -> derecha
+    // a) ráfaga horizontal — W olas × N textos, izq → der
     const hPhase = E * 0.52;
     const hWave = hPhase / W;
     const hDur = hWave * 0.92;
@@ -237,14 +211,15 @@ export class RevealOverlayComponent implements OnDestroy {
       for (let i = 0; i < N; i++) {
         const delay = w * hWave + (N > 1 ? (hWave * 0.55 * i) / (N - 1) : 0);
         const top = 30 + 40 * frac((w * N + i + 1) * 0.618);
-        this.hypeHoriz.push({
+        this.hypeWords.push({
+          flash: false,
           top: top.toFixed(1) + '%',
           anim: `hype-slide ${Math.round(hDur)}ms cubic-bezier(.5,0,.5,1) ${Math.round(delay)}ms both`,
         });
       }
     }
 
-    // b) parpadeos verticales: W olas, cada una un recorrido arriba -> abajo de N
+    // b) parpadeos verticales — W olas, arriba → abajo
     const vStart = E * 0.4;
     const vSpan = E * 0.42;
     const vWave = vSpan / W;
@@ -254,64 +229,87 @@ export class RevealOverlayComponent implements OnDestroy {
         const delay = vStart + w * vWave + i * slot;
         const dur = Math.max(70, slot * 0.9);
         const top = 18 + (N > 1 ? (60 * i) / (N - 1) : 30);
-        this.hypeVert.push({
+        this.hypeWords.push({
+          flash: true,
           top: top.toFixed(1) + '%',
           anim: `hype-flash ${Math.round(dur)}ms ease-out ${Math.round(delay)}ms both`,
         });
       }
     }
 
-    // c) texto final: aterriza centrado (escala desde un poco más grande)
-    this.hypeFinalTransform = `translate(-50%, -50%) translateY(${textY}vh)`;
-    this.hypeFinalDur = `${Math.round(E * 0.34)}ms`;
+    // c) texto final que aterriza centrado
+    const finalDur = `${Math.round(E * 0.34)}ms`;
+    this.hypeFinalBase = `translate(-50%, -50%) translateY(${cfg.textY}vh)`;
+    this.hypeFinalTransition = `transform ${finalDur} cubic-bezier(.2,.9,.25,1), opacity ${finalDur} ease`;
   }
 
   private run(cfg: RevealConfig) {
     this.clearTimers();
+    this.cfg = cfg;
 
-    this.config = cfg;
-    this.phase = 'idle';
-    this.applyVars(cfg);
+    // imágenes + fallbacks
+    this.leftSrc = this.reveal.resolveAnimal(cfg.leftImage);
+    this.rightSrc = this.reveal.resolveAnimal(cfg.rightImage);
+    this.leftFallback = cfg.leftImage.replace(/\.png$/i, '');
+    this.rightFallback = cfg.rightImage.replace(/\.png$/i, '');
+
+    this.buildVars(cfg);
     this.buildHype(cfg);
+
+    this.active = true;
+    this.phase = 'idle';
+    this.bandsShown = false;
     this.cdr.markForCheck();
 
-    const enter = cfg.enterMs ?? REVEAL_DEFAULTS.enterMs;
-    const hold = cfg.holdMs ?? REVEAL_DEFAULTS.holdMs;
-    const exit = cfg.exitMs ?? REVEAL_DEFAULTS.exitMs;
+    const enter = cfg.enterMs!;
+    const hold = cfg.holdMs!;
+    const exit = cfg.exitMs!;
     const shrink = exit * 0.58;
     const clear = Math.max(120, exit - shrink);
+    const bandOut = Math.max(260, Math.round(exit * 0.5));
 
-    // requestAnimationFrame para que la transición idle -> in se anime.
     this.zone.runOutsideAngular(() => {
-      requestAnimationFrame(() => this.set('in'));
-      // el texto final (hype) aparece hacia el final de la entrada
-      if (this.isHype) {
-        this.at(enter * 0.8, () => {
-          this.showHypeFinal = true;
-          this.zone.run(() => this.cdr.markForCheck());
+      requestAnimationFrame(() => {
+        this.set('in');
+        this.setBands(true); // las franjas se despliegan
+
+        if (cfg.hype) {
+          this.at(enter * 0.8, () => {
+            this.showHypeFinal = true;
+            this.flush();
+          });
+        }
+
+        this.at(enter, () => this.set('hold'));
+        // 1) las franjas se repliegan PRIMERO
+        this.at(enter + hold, () => this.setBands(false));
+        // 2) luego colapsan texto + imágenes
+        this.at(enter + hold + bandOut, () => this.set('shrink'));
+        this.at(enter + hold + bandOut + shrink, () => this.set('clear'));
+        this.at(enter + hold + bandOut + shrink + clear, () => {
+          this.phase = 'done';
+          this.active = false;
+          this.flush();
+          this.reveal.emitDone(cfg);
         });
-      }
-      this.at(enter, () => this.set('hold'));
-      this.at(enter + hold, () => this.set('shrink'));
-      this.at(enter + hold + shrink, () => this.set('clear'));
-      this.at(enter + hold + shrink + clear, () => {
-        this.set('done');
-        this.reveal.emitDone(cfg);
       });
     });
   }
 
   private set(p: Phase) {
-    this.zone.run(() => {
-      this.phase = p;
-      this.cdr.markForCheck();
-    });
+    this.phase = p;
+    this.flush();
   }
-
+  private setBands(shown: boolean) {
+    this.bandsShown = shown;
+    this.flush();
+  }
+  private flush() {
+    this.zone.run(() => this.cdr.markForCheck());
+  }
   private at(ms: number, fn: () => void) {
     this.timers.push(setTimeout(fn, ms));
   }
-
   private clearTimers() {
     this.timers.forEach(clearTimeout);
     this.timers = [];
