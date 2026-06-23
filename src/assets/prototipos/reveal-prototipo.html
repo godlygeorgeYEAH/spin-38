@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reveal Animation — Prototipo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       VARIABLES DE DISEÑO
+       Editar aquí para ajustar la apariencia sin tocar el resto del CSS.
+       Los tiempos (--reveal-*) se calculan y sobreescriben desde JS al pulsar Play.
+    ========================================================================== */
+    :root {
+      /* Tamaño y posición de los círculos de personaje */
+      --char-ring-size:       clamp(150px, 26vmin, 230px);
+      --char-rest:            180px;      /* distancia horizontal ±centro de cada imagen */
+      --char-name-font-size:  clamp(1rem, 3vmin, 1.4rem);
+      --char-name-margin-top: 28px;
+
+      /* Imágenes decorativas de resultado (contenedor izq/der) */
+      --resultado-izq-size:     300px;
+      --resultado-der-size:     300px;
+      --resultado-izq-offset-x: 0px;
+      --resultado-izq-offset-y: 0px;
+      --resultado-der-offset-x: 0px;
+      --resultado-der-offset-y: 0px;
+
+      /* Colores de anillo — sobreescritos por JS al jugar */
+      --ring-left-color:  #128DFC;
+      --ring-right-color: #FFE28F;
+
+      /* Duraciones — sobreescritas por JS al jugar */
+      --reveal-enter:       2500ms;
+      --reveal-shrink:      1450ms;
+      --reveal-clear:        640ms;
+      --reveal-text-delay:   350ms;
+      --reveal-img-shrink:   0.1;
+      --reveal-text-shrink:  0.04;
+      --reveal-text-y:       30vh;
+      --reveal-collapse-x:   0px;
+      --reveal-collapse-y:   0px;
+    }
+
+    /* ==========================================================================
+       KEYFRAMES (copiados de src/global.scss)
+    ========================================================================== */
+    @keyframes ring-glow-pulse {
+      0%   { box-shadow: 0 0 16px  3px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+      12%  { box-shadow: 0 0  8px  1px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+      28%  { box-shadow: 0 0 44px 13px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+      45%  { box-shadow: 0 0 11px  2px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+      63%  { box-shadow: 0 0 30px  8px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+      80%  { box-shadow: 0 0  6px  1px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+      100% { box-shadow: 0 0 16px  3px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+    }
+
+    @keyframes neon-flicker {
+      0%   { filter: drop-shadow(0 0 8px #FFB300)  drop-shadow(0 0 26px #FF8800BB) drop-shadow(0 0 55px #FF440055); }
+      12%  { filter: drop-shadow(0 0 4px #FF9900)  drop-shadow(0 0 16px #FF660077) drop-shadow(0 0 38px #FF330033); }
+      23%  { filter: drop-shadow(0 0 18px #FFD700) drop-shadow(0 0 48px #FFAA00CC) drop-shadow(0 0 90px #FF660077); }
+      41%  { filter: drop-shadow(0 0 9px #FFB300)  drop-shadow(0 0 28px #FF880099) drop-shadow(0 0 58px #FF440055); }
+      58%  { filter: drop-shadow(0 0 3px #FF9900)  drop-shadow(0 0 14px #FF660066) drop-shadow(0 0 32px #FF330022); }
+      67%  { filter: drop-shadow(0 0 22px #FFE000) drop-shadow(0 0 60px #FFBB00DD) drop-shadow(0 0 110px #FF770088); }
+      83%  { filter: drop-shadow(0 0 11px #FFB300) drop-shadow(0 0 32px #FF8800AA) drop-shadow(0 0 65px #FF440066); }
+      92%  { filter: drop-shadow(0 0 6px #FFB300)  drop-shadow(0 0 20px #FF880088) drop-shadow(0 0 45px #FF440044); }
+      100% { filter: drop-shadow(0 0 8px #FFB300)  drop-shadow(0 0 26px #FF8800BB) drop-shadow(0 0 55px #FF440055); }
+    }
+
+    @keyframes neon-flicker-blue {
+      0%   { filter: drop-shadow(0 0 8px #2299FF)  drop-shadow(0 0 26px #0066FFBB) drop-shadow(0 0 55px #0033BB55); }
+      12%  { filter: drop-shadow(0 0 4px #1188EE)  drop-shadow(0 0 16px #0055DD77) drop-shadow(0 0 38px #002299AA); }
+      23%  { filter: drop-shadow(0 0 18px #44AAFF) drop-shadow(0 0 48px #2288FFCC) drop-shadow(0 0 90px #0055FF77); }
+      41%  { filter: drop-shadow(0 0 9px #2299FF)  drop-shadow(0 0 28px #0066FF99) drop-shadow(0 0 58px #0033BB55); }
+      58%  { filter: drop-shadow(0 0 3px #1188EE)  drop-shadow(0 0 14px #0055DD66) drop-shadow(0 0 32px #002299AA); }
+      67%  { filter: drop-shadow(0 0 22px #55BBFF) drop-shadow(0 0 60px #33AAFFDD) drop-shadow(0 0 110px #0066FF88); }
+      83%  { filter: drop-shadow(0 0 11px #2299FF) drop-shadow(0 0 32px #0066FFAA) drop-shadow(0 0 65px #0033BB66); }
+      92%  { filter: drop-shadow(0 0 6px #2299FF)  drop-shadow(0 0 20px #0066FF88) drop-shadow(0 0 45px #0033BB44); }
+      100% { filter: drop-shadow(0 0 8px #2299FF)  drop-shadow(0 0 26px #0066FFBB) drop-shadow(0 0 55px #0033BB55); }
+    }
+
+    @keyframes hype-slide {
+      0%   { transform: translate(-50%, -50%) translateX(-95vw) scale(0.92); opacity: 0; }
+      14%  { opacity: 1; }
+      86%  { opacity: 1; }
+      100% { transform: translate(-50%, -50%) translateX(95vw) scale(0.92); opacity: 0; }
+    }
+
+    @keyframes hype-flash {
+      0%   { transform: translate(-50%, -50%) scale(0.45); opacity: 0; }
+      32%  { transform: translate(-50%, -50%) scale(1.1);  opacity: 1; }
+      62%  { transform: translate(-50%, -50%) scale(0.98); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1.2);  opacity: 0; }
+    }
+
+    /* ==========================================================================
+       BASE
+    ========================================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #060f1e;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
+      overflow: hidden;
+    }
+
+    /* ==========================================================================
+       REVEAL OVERLAY
+    ========================================================================== */
+    #reveal-root {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    #reveal-root.active { display: block; }
+
+    /* --- Oscurecer + blur --- */
+    .reveal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: oklch(0.08 0.03 265 / 0.55);
+      backdrop-filter: blur(9px);
+      -webkit-backdrop-filter: blur(9px);
+      opacity: 1;
+      transition:
+        opacity calc(var(--reveal-enter) * 0.7) ease,
+        backdrop-filter calc(var(--reveal-enter) * 0.7) ease,
+        -webkit-backdrop-filter calc(var(--reveal-enter) * 0.7) ease;
+    }
+    .reveal-backdrop.is-clear {
+      opacity: 0;
+      backdrop-filter: blur(0);
+      -webkit-backdrop-filter: blur(0);
+      transition:
+        opacity var(--reveal-clear) cubic-bezier(0.55, 0, 0.45, 1),
+        backdrop-filter var(--reveal-clear) cubic-bezier(0.55, 0, 0.45, 1),
+        -webkit-backdrop-filter var(--reveal-clear) cubic-bezier(0.55, 0, 0.45, 1);
+    }
+
+    /* --- Escena --- */
+    .reveal-stage {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      isolation: isolate;
+    }
+
+    /* --- Texto normal (modo no-hype) --- */
+    .reveal-text {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 1;
+      white-space: nowrap;
+      user-select: none;
+      font-family: 'Titan One', system-ui, sans-serif;
+      font-size: clamp(64px, 17vw, 230px);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: #ffffff;
+      paint-order: stroke fill;
+      -webkit-text-stroke: clamp(4px, 0.8vw, 8px) #001a3a;
+      filter: drop-shadow(0 0 8px #2299FF) drop-shadow(0 0 26px #0066FFBB) drop-shadow(0 0 55px #0033BB55);
+      will-change: transform;
+      transform: translate(-50%, -50%) translateX(-82vw) translateY(var(--reveal-text-y)) scale(1);
+      opacity: 0;
+      transition:
+        transform var(--reveal-enter) cubic-bezier(0.25, 1, 0.5, 1) var(--reveal-text-delay),
+        opacity calc(var(--reveal-enter) * 0.7) ease var(--reveal-text-delay);
+    }
+    .reveal-text.enter {
+      transform: translate(-50%, -50%) translateX(0) translateY(var(--reveal-text-y)) scale(1);
+      opacity: 1;
+      animation: neon-flicker-blue 4s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+      animation-delay: var(--reveal-enter);
+      animation-fill-mode: backwards;
+    }
+    .reveal-text.collapse {
+      transform: translate(-50%, -50%) translateX(var(--reveal-collapse-x, 0px)) translateY(var(--reveal-collapse-y, 0px)) scale(var(--reveal-text-shrink));
+      opacity: 0.9;
+      transition:
+        transform var(--reveal-shrink) cubic-bezier(0.55, 0, 0.45, 1),
+        opacity    var(--reveal-shrink) cubic-bezier(0.55, 0, 0.45, 1);
+    }
+    .reveal-text.gone {
+      opacity: 0;
+      transform: translate(-50%, -50%) translateX(var(--reveal-collapse-x, 0px)) translateY(var(--reveal-collapse-y, 0px)) scale(var(--reveal-text-shrink));
+      transition:
+        transform var(--reveal-shrink) cubic-bezier(0.55, 0, 0.45, 1),
+        opacity    var(--reveal-clear)  cubic-bezier(0.55, 0, 0.45, 1);
+    }
+
+    /* --- Secuencia hype (DUPLA) — palabras que cruzan la pantalla --- */
+    .hype-word {
+      position: absolute;
+      left: 50%;
+      white-space: nowrap;
+      user-select: none;
+      font-family: 'Titan One', system-ui, sans-serif;
+      font-size: clamp(54px, 13vw, 175px);
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      color: #FFD700;
+      paint-order: stroke fill;
+      -webkit-text-stroke: clamp(4px, 0.9vw, 9px) #1A0500;
+      z-index: 1;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+    .hype-word.flash {
+      filter: drop-shadow(0 0 24px #FFB30099) drop-shadow(0 0 50px #FF660066);
+      -webkit-text-stroke-color: #FFE000;
+    }
+
+    /* --- Texto final centrado del hype --- */
+    .hype-final {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      white-space: nowrap;
+      user-select: none;
+      font-family: 'Titan One', system-ui, sans-serif;
+      font-size: clamp(46px, 11vw, 150px);
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      color: #FFD700;
+      paint-order: stroke fill;
+      -webkit-text-stroke: clamp(5px, 1vw, 10px) #1A0500;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      animation: neon-flicker 4.4s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+      animation-delay: 600ms;
+    }
+
+    /* --- Contenedores de imagen (izq y der) --- */
+    .reveal-img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 2;
+      opacity: 0;
+      transition:
+        transform var(--reveal-enter) cubic-bezier(0.16, 1.02, 0.3, 1),
+        opacity   calc(var(--reveal-enter) * 0.6) ease;
+    }
+    /* Posición inicial: muy fuera de la pantalla */
+    .reveal-img.left  { transform: translate(-50%, -50%) translateX(-62vw) scale(0.85); }
+    .reveal-img.right { transform: translate(-50%, -50%) translateX(62vw) scale(0.85); }
+
+    /* Reposo: a ±char-rest del centro */
+    .reveal-img.left.enter {
+      transform: translate(-50%, -50%) translateX(calc(-1 * var(--char-rest, 180px))) scale(1);
+      opacity: 1;
+    }
+    .reveal-img.right.enter {
+      transform: translate(-50%, -50%) translateX(var(--char-rest, 180px)) scale(1);
+      opacity: 1;
+    }
+    .reveal-img.left.enter  .char-glow { animation: ring-glow-pulse 4.2s cubic-bezier(0.37, 0, 0.63, 1) infinite; }
+    .reveal-img.right.enter .char-glow { animation: ring-glow-pulse 4.2s cubic-bezier(0.37, 0, 0.63, 1) infinite 600ms; }
+
+    /* Colapso: ambas convergen al centro y se encogen */
+    .reveal-img.left.collapse,
+    .reveal-img.right.collapse {
+      transform: translate(-50%, -50%) translateX(var(--reveal-collapse-x, 0px)) translateY(var(--reveal-collapse-y, 0px)) scale(var(--reveal-img-shrink));
+      opacity: 1;
+      transition:
+        transform var(--reveal-shrink) cubic-bezier(0.55, 0, 0.45, 1),
+        opacity   var(--reveal-shrink) cubic-bezier(0.55, 0, 0.45, 1);
+    }
+    /* Desvanecido final */
+    .reveal-img.left.gone,
+    .reveal-img.right.gone {
+      transform: translate(-50%, -50%) translateX(var(--reveal-collapse-x, 0px)) translateY(var(--reveal-collapse-y, 0px)) scale(var(--reveal-img-shrink));
+      opacity: 0;
+      transition:
+        transform var(--reveal-shrink) cubic-bezier(0.55, 0, 0.45, 1),
+        opacity   var(--reveal-clear)  cubic-bezier(0.55, 0, 0.45, 1);
+    }
+
+    /* --- Imágenes decorativas de fondo resultado --- */
+    .resultado-izq-bg {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(calc(-50% + var(--resultado-izq-offset-x)), calc(-50% + var(--resultado-izq-offset-y)));
+      width: var(--resultado-izq-size);
+      max-width: none;
+      height: auto;
+      pointer-events: none;
+      user-select: none;
+    }
+    .resultado-der-bg {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(calc(-50% + var(--resultado-der-offset-x)), calc(-50% + var(--resultado-der-offset-y)));
+      width: var(--resultado-der-size);
+      max-width: none;
+      height: auto;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* --- Glow detrás del círculo --- */
+    .char-glow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: var(--char-ring-size, clamp(150px, 26vmin, 230px));
+      aspect-ratio: 1;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .char-glow.ring-left  { --ring-glow: var(--ring-left-color); }
+    .char-glow.ring-right { --ring-glow: var(--ring-right-color); }
+
+    /* --- Círculo de personaje --- */
+    .char-ring {
+      position: relative;
+      width: var(--char-ring-size, clamp(150px, 26vmin, 230px));
+      aspect-ratio: 1;
+      border-radius: 50%;
+      box-shadow: 0 10px 30px oklch(0 0 0 / 0.45);
+    }
+    .char-ring.ring-left  { background: var(--ring-left-color); }
+    .char-ring.ring-right { background: var(--ring-right-color); }
+
+    .char-fill {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      background: oklch(0.2 0.02 265);
+    }
+    .char-ring.ring-left  .char-fill { background: var(--ring-left-color); }
+    .char-ring.ring-right .char-fill { background: var(--ring-right-color); }
+
+    .char-fill img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .char-fill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, transparent 38%, oklch(0 0 0 / 0.38) 100%);
+      pointer-events: none;
+    }
+
+    /* --- Nombre del animal --- */
+    .char-name {
+      position: absolute;
+      top: calc(100% + var(--char-name-margin-top, 28px));
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      text-align: center;
+      font-size: var(--char-name-font-size, clamp(1rem, 3vmin, 1.4rem));
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 0 8px oklch(0 0 0 / 0.8), 0 2px 4px oklch(0 0 0 / 0.6);
+    }
+
+    /* ==========================================================================
+       PANEL DE CONTROLES
+    ========================================================================== */
+    #controls {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10000;
+      background: rgba(4, 10, 24, 0.96);
+      border-top: 1px solid rgba(80, 130, 220, 0.18);
+      padding: 10px 14px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      align-items: flex-end;
+      font-family: system-ui, sans-serif;
+      font-size: 11px;
+      color: #7a9ac0;
+    }
+    #controls label {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    #controls select,
+    #controls input[type="text"],
+    #controls input[type="number"] {
+      background: #0b1628;
+      border: 1px solid #243555;
+      color: #c0d8f0;
+      border-radius: 4px;
+      padding: 3px 6px;
+      font-size: 11px;
+      min-width: 88px;
+      outline: none;
+    }
+    #controls input[type="color"] {
+      width: 36px;
+      height: 24px;
+      padding: 1px;
+      border-radius: 4px;
+      border: 1px solid #243555;
+      cursor: pointer;
+      background: none;
+    }
+    #controls select:focus,
+    #controls input:focus { border-color: #4080cc; }
+
+    .ctrl-sep {
+      width: 1px;
+      height: 40px;
+      background: rgba(80, 130, 220, 0.15);
+      align-self: center;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 6px;
+      align-self: flex-end;
+    }
+    .btn {
+      padding: 6px 14px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      transition: opacity 0.12s, transform 0.08s;
+    }
+    .btn:hover  { opacity: 0.85; }
+    .btn:active { transform: scale(0.96); }
+    .btn-normal { background: #128DFC; color: #fff; }
+    .btn-hype   { background: linear-gradient(135deg, #FFD700, #FFAA00); color: #1A0500; }
+    .btn-reset  { background: #1c2c48; color: #7a9ac0; }
+
+    #phase-badge {
+      align-self: center;
+      padding: 3px 9px;
+      border-radius: 4px;
+      background: #0b1628;
+      border: 1px solid #243555;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: #44aaff;
+      text-transform: uppercase;
+      min-width: 58px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mock background: simula el juego detrás del overlay -->
+  <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+    <div style="color:#0d2040;font-size:clamp(80px,20vw,220px);font-family:'Titan One',system-ui;line-height:1;pointer-events:none;user-select:none;">🎰</div>
+    <p style="color:#182e50;font-size:clamp(14px,2vw,22px);font-family:system-ui;text-align:center;line-height:1.7;">
+      Fondo del juego<br>
+      <span style="font-size:0.65em;opacity:0.6;">El overlay de resultado aparece sobre este fondo</span>
+    </p>
+  </div>
+
+  <!-- ==========================================================================
+       REVEAL OVERLAY
+  =========================================================================== -->
+  <div id="reveal-root">
+    <div class="reveal-backdrop is-clear" id="backdrop"></div>
+
+    <div class="reveal-stage" id="stage">
+
+      <!-- El texto se inyecta por JS (normal o hype) -->
+      <div id="text-container"></div>
+
+      <!-- Imagen izquierda -->
+      <div class="reveal-img left" id="img-left">
+        <div class="char-glow ring-left"></div>
+        <img class="resultado-izq-bg"
+             src="../images/contenedores/rueda-resultado-izquierda.png"
+             aria-hidden="true"
+             onerror="this.style.opacity='0'">
+        <div class="char-ring ring-left">
+          <div class="char-fill">
+            <img id="left-animal-img" src="" alt="">
+          </div>
+        </div>
+        <span class="char-name" id="left-name-label"></span>
+      </div>
+
+      <!-- Imagen derecha -->
+      <div class="reveal-img right" id="img-right">
+        <div class="char-glow ring-right"></div>
+        <img class="resultado-der-bg"
+             src="../images/contenedores/rueda-resultado-derecha.png"
+             aria-hidden="true"
+             onerror="this.style.opacity='0'">
+        <div class="char-ring ring-right">
+          <div class="char-fill">
+            <img id="right-animal-img" src="" alt="">
+          </div>
+        </div>
+        <span class="char-name" id="right-name-label"></span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       PANEL DE CONTROLES
+  =========================================================================== -->
+  <div id="controls">
+
+    <!-- Animal izquierdo -->
+    <label>
+      Animal izq.
+      <select id="left-select"></select>
+    </label>
+    <label>
+      Anillo izq.
+      <input type="color" id="left-color" value="#128DFC">
+    </label>
+    <label>
+      Nombre izq.
+      <input type="text" id="left-name-input" placeholder="(opcional)" style="min-width:72px">
+    </label>
+
+    <div class="ctrl-sep"></div>
+
+    <!-- Animal derecho -->
+    <label>
+      Animal der.
+      <select id="right-select"></select>
+    </label>
+    <label>
+      Anillo der.
+      <input type="color" id="right-color" value="#FFE28F">
+    </label>
+    <label>
+      Nombre der.
+      <input type="text" id="right-name-input" placeholder="(opcional)" style="min-width:72px">
+    </label>
+
+    <div class="ctrl-sep"></div>
+
+    <!-- Texto -->
+    <label>
+      Texto
+      <input type="text" id="text-input" value="DUPLA" style="min-width:72px">
+    </label>
+
+    <div class="ctrl-sep"></div>
+
+    <!-- Tiempos -->
+    <label>
+      Entrada (ms)
+      <input type="number" id="enter-ms" value="2500" min="200" step="100" style="min-width:72px">
+    </label>
+    <label>
+      Espera (ms)
+      <input type="number" id="hold-ms" value="5000" min="500" step="500" style="min-width:72px">
+    </label>
+    <label>
+      Salida (ms)
+      <input type="number" id="exit-ms" value="2500" min="200" step="100" style="min-width:72px">
+    </label>
+    <label>
+      Escala final
+      <input type="number" id="shrink-scale" value="0.1" min="0" max="1" step="0.05" style="min-width:62px">
+    </label>
+    <label>
+      Texto Y (vh)
+      <input type="number" id="text-y" value="30" min="-50" max="50" step="5" style="min-width:62px">
+    </label>
+
+    <div class="ctrl-sep"></div>
+
+    <!-- Parámetros hype -->
+    <label>
+      Bursts
+      <input type="number" id="bursts" value="3" min="1" max="8" style="min-width:50px">
+    </label>
+    <label>
+      Waves
+      <input type="number" id="waves" value="5" min="1" max="10" style="min-width:50px">
+    </label>
+
+    <div class="ctrl-sep"></div>
+
+    <!-- Botones -->
+    <div class="btn-group">
+      <button class="btn btn-normal" onclick="playNormal()">▶ Normal</button>
+      <button class="btn btn-hype"   onclick="playHype()">★ DUPLA</button>
+      <button class="btn btn-reset"  onclick="stopAndReset()">↺ Reset</button>
+    </div>
+
+    <!-- Indicador de fase -->
+    <div id="phase-badge">idle</div>
+
+  </div>
+
+  <script>
+    // =========================================================================
+    // LISTA DE ANIMALES
+    // =========================================================================
+    const ANIMALS = [
+      'AGUILA','ALACRAN','ARDILLA','BALLENA','BURRO','CABALLO','CAIMAN',
+      'CAMELLO','CARNERO','CEBRA','CERDO','CHIVO','CIEMPIES','CULEBRA',
+      'DELFIN','ELEFANTE','GALLINA','GALLO','GATO','IGUANA','JIRAFA',
+      'LAPA','LEON','MONO','OSO','PALOMA','PAVO','PERICO','PERRO',
+      'PESCADO','RANA','RATON','TIGRE','TORO','VACA','VENADO','ZAMURO','ZORRO'
+    ];
+
+    // Populate selects
+    ['left-select', 'right-select'].forEach(id => {
+      const sel = document.getElementById(id);
+      ANIMALS.forEach(name => {
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        if (id === 'left-select'  && name === 'DELFIN') opt.selected = true;
+        if (id === 'right-select' && name === 'ZORRO')  opt.selected = true;
+        sel.appendChild(opt);
+      });
+    });
+
+    // =========================================================================
+    // ESTADO
+    // =========================================================================
+    let timers = [];
+
+    function clearTimers() {
+      timers.forEach(clearTimeout);
+      timers = [];
+    }
+
+    function at(ms, fn) {
+      timers.push(setTimeout(fn, ms));
+    }
+
+    function setPhaseBadge(phase) {
+      document.getElementById('phase-badge').textContent = phase;
+    }
+
+    // =========================================================================
+    // APLICAR CUSTOM PROPERTIES (equiv. a applyVars())
+    // =========================================================================
+    function applyVars(cfg) {
+      const enter    = cfg.enterMs;
+      const exit     = cfg.exitMs;
+      const shrink   = Math.round(exit * 0.58);
+      const clear    = Math.max(120, exit - shrink);
+      const imgShrk  = cfg.shrinkScale;
+      const textShrk = Math.max(0.04, imgShrk * 0.4);
+      const textY    = cfg.textY;
+
+      const root = document.getElementById('reveal-root');
+      root.style.setProperty('--reveal-enter',       `${enter}ms`);
+      root.style.setProperty('--reveal-shrink',      `${shrink}ms`);
+      root.style.setProperty('--reveal-clear',       `${clear}ms`);
+      root.style.setProperty('--reveal-text-delay',  `${Math.round(enter * 0.14)}ms`);
+      root.style.setProperty('--reveal-img-shrink',  `${imgShrk}`);
+      root.style.setProperty('--reveal-text-shrink', `${textShrk}`);
+      root.style.setProperty('--reveal-text-y',      `${textY}vh`);
+      root.style.setProperty('--reveal-collapse-x',  '0px');
+      root.style.setProperty('--reveal-collapse-y',  '0px');
+      root.style.setProperty('--ring-left-color',    cfg.leftThemeColor);
+      root.style.setProperty('--ring-right-color',   cfg.rightThemeColor);
+    }
+
+    // =========================================================================
+    // CONSTRUIR DOM DEL TEXTO HYPE (equiv. a buildHype())
+    // =========================================================================
+    function buildHypeDOM(cfg) {
+      const container = document.getElementById('text-container');
+      container.innerHTML = '';
+
+      const E    = cfg.enterMs;
+      const textY = cfg.textY;
+      const N    = Math.max(1, Math.round(cfg.bursts));
+      const W    = Math.max(1, Math.round(cfg.waves));
+      const frac = x => x - Math.floor(x);
+
+      // a) Ráfaga horizontal — W olas × N textos, izq → der
+      const hPhase = E * 0.52;
+      const hWave  = hPhase / W;
+      const hDur   = hWave * 0.92;
+      for (let w = 0; w < W; w++) {
+        for (let i = 0; i < N; i++) {
+          const delay = w * hWave + (N > 1 ? (hWave * 0.55 * i) / (N - 1) : 0);
+          const top   = 30 + 40 * frac((w * N + i + 1) * 0.618);
+          const el = document.createElement('div');
+          el.className   = 'hype-word';
+          el.textContent = cfg.text;
+          el.style.top       = top.toFixed(1) + '%';
+          el.style.animation = `hype-slide ${Math.round(hDur)}ms cubic-bezier(.5,0,.5,1) ${Math.round(delay)}ms both`;
+          container.appendChild(el);
+        }
+      }
+
+      // b) Parpadeos verticales — W olas, arriba → abajo
+      const vStart = E * 0.4;
+      const vSpan  = E * 0.42;
+      const vWave  = vSpan / W;
+      for (let w = 0; w < W; w++) {
+        for (let i = 0; i < N; i++) {
+          const slot  = vWave / N;
+          const delay = vStart + w * vWave + i * slot;
+          const dur   = Math.max(70, slot * 0.9);
+          const top   = 18 + (N > 1 ? (60 * i) / (N - 1) : 30);
+          const el = document.createElement('div');
+          el.className   = 'hype-word flash';
+          el.textContent = cfg.text;
+          el.style.top       = top.toFixed(1) + '%';
+          el.style.animation = `hype-flash ${Math.round(dur)}ms ease-out ${Math.round(delay)}ms both`;
+          container.appendChild(el);
+        }
+      }
+
+      // c) Texto final centrado que "aterriza"
+      const finalEl  = document.createElement('div');
+      finalEl.className   = 'hype-final';
+      finalEl.id          = 'hype-final';
+      finalEl.textContent = cfg.text;
+
+      const finalBaseTransform = `translate(-50%, -50%) translateY(${textY}vh)`;
+      const finalDur           = `${Math.round(E * 0.34)}ms`;
+
+      finalEl.style.transform  = finalBaseTransform + ' scale(1.28)';
+      finalEl.style.opacity    = '0';
+      finalEl.style.transition = `transform ${finalDur} cubic-bezier(.2,.9,.25,1), opacity ${finalDur} ease`;
+      container.appendChild(finalEl);
+
+      return { finalEl, finalBaseTransform };
+    }
+
+    // =========================================================================
+    // CONSTRUIR DOM DEL TEXTO NORMAL
+    // =========================================================================
+    function buildNormalDOM(cfg) {
+      const container = document.getElementById('text-container');
+      container.innerHTML = '';
+      const el = document.createElement('div');
+      el.className   = 'reveal-text';
+      el.id          = 'reveal-text';
+      el.textContent = cfg.text;
+      container.appendChild(el);
+      return el;
+    }
+
+    // =========================================================================
+    // ACTUALIZAR CLASES DE FASE
+    // =========================================================================
+    function applyPhaseClasses(phase, textEl, isHype, hypeResult) {
+      setPhaseBadge(phase);
+
+      const imgLeft  = document.getElementById('img-left');
+      const imgRight = document.getElementById('img-right');
+      const backdrop = document.getElementById('backdrop');
+
+      const isVisible   = phase === 'in' || phase === 'hold' || phase === 'shrink';
+      const isCollapsed = phase === 'shrink' || phase === 'clear';
+      const isGone      = phase === 'clear';
+
+      // Backdrop
+      backdrop.classList.toggle('is-clear', phase === 'clear' || phase === 'idle');
+
+      // Imágenes
+      [imgLeft, imgRight].forEach(el => {
+        el.classList.toggle('enter',    isVisible);
+        el.classList.toggle('collapse', isCollapsed);
+        el.classList.toggle('gone',     isGone);
+      });
+
+      // Texto normal
+      if (!isHype && textEl) {
+        textEl.classList.toggle('enter',    isVisible);
+        textEl.classList.toggle('collapse', isCollapsed);
+        textEl.classList.toggle('gone',     isGone);
+      }
+
+      // Texto hype-final: se oculta durante clear
+      if (isHype && hypeResult && phase === 'clear') {
+        hypeResult.finalEl.style.opacity = '0';
+      }
+    }
+
+    // =========================================================================
+    // FUNCIÓN PRINCIPAL: play()
+    // =========================================================================
+    function play(cfg) {
+      clearTimers();
+
+      const enter  = cfg.enterMs;
+      const hold   = cfg.holdMs;
+      const exit   = cfg.exitMs;
+      const shrink = exit * 0.58;
+      const clear  = Math.max(120, exit - shrink);
+
+      // Actualizar imágenes y nombres
+      document.getElementById('left-animal-img').src    = `../images/animales-sin-fondo/${cfg.leftImage}`;
+      document.getElementById('right-animal-img').src   = `../images/animales-sin-fondo/${cfg.rightImage}`;
+      document.getElementById('left-name-label').textContent  = cfg.leftName  || '';
+      document.getElementById('right-name-label').textContent = cfg.rightName || '';
+
+      // Aplicar variables CSS
+      applyVars(cfg);
+
+      // Construir DOM del texto
+      let textEl = null;
+      let hypeResult = null;
+      if (cfg.hype) {
+        hypeResult = buildHypeDOM(cfg);
+      } else {
+        textEl = buildNormalDOM(cfg);
+      }
+
+      // Resetear estado visual
+      const imgLeft  = document.getElementById('img-left');
+      const imgRight = document.getElementById('img-right');
+      const backdrop = document.getElementById('backdrop');
+      [imgLeft, imgRight].forEach(el => el.classList.remove('enter','collapse','gone'));
+      backdrop.classList.add('is-clear');
+
+      // Mostrar overlay
+      const revealRoot = document.getElementById('reveal-root');
+      revealRoot.classList.add('active');
+      applyPhaseClasses('idle', textEl, cfg.hype, hypeResult);
+
+      // Secuencia de fases (rAF para que la transición idle→in se anime)
+      requestAnimationFrame(() => {
+        applyPhaseClasses('in', textEl, cfg.hype, hypeResult);
+
+        // Texto final hype aparece al 80% de la fase de entrada
+        if (cfg.hype && hypeResult) {
+          at(enter * 0.8, () => {
+            hypeResult.finalEl.style.transform  = hypeResult.finalBaseTransform + ' scale(1)';
+            hypeResult.finalEl.style.opacity    = '1';
+          });
+        }
+
+        at(enter,                     () => applyPhaseClasses('hold',   textEl, cfg.hype, hypeResult));
+        at(enter + hold,              () => applyPhaseClasses('shrink', textEl, cfg.hype, hypeResult));
+        at(enter + hold + shrink,     () => applyPhaseClasses('clear',  textEl, cfg.hype, hypeResult));
+        at(enter + hold + shrink + clear, () => {
+          setPhaseBadge('done');
+          revealRoot.classList.remove('active');
+        });
+      });
+    }
+
+    // =========================================================================
+    // LEER CONFIG DEL PANEL
+    // =========================================================================
+    function readConfig(forceHype) {
+      return {
+        leftImage:      document.getElementById('left-select').value + '.png',
+        rightImage:     document.getElementById('right-select').value + '.png',
+        leftThemeColor: document.getElementById('left-color').value,
+        rightThemeColor:document.getElementById('right-color').value,
+        leftName:       document.getElementById('left-name-input').value.trim(),
+        rightName:      document.getElementById('right-name-input').value.trim(),
+        text:           document.getElementById('text-input').value.trim() || 'DUPLA',
+        enterMs:        Math.max(200, +document.getElementById('enter-ms').value    || 2500),
+        holdMs:         Math.max(500, +document.getElementById('hold-ms').value     || 5000),
+        exitMs:         Math.max(200, +document.getElementById('exit-ms').value     || 2500),
+        shrinkScale:         parseFloat(document.getElementById('shrink-scale').value) || 0.1,
+        textY:          parseFloat(document.getElementById('text-y').value) ?? 30,
+        bursts:         Math.max(1, +document.getElementById('bursts').value || 3),
+        waves:          Math.max(1, +document.getElementById('waves').value  || 5),
+        hype:           !!forceHype,
+      };
+    }
+
+    // =========================================================================
+    // BOTONES PÚBLICOS
+    // =========================================================================
+    function playNormal()  { play(readConfig(false)); }
+    function playHype()    { play(readConfig(true));  }
+    function stopAndReset() {
+      clearTimers();
+      setPhaseBadge('idle');
+      document.getElementById('reveal-root').classList.remove('active');
+      document.getElementById('text-container').innerHTML = '';
+      ['img-left', 'img-right'].forEach(id => {
+        document.getElementById(id).classList.remove('enter','collapse','gone');
+      });
+      document.getElementById('backdrop').classList.add('is-clear');
+    }
+  </script>
+</body>
+</html>
