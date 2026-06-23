@@ -5,20 +5,6 @@
  */
 
 :host {
-  /* Tamaño y posición de los círculos */
-  --char-ring-size: clamp(150px, 26vmin, 230px);
-  --char-rest: 180px;
-  --char-name-font-size: clamp(1rem, 3vmin, 1.4rem);
-  --char-name-margin-top: 28px;
-
-  /* Imágenes decorativas de resultado */
-  --resultado-izq-size: 300px;
-  --resultado-der-size: 300px;
-  --resultado-izq-offset-x: 0px;
-  --resultado-izq-offset-y: 0px;
-  --resultado-der-offset-x: 0px;
-  --resultado-der-offset-y: 0px;
-
   /* Colores de anillo (sobrescritos por JS) */
   --ring-left-color: #128dfc;
   --ring-right-color: #ffe28f;
@@ -286,8 +272,8 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(calc(-50% + var(--resultado-izq-offset-x)), calc(-50% + var(--resultado-izq-offset-y)));
-  width: var(--resultado-izq-size);
+  transform: translate(calc(-50% + var(--resultado-izq-offset-x, 0px)), calc(-50% + var(--resultado-izq-offset-y, 0px)));
+  width: var(--resultado-izq-size, 300px);
   max-width: none;
   height: auto;
   pointer-events: none;
@@ -297,8 +283,8 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(calc(-50% + var(--resultado-der-offset-x)), calc(-50% + var(--resultado-der-offset-y)));
-  width: var(--resultado-der-size);
+  transform: translate(calc(-50% + var(--resultado-der-offset-x, 0px)), calc(-50% + var(--resultado-der-offset-y, 0px)));
+  width: var(--resultado-der-size, 300px);
   max-width: none;
   height: auto;
   pointer-events: none;
