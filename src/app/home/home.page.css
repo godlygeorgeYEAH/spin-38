@@ -193,6 +193,13 @@ ion-content.home-background::part(background) {
     display: none;
   }
 }
+
+/* Override: mostrar el panel en teléfonos en landscape */
+@media (min-width: 617px) and (max-width: 990px) and (max-height: 460px) and (orientation: landscape) {
+  .right-results-panel {
+    display: block;
+  }
+}
 /* fin panel de resultados */
 
 /* Header - Contiene solo balance cuando betting-panel NO está visible */
