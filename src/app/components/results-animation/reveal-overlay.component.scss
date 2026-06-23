@@ -34,6 +34,9 @@
   --reveal-collapse-x: 0px;
   --reveal-collapse-y: 0px;
   --reveal-band-out: 640ms;
+
+  /* Posición vertical del stage (anillos, imagen, texto) */
+  --reveal-stage-translate-y: 0px;
 }
 
 /* ==========================================================================
@@ -126,6 +129,7 @@
   inset: 0;
   z-index: 1;
   isolation: isolate;
+  transform: translateY(var(--reveal-stage-translate-y, 0px));
 }
 
 /* --- Franjas diagonales detrás de los anillos --- */

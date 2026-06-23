@@ -889,6 +889,9 @@
     --wheel-displacement-x: -100px;
     --wheel-displacement-y: 0px;
 
+    /* === REVEAL ANIMATION === */
+    --reveal-stage-translate-y: 0px;
+
     /* Globales */
   }
 }
@@ -1005,6 +1008,9 @@
     /* === WHEEL DISPLACEMENT (panel visible) === */
     --wheel-displacement-x: -90px;
     --wheel-displacement-y: 0px;
+
+    /* === REVEAL ANIMATION === */
+    --reveal-stage-translate-y: 0px;
 
     /* Globales */
   }
@@ -1123,6 +1129,9 @@
     --wheel-displacement-x: -100px;
     --wheel-displacement-y: 0px;
 
+    /* === REVEAL ANIMATION === */
+    --reveal-stage-translate-y: 0px;
+
     /* Globales */
   }
 }
@@ -1235,6 +1244,9 @@
     --right-panel-content-h3-font-size: 1.2rem;
     --right-panel-content-p-font-size: 0.55rem;
     --right-panel-content-p-line-height: 1.4;
+
+    /* === REVEAL ANIMATION === */
+    --reveal-stage-translate-y: 0px;
 
     /* Globales */
   }
@@ -1349,6 +1361,9 @@
     --right-panel-content-p-font-size: 0.6rem;
     --right-panel-content-p-line-height: 1.4;
 
+    /* === REVEAL ANIMATION === */
+    --reveal-stage-translate-y: 0px;
+
     /* Globales */
   }
 }
@@ -1461,6 +1476,9 @@
     --right-panel-content-h3-font-size: 1.6rem;
     --right-panel-content-p-font-size: 0.68rem;
     --right-panel-content-p-line-height: 1.4;
+
+    /* === REVEAL ANIMATION === */
+    --reveal-stage-translate-y: 0px;
 
     /* Globales */
   }
@@ -1576,9 +1594,12 @@
     --right-panel-content-p-font-size: 0.85rem;
     --right-panel-content-p-line-height: 1.4;
 
+    /* === REVEAL ANIMATION === */
+    --reveal-stage-translate-y: 0px;
+
     /* Globales */
   }
-}   
+}
 
 /* ============================================
  * BREAKPOINT TV-QHD: TV 4K / Windows 150% scaling (2560x1440)
@@ -1692,6 +1713,9 @@
     --right-panel-content-h3-font-size: 1rem;
     --right-panel-content-p-font-size: 1.15rem;
     --right-panel-content-p-line-height: 1.45;
+
+    /* === REVEAL ANIMATION === */
+    --reveal-stage-translate-y: 0px;
 
     /* Globales */
 
@@ -1810,6 +1834,9 @@
     --right-panel-content-h3-font-size: 1rem;
     --right-panel-content-p-font-size: 1.15rem;
     --right-panel-content-p-line-height: 1.45;
+
+    /* === REVEAL ANIMATION === */
+    --reveal-stage-translate-y: 0px;
 
     /* Globales */
 
@@ -2157,6 +2184,9 @@
     --right-panel-content-h3-font-size: 1.5rem;
     --right-panel-content-p-font-size: 1.725rem;
     --right-panel-content-p-line-height: 1.45;
+
+    /* === REVEAL ANIMATION === */
+    --reveal-stage-translate-y: 0px;
 
     /* Globales */
   }
