@@ -1,0 +1,409 @@
+/* reveal-overlay.component.scss
+ * Calco 1:1 del prototipo (Reveal Prototipo.html).
+ * Las duraciones y colores se inyectan como CSS custom properties desde el
+ * componente (rootVars en .reveal-root). Aquí solo van los valores por defecto.
+ */
+
+:host {
+  /* Tamaño y posición de los círculos */
+  --char-ring-size: clamp(150px, 26vmin, 230px);
+  --char-rest: 180px;
+  --char-name-font-size: clamp(1rem, 3vmin, 1.4rem);
+  --char-name-margin-top: 28px;
+
+  /* Imágenes decorativas de resultado */
+  --resultado-izq-size: 300px;
+  --resultado-der-size: 300px;
+  --resultado-izq-offset-x: 0px;
+  --resultado-izq-offset-y: 0px;
+  --resultado-der-offset-x: 0px;
+  --resultado-der-offset-y: 0px;
+
+  /* Colores de anillo (sobrescritos por JS) */
+  --ring-left-color: #128dfc;
+  --ring-right-color: #ffe28f;
+
+  /* Duraciones (sobrescritas por JS) */
+  --reveal-enter: 2500ms;
+  --reveal-shrink: 1450ms;
+  --reveal-clear: 640ms;
+  --reveal-text-delay: 350ms;
+  --reveal-img-shrink: 0.1;
+  --reveal-text-shrink: 0.04;
+  --reveal-text-y: 30vh;
+  --reveal-collapse-x: 0px;
+  --reveal-collapse-y: 0px;
+  --reveal-band-out: 640ms;
+}
+
+/* ==========================================================================
+   KEYFRAMES
+========================================================================== */
+@keyframes ring-glow-pulse {
+  0%   { box-shadow: 0 0 16px 3px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+  12%  { box-shadow: 0 0 8px 1px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+  28%  { box-shadow: 0 0 44px 13px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+  45%  { box-shadow: 0 0 11px 2px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+  63%  { box-shadow: 0 0 30px 8px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+  80%  { box-shadow: 0 0 6px 1px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+  100% { box-shadow: 0 0 16px 3px var(--ring-glow), 0 10px 30px oklch(0 0 0 / 0.45); }
+}
+
+@keyframes neon-flicker {
+  0%   { filter: drop-shadow(0 0 8px #FFB300) drop-shadow(0 0 26px #FF8800BB) drop-shadow(0 0 55px #FF440055); }
+  12%  { filter: drop-shadow(0 0 4px #FF9900) drop-shadow(0 0 16px #FF660077) drop-shadow(0 0 38px #FF330033); }
+  23%  { filter: drop-shadow(0 0 18px #FFD700) drop-shadow(0 0 48px #FFAA00CC) drop-shadow(0 0 90px #FF660077); }
+  41%  { filter: drop-shadow(0 0 9px #FFB300) drop-shadow(0 0 28px #FF880099) drop-shadow(0 0 58px #FF440055); }
+  58%  { filter: drop-shadow(0 0 3px #FF9900) drop-shadow(0 0 14px #FF660066) drop-shadow(0 0 32px #FF330022); }
+  67%  { filter: drop-shadow(0 0 22px #FFE000) drop-shadow(0 0 60px #FFBB00DD) drop-shadow(0 0 110px #FF770088); }
+  83%  { filter: drop-shadow(0 0 11px #FFB300) drop-shadow(0 0 32px #FF8800AA) drop-shadow(0 0 65px #FF440066); }
+  92%  { filter: drop-shadow(0 0 6px #FFB300) drop-shadow(0 0 20px #FF880088) drop-shadow(0 0 45px #FF440044); }
+  100% { filter: drop-shadow(0 0 8px #FFB300) drop-shadow(0 0 26px #FF8800BB) drop-shadow(0 0 55px #FF440055); }
+}
+
+@keyframes neon-flicker-blue {
+  0%   { filter: drop-shadow(0 0 8px #2299FF) drop-shadow(0 0 26px #0066FFBB) drop-shadow(0 0 55px #0033BB55); }
+  12%  { filter: drop-shadow(0 0 4px #1188EE) drop-shadow(0 0 16px #0055DD77) drop-shadow(0 0 38px #002299AA); }
+  23%  { filter: drop-shadow(0 0 18px #44AAFF) drop-shadow(0 0 48px #2288FFCC) drop-shadow(0 0 90px #0055FF77); }
+  41%  { filter: drop-shadow(0 0 9px #2299FF) drop-shadow(0 0 28px #0066FF99) drop-shadow(0 0 58px #0033BB55); }
+  58%  { filter: drop-shadow(0 0 3px #1188EE) drop-shadow(0 0 14px #0055DD66) drop-shadow(0 0 32px #002299AA); }
+  67%  { filter: drop-shadow(0 0 22px #55BBFF) drop-shadow(0 0 60px #33AAFFDD) drop-shadow(0 0 110px #0066FF88); }
+  83%  { filter: drop-shadow(0 0 11px #2299FF) drop-shadow(0 0 32px #0066FFAA) drop-shadow(0 0 65px #0033BB66); }
+  92%  { filter: drop-shadow(0 0 6px #2299FF) drop-shadow(0 0 20px #0066FF88) drop-shadow(0 0 45px #0033BB44); }
+  100% { filter: drop-shadow(0 0 8px #2299FF) drop-shadow(0 0 26px #0066FFBB) drop-shadow(0 0 55px #0033BB55); }
+}
+
+@keyframes hype-slide {
+  0%   { transform: translate(-50%, -50%) translateX(-95vw) scale(0.92); opacity: 0; }
+  14%  { opacity: 1; }
+  86%  { opacity: 1; }
+  100% { transform: translate(-50%, -50%) translateX(95vw) scale(0.92); opacity: 0; }
+}
+
+@keyframes hype-flash {
+  0%   { transform: translate(-50%, -50%) scale(0.45); opacity: 0; }
+  32%  { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+  62%  { transform: translate(-50%, -50%) scale(0.98); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0; }
+}
+
+/* ==========================================================================
+   OVERLAY
+========================================================================== */
+.reveal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* --- Oscurecer + blur --- */
+.reveal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: oklch(0.08 0.03 265 / 0.55);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  opacity: 1;
+  transition:
+    opacity calc(var(--reveal-enter) * 0.7) ease,
+    backdrop-filter calc(var(--reveal-enter) * 0.7) ease,
+    -webkit-backdrop-filter calc(var(--reveal-enter) * 0.7) ease;
+
+  &.is-clear {
+    opacity: 0;
+    backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
+    transition:
+      opacity var(--reveal-clear) cubic-bezier(0.55, 0, 0.45, 1),
+      backdrop-filter var(--reveal-clear) cubic-bezier(0.55, 0, 0.45, 1),
+      -webkit-backdrop-filter var(--reveal-clear) cubic-bezier(0.55, 0, 0.45, 1);
+  }
+}
+
+.reveal-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  isolation: isolate;
+}
+
+/* --- Franjas diagonales detrás de los anillos --- */
+.reveal-band {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--char-ring-size, 200px) * 1.12);
+  height: 220vh;
+  z-index: 0;
+  pointer-events: none;
+  will-change: clip-path;
+  transition: clip-path var(--reveal-band-out, var(--reveal-clear)) cubic-bezier(0.55, 0, 0.45, 1);
+
+  &.left {
+    transform: translate(-50%, -50%) translateX(calc(-1 * var(--char-rest, 180px))) rotate(-20deg);
+    background: linear-gradient(105deg,
+      color-mix(in srgb, var(--ring-left-color) 52%, #000),
+      color-mix(in srgb, var(--ring-left-color) 68%, #000));
+    clip-path: inset(0 0 100% 0);
+  }
+  &.right {
+    transform: translate(-50%, -50%) translateX(var(--char-rest, 180px)) rotate(20deg);
+    background: linear-gradient(105deg,
+      color-mix(in srgb, var(--ring-right-color) 68%, #000),
+      color-mix(in srgb, var(--ring-right-color) 52%, #000));
+    clip-path: inset(100% 0 0 0);
+  }
+  &.left.show,
+  &.right.show {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path calc(var(--reveal-enter) * 0.85) cubic-bezier(0.16, 1.02, 0.3, 1);
+  }
+}
+
+/* --- Texto normal (azul neón) --- */
+.reveal-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  white-space: nowrap;
+  user-select: none;
+  font-family: 'Titan One', system-ui, sans-serif;
+  font-size: clamp(64px, 17vw, 230px);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  paint-order: stroke fill;
+  -webkit-text-stroke: clamp(4px, 0.8vw, 8px) #001a3a;
+  filter: drop-shadow(0 0 8px #2299FF) drop-shadow(0 0 26px #0066FFBB) drop-shadow(0 0 55px #0033BB55);
+  will-change: transform;
+  transform: translate(-50%, -50%) translateX(-82vw) translateY(var(--reveal-text-y)) scale(1);
+  opacity: 0;
+  transition:
+    transform var(--reveal-enter) cubic-bezier(0.25, 1, 0.5, 1) var(--reveal-text-delay),
+    opacity calc(var(--reveal-enter) * 0.7) ease var(--reveal-text-delay);
+
+  &.enter {
+    transform: translate(-50%, -50%) translateX(0) translateY(var(--reveal-text-y)) scale(1);
+    opacity: 1;
+    animation: neon-flicker-blue 4s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+    animation-delay: var(--reveal-enter);
+    animation-fill-mode: backwards;
+  }
+  &.collapse {
+    transform: translate(-50%, -50%) translateX(var(--reveal-collapse-x, 0px)) translateY(var(--reveal-collapse-y, 0px)) scale(var(--reveal-text-shrink));
+    opacity: 0.9;
+    transition:
+      transform var(--reveal-shrink) cubic-bezier(0.55, 0, 0.45, 1),
+      opacity var(--reveal-shrink) cubic-bezier(0.55, 0, 0.45, 1);
+  }
+  &.gone {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateX(var(--reveal-collapse-x, 0px)) translateY(var(--reveal-collapse-y, 0px)) scale(var(--reveal-text-shrink));
+    transition:
+      transform var(--reveal-shrink) cubic-bezier(0.55, 0, 0.45, 1),
+      opacity var(--reveal-clear) cubic-bezier(0.55, 0, 0.45, 1);
+  }
+}
+
+/* --- Secuencia hype (DUPLA) --- */
+.hype-word {
+  position: absolute;
+  left: 50%;
+  white-space: nowrap;
+  user-select: none;
+  font-family: 'Titan One', system-ui, sans-serif;
+  font-size: clamp(54px, 13vw, 175px);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  color: #ffd700;
+  paint-order: stroke fill;
+  -webkit-text-stroke: clamp(4px, 0.9vw, 9px) #1a0500;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform, opacity;
+
+  &.flash {
+    filter: drop-shadow(0 0 24px #FFB30099) drop-shadow(0 0 50px #FF660066);
+    -webkit-text-stroke-color: #ffe000;
+  }
+}
+
+.hype-final {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  white-space: nowrap;
+  user-select: none;
+  font-family: 'Titan One', system-ui, sans-serif;
+  font-size: clamp(46px, 11vw, 150px);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  color: #ffd700;
+  paint-order: stroke fill;
+  -webkit-text-stroke: clamp(5px, 1vw, 10px) #1a0500;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  animation: neon-flicker 4.4s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation-delay: 600ms;
+}
+
+/* --- Contenedores de imagen --- */
+.reveal-img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  opacity: 0;
+  transition:
+    transform var(--reveal-enter) cubic-bezier(0.16, 1.02, 0.3, 1),
+    opacity calc(var(--reveal-enter) * 0.6) ease;
+
+  &.left { transform: translate(-50%, -50%) translateX(-62vw) scale(0.85); }
+  &.right { transform: translate(-50%, -50%) translateX(62vw) scale(0.85); }
+
+  &.left.enter {
+    transform: translate(-50%, -50%) translateX(calc(-1 * var(--char-rest, 180px))) scale(1);
+    opacity: 1;
+  }
+  &.right.enter {
+    transform: translate(-50%, -50%) translateX(var(--char-rest, 180px)) scale(1);
+    opacity: 1;
+  }
+  &.left.enter .char-glow { animation: ring-glow-pulse 4.2s cubic-bezier(0.37, 0, 0.63, 1) infinite; }
+  &.right.enter .char-glow { animation: ring-glow-pulse 4.2s cubic-bezier(0.37, 0, 0.63, 1) infinite 600ms; }
+
+  &.left.collapse,
+  &.right.collapse {
+    transform: translate(-50%, -50%) translateX(var(--reveal-collapse-x, 0px)) translateY(var(--reveal-collapse-y, 0px)) scale(var(--reveal-img-shrink));
+    opacity: 1;
+    transition:
+      transform var(--reveal-shrink) cubic-bezier(0.55, 0, 0.45, 1),
+      opacity var(--reveal-shrink) cubic-bezier(0.55, 0, 0.45, 1);
+  }
+  &.left.gone,
+  &.right.gone {
+    transform: translate(-50%, -50%) translateX(var(--reveal-collapse-x, 0px)) translateY(var(--reveal-collapse-y, 0px)) scale(var(--reveal-img-shrink));
+    opacity: 0;
+    transition:
+      transform var(--reveal-shrink) cubic-bezier(0.55, 0, 0.45, 1),
+      opacity var(--reveal-clear) cubic-bezier(0.55, 0, 0.45, 1);
+  }
+}
+
+/* --- Imágenes decorativas de fondo resultado --- */
+.resultado-izq-bg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(calc(-50% + var(--resultado-izq-offset-x)), calc(-50% + var(--resultado-izq-offset-y)));
+  width: var(--resultado-izq-size);
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+.resultado-der-bg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(calc(-50% + var(--resultado-der-offset-x)), calc(-50% + var(--resultado-der-offset-y)));
+  width: var(--resultado-der-size);
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* --- Glow detrás del círculo --- */
+.char-glow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--char-ring-size, clamp(150px, 26vmin, 230px));
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+
+  &.ring-left { --ring-glow: var(--ring-left-color); }
+  &.ring-right { --ring-glow: var(--ring-right-color); }
+}
+
+/* --- Círculo de personaje --- */
+.char-ring {
+  position: relative;
+  width: var(--char-ring-size, clamp(150px, 26vmin, 230px));
+  aspect-ratio: 1;
+  border-radius: 50%;
+  box-shadow: 0 10px 30px oklch(0 0 0 / 0.45);
+
+  &.ring-left { background: var(--ring-left-color); }
+  &.ring-right { background: var(--ring-right-color); }
+}
+
+.char-fill {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: oklch(0.2 0.02 265);
+
+  .char-ring.ring-left & { background: var(--ring-left-color); }
+  .char-ring.ring-right & { background: var(--ring-right-color); }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, transparent 38%, oklch(0 0 0 / 0.38) 100%);
+    pointer-events: none;
+  }
+}
+
+/* Fallback cuando la imagen del animal no carga */
+.char-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 10%;
+  font-family: 'Titan One', system-ui, sans-serif;
+  font-size: clamp(0.9rem, 3.4vmin, 1.5rem);
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-shadow: 0 1px 3px oklch(0 0 0 / 0.55);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* --- Nombre del animal --- */
+.char-name {
+  position: absolute;
+  top: calc(100% + var(--char-name-margin-top, 28px));
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  text-align: center;
+  font-size: var(--char-name-font-size, clamp(1rem, 3vmin, 1.4rem));
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 0 8px oklch(0 0 0 / 0.8), 0 2px 4px oklch(0 0 0 / 0.6);
+}

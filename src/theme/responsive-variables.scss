@@ -834,7 +834,7 @@
     --buho-left: 23vh;
 
     /* === LOGO === */
-    --logo-size: 25vh;
+    --logo-size: 18vh;
     --logo-top: 5px;
     --logo-left: 5px;
     --logo-translate-x: 0px;
@@ -856,17 +856,17 @@
     --history-panel-right: 0px;
     --history-panel-top: 50%;
     --history-panel-transform: translateY(-50%);
-    --history-panel-width: 55px;
-    --history-label-font-size: 0.45rem;
+    --history-panel-width: 135px;
+    --history-label-font-size: 1.05rem;
     --history-entry-gap: 2px;
     --history-entry-inner-gap: 4px;
     --history-entry-padding: 2px 3px;
     --history-entry-image-size: 20px;
-    --history-time-font-size: 0.45rem;
-    --history-entry-font-size: 0.6rem;
+    --history-time-font-size: 0.75rem;
+    --history-entry-font-size: 0.9rem;
 
     /* === RIGHT RESULTS PANEL === */
-    --right-panel-top: 0;
+    --right-panel-top: 10vh;
     --right-panel-right: 0vh;
     --right-panel-width: min(200px, 90vw);
     --right-panel-max-width: 300px;
@@ -886,7 +886,7 @@
     --right-panel-content-p-line-height: 1.3;
 
     /* === WHEEL DISPLACEMENT (panel visible) === */
-    --wheel-displacement-x: -80px;
+    --wheel-displacement-x: -100px;
     --wheel-displacement-y: 0px;
 
     /* Globales */
@@ -902,28 +902,28 @@
 @media (min-width: 721px) and (max-width: 900px) and (max-height: 430px) and (orientation: landscape) {
   :root {
     /* === RESULTADO IZQUIERDA === */
-    --resultado-izq-size: 75px;
+    --resultado-izq-size: 125px;
     --resultado-izq-offset-x: 0px;
     --resultado-izq-offset-y: 0px;
 
     /* === RESULTADO DERECHA === */
-    --resultado-der-size: 75px;
+    --resultado-der-size: 125px;
     --resultado-der-offset-x: 0px;
     --resultado-der-offset-y: 0px;
 
     /* === WHEEL & GAME AREA === */
-    --wheel-margin-top: 2%;
+    --wheel-margin-top: 2.5%;
     --wheel-right: 0vh;
     --wheel-center-size: 40%;
-    --wheel-border-size: 65vh;
-    --wheel-diameter: 60vh;
+    --wheel-border-size: 124vh;
+    --wheel-diameter: 84vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
-    --pointer-size: 55px;
-    --pointer-top: -3px;
+    --pointer-size: 30vh;
+    --pointer-top: 10px;
 
     /* === ANIMAL DISPLAY === */
-    --animal-image-size: 42px;
+    --animal-image-size: 80px;
     --animal-image-translate-x: 0%;
     --animal-image-translate-y: -10%;
     --animal-name-tag-width: 24%;
@@ -935,23 +935,23 @@
     --animal-name-font-size: 0.55rem;
 
     /* === CLOCK === */
-    --clock-widget-width: 140px;
-    --clock-widget-min-height: 110px;
+    --clock-widget-width: 42vh;
+    --clock-widget-min-height: 42vh;
     --clock-widget-bottom: 0rem;
     --clock-widget-left: 0rem;
-    --clock-value-font-size: 0.7rem;
-    --clock-value-top: 41px;
-    --clock-value-left: 18px;
+    --clock-value-font-size: 1.25rem;
+    --clock-value-top: 13vh;
+    --clock-value-left: 1vh;
     --countdown-font-size: 0.75rem;
     --countdown-top: 41px;
     --countdown-left: -34px;
     /* === BUHO GIF === */
-    --buho-width: 41px;
-    --buho-top: 55px;
-    --buho-left: 80px;
+    --buho-width: 14vh;
+    --buho-top: 20vh;
+    --buho-left: 24vh;
 
     /* === LOGO === */
-    --logo-size: 50px;
+    --logo-size: 20vh;
     --logo-top: 5px;
     --logo-left: 5px;
     --logo-translate-x: 0px;
@@ -964,7 +964,7 @@
     --settings-title-font-size: 1.6rem;
     --result-title-font-size: 1.7rem;
     --win-amount-font-size: 1.5rem;
-    --char-ring-size: 90px;
+    --char-ring-size: 110px;
     --char-rest: 90px;
     --char-name-font-size: 0.7rem;
     --char-name-margin-top: 12px;
@@ -973,14 +973,14 @@
     --history-panel-right: 0px;
     --history-panel-top: 50%;
     --history-panel-transform: translateY(-50%);
-    --history-panel-width: 58px;
-    --history-label-font-size: 0.48rem;
+    --history-panel-width: 158px;
+    --history-label-font-size: 1.1rem;
     --history-entry-gap: 2px;
-    --history-entry-inner-gap: 5px;
-    --history-entry-padding: 2px 4px;
-    --history-entry-image-size: 22px;
-    --history-time-font-size: 0.48rem;
-    --history-entry-font-size: 0.65rem;
+    --history-entry-inner-gap: 0px;
+    --history-entry-padding: 0px 1px;
+    --history-entry-image-size: 35px;
+    --history-time-font-size: 0.68rem;
+    --history-entry-font-size: 0.75rem;
 
     /* === RIGHT RESULTS PANEL === */
     --right-panel-top: 1rem;
@@ -1019,25 +1019,25 @@
 @media (min-width: 901px) and (max-width: 990px) and (max-height: 460px) and (orientation: landscape) {
   :root {
     /* === RESULTADO IZQUIERDA === */
-    --resultado-izq-size: 85px;
+    --resultado-izq-size: 145px;
     --resultado-izq-offset-x: 0px;
     --resultado-izq-offset-y: 0px;
 
     /* === RESULTADO DERECHA === */
-    --resultado-der-size: 85px;
+    --resultado-der-size: 145px;
     --resultado-der-offset-x: 0px;
     --resultado-der-offset-y: 0px;
 
     /* === WHEEL & GAME AREA === */
-    --wheel-margin-top: 2%;
+    --wheel-margin-top: 2.5%;
     --wheel-right: 0vh;
     --wheel-center-size: 40%;
-    --wheel-border-size: 65vh;
-    --wheel-diameter: 60vh;
+    --wheel-border-size: 124vh;
+    --wheel-diameter: 84vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
-    --pointer-size: 60px;
-    --pointer-top: -3px;
+    --pointer-size: 25vh;
+    --pointer-top: 10px;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 48px;
@@ -1052,23 +1052,23 @@
     --animal-name-font-size: 0.6rem;
 
     /* === CLOCK === */
-    --clock-widget-width: 150px;
-    --clock-widget-min-height: 115px;
+    --clock-widget-width: 50vh;
+    --clock-widget-min-height: 50vh;
     --clock-widget-bottom: 0rem;
     --clock-widget-left: 0rem;
-    --clock-value-font-size: 0.75rem;
-    --clock-value-top: 44px;
-    --clock-value-left: 20px;
+    --clock-value-font-size: 1.75rem;
+    --clock-value-top: 16vh;
+    --clock-value-left: 1vh;
     --countdown-font-size: 0.8rem;
     --countdown-top: 44px;
     --countdown-left: -37px;
     /* === BUHO GIF === */
-    --buho-width: 44px;
-    --buho-top: 59px;
-    --buho-left: 86px;
+    --buho-width: 16vh;
+    --buho-top: 25vh;
+    --buho-left: 29vh;
 
     /* === LOGO === */
-    --logo-size: 55px;
+    --logo-size: 20vh;
     --logo-top: 6px;
     --logo-left: 6px;
     --logo-translate-x: 0px;
@@ -1079,25 +1079,25 @@
     --modal-max-width: 600px;
     --history-title-font-size: 1rem;
     --settings-title-font-size: 1.7rem;
-    --result-title-font-size: 1.8rem;
+    --result-title-font-size: 1rem;
     --win-amount-font-size: 1.6rem;
-    --char-ring-size: 100px;
+    --char-ring-size: 120px;
     --char-rest: 100px;
     --char-name-font-size: 0.75rem;
-    --char-name-margin-top: 13px;
+    --char-name-margin-top: 10px;
 
     /* === RESULTS HISTORY PANEL === */
     --history-panel-right: 0px;
     --history-panel-top: 50%;
     --history-panel-transform: translateY(-50%);
-    --history-panel-width: 60px;
-    --history-label-font-size: 0.5rem;
+    --history-panel-width: 160px;
+    --history-label-font-size: 1.1rem;
     --history-entry-gap: 2px;
     --history-entry-inner-gap: 5px;
-    --history-entry-padding: 2px 4px;
-    --history-entry-image-size: 24px;
-    --history-time-font-size: 0.5rem;
-    --history-entry-font-size: 0.68rem;
+    --history-entry-padding: 0px 0px;
+    --history-entry-image-size: 32px;
+    --history-time-font-size: 0.9rem;
+    --history-entry-font-size: 0.98rem;
 
     /* === RIGHT RESULTS PANEL === */
     --right-panel-top: 1rem;
