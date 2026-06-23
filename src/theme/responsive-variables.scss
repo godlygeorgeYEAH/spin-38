@@ -777,11 +777,464 @@
 }  */
 
 /* ============================================
+ * BREAKPOINT PHONE-LANDSCAPE-S: Teléfono pequeño en horizontal (~667×375)
+ * iPhone SE, iPhone 8, teléfonos compactos rotados
+ * DevTools: 667 x 375 (landscape)
+ * Rango: 617-720px ancho / max 430px alto
+ * ============================================ */
+@media (min-width: 617px) and (max-width: 720px) and (max-height: 430px) and (orientation: landscape) {
+  :root {
+    /* === RESULTADO IZQUIERDA === */
+    --resultado-izq-size: 65px;
+    --resultado-izq-offset-x: 0px;
+    --resultado-izq-offset-y: 0px;
+
+    /* === RESULTADO DERECHA === */
+    --resultado-der-size: 65px;
+    --resultado-der-offset-x: 0px;
+    --resultado-der-offset-y: 0px;
+
+    /* === WHEEL & GAME AREA === */
+    --wheel-margin-top: 2%;
+    --wheel-right: 0vh;
+    --wheel-center-size: 40%;
+    --wheel-border-size: 65vh;
+    --wheel-diameter: 60vh;
+    --wheel-border-transform-x: 0px;
+    --wheel-border-transform-y: 0px;
+    --pointer-size: 50px;
+    --pointer-top: -2px;
+
+    /* === ANIMAL DISPLAY === */
+    --animal-image-size: 38px;
+    --animal-image-translate-x: 0%;
+    --animal-image-translate-y: -10%;
+    --animal-name-tag-width: 24%;
+    --animal-name-tag-height: 17%;
+    --animal-name-tag-top: 10%;
+    --animal-name-tag-left: 9%;
+    --animal-name-tag-translate-x: 0%;
+    --animal-name-tag-translate-y: 0%;
+    --animal-name-font-size: 0.5rem;
+
+    /* === CLOCK === */
+    --clock-widget-width: 130px;
+    --clock-widget-min-height: 100px;
+    --clock-widget-bottom: 0rem;
+    --clock-widget-left: 0rem;
+    --clock-value-font-size: 0.65rem;
+    --clock-value-top: 38px;
+    --clock-value-left: 17px;
+    --countdown-font-size: 0.7rem;
+    --countdown-top: 38px;
+    --countdown-left: -31px;
+    /* === BUHO GIF === */
+    --buho-width: 38px;
+    --buho-top: 51px;
+    --buho-left: 74px;
+
+    /* === LOGO === */
+    --logo-size: 45px;
+    --logo-top: 5px;
+    --logo-left: 5px;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
+
+    /* === MODALS === */
+    --modal-width: 90%;
+    --modal-max-width: 500px;
+    --history-title-font-size: 0.9rem;
+    --settings-title-font-size: 1.5rem;
+    --result-title-font-size: 1.6rem;
+    --win-amount-font-size: 1.4rem;
+    --char-ring-size: 80px;
+    --char-rest: 80px;
+    --char-name-font-size: 0.65rem;
+    --char-name-margin-top: 10px;
+
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 55px;
+    --history-label-font-size: 0.45rem;
+    --history-entry-gap: 2px;
+    --history-entry-inner-gap: 4px;
+    --history-entry-padding: 2px 3px;
+    --history-entry-image-size: 20px;
+    --history-time-font-size: 0.45rem;
+    --history-entry-font-size: 0.6rem;
+
+    /* === RIGHT RESULTS PANEL === */
+    --right-panel-top: 1rem;
+    --right-panel-right: -0.3rem;
+    --right-panel-width: min(200px, 90vw);
+    --right-panel-max-width: 300px;
+    --right-panel-z-index: 950;
+    --right-panel-border-radius: 0.5rem;
+    --right-panel-transform: none;
+
+    /* === RIGHT RESULTS PANEL CONTENT === */
+    --right-panel-content-top: 0;
+    --right-panel-content-right: 0;
+    --right-panel-content-bottom: 0;
+    --right-panel-content-left: 0;
+    --right-panel-content-transform: none;
+    --right-panel-content-padding: 0.4rem;
+    --right-panel-content-h3-font-size: 0.65rem;
+    --right-panel-content-p-font-size: 0.5rem;
+    --right-panel-content-p-line-height: 1.3;
+
+    /* Globales */
+  }
+}
+
+/* ============================================
+ * BREAKPOINT PHONE-LANDSCAPE-M: Teléfono estándar en horizontal (~812×375)
+ * iPhone X, 11, 12, 13, 14 / Android estándar rotados
+ * DevTools: 812 x 375 (landscape)
+ * Rango: 721-900px ancho / max 430px alto
+ * ============================================ */
+@media (min-width: 721px) and (max-width: 900px) and (max-height: 430px) and (orientation: landscape) {
+  :root {
+    /* === RESULTADO IZQUIERDA === */
+    --resultado-izq-size: 75px;
+    --resultado-izq-offset-x: 0px;
+    --resultado-izq-offset-y: 0px;
+
+    /* === RESULTADO DERECHA === */
+    --resultado-der-size: 75px;
+    --resultado-der-offset-x: 0px;
+    --resultado-der-offset-y: 0px;
+
+    /* === WHEEL & GAME AREA === */
+    --wheel-margin-top: 2%;
+    --wheel-right: 0vh;
+    --wheel-center-size: 40%;
+    --wheel-border-size: 65vh;
+    --wheel-diameter: 60vh;
+    --wheel-border-transform-x: 0px;
+    --wheel-border-transform-y: 0px;
+    --pointer-size: 55px;
+    --pointer-top: -3px;
+
+    /* === ANIMAL DISPLAY === */
+    --animal-image-size: 42px;
+    --animal-image-translate-x: 0%;
+    --animal-image-translate-y: -10%;
+    --animal-name-tag-width: 24%;
+    --animal-name-tag-height: 17%;
+    --animal-name-tag-top: 10%;
+    --animal-name-tag-left: 9%;
+    --animal-name-tag-translate-x: 0%;
+    --animal-name-tag-translate-y: 0%;
+    --animal-name-font-size: 0.55rem;
+
+    /* === CLOCK === */
+    --clock-widget-width: 140px;
+    --clock-widget-min-height: 110px;
+    --clock-widget-bottom: 0rem;
+    --clock-widget-left: 0rem;
+    --clock-value-font-size: 0.7rem;
+    --clock-value-top: 41px;
+    --clock-value-left: 18px;
+    --countdown-font-size: 0.75rem;
+    --countdown-top: 41px;
+    --countdown-left: -34px;
+    /* === BUHO GIF === */
+    --buho-width: 41px;
+    --buho-top: 55px;
+    --buho-left: 80px;
+
+    /* === LOGO === */
+    --logo-size: 50px;
+    --logo-top: 5px;
+    --logo-left: 5px;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
+
+    /* === MODALS === */
+    --modal-width: 85%;
+    --modal-max-width: 550px;
+    --history-title-font-size: 0.95rem;
+    --settings-title-font-size: 1.6rem;
+    --result-title-font-size: 1.7rem;
+    --win-amount-font-size: 1.5rem;
+    --char-ring-size: 90px;
+    --char-rest: 90px;
+    --char-name-font-size: 0.7rem;
+    --char-name-margin-top: 12px;
+
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 58px;
+    --history-label-font-size: 0.48rem;
+    --history-entry-gap: 2px;
+    --history-entry-inner-gap: 5px;
+    --history-entry-padding: 2px 4px;
+    --history-entry-image-size: 22px;
+    --history-time-font-size: 0.48rem;
+    --history-entry-font-size: 0.65rem;
+
+    /* === RIGHT RESULTS PANEL === */
+    --right-panel-top: 1rem;
+    --right-panel-right: -0.3rem;
+    --right-panel-width: min(220px, 90vw);
+    --right-panel-max-width: 330px;
+    --right-panel-z-index: 950;
+    --right-panel-border-radius: 0.5rem;
+    --right-panel-transform: none;
+
+    /* === RIGHT RESULTS PANEL CONTENT === */
+    --right-panel-content-top: 0;
+    --right-panel-content-right: 0;
+    --right-panel-content-bottom: 0;
+    --right-panel-content-left: 0;
+    --right-panel-content-transform: none;
+    --right-panel-content-padding: 0.45rem;
+    --right-panel-content-h3-font-size: 0.7rem;
+    --right-panel-content-p-font-size: 0.55rem;
+    --right-panel-content-p-line-height: 1.3;
+
+    /* Globales */
+  }
+}
+
+/* ============================================
+ * BREAKPOINT PHONE-LANDSCAPE-L: Teléfono grande en horizontal (~932×430)
+ * iPhone Pro Max, Android phablet rotados
+ * DevTools: 932 x 430 (landscape)
+ * Rango: 901-990px ancho / max 460px alto
+ * ============================================ */
+@media (min-width: 901px) and (max-width: 990px) and (max-height: 460px) and (orientation: landscape) {
+  :root {
+    /* === RESULTADO IZQUIERDA === */
+    --resultado-izq-size: 85px;
+    --resultado-izq-offset-x: 0px;
+    --resultado-izq-offset-y: 0px;
+
+    /* === RESULTADO DERECHA === */
+    --resultado-der-size: 85px;
+    --resultado-der-offset-x: 0px;
+    --resultado-der-offset-y: 0px;
+
+    /* === WHEEL & GAME AREA === */
+    --wheel-margin-top: 2%;
+    --wheel-right: 0vh;
+    --wheel-center-size: 40%;
+    --wheel-border-size: 65vh;
+    --wheel-diameter: 60vh;
+    --wheel-border-transform-x: 0px;
+    --wheel-border-transform-y: 0px;
+    --pointer-size: 60px;
+    --pointer-top: -3px;
+
+    /* === ANIMAL DISPLAY === */
+    --animal-image-size: 48px;
+    --animal-image-translate-x: 0%;
+    --animal-image-translate-y: -10%;
+    --animal-name-tag-width: 24%;
+    --animal-name-tag-height: 17%;
+    --animal-name-tag-top: 10%;
+    --animal-name-tag-left: 9%;
+    --animal-name-tag-translate-x: 0%;
+    --animal-name-tag-translate-y: 0%;
+    --animal-name-font-size: 0.6rem;
+
+    /* === CLOCK === */
+    --clock-widget-width: 150px;
+    --clock-widget-min-height: 115px;
+    --clock-widget-bottom: 0rem;
+    --clock-widget-left: 0rem;
+    --clock-value-font-size: 0.75rem;
+    --clock-value-top: 44px;
+    --clock-value-left: 20px;
+    --countdown-font-size: 0.8rem;
+    --countdown-top: 44px;
+    --countdown-left: -37px;
+    /* === BUHO GIF === */
+    --buho-width: 44px;
+    --buho-top: 59px;
+    --buho-left: 86px;
+
+    /* === LOGO === */
+    --logo-size: 55px;
+    --logo-top: 6px;
+    --logo-left: 6px;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
+
+    /* === MODALS === */
+    --modal-width: 85%;
+    --modal-max-width: 600px;
+    --history-title-font-size: 1rem;
+    --settings-title-font-size: 1.7rem;
+    --result-title-font-size: 1.8rem;
+    --win-amount-font-size: 1.6rem;
+    --char-ring-size: 100px;
+    --char-rest: 100px;
+    --char-name-font-size: 0.75rem;
+    --char-name-margin-top: 13px;
+
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 60px;
+    --history-label-font-size: 0.5rem;
+    --history-entry-gap: 2px;
+    --history-entry-inner-gap: 5px;
+    --history-entry-padding: 2px 4px;
+    --history-entry-image-size: 24px;
+    --history-time-font-size: 0.5rem;
+    --history-entry-font-size: 0.68rem;
+
+    /* === RIGHT RESULTS PANEL === */
+    --right-panel-top: 1rem;
+    --right-panel-right: -0.3rem;
+    --right-panel-width: min(240px, 90vw);
+    --right-panel-max-width: 360px;
+    --right-panel-z-index: 950;
+    --right-panel-border-radius: 0.5rem;
+    --right-panel-transform: none;
+
+    /* === RIGHT RESULTS PANEL CONTENT === */
+    --right-panel-content-top: 0;
+    --right-panel-content-right: 0;
+    --right-panel-content-bottom: 0;
+    --right-panel-content-left: 0;
+    --right-panel-content-transform: none;
+    --right-panel-content-padding: 0.5rem;
+    --right-panel-content-h3-font-size: 0.75rem;
+    --right-panel-content-p-font-size: 0.58rem;
+    --right-panel-content-p-line-height: 1.3;
+
+    /* Globales */
+  }
+}
+
+/* ============================================
+ * BREAKPOINT MONITOR-1280: Monitor HD-ready / WXGA (1280×720 o 1280×800)
+ * Monitor pequeño o laptop, Windows 100% scaling
+ * DevTools: 1280 x 720 / 1280 x 800
+ * Rango: 1230-1315px ancho / 665-850px alto
+ * ============================================ */
+@media (min-width: 1230px) and (max-width: 1315px) and (min-height: 665px) and (max-height: 850px) {
+  :root {
+    /* === RESULTADO IZQUIERDA === */
+    --resultado-izq-size: 180px;
+    --resultado-izq-offset-x: 0px;
+    --resultado-izq-offset-y: 0vh;
+
+    /* === RESULTADO DERECHA === */
+    --resultado-der-size: 180px;
+    --resultado-der-offset-x: 0px;
+    --resultado-der-offset-y: 0vh;
+
+    /* === WHEEL & GAME AREA === */
+    --wheel-margin-top: 5%;
+    --wheel-right: 0vh;
+    --wheel-center-size: 40%;
+    --wheel-border-size: 118vh;
+    --wheel-diameter: 80vh;
+    --wheel-border-transform-x: 0px;
+    --wheel-border-transform-y: 0px;
+    --pointer-size: 160px;
+    --pointer-top: -4px;
+
+    /* === ANIMAL DISPLAY === */
+    --animal-image-size: 62px;
+    --animal-image-translate-x: 0%;
+    --animal-image-translate-y: -10%;
+    --animal-name-tag-width: 24%;
+    --animal-name-tag-height: 17%;
+    --animal-name-tag-top: 10%;
+    --animal-name-tag-left: 9%;
+    --animal-name-tag-translate-x: 0%;
+    --animal-name-tag-translate-y: 0%;
+    --animal-name-font-size: 0.7rem;
+
+    /* === CLOCK === */
+    --clock-widget-width: 310px;
+    --clock-widget-min-height: 250px;
+    --clock-widget-bottom: 0rem;
+    --clock-widget-left: 0rem;
+    --clock-value-font-size: 1.5rem;
+    --clock-value-top: 90px;
+    --clock-value-left: 40px;
+    --countdown-font-size: 1.62rem;
+    --countdown-top: 90px;
+    --countdown-left: -74px;
+    /* === BUHO GIF === */
+    --buho-width: 90px;
+    --buho-top: 122px;
+    --buho-left: 178px;
+
+    /* === LOGO === */
+    --logo-size: 135px;
+    --logo-top: 13px;
+    --logo-left: 13px;
+    --logo-translate-x: 0px;
+    --logo-translate-y: 0px;
+
+    /* === MODALS === */
+    --modal-width: 80%;
+    --modal-max-width: 620px;
+    --history-title-font-size: 0.9rem;
+    --settings-title-font-size: 2rem;
+    --result-title-font-size: 2.2rem;
+    --win-amount-font-size: 1.9rem;
+    --char-ring-size: 160px;
+    --char-rest: 160px;
+    --char-name-font-size: 1rem;
+    --char-name-margin-top: 22px;
+
+    /* === RESULTS HISTORY PANEL === */
+    --history-panel-right: 0px;
+    --history-panel-top: 50%;
+    --history-panel-transform: translateY(-50%);
+    --history-panel-width: 100%;
+    --history-label-font-size: 0.8rem;
+    --history-entry-gap: 4px;
+    --history-entry-inner-gap: 18px;
+    --history-entry-padding: 3px 5px;
+    --history-entry-image-size: 36px;
+    --history-time-font-size: 0.85rem;
+    --history-entry-font-size: 1.2rem;
+
+    /* === RIGHT RESULTS PANEL === */
+    --right-panel-top: 2rem;
+    --right-panel-right: -0.4rem;
+    --right-panel-width: min(310px, 90vw);
+    --right-panel-max-width: 550px;
+    --right-panel-z-index: 950;
+    --right-panel-border-radius: 1rem;
+    --right-panel-transform: none;
+
+    /* === RIGHT RESULTS PANEL CONTENT === */
+    --right-panel-content-top: 0;
+    --right-panel-content-right: 0;
+    --right-panel-content-bottom: 0;
+    --right-panel-content-left: 0;
+    --right-panel-content-transform: none;
+    --right-panel-content-padding: 0.8rem;
+    --right-panel-content-h3-font-size: 1.2rem;
+    --right-panel-content-p-font-size: 0.55rem;
+    --right-panel-content-p-line-height: 1.4;
+
+    /* Globales */
+  }
+}
+
+/* ============================================
  * BREAKPOINT TV-HD: TV 32" HD 720p (1366x768)
  * PC conectada a TV HD por HDMI, Windows 100% scaling
  * DevTools: 1366 x 768
+ * Rango: 1316-1416px ancho / 718-818px alto
  * ============================================ */
-@media (min-width: 1356px) and (max-width: 1366px) and (min-height: 758px) and (max-height: 768px) {
+@media (min-width: 1316px) and (max-width: 1416px) and (min-height: 718px) and (max-height: 818px) {
   :root {
     /* === RESULTADO IZQUIERDA === */
     --resultado-izq-size: 205px;
@@ -892,8 +1345,9 @@
  * BREAKPOINT TV-FHD-125: TV 1080p / Windows 125% scaling (1536x864)
  * PC conectada a TV Full HD por HDMI, Windows 125% scaling
  * DevTools: 1536 x 864
+ * Rango: 1486-1586px ancho / 814-914px alto
  * ============================================ */
-@media (min-width: 1526px) and (max-width: 1536px) and (min-height: 854px) and (max-height: 864px) {
+@media (min-width: 1486px) and (max-width: 1586px) and (min-height: 814px) and (max-height: 914px) {
   :root {
     /* === RESULTADO IZQUIERDA === */
     --resultado-izq-size: 260px;
@@ -1004,8 +1458,9 @@
  * BREAKPOINT TV-FHD: TV Full HD / Windows 100% scaling (1920x1080)
  * PC conectada a TV Full HD por HDMI, Windows 100% scaling
  * DevTools: 1920 x 1080
+ * Rango: 1870-1970px ancho / 895-1130px alto
  * ============================================ */
-@media (min-width: 1910px) and (max-width: 1920px) and (min-height: 945px) and (max-height: 1080px) {
+@media (min-width: 1870px) and (max-width: 1970px) and (min-height: 895px) and (max-height: 1130px) {
   :root {
     /* === RESULTADO IZQUIERDA === */
     --resultado-izq-size: 260px;
@@ -1117,8 +1572,9 @@
  * BREAKPOINT TV-QHD: TV 4K / Windows 150% scaling (2560x1440)
  * PC conectada a TV 4K por HDMI, Windows 150% scaling (default en 4K)
  * DevTools: 2560 x 1440
+ * Rango: 2460-2610px ancho / 1257-1490px alto
  * ============================================ */
-@media (min-width: 2510px) and (max-width: 2560px) and (min-height: 1307px) and (max-height: 1440px)   {
+@media (min-width: 2460px) and (max-width: 2610px) and (min-height: 1257px) and (max-height: 1490px) {
   :root {
     /* === RESULTADO IZQUIERDA === */
     --resultado-izq-size: 460px;
@@ -1234,8 +1690,9 @@
  * BREAKPOINT TV-QHD-PORTRAIT: TV 4K / Windows 150% scaling en portrait (2560x+)
  * PC conectada a TV 4K por HDMI, Windows 150% scaling, monitor en vertical
  * DevTools: 2560+ ancho con orientation: portrait
+ * Rango: 2460px+ ancho / orientation: portrait
  * ============================================ */
-@media (min-width: 2510px) and (orientation: portrait)   {
+@media (min-width: 2460px) and (orientation: portrait) {
   :root {
     /* === RESULTADO IZQUIERDA === */
     --resultado-izq-size: 300px;
@@ -1582,8 +2039,9 @@
  * BREAKPOINT TV-4K: TV 4K UHD / Windows 100% scaling (3840x2160)
  * PC conectada a TV 4K por HDMI, Windows 100% scaling
  * DevTools: 3840 x 2160
+ * Rango: 3780-3890px ancho / 2100-2210px alto
  * ============================================ */
-@media (min-width: 3830px) and (max-width: 3840px) and (min-height: 2150px) and (max-height: 2160px) {
+@media (min-width: 3780px) and (max-width: 3890px) and (min-height: 2100px) and (max-height: 2210px) {
   :root {
     /* === RESULTADO IZQUIERDA === */
     --resultado-izq-size: 840px;
