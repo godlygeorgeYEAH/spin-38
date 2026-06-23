@@ -35,8 +35,8 @@
   --reveal-collapse-y: 0px;
   --reveal-band-out: 640ms;
 
-  /* Posición vertical del stage (anillos, imagen, texto) */
-  --reveal-stage-translate-y: 0px;
+  /* Desplazamiento vertical de los círculos de animales (anillo, imagen, nombre) */
+  --reveal-circles-offset-y: 0px;
 }
 
 /* ==========================================================================
@@ -129,7 +129,6 @@
   inset: 0;
   z-index: 1;
   isolation: isolate;
-  transform: translateY(var(--reveal-stage-translate-y, 0px));
 }
 
 /* --- Franjas diagonales detrás de los anillos --- */
@@ -265,15 +264,15 @@
     transform var(--reveal-enter) cubic-bezier(0.16, 1.02, 0.3, 1),
     opacity calc(var(--reveal-enter) * 0.6) ease;
 
-  &.left { transform: translate(-50%, -50%) translateX(-62vw) scale(0.85); }
-  &.right { transform: translate(-50%, -50%) translateX(62vw) scale(0.85); }
+  &.left { transform: translate(-50%, -50%) translateX(-62vw) translateY(var(--reveal-circles-offset-y, 0px)) scale(0.85); }
+  &.right { transform: translate(-50%, -50%) translateX(62vw) translateY(var(--reveal-circles-offset-y, 0px)) scale(0.85); }
 
   &.left.enter {
-    transform: translate(-50%, -50%) translateX(calc(-1 * var(--char-rest, 180px))) scale(1);
+    transform: translate(-50%, -50%) translateX(calc(-1 * var(--char-rest, 180px))) translateY(var(--reveal-circles-offset-y, 0px)) scale(1);
     opacity: 1;
   }
   &.right.enter {
-    transform: translate(-50%, -50%) translateX(var(--char-rest, 180px)) scale(1);
+    transform: translate(-50%, -50%) translateX(var(--char-rest, 180px)) translateY(var(--reveal-circles-offset-y, 0px)) scale(1);
     opacity: 1;
   }
   &.left.enter .char-glow { animation: ring-glow-pulse 4.2s cubic-bezier(0.37, 0, 0.63, 1) infinite; }
