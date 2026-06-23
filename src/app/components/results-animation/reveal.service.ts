@@ -103,7 +103,7 @@ export class RevealService {
   /** Resuelve un filename/URL de animal a ruta usable por <img src>. */
   resolveAnimal(src: string): string {
     if (!src) return src;
-    if (/^(https?:|data:|blob:|file:|\/\/|\/)/i.test(src)) return src;
+    if (/^(https?:|data:|blob:|file:|\/\/|\/|assets\/)/i.test(src)) return src;
     const base = this.animalsBasePath.endsWith('/')
       ? this.animalsBasePath
       : this.animalsBasePath + '/';
