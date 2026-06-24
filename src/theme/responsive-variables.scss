@@ -905,12 +905,12 @@
 @media (min-width: 721px) and (max-width: 900px) and (max-height: 430px) and (orientation: landscape) {
   :root {
     /* === RESULTADO IZQUIERDA === */
-    --resultado-izq-size: 125px;
+    --resultado-izq-size: 165px;
     --resultado-izq-offset-x: 0px;
     --resultado-izq-offset-y: 0px;
 
     /* === RESULTADO DERECHA === */
-    --resultado-der-size: 125px;
+    --resultado-der-size: 165px;
     --resultado-der-offset-x: 0px;
     --resultado-der-offset-y: 0px;
 
@@ -970,7 +970,7 @@
     --char-ring-size: 110px;
     --char-rest: 90px;
     --char-name-font-size: 0.7rem;
-    --char-name-margin-top: 12px;
+    --char-name-margin-top: 42px;
 
     /* === RESULTS HISTORY PANEL === */
     --history-panel-right: 0px;
@@ -1010,7 +1010,7 @@
     --wheel-displacement-y: 0px;
 
     /* === REVEAL ANIMATION === */
-    --reveal-circles-offset-y: 0px;
+    --reveal-circles-offset-y: -8vh;
 
     /* Globales */
   }
@@ -1025,12 +1025,12 @@
 @media (min-width: 901px) and (max-width: 990px) and (max-height: 460px) and (orientation: landscape) {
   :root {
     /* === RESULTADO IZQUIERDA === */
-    --resultado-izq-size: 145px;
+    --resultado-izq-size: 185px;
     --resultado-izq-offset-x: 0px;
     --resultado-izq-offset-y: 0px;
 
     /* === RESULTADO DERECHA === */
-    --resultado-der-size: 145px;
+    --resultado-der-size: 185px;
     --resultado-der-offset-x: 0px;
     --resultado-der-offset-y: 0px;
 
@@ -1088,9 +1088,9 @@
     --result-title-font-size: 1rem;
     --win-amount-font-size: 1.6rem;
     --char-ring-size: 120px;
-    --char-rest: 100px;
+    --char-rest: 150px;
     --char-name-font-size: 0.75rem;
-    --char-name-margin-top: 10px;
+    --char-name-margin-top: 40px;
 
     /* === RESULTS HISTORY PANEL === */
     --history-panel-right: 0px;
@@ -1130,7 +1130,7 @@
     --wheel-displacement-y: 0px;
 
     /* === REVEAL ANIMATION === */
-    --reveal-circles-offset-y: 0px;
+    --reveal-circles-offset-y: -15vh;
 
     /* Globales */
   }
@@ -1145,12 +1145,12 @@
 @media (min-width: 1230px) and (max-width: 1315px) and (min-height: 665px) and (max-height: 850px) {
   :root {
     /* === RESULTADO IZQUIERDA === */
-    --resultado-izq-size: 180px;
+    --resultado-izq-size: 250px;
     --resultado-izq-offset-x: 0px;
     --resultado-izq-offset-y: 0vh;
 
     /* === RESULTADO DERECHA === */
-    --resultado-der-size: 180px;
+    --resultado-der-size: 250px;
     --resultado-der-offset-x: 0px;
     --resultado-der-offset-y: 0vh;
 
@@ -1210,7 +1210,7 @@
     --char-ring-size: 160px;
     --char-rest: 160px;
     --char-name-font-size: 1rem;
-    --char-name-margin-top: 22px;
+    --char-name-margin-top: 60px;
 
     /* === RESULTS HISTORY PANEL === */
     --history-panel-right: 0px;
@@ -1246,7 +1246,7 @@
     --right-panel-content-p-line-height: 1.4;
 
     /* === REVEAL ANIMATION === */
-    --reveal-circles-offset-y: 0px;
+    --reveal-circles-offset-y: -10vh;
 
     /* Globales */
   }
@@ -1261,12 +1261,12 @@
 @media (min-width: 1316px) and (max-width: 1416px) and (min-height: 718px) and (max-height: 818px) {
   :root {
     /* === RESULTADO IZQUIERDA === */
-    --resultado-izq-size: 205px;
+    --resultado-izq-size: 285px;
     --resultado-izq-offset-x: 0px;
     --resultado-izq-offset-y: 0vh;
 
     /* === RESULTADO DERECHA === */
-    --resultado-der-size: 205px;
+    --resultado-der-size: 285px;
     --resultado-der-offset-x: 0px;
     --resultado-der-offset-y: 0vh;
 
@@ -1377,12 +1377,12 @@
 @media (min-width: 1486px) and (max-width: 1586px) and (min-height: 814px) and (max-height: 914px) {
   :root {
     /* === RESULTADO IZQUIERDA === */
-    --resultado-izq-size: 260px;
+    --resultado-izq-size: 320px;
     --resultado-izq-offset-x: 0px;
     --resultado-izq-offset-y: 0vh;
 
     /* === RESULTADO DERECHA === */
-    --resultado-der-size: 260px;
+    --resultado-der-size: 320px;
     --resultado-der-offset-x: 0px;
     --resultado-der-offset-y: 0vh;
 
@@ -1442,7 +1442,7 @@
     --char-ring-size: 210px;
     --char-rest: 210px;
     --char-name-font-size: 1.2rem;
-    --char-name-margin-top: 26px;
+    --char-name-margin-top: 90px;
 
     /* === RESULTS HISTORY PANEL === */
     --history-panel-right: 0px;
@@ -1478,7 +1478,7 @@
     --right-panel-content-p-line-height: 1.4;
 
     /* === REVEAL ANIMATION === */
-    --reveal-circles-offset-y: 0px;
+    --reveal-circles-offset-y: -12vh;
 
     /* Globales */
   }
@@ -1493,12 +1493,12 @@
 @media (min-width: 1870px) and (max-width: 1970px) and (min-height: 895px) and (max-height: 1130px) {
   :root {
     /* === RESULTADO IZQUIERDA === */
-    --resultado-izq-size: 260px;
+    --resultado-izq-size: 350px;
     --resultado-izq-offset-x: 0px;
     --resultado-izq-offset-y: 0vh;
 
     /* === RESULTADO DERECHA === */
-    --resultado-der-size: 260px;
+    --resultado-der-size: 350px;
     --resultado-der-offset-x: 0px;
     --resultado-der-offset-y: 0vh;
 
@@ -1559,7 +1559,7 @@
     --char-ring-size: 230px;
     --char-rest: 230px;
     --char-name-font-size: 1.4rem;
-    --char-name-margin-top: 28px;
+    --char-name-margin-top: 100px;
 
     /* === RESULTS HISTORY PANEL === */
     --history-panel-right: 0px;
@@ -1595,7 +1595,7 @@
     --right-panel-content-p-line-height: 1.4;
 
     /* === REVEAL ANIMATION === */
-    --reveal-circles-offset-y: 0px;
+    --reveal-circles-offset-y: -10vh;
 
     /* Globales */
   }
@@ -1610,26 +1610,26 @@
 @media (min-width: 2460px) and (max-width: 2610px) and (min-height: 1257px) and (max-height: 1490px) {
   :root {
     /* === RESULTADO IZQUIERDA === */
-    --resultado-izq-size: 460px;
+    --resultado-izq-size: 560px;
     --resultado-izq-offset-x: 0px;
     --resultado-izq-offset-y: 2px;
 
     /* === RESULTADO DERECHA === */
-    --resultado-der-size: 460px;
+    --resultado-der-size: 560px;
     --resultado-der-offset-x: 0px;
     --resultado-der-offset-y: 2px;
 
     /* === WHEEL & GAME AREA === */
-    --wheel-margin-top: 10vh;
+    --wheel-margin-top: 8vh;
     --wheel-right: -15vh;
     --wheel-center-size: 30%;
     --wheel-border-size: 118vh; // 
     --wheel-margin-left:10%;
-    --wheel-diameter: 1150px;
+    --wheel-diameter: 80vh;
     --wheel-border-transform-x: 0px;
     --wheel-border-transform-y: 0px;
     --pointer-size: 400px; // tamaño del puntero
-    --pointer-top: -50px;
+    --pointer-top: -3.5vh;
 
     /* === ANIMAL DISPLAY === */
     --animal-image-size: 225px;
@@ -1648,9 +1648,9 @@
     --clock-widget-min-height: 432px;
     --clock-widget-bottom: 0.05em;
     --clock-widget-left: 0rem;
-    --clock-value-font-size: 1.8rem;
-    --clock-value-top: 9.5vh;
-    --clock-value-left: 5vh;
+    --clock-value-font-size: 3rem;
+    --clock-value-top: 11vh;
+    --clock-value-left: 3.8vh;
     --countdown-font-size: 1.8rem;
     --countdown-color-font: #fff;
     --countdown-top: 9vh;
@@ -1678,7 +1678,7 @@
     --char-ring-size: 380px;
     --char-rest: 400px;
     --char-name-font-size: 2rem;
-    --char-name-margin-top: 60px;
+    --char-name-margin-top: 100px;
 
     /* === RESULTS HISTORY PANEL === */
     --history-panel-right: -25%;
@@ -1715,7 +1715,7 @@
     --right-panel-content-p-line-height: 1.45;
 
     /* === REVEAL ANIMATION === */
-    --reveal-circles-offset-y: 0px;
+    --reveal-circles-offset-y: -10vh;
 
     /* Globales */
 
