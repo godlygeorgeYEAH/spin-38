@@ -16,6 +16,7 @@ import { AdminAuthService } from '../services/admin-auth.service';
 import { DevicePerformanceTier, PerformanceDetectorService } from '../services/performance-detector.service';
 import { ApiService } from '../services/api.service';
 import { RoundOrchestratorService } from '../services/round-orchestrator.service';
+import { SunRaysComponent } from '../sun-rays/sun-rays.component';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,8 @@ import { RoundOrchestratorService } from '../services/round-orchestrator.service
   imports: [
     IonContent, CommonModule,
     WheelContainerComponent, GameSettingsComponent,
-    ResultsHistoryPanelComponent, JackpotDisplayComponent
+    ResultsHistoryPanelComponent, JackpotDisplayComponent,
+    SunRaysComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

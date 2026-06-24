@@ -2,6 +2,9 @@
              [class.performance-low]="getPerformanceTier() === 'low'"
              [class.performance-medium]="getPerformanceTier() === 'medium'"
              [class.performance-high]="getPerformanceTier() === 'high'">
+
+  <app-sun-rays></app-sun-rays>
+
   <!-- Pantalla de carga -->
   <!--<div class="loading-screen" *ngIf="isLoading">
     <div class="loading-content">
