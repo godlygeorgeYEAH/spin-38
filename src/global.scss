@@ -40,56 +40,6 @@
 @import './theme/variables.scss';
 @import './theme/responsive-variables.scss';
 
-/* ============================================================
-   DEBUG TEMPORAL — identificar breakpoint activo
-   Muestra una etiqueta en la esquina superior izquierda.
-   BORRAR cuando ya no se necesite.
-   ============================================================ */
-body::before {
-  content: 'base (sin breakpoint)';
-  position: fixed;
-  top: 6px;
-  left: 6px;
-  z-index: 999999;
-  background: rgba(0,0,0,0.75);
-  color: #0ff;
-  font: bold 11px/1.4 monospace;
-  padding: 3px 7px;
-  border-radius: 4px;
-  pointer-events: none;
-}
-
-@media (min-width: 617px) and (max-width: 720px) and (max-height: 430px) and (orientation: landscape) {
-  body::before { content: 'PHONE-LANDSCAPE-S  (617–720 × ≤430 landscape)'; }
-}
-@media (min-width: 721px) and (max-width: 900px) and (max-height: 430px) and (orientation: landscape) {
-  body::before { content: 'PHONE-LANDSCAPE-M  (721–900 × ≤430 landscape)'; }
-}
-@media (min-width: 901px) and (max-width: 990px) and (max-height: 460px) and (orientation: landscape) {
-  body::before { content: 'PHONE-LANDSCAPE-L  (901–990 × ≤460 landscape)'; }
-}
-@media (min-width: 1230px) and (max-width: 1315px) and (min-height: 665px) and (max-height: 850px) {
-  body::before { content: 'MONITOR-1280  (1230–1315 × 665–850)'; }
-}
-@media (min-width: 1316px) and (max-width: 1416px) and (min-height: 718px) and (max-height: 818px) {
-  body::before { content: 'TV-HD  (1316–1416 × 718–818)'; }
-}
-@media (min-width: 1486px) and (max-width: 1586px) and (min-height: 814px) and (max-height: 914px) {
-  body::before { content: 'TV-FHD-125  (1486–1586 × 814–914)'; }
-}
-@media (min-width: 1870px) and (max-width: 1970px) and (min-height: 895px) and (max-height: 1130px) {
-  body::before { content: 'TV-FHD  (1870–1970 × 895–1130)'; }
-}
-@media (min-width: 2460px) and (max-width: 2610px) and (min-height: 1257px) and (max-height: 1490px) {
-  body::before { content: 'TV-QHD  (2460–2610 × 1257–1490)'; }
-}
-@media (min-width: 2460px) and (orientation: portrait) {
-  body::before { content: 'TV-QHD-PORTRAIT  (≥2460 portrait)'; }
-}
-@media (min-width: 3780px) and (max-width: 3890px) and (min-height: 2100px) and (max-height: 2210px) {
-  body::before { content: 'TV-4K  (3780–3890 × 2100–2210)'; }
-}
-
 @keyframes hype-slide {
   0%   { transform: translate(-50%, -50%) translateX(-95vw) scale(0.92); opacity: 0; }
   14%  { opacity: 1; }

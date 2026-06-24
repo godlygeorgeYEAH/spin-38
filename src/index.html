@@ -25,17 +25,6 @@
 
 <body>
   <app-root></app-root>
-  <script>
-    (function() {
-      var el = document.createElement('div');
-      el.id = 'vp-debug';
-      el.style.cssText = 'position:fixed;top:30px;left:6px;z-index:999999;background:rgba(0,0,0,.75);color:#0f0;font:bold 11px/1.4 monospace;padding:3px 7px;border-radius:4px;pointer-events:none';
-      function update() { el.textContent = window.innerWidth + ' × ' + window.innerHeight; }
-      update();
-      window.addEventListener('resize', update);
-      document.body.appendChild(el);
-    })();
-  </script>
 </body>
 
 </html>
