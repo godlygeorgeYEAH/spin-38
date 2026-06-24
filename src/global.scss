@@ -90,9 +90,6 @@ body::before {
   body::before { content: 'TV-4K  (3780–3890 × 2100–2210)'; }
 }
 
- que se aplican via inline style
-   (TypeScript [style.animation]). Deben vivir aquí para evitar el hash-scoping
-   que Angular 17+ aplica a @keyframes dentro de estilos de componente. */
 @keyframes hype-slide {
   0%   { transform: translate(-50%, -50%) translateX(-95vw) scale(0.92); opacity: 0; }
   14%  { opacity: 1; }
