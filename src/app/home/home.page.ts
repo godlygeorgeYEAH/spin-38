@@ -44,7 +44,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   // buho gif aleatorio
   // true = GIF siempre visible y animado (para posicionamiento/dev)
   // false = comportamiento normal (frame estático + disparo aleatorio)
-  private readonly OWL_DEV_MODE = true;
+  private readonly OWL_DEV_MODE = false;
   public owlGifSrc = 'assets/images/contenedores/buho.gif';
   public owlAnimating = false;
   private owlTimer: any = null;
