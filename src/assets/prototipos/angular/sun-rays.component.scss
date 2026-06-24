@@ -1,0 +1,104 @@
+:host { position: absolute; inset: 0; z-index: -1; }   /* detrás del contenido */
+
+.sr-scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  container-type: size;
+  background: #9ed3fb;
+}
+
+.sr-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: max(100cqw, calc(100cqh * 1.6410256));   /* 4096 / 2496 */
+  aspect-ratio: 4096 / 2496;
+  container-type: size;
+  background: url(/assets/fondo.png) center / 100% 100% no-repeat;
+}
+
+.sr-anchor {
+  position: absolute;
+  left: 83.84%;          /* posición horizontal del sol en la imagen */
+  top: 34.54%;           /* posición vertical del sol en la imagen */
+  width: 0;
+  height: 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: 1;            /* masterOp */
+}
+
+.sr-anchor > div {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+}
+
+/* 1) núcleo cálido que respira (no rota) */
+.sr-breath {
+  width: 46cqw;
+  height: 46cqw;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle,
+    rgba(255, 247, 222, .85) 0%,
+    rgba(255, 238, 190, .5) 22%,
+    rgba(255, 236, 185, 0) 60%);
+  animation: sunbreath 11s ease-in-out infinite;
+}
+
+/* base de las dos capas que giran */
+.sr-rot {
+  --reach: 125cqw;       /* alcance de los rayos */
+  width: var(--reach);
+  height: var(--reach);
+  margin-left: calc(-1 * var(--reach) / 2);
+  margin-top: calc(-1 * var(--reach) / 2);
+  will-change: transform;
+}
+
+/* 2) halo difuso girando (lento) */
+.sr-diffuse {
+  animation: sunspin 168s linear infinite;
+  opacity: .85;
+  background: conic-gradient(from 8deg,
+    rgba(255, 235, 178, 0),
+    rgba(255, 235, 178, .22) 8%,
+    rgba(255, 235, 178, 0) 26%,
+    rgba(255, 235, 178, .15) 50%,
+    rgba(255, 235, 178, 0) 70%,
+    rgba(255, 235, 178, .2) 90%,
+    rgba(255, 235, 178, 0));
+  filter: blur(10px);
+  -webkit-mask: radial-gradient(closest-side, transparent 4%, #000 16%, rgba(0, 0, 0, .55) 55%, transparent 92%);
+          mask: radial-gradient(closest-side, transparent 4%, #000 16%, rgba(0, 0, 0, .55) 55%, transparent 92%);
+}
+
+/* 3) haces marcados girando (más rápido) */
+.sr-beams {
+  animation: sunspin 99s linear infinite;
+  opacity: .25;
+  background: repeating-conic-gradient(from 0deg,
+    rgba(255, 244, 206, 0) 0deg,
+    rgba(255, 244, 206, 0) 17deg,
+    rgba(255, 239, 186, .92) 22.5deg,
+    rgba(255, 244, 206, 0) 28deg,
+    rgba(255, 244, 206, 0) 45deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 5%, #000 17%, #000 38%, transparent 82%);
+          mask: radial-gradient(closest-side, transparent 5%, #000 17%, #000 38%, transparent 82%);
+}
+
+@keyframes sunspin {
+  to { transform: rotate(360deg); }   /* horario; usa -360deg para antihorario */
+}
+
+@keyframes sunbreath {
+  0%, 100% { opacity: .62; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: .92; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-rot, .sr-breath { animation: none; }
+}
