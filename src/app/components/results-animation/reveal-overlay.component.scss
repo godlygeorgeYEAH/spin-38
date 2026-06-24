@@ -73,26 +73,7 @@
 
 /* --- Oscurecer + blur --- */
 .reveal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: oklch(0.08 0.03 265 / 0.55);
-  backdrop-filter: blur(9px);
-  -webkit-backdrop-filter: blur(9px);
-  opacity: 1;
-  transition:
-    opacity calc(var(--reveal-enter) * 0.7) ease,
-    backdrop-filter calc(var(--reveal-enter) * 0.7) ease,
-    -webkit-backdrop-filter calc(var(--reveal-enter) * 0.7) ease;
-
-  &.is-clear {
-    opacity: 0;
-    backdrop-filter: blur(0);
-    -webkit-backdrop-filter: blur(0);
-    transition:
-      opacity var(--reveal-clear) cubic-bezier(0.55, 0, 0.45, 1),
-      backdrop-filter var(--reveal-clear) cubic-bezier(0.55, 0, 0.45, 1),
-      -webkit-backdrop-filter var(--reveal-clear) cubic-bezier(0.55, 0, 0.45, 1);
-  }
+  display: none;
 }
 
 .reveal-stage {
@@ -104,35 +85,7 @@
 
 /* --- Franjas diagonales detrás de los anillos --- */
 .reveal-band {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: calc(var(--char-ring-size, 200px) * 1.12);
-  height: 220vh;
-  z-index: 0;
-  pointer-events: none;
-  will-change: clip-path;
-  transition: clip-path var(--reveal-band-out, var(--reveal-clear)) cubic-bezier(0.55, 0, 0.45, 1);
-
-  &.left {
-    transform: translate(-50%, -50%) translateX(calc(-1 * var(--char-rest, 180px))) rotate(-20deg);
-    background: linear-gradient(105deg,
-      color-mix(in srgb, var(--ring-left-color) 52%, #000),
-      color-mix(in srgb, var(--ring-left-color) 68%, #000));
-    clip-path: inset(0 0 100% 0);
-  }
-  &.right {
-    transform: translate(-50%, -50%) translateX(var(--char-rest, 180px)) rotate(20deg);
-    background: linear-gradient(105deg,
-      color-mix(in srgb, var(--ring-right-color) 68%, #000),
-      color-mix(in srgb, var(--ring-right-color) 52%, #000));
-    clip-path: inset(100% 0 0 0);
-  }
-  &.left.show,
-  &.right.show {
-    clip-path: inset(0 0 0 0);
-    transition: clip-path calc(var(--reveal-enter) * 0.85) cubic-bezier(0.16, 1.02, 0.3, 1);
-  }
+  display: none;
 }
 
 /* --- Texto normal (azul neón) --- */
